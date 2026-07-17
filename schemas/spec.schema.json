@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/package-spec-language/spec.schema.json",
+  "title": "Provisional semantic specification record",
+  "type": "object",
+  "required": ["id", "version", "vocabulary", "claims"],
+  "properties": {
+    "id": {"type": "string", "minLength": 1},
+    "version": {"type": "string", "minLength": 1},
+    "vocabulary": {"type": "object"},
+    "laws": {"type": "array", "items": {"type": "object"}},
+    "effects": {"type": "object"},
+    "resources": {"type": "object"},
+    "claims": {"type": "array", "items": {"type": "object"}}
+  },
+  "additionalProperties": true
+}

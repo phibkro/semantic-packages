@@ -1,0 +1,26 @@
+spec Stack[A] version 0.1.0 {
+  type Stack
+
+  op empty : Stack
+  op push  : Stack * A -> Stack
+  obs pop  : Stack -> Option[A * Stack]
+
+  law pop_push(s: Stack, x: A):
+    pop(push(s, x)) == Some((x, s))
+
+  effects {
+    forbidden: io.*
+    optional: debug.emit
+  }
+
+  resources {
+    persistence: old_state_remains_valid
+  }
+
+  claim push_cost {
+    concern: performance
+    proposition: amortized_O(1)
+    profile: default
+    status: asserted
+  }
+}
