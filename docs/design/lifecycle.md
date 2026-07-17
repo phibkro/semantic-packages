@@ -79,6 +79,10 @@ nodes to reduce correlated blind spots. Diversity is a probe, not an assurance l
 compare propositions, artifacts, and evidence rather than model reputation or vote
 count. All providers inherit the same bounded authority and acceptance gates.
 
+The versioned capability matrix, secure command patterns, and evidence-packet fields
+live in the [multi-provider workflow](../operations/multi-provider-workflow.md). Treat
+that runbook as current operational memory and re-probe environment-dependent facts.
+
 Record provider/model/tool provenance when it affects reproducibility or explains an
 independent review. Sending repository material to an external provider requires the
 applicable data-sharing authority; a locally hosted model is preferred when that
@@ -164,6 +168,7 @@ status for a timeless contract:
 | protected intent | `docs/vision/constitution.md` | change only with explicit human review |
 | current architecture and semantics | `ARCHITECTURE.md`, `docs/design/` | describe the present design; consequential forks get ADRs |
 | accepted decisions | `docs/decisions/` | append or supersede; retain rationale and rejected alternatives |
+| operational runbooks | `docs/operations/` | record current verified tool behavior; re-probe versioned facts and preserve security invariants |
 | active work and discoveries | `docs/exec-plans/active/` | living state; move the current edge rather than accumulating history |
 | future work | `tasks/backlog.md` | revisable and ordered by dependency/evidence |
 | completed history | completed ExecPlans and git | do not duplicate as current-state prose |

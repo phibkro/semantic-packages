@@ -92,6 +92,17 @@ research. External disclosure was limited to the governing semantic-packages doc
 the schema/Stack scaffolds, and brief revision 1. Herdr remained lead-side and its
 control socket was unavailable inside the sandbox.
 
+### Current operational-memory DAG: MPW revision 1
+
+| Node | Edges and owner | Scope / write boundary | Evidence and status |
+|---|---|---|---|
+| MPW-L1 runbook authoring | informed by the DC1 provider probes; lead Codex | exclusive writes to agent guidance, operations/lifecycle docs, README, checker, and this plan | capability/status matrix, secure dispatch patterns, reusable briefs, provenance, fusion, and failure handling authored |
+| MPW-R1 requirements audit | challenges MPW-L1; independent Codex reviewer | read-only capability and governance inventory | required conditional claims, provenance, fusion rules, and anti-patterns returned |
+| MPW-R2 convergence review | challenges MPW-L1; same independent reviewer | read-only actual-diff audit | blocked on a Herdr child-boundary contradiction, flattened verification status, unsupported route wording, and missing plan evidence |
+| MPW-L2 successor integration | depends on MPW-R2; lead Codex | same exclusive shared surfaces | child-side `HERDR_*` is now a stop condition; verified, advertised-but-unprobed, and unsupported routes are distinct; this DAG retains the failed review |
+| MPW-R3 successor review | challenges/supports MPW-L2; independent Codex reviewer | read-only focused regression review | passed after one final mandatory-entrypoint wording correction; no material objection remains |
+| MPW-G1 repository-memory convergence | depends on MPW-L2, MPW-R3, and G0 | lead acceptance owner | passed; `git diff --check` and Nix-backed `python3 scripts/check_repo.py` both passed |
+
 ## Specification changes required before implementation
 
 The design audit found prerequisites that the original implementation order omitted:
@@ -304,6 +315,9 @@ summary proxy.
   evidence-priority rank. Contested required concerns and unproved prohibitions do not
   pass by default; see
   [ADR 0006](../../decisions/0006-separate-priority-from-prohibition.md).
+- Treat the multi-provider capability and verification-status matrix and secure dispatch workflow as
+  operational project memory, with versioned facts re-probed before reuse; see
+  [the multi-provider workflow](../../operations/multi-provider-workflow.md).
 
 ## Result
 

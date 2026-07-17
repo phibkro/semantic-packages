@@ -18,6 +18,8 @@ Read these before substantial work:
    - work and gates: `lifecycle.md`;
    - current vertical slice: `tracer-bullet.md`;
 5. the relevant file in `docs/exec-plans/active/`
+6. before delegating across models or providers,
+   `docs/operations/multi-provider-workflow.md`
 
 Treat repository documentation as durable project memory. Do not rely on prior chat context.
 
@@ -55,11 +57,18 @@ never grants authority or assurance. See `docs/design/lifecycle.md` for the full
 Cross-provider children must be launched through `agent-dispatch`; agents never invoke
 `claude` or delegated `codex` directly. Read-only consultation uses
 `agent-dispatch --read-only`, while delegated writes require an isolated worktree and
-exclusive scope. Record requested and runtime-resolved model provenance, explicit
+exclusive scope. The current dispatcher permits two delegated workers and depth two
+(lead -> worker -> reviewer), then fails loudly; every child enters pagu-box `strict`,
+and inherited authority may only narrow. Record requested and runtime-resolved model
+provenance, explicit
 effort, sandbox/write mode, and the externally disclosed data scope in the handoff.
 Herdr may provide lead-side panes, status, interaction, and worktree organization, but
 it does not replace `agent-dispatch` or become a child capability. Never expose its
 control socket or `HERDR_*` control environment inside a delegated sandbox.
+Follow the capability and verification-status matrix, routing, command patterns,
+provenance packet, and failure handling in
+`docs/operations/multi-provider-workflow.md`; re-probe versioned capabilities rather
+than treating that operational snapshot as timeless.
 
 ## Completion standard
 

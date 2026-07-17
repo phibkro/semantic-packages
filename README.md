@@ -28,6 +28,7 @@ The first milestone is deliberately narrow: publish one nontrivial specification
 - [`docs/design/evidence-model.md`](docs/design/evidence-model.md): claim, evidence, result, and assurance boundaries.
 - [`docs/design/compatibility.md`](docs/design/compatibility.md): semantic and realization resolution.
 - [`docs/design/lifecycle.md`](docs/design/lifecycle.md): project knowledge, feedback loops, and quality gates.
+- [`docs/operations/multi-provider-workflow.md`](docs/operations/multi-provider-workflow.md): agent route status, model-diverse delegation, security boundaries, and provenance.
 - [`docs/design/tracer-bullet.md`](docs/design/tracer-bullet.md): first vertical slice.
 - [`docs/exec-plans/active/0001-tracer-bullet.md`](docs/exec-plans/active/0001-tracer-bullet.md): active implementation plan.
 - [`tasks/backlog.md`](tasks/backlog.md): ordered research and engineering backlog.

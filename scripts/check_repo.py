@@ -27,6 +27,7 @@ REQUIRED = [
     "docs/design/compatibility.md",
     "docs/design/lifecycle.md",
     "docs/design/tracer-bullet.md",
+    "docs/operations/multi-provider-workflow.md",
     ".agent/PLANS.md",
     "docs/exec-plans/active/0001-tracer-bullet.md",
 ]
