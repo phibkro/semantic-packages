@@ -25,6 +25,9 @@ The first milestone is deliberately narrow: publish one nontrivial specification
 - [`docs/research/synthesis.md`](docs/research/synthesis.md): condensed research developed before implementation.
 - [`docs/design/core-model.md`](docs/design/core-model.md): specification, realization, evidence, profile, and policy model.
 - [`docs/design/spec-language.md`](docs/design/spec-language.md): minimum viable specification calculus.
+- [`docs/design/evidence-model.md`](docs/design/evidence-model.md): claim, evidence, result, and assurance boundaries.
+- [`docs/design/compatibility.md`](docs/design/compatibility.md): semantic and realization resolution.
+- [`docs/design/lifecycle.md`](docs/design/lifecycle.md): project knowledge, feedback loops, and quality gates.
 - [`docs/design/tracer-bullet.md`](docs/design/tracer-bullet.md): first vertical slice.
 - [`docs/exec-plans/active/0001-tracer-bullet.md`](docs/exec-plans/active/0001-tracer-bullet.md): active implementation plan.
 - [`tasks/backlog.md`](tasks/backlog.md): ordered research and engineering backlog.
