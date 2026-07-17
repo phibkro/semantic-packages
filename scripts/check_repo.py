@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """Minimal repository quality gate.
 
-Checks required project-memory files and local Markdown links. This is intentionally
-small so the first tracer bullet has an executable governance gate without locking
-in a larger toolchain.
+Checks required project-memory files, local Markdown links, and JSON syntax. This is
+intentionally small so the first tracer bullet has an executable governance gate
+without locking in a larger toolchain.
 """
 
 from __future__ import annotations
 
+import json
 import re
 import sys
 from pathlib import Path
@@ -22,10 +23,16 @@ REQUIRED = [
     "docs/research/synthesis.md",
     "docs/design/core-model.md",
     "docs/design/spec-language.md",
+    "docs/design/evidence-model.md",
+    "docs/design/compatibility.md",
+    "docs/design/lifecycle.md",
     "docs/design/tracer-bullet.md",
+    "docs/operations/multi-provider-workflow.md",
+    ".agent/PLANS.md",
     "docs/exec-plans/active/0001-tracer-bullet.md",
 ]
 LINK_RE = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
+JSON_EXCLUDED_DIRS = {".git", ".direnv", "node_modules"}
 
 
 def check_required() -> list[str]:
@@ -51,8 +58,21 @@ def check_markdown_links() -> list[str]:
     return errors
 
 
+def check_json_syntax() -> list[str]:
+    errors: list[str] = []
+    for path in ROOT.rglob("*.json"):
+        relative = path.relative_to(ROOT)
+        if JSON_EXCLUDED_DIRS.intersection(relative.parts):
+            continue
+        try:
+            json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, UnicodeError, json.JSONDecodeError) as error:
+            errors.append(f"{relative}: invalid JSON: {error}")
+    return errors
+
+
 def main() -> int:
-    errors = check_required() + check_markdown_links()
+    errors = check_required() + check_markdown_links() + check_json_syntax()
     if errors:
         print("Repository checks failed:")
         for error in errors:
