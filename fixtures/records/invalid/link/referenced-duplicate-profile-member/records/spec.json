@@ -1,0 +1,22 @@
+{
+  "kind": "specification",
+  "id": "stack",
+  "version": "0.1.0",
+  "operations": [{ "id": "push", "signature": "Stack[A] * A -> Stack[A]" }],
+  "performancePropositions": [
+    {
+      "id": "push-cost",
+      "operationFamily": ["push"],
+      "workload": {
+        "profile": { "kind": "realizationProfile", "id": "duplicate-profile-members", "version": "0.1.0" },
+        "localId": "push-sequence"
+      },
+      "costMeasure": {
+        "profile": { "kind": "realizationProfile", "id": "duplicate-profile-members", "version": "0.1.0" },
+        "localId": "shared-member"
+      },
+      "predicate": "total cost <= a*n+b",
+      "permittedEvidenceMethods": ["proof"]
+    }
+  ]
+}

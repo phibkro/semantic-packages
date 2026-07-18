@@ -1,0 +1,18 @@
+{
+  "kind": "evidence",
+  "id": "schema-impossible-calendar-produced-at",
+  "version": "0.1.0",
+  "claim": { "kind": "claim", "id": "claim", "version": "0.1.0" },
+  "specification": { "kind": "specification", "id": "stack", "version": "0.1.0" },
+  "scope": "specification",
+  "mechanism": "proof",
+  "result": "supports",
+  "reviewState": "accepted",
+  "method": "schema counterexample",
+  "environment": {},
+  "freshness": { "producedAt": "2026-99-99T99:99:99Z" },
+  "assumptions": [],
+  "exclusions": [],
+  "applicability": { "profiles": [] },
+  "provenance": {}
+}

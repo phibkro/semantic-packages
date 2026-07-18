@@ -1,0 +1,12 @@
+{
+  "kind": "consumerPolicy",
+  "id": "schema-concerns-wrong-container",
+  "version": "0.1.0",
+  "specification": { "kind": "specification", "id": "stack", "version": "0.1.0" },
+  "profile": { "kind": "realizationProfile", "id": "stack-default", "version": "0.1.0" },
+  "concerns": {
+    "concern": "law.conformance",
+    "priority": "required"
+  },
+  "prohibitions": []
+}

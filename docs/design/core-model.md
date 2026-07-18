@@ -177,6 +177,10 @@ concurrency, trust assumptions, and portability constraints. Claims and evidence
 reference the profile under which they apply. Realizations declare supported
 profiles or constraints; consumer policies state the requested envelope.
 
+Workload and cost-measure IDs share one flat profile-local namespace within an exact
+RealizationProfile version. Reusing an ID within or across those categories is invalid;
+otherwise an exact profile-member reference could select more than one meaning.
+
 A profile does not itself prove that a realization works in that environment. It
 provides the shared vocabulary needed to make the claim and evidence comparable.
 Performance propositions additionally name an operation family, workload and starting

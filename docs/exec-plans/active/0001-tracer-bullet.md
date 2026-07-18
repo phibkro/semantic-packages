@@ -119,8 +119,17 @@ control socket was unavailable inside the sandbox.
 | W2-F3 final oracle successor | depends on W2-D2; independent GPT fixture writer | exclusive `fixtures/records/` | complete: one zero-diagnostic order-independence graph and eight remaining typed-role/coherence falsifiers; 15 schema and 29 link negatives total |
 | W2-D3 checkpoint review | challenges/supports W2-F3; same independent reviewer | read-only focused regression review | passed; all W2-D2 gaps closed with isolated exact controls |
 | W2-P1 reviewed checkpoint | depends on W2-L2, W2-F3, W2-D3, and lead controls | lead acceptance owner | passed for checkpoint: 7 metaschemas, 8 flat valid records, 15 schema negatives, 29 link negatives, 1 valid link graph, 105 parsed JSON; does not imply W2-G1 acceptance |
-| W2-C1 durable record gate | depends on W2-P1; Claude Sonnet 5 plus lead integration | isolated checker worktree; exclusive checker surfaces | pending |
-| W2-G1 records gate | depends on W2-L2, W2-F2, W2-C1, successor review, and G0 | lead acceptance owner | pending |
+| W2-C1 durable record gate | depends on W2-P1; Claude Sonnet 5 plus lead integration | isolated checker worktree; exclusive `scripts/` writer | implementation passed all checkpoint fixtures under lead execution; child correctly reported execution-blocked because Python/Nix were unavailable |
+| W2-CR1 checker generality review | challenges W2-C1; independent internal Codex reviewer | read-only actual-code review plus novel temporary counterexamples | blocked convergence: conditional Evidence scope, profile-member uniqueness, policy event roles, and schema type errors were unsound; reference/CLI diagnostics also incomplete |
+| W2-F4 checker falsifiers | depends on W2-CR1; independent GPT fixture writer | exclusive `fixtures/records/` successor controls | complete: 4 schema, 6 link-negative, 1 link-valid, and one two-diagnostic candidate control made W2-C1 red |
+| W2-C2 checker successor | depends on W2-F4; Claude Sonnet 5 plus lead integration | same isolated checker worktree and exclusive `scripts/` scope | implementation execution-blocked in child; lead exact gate, compile, CLI input, and candidate controls pass |
+| W2-CR2 checker successor review | challenges W2-C2; independent reviewer | read-only actual-code and 280-case mutation regression | blocked: non-string kind crashed, duplicate indexes caused false role cascades, and multi-kind candidates were truncated |
+| W2-F5 final generality controls | depends on W2-CR2; independent GPT fixture writer | exclusive `fixtures/records/` | complete: kind type, referenced duplicate, and multi-kind/version controls; 20 schema and 38 link negatives total |
+| W2-C3 final checker integration | depends on W2-F5; lead Codex | exclusive `scripts/` integrator | kind typing, category-set indexes, and complete plural candidate diagnostics landed; exact lead gate passes |
+| W2-CR3 final checker review | challenges/supports W2-C3; same independent reviewer | read-only mutation and actual-code regression | passed with no dissent: 280 wrong-type mutations, duplicate cascades, multi-candidates, and all prior blockers rechecked |
+| W2-CG1 durable-checker convergence | depends on W2-C3, W2-CR3, and G0 | lead acceptance owner | passed: exact fixture gate, repository gate, compilation, CLI red controls, and diff check |
+| W2-R2 final records convergence | challenges/supports W2-P1/W2-CG1; Claude Fable 5 | read-only integrated actual-diff audit | pending |
+| W2-G1 records gate | depends on W2-P1, W2-CG1, W2-R2, and G0 | lead acceptance owner | pending |
 
 The published design baseline is commit `87ffbb1` and draft PR #1. Wave 2 runs on a
 stacked isolated branch so schema implementation cannot silently expand that review.
@@ -141,6 +150,18 @@ the child, so its manual artifact review does not replace lead-executed validati
 W2-D1 was an independent internal Codex collaboration node and did execute the fixture
 shape controls. Both reviews received the same governing worktree independently and
 neither model identity nor Fable's PASS overrode W2-D1's decisive missing falsifiers.
+
+W2-C1 and W2-C2 used Claude Code 2.1.212 through `agent-dispatch`, pagu-box
+`strict`, writable PWD mode in the isolated checker worktree, the exact requested and
+runtime primary model `claude-sonnet-5`, and an exclusive `scripts/` boundary. Both
+dispatches requested high effort; the C1 narrative self-reported “medium-high/default”
+despite the explicit dispatcher request, so that mismatch is retained rather than
+treated as runtime proof of effort. Structured output reported auxiliary
+`claude-haiku-4-5-20251001` usage. Python, Nix, and git probes were unavailable or
+denied inside the children; both correctly returned execution-blocked, and the lead
+ran the exact pinned controls. Disclosure remained limited to the approved
+semantic-packages worktree and versioned briefs; neither child delegated or used web
+research.
 
 ## Specification changes required before implementation
 
@@ -359,6 +380,20 @@ summary proxy.
   negatives rejected; all 105 JSON files parsed. This temporary lead control supports
   a checkpoint only; W2-C1 must make the same observations durable in the repository
   before W2-G1 can close.
+- W2-CR1 rejected a checker that passed every checkpoint fixture: novel records showed
+  missing subject-dependent Evidence scope, ambiguous duplicate profile members,
+  policy event-role confusion, schema-classifier type crashes, lost reference
+  candidates, and CLI tracebacks. W2-F4 converted those observations into red controls
+  before W2-C2. The successor now passes 19 schema negatives, 35 link negatives, two
+  link-valid graphs, direct missing/invalid-input CLI probes, and both diagnostics for
+  a reference with simultaneous wrong-kind and wrong-version candidates. These are
+  lead observations; W2-CR2 remains the independent generality gate.
+- W2-CR2 then found a non-string `kind` crash, false dependent role errors after valid
+  duplicate-ID diagnostics, and truncated multi-kind candidates. W2-F5 made those
+  failures permanent controls; W2-C3 indexes roles as sets, type-checks `kind`, and
+  reports all candidate kinds and versions. W2-CR3 passed the exact gate and repeated
+  280 systematic wrong-type mutations with no exception or false acceptance. Failed
+  CR1 and CR2 remain part of the checker assurance trail.
 
 ## Decision log
 

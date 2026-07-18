@@ -1,0 +1,2 @@
+LINK_VERSION_MISMATCH records/requester.json#/specification: requested (specification, x, 2), loaded versions are 1, 3
+LINK_WRONG_KIND_REFERENCE records/requester.json#/specification: requested (specification, x, 2), loaded kinds are realization, realizationProfile
