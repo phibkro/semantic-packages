@@ -1,0 +1,44 @@
+{
+  "kind": "realization",
+  "id": "stack-reference",
+  "version": "0.2.0",
+  "specification": {
+    "kind": "specification",
+    "id": "stack",
+    "version": "0.1.0"
+  },
+  "adapter": {
+    "id": "stack-json-adapter",
+    "version": "0.2.0",
+    "protocol": "stack-runner-json-v1",
+    "entrypoint": "semantic_packages.stack_adapter",
+    "assumptions": [
+      "The harness owns expected traces and comparison.",
+      "The adapter faithfully exposes the named reference Realization.",
+      "Reported events are complete for the adapter-observed boundary."
+    ]
+  },
+  "implementation": {
+    "language": "Python",
+    "languageVersion": "3.12 or newer",
+    "target": "local CPython child process",
+    "runtime": "CPython",
+    "interfaceMechanism": "NDJSON messages over stdin and stdout",
+    "buildSystem": "none",
+    "buildInstructions": "No build step.",
+    "executionInstructions": "Run python3 -m semantic_packages.stack_adapter from the repository root."
+  },
+  "capabilities": ["stack.empty", "stack.push", "stack.pop"],
+  "limitations": [
+    "ExecPlan 0001 tracer only; elements are JSON integers in the stack-default profile.",
+    "No realization-steps instrumentation or performance evidence.",
+    "No registry discovery, remote transport, or concurrent requests."
+  ],
+  "supportedProfiles": [
+    {
+      "kind": "realizationProfile",
+      "id": "stack-default",
+      "version": "0.1.0"
+    }
+  ]
+}

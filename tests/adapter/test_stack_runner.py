@@ -149,7 +149,6 @@ class StackRunnerContractTests(unittest.TestCase):
             report = self.run_mode("eof-timeout", str(marker))
             elapsed = time.monotonic() - started
 
-            self.assertLess(elapsed, 3.0, report)
             pid = int(marker.read_text(encoding="ascii"))
             try:
                 os.kill(pid, 0)
@@ -157,11 +156,23 @@ class StackRunnerContractTests(unittest.TestCase):
                 pass
             else:
                 self.fail(f"adapter process {pid} remained after bounded teardown")
+
+            semantic_timeout = 0.20
+            cleanup_grace = 0.20
+            scheduling_allowance = 0.15
+            self.assertLess(
+                elapsed,
+                semantic_timeout + cleanup_grace + scheduling_allowance,
+                report,
+            )
             self.assertEqual("error", report.result, report)
             self.assertIn("TIMEOUT", report.causes, report)
 
     def test_extra_stdout_emitted_only_after_eof_is_an_error(self) -> None:
         self.assert_result("eof-extra-stdout", "error", "EXTRA_STDOUT")
+
+    def test_unterminated_stdout_emitted_only_after_eof_is_an_error(self) -> None:
+        self.assert_result("eof-extra-stdout-unterminated", "error", "EXTRA_STDOUT")
 
     def test_unterminated_extra_stdout_remains_detectable(self) -> None:
         self.assert_result("extra-stdout-unterminated", "error", "EXTRA_STDOUT")
@@ -170,6 +181,11 @@ class StackRunnerContractTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             missing = Path(directory) / "missing-adapter-command"
             report = self.run_command((str(missing),))
+        self.assertEqual("error", report.result, report)
+        self.assertIn("PROCESS_START", report.causes, report)
+
+    def test_empty_command_is_a_returned_process_start_error(self) -> None:
+        report = self.run_command(())
         self.assertEqual("error", report.result, report)
         self.assertIn("PROCESS_START", report.causes, report)
 

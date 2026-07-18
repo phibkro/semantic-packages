@@ -56,6 +56,18 @@ never acquire files from elsewhere. The source tree must remain quiescent during
 load; this tracer loader is not a secure traversal boundary for concurrently mutated or
 adversarial filesystems.
 
+Run the tracer-scoped Stack conformance suite, including the executable reference
+Realization and child adapter:
+
+```sh
+python3 -m unittest discover -s tests/adapter -v
+python3 -m semantic_packages.stack_adapter < /dev/null
+```
+
+The adapter uses `stack-runner-json-v1` for this tracer only. Passing the bounded suite
+retains adapter-faithfulness and event-completeness assumptions and does not produce
+performance evidence.
+
 Then open the repository in Codex, an IDE extension, or another coding agent. The agent should begin with `AGENTS.md`, then follow the active ExecPlan.
 
 ## Status

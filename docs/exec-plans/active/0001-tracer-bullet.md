@@ -199,16 +199,22 @@ semantic-packages worktree and the versioned review brief.
 | W3-A1 reference realization and adapter | depends on W3-AF1; Claude Sonnet 5 | isolated worktree; exclusive `semantic_packages/**` | implementation checkpoint green: independent persistent realization, child adapter, and runner pass all 9 AF1 tests, compile, actual EOF probe, and full repository gate |
 | W3-AR1 adapter review | challenges W3-A1; independent internal GPT reviewer | read-only actual-code and novel observable-semantics/lifecycle audit | blocked despite AF1 green: EOF nonzero/hang/extra-output failures are accepted, process start escapes, stderr provenance is discarded, and a nonempty pushed source can be rebound undetected |
 | W3-AF2 adapter lifecycle successor | depends on W3-AR1; independent fixture owner | exclusive adapter fake/test scope | complete red checkpoint: prior 9 plus unterminated-line regression pass; six controls fail exactly on EOF exit/hang/extra-output, start error, stderr retention, and nonempty-source persistence |
-| W3-A2 adapter successor | depends on W3-AF2; Claude Sonnet 5 | exclusive `semantic_packages/**` | in progress |
-| W3-AR2 adapter successor review | challenges W3-A2 | read-only prior and novel regression | pending |
-| W3-AG1 reference-adapter convergence | depends on W3-A2, W3-AR2, and G1 | lead acceptance owner | pending |
+| W3-A2 adapter successor | depends on W3-AF2; Claude Sonnet 5 | exclusive `semantic_packages/**` | implementation checkpoint green on 16 tests: lifecycle outcomes, raw stderr, start failure, and every pushed source are retained; W3-AR2 still blocked convergence |
+| W3-AR2 adapter successor review | challenges W3-A2; independent internal GPT reviewer | read-only prior and novel regression | blocked: cleanup opens two fresh timeout windows after the declared deadline, unterminated post-EOF bytes are discarded, and empty command raises `IndexError` |
+| W3-AF3 adapter boundary successor | depends on W3-AR2; independent fixture owner | exclusive adapter fake/test scope | complete red checkpoint: 15 unaffected tests pass; calibrated one-deadline ceiling, post-EOF unterminated bytes, and empty command fail exactly as intended |
+| W3-A3 adapter boundary implementation | depends on W3-AF3; Claude Sonnet 5 | exclusive `semantic_packages/stack_runner.py` | complete: all 18 tests pass; timeout signals immediately then uses one cleanup grace, buffered EOF bytes fail, and empty command returns `PROCESS_START` |
+| W3-AR3 adapter boundary review | challenges W3-A3; independent internal GPT reviewer | read-only prior and novel regression | passed: stable repeated timing, seven post-EOF payload sizes, stdout-close hangs, termination stderr, cause precedence, command shapes, depths 1–4 persistence, immutability, and PID cleanup all pass |
+| W3-AG1 reference-adapter convergence | depends on W3-A3, W3-AR3, and G1 | lead acceptance owner | accepted: executable Realization/adapter `0.2.0`, 18-test shared suite, README, canonical record, and repository gate agree; Wave 2 `0.1.0` remains immutable |
 | W3-P0S1 bounded proof preflight | informs W3-P0L1; independent internal GPT concern owner | read-only law, local-tool, falsifier, and evidence-boundary analysis | complete: recommends experimental Lean-core universal `pop-empty` probe; found `sorry` exit-zero and admitted-axiom traps; keeps translation/tool trust and non-global authority explicit |
 | W3-P0R1 diverse proof skeptic | challenges W3-P0S1; Claude Fable 5 | read-only semantic-model, trust-boundary, and evidence-scope audit | complete REVISE: support only model satisfaction/pipeline evidence, pin the expected theorem statement, treat new Evidence as additional, and disposition the accepted fixture-only hazard; its `--trust=0` concern was directly falsified against Lean 4.30.0 help/execution |
 | W3-P0L1 bounded proof boundary | depends on W3-P0S1/P0R1 and W3-LG1; lead integration | exclusive proof design/plan acceptance; no universal foundation authority | accepted experimentally in ADR 0009 with all four bounded review corrections and explicit non-authority/revisit conditions |
 | W3-PF1 proof falsifiers | depends on W3-P0L1; independent internal GPT fixture owner | exclusive `fixtures/proofs/v1/**` and `scripts/proof_fixture_check.py` | complete red checkpoint: 25 future groups freeze theorem, warning, axiom, exact-statement, linkage, digest, tool, fixture-Evidence, manifest, and path behavior; only future checker/proof/manifest absence remains red |
-| W3-P1 named-law proof implementation | depends on W3-PF1; Claude Sonnet 5 | exclusive `scripts/proof_check.py` and `proofs/stack-pop-empty/**` | in progress |
-| W3-PR1 proof review | challenges W3-P1 | independent theorem, linkage, provenance, and evidence audit | pending |
-| W3-PG1 named-law evidence gate | depends on accepted W3-P1 successor, W3-PR1, and G1 | lead acceptance owner | pending |
+| W3-P1 named-law proof implementation | depends on W3-PF1; Claude Sonnet 5 | exclusive `scripts/proof_check.py` and `proofs/stack-pop-empty/**` | implementation checkpoint green: core-only universal theorem, pinned manifest, and standalone checker pass all 25 PF1 groups, direct Lean/checker, compilation, and record/loader gate |
+| W3-PR1 proof review | challenges W3-P1; independent internal GPT reviewer | read-only theorem, linkage, provenance, and evidence audit | blocked: 16 coherent manifest/record/theorem/warning/path/Evidence/output mutations falsely pass and Lean execution is unbounded; the theorem itself remains clean and axiom-free |
+| W3-PF2 proof boundary successor | depends on W3-PR1; independent fixture owner | exclusive proof fixture/harness scope | in progress: pin semantic/tool constants, exact elaborated type, record validity, warnings, containment, Evidence validity, structured output, and timeouts |
+| W3-P2 proof checker successor | depends on W3-PF2 | exclusive `scripts/proof_check.py` and proof manifest/source as required | pending |
+| W3-PR2 proof successor review | challenges W3-P2 | read-only prior and novel theorem/linkage/provenance audit | pending |
+| W3-PG1 named-law evidence gate | depends on accepted W3-P2 successor, W3-PR2, and G1 | lead acceptance owner | pending |
 | W3-G1 execution-substrate convergence | depends on W3-LG1, W3-AG1, W3-PG1, and G0 | lead acceptance owner | pending |
 
 W3-S2 used Claude Code 2.1.212 through `agent-dispatch --read-only`, pagu-box
@@ -255,6 +261,22 @@ the unchanged 9-test AF1 suite, compilation, actual adapter EOF, and the full re
 gate green. Disclosure was limited to the approved public worktree and brief; no web,
 unrelated data, installs, or delegation occurred.
 
+W3-A2 used Claude Code through `agent-dispatch`, pagu-box `strict`, writable PWD mode
+in the isolated Wave 3 worktree, exact `claude-sonnet-5`, explicit high effort, no
+fallback, and exclusive `semantic_packages/**` ownership. It ran all 16 AF2 tests,
+compilation, and the full record/loader gate green. Its child sandbox could not access
+worktree Git metadata; the lead separately ran diff hygiene. Disclosure was limited to
+the approved public worktree and brief; no web, unrelated data, installs, or delegation
+occurred.
+
+W3-A3 used the same `agent-dispatch`/pagu-box strict writable boundary, exact
+`claude-sonnet-5`, explicit high effort, no fallback, and exclusive
+`semantic_packages/stack_runner.py` ownership. It ran the 18-test successor repeatedly,
+compilation, actual adapter behavior, and record/loader gate green. Worktree Git and
+the unrelated Lean executable were unavailable in the child; the lead owns those
+separate gates. Disclosure remained limited to the approved public worktree and brief;
+no web, unrelated data, or delegation occurred.
+
 W3-P0R1 used Claude Code through `agent-dispatch --read-only`, pagu-box `strict`, exact
 `claude-fable-5`, explicit high effort, and no fallback. It could not execute Lean in
 its sandbox, so its likely-Lean-3-only objection to `--trust=0` remained an inference;
@@ -263,6 +285,15 @@ the lead directly verified the installed Lean 4.30.0 help and a successful
 record, and fixture-hazard corrections were accepted. Disclosure was limited to the
 approved public worktree and brief; no writes, web, installs, unrelated data, or
 delegation occurred.
+
+W3-P1 used Claude Code through `agent-dispatch`, pagu-box `strict`, writable PWD mode
+in the isolated Wave 3 worktree, exact `claude-sonnet-5`, explicit high effort, no
+fallback, and exclusive proof/checker ownership. It used the existing Lean 4.30.0
+toolchain explicitly, with no store path committed, and ran the unchanged 25-group
+oracle, direct checker, compilation, and record/loader gate green. Worktree Git metadata
+was unavailable inside the child; the lead owns diff hygiene. Disclosure was limited
+to the approved public worktree and brief; no web, unrelated data, or delegation
+occurred.
 
 ## Specification changes required before implementation
 
@@ -351,7 +382,7 @@ nix shell --impure --expr \
 ```
 
 Wave 2 pins `jsonschema[format]==4.26.0` and `rfc3339-validator==0.1.4`; the checker
-enables format assertion explicitly. W2-G1 also ran:
+enables format assertion explicitly. The current Wave 3 gate also runs:
 
 ```sh
 python3 -m py_compile scripts/check_repo.py scripts/record_check.py
@@ -362,10 +393,10 @@ python3 scripts/record_check.py fixtures/records/valid/*.json
 python3 scripts/record_check.py fixtures/records/invalid/schema/spec/kind-array.json
 ```
 
-Expected repository observation: `Record fixture checks passed: 8 valid, 20
-schema-invalid, 38 link-invalid, 2 link-valid.` followed by `Repository checks passed.`
-with exit status 0. Wave 3 additionally reports `Loader fixture checks passed: 18
-contract groups.` The direct positive graph reports `Graph is valid: 0 diagnostics.`
+Expected repository observation: `Record fixture checks passed: 9 valid, 20
+schema-invalid, 38 link-invalid, 2 link-valid.`, `Loader fixture checks passed: 18
+contract groups.`, `Adapter fixture checks passed: 18 tests.`, and `Repository checks
+passed.` with exit status 0. The direct positive graph reports `Graph is valid: 0 diagnostics.`
 with exit status 0; the negative graph reports `SCHEMA_KIND_TYPE
 fixtures/records/invalid/schema/spec/kind-array.json#/kind` with the intended exit
 status 1. Each later milestone must add its executable command and expected observation
@@ -388,11 +419,11 @@ not a grep or summary proxy.
 - [x] Six core JSON schemas
 - [x] Positive and negative schema fixtures
 - [x] Spec loader
-- [ ] Reference model
+- [x] Reference model
 - [ ] Proof integration
 - [ ] Rust realization
 - [ ] TypeScript realization
-- [ ] Shared conformance suite
+- [x] Shared conformance suite
 - [ ] Evidence records
 - [ ] Browser/CLI
 - [ ] Compatibility explanation
@@ -580,6 +611,18 @@ not a grep or summary proxy.
   as provenance. A targeted child also showed that a nonempty pushed source can be
   rebound on its next use because the runner retains empty/remainders but not every
   constructed pushed handle. W3-AF2 freezes each observation before W3-A2.
+- W3-A2 closes those six controls, but W3-AR2 found three narrower boundary defects.
+  A SIGTERM-ignoring EOF hang consumes roughly three configured timeout windows;
+  non-newline bytes emitted only after EOF are retained internally but treated as clean
+  EOF; and an empty command escapes the `OSError` start boundary as `IndexError`.
+  Large binary stderr, semantic/lifecycle cause precedence, depth-three persistence,
+  and process cleanup otherwise passed. W3-AF3 freezes only the remaining defects.
+- W3-A3 closes those final controls. W3-AR3 repeated the full suite and added deadline,
+  large unterminated-output, stdout-close, termination-stderr, cause-precedence,
+  command-shape, deep-persistence, immutability, and leak probes without finding an
+  in-boundary violation. W3-AG1 adds executable Realization/adapter version `0.2.0`
+  rather than mutating published Wave 2 version `0.1.0`, deliberately re-baselines the
+  valid-record gate from eight to nine, and integrates all 18 adapter tests into G0.
 - W3-P0S1 found a locally available core-only Lean 4.30.0 route for universal
   `pop-empty`, plus decisive `sorry` and admitted-axiom controls. W3-P0R1 challenged
   overbroad evidence wording, name-only theorem linkage, nonexistent supersession
@@ -592,6 +635,17 @@ not a grep or summary proxy.
   committed Lean/JSON controls self-check against explicit Lean 4.30.0; the harness is
   red only because `scripts/proof_check.py`, the actual proof source, and its manifest
   do not yet exist. No canonical Evidence or schema changed.
+- W3-P1 supplies the core-only universal model theorem, self-digesting manifest, and
+  standalone phased checker. All 25 authored controls are green, including wrong-but-
+  true statements and axiom dependencies. W3-PR1 remains the independent generality
+  gate for coherent record/link drift, manifest authority, warnings, path boundaries,
+  tool completion, and exact-statement strength.
+- W3-PR1 confirmed the theorem is universal, core-only, and axiom-free, but blocked the
+  checker boundary. Sixteen coherent mutations passed: semantic constants and record
+  validity were not pinned, expected axioms could be widened, assignability stood in
+  for exact theorem type, warnings and manifest/Evidence/path containment were porous,
+  malformed structured output could forge success, and Lean execution had no timeout.
+  W3-PF2 converts those categories into durable controls before W3-P2.
 
 ## Decision log
 
@@ -644,8 +698,10 @@ reviewed successors. The repository now carries seven strict schema files defini
 canonical record kinds, positive and falsifying schema/reference fixtures, and a
 deterministic durable record gate. W3-LG1 now closes the provisional loader/import
 slice after three implementation/review successors and 18 durable contract groups.
-The reference adapter and bounded proof probe are active. No independent Rust or
-TypeScript realization, proof Evidence gate, or browser has started.
+W3-AG1 now closes the executable Python reference Realization and shared adapter suite
+after three reviewed successors and 18 durable tests. The bounded proof checker remains
+active at its PF2 successor. No independent Rust or TypeScript realization, proof
+Evidence gate, or browser has started.
 
 ## Stop and escalation conditions
 

@@ -5,15 +5,18 @@ Checks required project-memory files, local Markdown links, JSON syntax, the sev
 canonical record schemas (including offline metaschema validation), and every record
 fixture (valid, schema-invalid, link-invalid, link-valid) against their exact
 diagnostic oracles. It also exercises the deterministic local loader's discovery,
-normalization, phase, and import-edge fixtures. This is intentionally small so the
-tracer bullet has an executable governance gate without locking in a larger toolchain.
+normalization, phase, and import-edge fixtures and the tracer-scoped Stack adapter
+suite. This is intentionally small so the tracer bullet has an executable governance
+gate without locking in a larger toolchain.
 """
 
 from __future__ import annotations
 
+import io
 import json
 import re
 import sys
+import unittest
 from pathlib import Path
 from urllib.parse import unquote
 
@@ -38,6 +41,10 @@ REQUIRED = [
     "docs/operations/multi-provider-workflow.md",
     ".agent/PLANS.md",
     "docs/exec-plans/active/0001-tracer-bullet.md",
+    "semantic_packages/__init__.py",
+    "semantic_packages/stack_realization.py",
+    "semantic_packages/stack_adapter.py",
+    "semantic_packages/stack_runner.py",
 ]
 LINK_RE = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
 JSON_EXCLUDED_DIRS = {".git", ".direnv", "node_modules"}
@@ -79,12 +86,24 @@ def check_json_syntax() -> list[str]:
     return errors
 
 
+def run_adapter_checks() -> tuple[list[str], str]:
+    sys.path.insert(0, str(ROOT))
+    stream = io.StringIO()
+    suite = unittest.defaultTestLoader.discover(str(ROOT / "tests" / "adapter"))
+    result = unittest.TextTestRunner(stream=stream, verbosity=2).run(suite)
+    if not result.wasSuccessful():
+        return [f"adapter conformance suite failed:\n{stream.getvalue()}"], ""
+    return [], f"Adapter fixture checks passed: {result.testsRun} tests."
+
+
 def main() -> int:
     errors = check_required() + check_markdown_links() + check_json_syntax()
     record_errors, record_summary = record_check.run_fixture_checks()
     errors += record_errors
     loader_errors, loader_summary = loader_fixture_check.run_loader_fixture_checks()
     errors += loader_errors
+    adapter_errors, adapter_summary = run_adapter_checks()
+    errors += adapter_errors
     if errors:
         print("Repository checks failed:")
         for error in errors:
@@ -92,6 +111,7 @@ def main() -> int:
         return 1
     print(record_summary)
     print(loader_summary)
+    print(adapter_summary)
     print("Repository checks passed.")
     return 0
 

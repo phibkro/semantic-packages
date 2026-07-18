@@ -31,7 +31,10 @@ POST_EOF_ACTIONS = {
     "eof-marker": "marker",
     "eof-nonzero": "nonzero",
     "eof-timeout": "ignore-term-and-wait",
-    "eof-extra-stdout": "extra-stdout",
+}
+POST_EOF_STDOUT = {
+    "eof-extra-stdout": b'{"extra":true}\n',
+    "eof-extra-stdout-unterminated": b'{"extra":true}',
 }
 STDERR_PAYLOADS = {
     "stderr-bytes": b"adapter diagnostic: \xff\x00\n",
@@ -225,9 +228,10 @@ def main() -> int:
         Path(MODE_ARGUMENTS[0]).write_text(str(os.getpid()) + "\n", encoding="ascii")
         while True:
             time.sleep(10)
-    elif eof_action == "extra-stdout":
-        sys.stdout.write('{"extra":true}\n')
-        sys.stdout.flush()
+    post_eof_stdout = POST_EOF_STDOUT.get(MODE)
+    if post_eof_stdout is not None:
+        sys.stdout.buffer.write(post_eof_stdout)
+        sys.stdout.buffer.flush()
     return 0
 
 
