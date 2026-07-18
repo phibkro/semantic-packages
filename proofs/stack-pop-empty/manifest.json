@@ -25,7 +25,7 @@
   },
   "runner": {
     "path": "scripts/proof_check.py",
-    "sha256": "148162e12e495a51b61947cc7f2babbde2e97f2f8d1ed682de714e72fdf19c04"
+    "sha256": "fc452d7d8b6f87377339f780b9dac8e1b40b243792dfb6c459173a22afcf0694"
   },
   "tool": {
     "name": "Lean",

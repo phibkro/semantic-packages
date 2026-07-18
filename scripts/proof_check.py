@@ -58,6 +58,25 @@ CLAIM_PATH = "fixtures/records/valid/pop-empty-spec-claim.json"
 SOURCE_PATH = "proofs/stack-pop-empty/StackPopEmpty.lean"
 RUNNER_PATH = "scripts/proof_check.py"
 
+EVIDENCE_IDENTITY = {
+    "kind": "evidence",
+    "id": "stack-pop-empty-model-proof",
+    "version": "0.1.0",
+}
+EVIDENCE_METHOD = "Lean model-satisfaction and proof-pipeline check for Stack pop-empty"
+EVIDENCE_ENVIRONMENT = {"execution": "local", "kernel": "Lean 4.30.0"}
+EVIDENCE_ASSUMPTIONS = [
+    "The hand-reviewed translation from the Stack law to the Lean observation model is faithful.",
+    "Finite Lean lists faithfully model the Specification's finite top-first Stack observation space.",
+    "Lean 4.30.0 and its trusted kernel correctly check the generated proof audit.",
+]
+EVIDENCE_EXCLUSIONS = [
+    "This Evidence does not establish conformance of any Realization or adapter.",
+    "This Evidence does not prove every Stack law or the complete Specification.",
+    "This Evidence grants no global authority to Lean or to this proof pipeline.",
+]
+SUCCESS_SHA256 = hashlib.sha256(f"{SUCCESS}\n".encode("utf-8")).hexdigest()
+
 _STRING = ("string",)
 _INT = ("int",)
 _STRING_LIST = ("string_list",)
@@ -98,6 +117,9 @@ _DECLARATION = re.compile(
 _LEADING_WARNING_OPTION = re.compile(
     r"\A[ \t\r\n]*set_option[ \t]+warningAsError[ \t]+true[ \t]*(?:\r?\n|\Z)"
 )
+_SOURCE_AXIOM = re.compile(r"\baxiom\b")
+_SOURCE_UNSAFE = re.compile(r"\bunsafe\b")
+_SOURCE_EXECUTING_COMMAND = re.compile(r"(?m)^\s*#\s*(?:eval|print)\b")
 
 _LEAN_MESSAGE_KEYS = {
     "caption",
@@ -493,8 +515,8 @@ def _check_tool(lean: str, manifest: dict[str, Any], manifest_arg: str) -> list[
     return violations
 
 
-def _strip_lean_comments(text: str) -> str:
-    """Remove nested block and line comments while preserving token boundaries."""
+def _strip_lean_comments_and_strings(text: str) -> str:
+    """Blank comments and string literals while preserving positions and lines."""
     output: list[str] = []
     index = 0
     depth = 0
@@ -526,22 +548,28 @@ def _strip_lean_comments(text: str) -> str:
             output.extend("  ")
             index += 2
             continue
-        output.append(char)
         if in_string:
+            output.append("\n" if char == "\n" else " ")
             if escaped:
                 escaped = False
             elif char == "\\":
                 escaped = True
             elif char == '"':
                 in_string = False
-        elif char == '"':
+            index += 1
+            continue
+        if char == '"':
+            output.append(" ")
             in_string = True
+            index += 1
+            continue
+        output.append(char)
         index += 1
     return "".join(output)
 
 
-def _check_source_boundary(source_text: str, source_arg: str) -> None:
-    uncommented = _strip_lean_comments(source_text)
+def _check_source_boundary(source_text: str, source_arg: str) -> bool:
+    uncommented = _strip_lean_comments_and_strings(source_text)
     option = _LEADING_WARNING_OPTION.match(uncommented)
     declaration = _DECLARATION.search(uncommented)
     if option is None or (declaration is not None and declaration.start() < option.end()):
@@ -554,10 +582,14 @@ def _check_source_boundary(source_text: str, source_arg: str) -> None:
         raise Diagnostic(
             "PROOF_SOURCE_BOUNDARY", source_arg, detail="the bounded proof imports no modules"
         )
-    if re.search(r"(?m)^\s*unsafe\b", uncommented):
+    has_source_axiom = _SOURCE_AXIOM.search(uncommented) is not None
+    if _SOURCE_UNSAFE.search(uncommented) or _SOURCE_EXECUTING_COMMAND.search(uncommented):
         raise Diagnostic(
-            "PROOF_SOURCE_BOUNDARY", source_arg, detail="unsafe declarations are rejected"
+            "PROOF_SOURCE_BOUNDARY",
+            source_arg,
+            detail="unsafe, #eval, and #print are outside the bounded source language",
         )
+    return has_source_axiom
 
 
 def _generated_source(source_text: str, manifest: dict[str, Any]) -> tuple[str, int]:
@@ -696,22 +728,16 @@ def _run_lean_checks(
         )
         is not None
     ]
-    if len(actual_types) == 1 and len(expected_types) == 1:
-        if actual_types[0] != expected_types[0]:
-            raise Diagnostic(
-                "PROOF_THEOREM_TYPE_MISMATCH", manifest_arg, "/expectedStatement"
-            )
-    elif len(actual_types) == 1 and not expected_types and actual_types[0] == EXPECTED_STATEMENT:
-        # The table-driven fake Lean used by the lifecycle controls reports the
-        # pinned source-level type as one synthetic observation. Real Lean emits
-        # the two independently elaborated appended observations above.
-        pass
-    else:
+    if len(actual_types) != 1 or len(expected_types) != 1:
         raise Diagnostic(
             "PROOF_THEOREM_AUDIT_MISSING", manifest_arg, "/expectedStatement"
         )
+    if actual_types[0] != expected_types[0]:
+        raise Diagnostic(
+            "PROOF_THEOREM_TYPE_MISMATCH", manifest_arg, "/expectedStatement"
+        )
 
-    observed_axioms: list[str] | None = None
+    axiom_observations: list[list[str]] = []
     mentions_theorem = False
     for message in messages:
         if message["severity"] != "information":
@@ -721,17 +747,19 @@ def _run_lean_checks(
             mentions_theorem = True
         no_axioms = _NO_AXIOMS.fullmatch(data)
         if no_axioms is not None and no_axioms.group(1) == theorem:
-            observed_axioms = []
-            break
+            axiom_observations.append([])
+            continue
         has_axioms = _HAS_AXIOMS.fullmatch(data)
         if has_axioms is not None and has_axioms.group(1) == theorem:
-            observed_axioms = [
-                item.strip() for item in has_axioms.group(2).split(",") if item.strip()
-            ]
-            break
-    if observed_axioms is None:
+            axiom_observations.append(
+                [item.strip() for item in has_axioms.group(2).split(",") if item.strip()]
+            )
+    if not axiom_observations:
         code = "PROOF_AXIOM_AUDIT_INVALID" if mentions_theorem else "PROOF_AXIOM_AUDIT_MISSING"
         raise Diagnostic(code, source_arg)
+    if len(axiom_observations) != 1:
+        raise Diagnostic("PROOF_AXIOM_AUDIT_INVALID", source_arg)
+    observed_axioms = axiom_observations[0]
     if observed_axioms != EXPECTED_AXIOMS:
         raise Diagnostic(
             "PROOF_AXIOM_DEPENDENCY",
@@ -740,8 +768,38 @@ def _run_lean_checks(
         )
 
 
-def _check_evidence(path: Path, label: str) -> None:
+def _first_json_difference(
+    expected: Any, observed: Any, path: tuple[str, ...] = ()
+) -> tuple[str, ...] | None:
+    if isinstance(expected, dict) and isinstance(observed, dict):
+        for key in sorted(set(expected) | set(observed)):
+            if key not in expected or key not in observed:
+                return (*path, key)
+            difference = _first_json_difference(expected[key], observed[key], (*path, key))
+            if difference is not None:
+                return difference
+        return None
+    if expected != observed:
+        return path
+    return None
+
+
+def _check_evidence(
+    path: Path,
+    label: str,
+    manifest_path: Path,
+    manifest_arg: str,
+    manifest: dict[str, Any],
+) -> None:
     data = _load_json(path, label, "PROOF_EVIDENCE_JSON")
+    schemas = record_check.SchemaRegistry()
+    if schemas.metaschema_errors:
+        raise Diagnostic("PROOF_EVIDENCE_SCHEMA", label, detail=schemas.metaschema_errors[0])
+    schema_diagnostic = record_check.validate_record(schemas, label, data)
+    if schema_diagnostic is not None:
+        raise Diagnostic(
+            "PROOF_EVIDENCE_SCHEMA", label, detail=schema_diagnostic.format()
+        )
     if isinstance(data, dict) and data.get("environment", {}).get("checker") == "fixture-only":
         raise Diagnostic(
             "PROOF_FIXTURE_EVIDENCE_FORBIDDEN",
@@ -749,6 +807,67 @@ def _check_evidence(path: Path, label: str) -> None:
             "/environment/checker",
             "the Wave 2 fixture-only placeholder cannot back this proof",
         )
+
+    assert isinstance(data, dict), "schema-valid Evidence is an object"
+    for field, expected in EVIDENCE_IDENTITY.items():
+        if data[field] != expected:
+            raise Diagnostic("PROOF_EVIDENCE_IDENTITY", label, f"/{field}")
+    if data["scope"] != "specification":
+        raise Diagnostic("PROOF_EVIDENCE_SCOPE", label, "/scope")
+    if data["claim"] != manifest["claim"]["reference"]:
+        raise Diagnostic("PROOF_EVIDENCE_LINK", label, "/claim")
+    if data["specification"] != manifest["specification"]["reference"]:
+        raise Diagnostic("PROOF_EVIDENCE_LINK", label, "/specification")
+    if data["mechanism"] != "proof":
+        raise Diagnostic("PROOF_EVIDENCE_MECHANISM", label, "/mechanism")
+    if data["result"] != "supports":
+        raise Diagnostic("PROOF_EVIDENCE_RESULT", label, "/result")
+    if data["applicability"] != {"profiles": []}:
+        raise Diagnostic("PROOF_EVIDENCE_SCOPE", label, "/applicability/profiles")
+
+    semantic_fields = {
+        "reviewState": "accepted",
+        "method": EVIDENCE_METHOD,
+        "environment": EVIDENCE_ENVIRONMENT,
+        "assumptions": EVIDENCE_ASSUMPTIONS,
+        "exclusions": EVIDENCE_EXCLUSIONS,
+    }
+    for field, expected in semantic_fields.items():
+        if data[field] != expected:
+            raise Diagnostic("PROOF_EVIDENCE_SEMANTICS", label, f"/{field}")
+
+    expected_provenance = {
+        "manifest": {
+            "path": manifest_arg,
+            "sha256": _sha256_file(manifest_path),
+        },
+        "runner": {
+            "path": manifest["runner"]["path"],
+            "sha256": manifest["runner"]["sha256"],
+        },
+        "inputs": {
+            "specification": {
+                "path": manifest["specification"]["path"],
+                "sha256": manifest["specification"]["sha256"],
+            },
+            "claim": {
+                "path": manifest["claim"]["path"],
+                "sha256": manifest["claim"]["sha256"],
+            },
+            "source": {
+                "path": manifest["source"]["path"],
+                "sha256": manifest["source"]["sha256"],
+            },
+        },
+        "tool": dict(manifest["tool"]),
+        "result": {"completed": True, "outputSha256": SUCCESS_SHA256},
+    }
+    difference = _first_json_difference(expected_provenance, data["provenance"])
+    if difference is not None:
+        pointer = "/provenance"
+        if difference:
+            pointer += "/" + "/".join(difference)
+        raise Diagnostic("PROOF_EVIDENCE_PROVENANCE", label, pointer)
 
 
 def _run_checks(args: argparse.Namespace) -> list[Diagnostic]:
@@ -768,6 +887,8 @@ def _run_checks(args: argparse.Namespace) -> list[Diagnostic]:
         field: _manifest_owned_path(manifest, field, repo_root, manifest_arg)
         for field in ("specification", "claim", "source", "runner")
     }
+    if Path(__file__).resolve(strict=True) != paths["runner"].resolve(strict=True):
+        raise Diagnostic("PROOF_RUNNER_IDENTITY", manifest_arg, "/runner/path")
     digest_codes = {
         "specification": "PROOF_INPUT_DIGEST_MISMATCH",
         "claim": "PROOF_INPUT_DIGEST_MISMATCH",
@@ -794,16 +915,21 @@ def _run_checks(args: argparse.Namespace) -> list[Diagnostic]:
         if manifest[field]["path"] != expected:
             return [Diagnostic("PROOF_ACCEPTANCE_SCOPE", manifest_arg, f"/{field}/path")]
 
+    if args.evidence is not None:
+        evidence_path = _evidence_argument_path(args.evidence, repo_root)
+        _check_evidence(
+            evidence_path, args.evidence, manifest_path, manifest_arg, manifest
+        )
+
+    source_text = paths["source"].read_text(encoding="utf-8")
+    has_source_axiom = _check_source_boundary(
+        source_text, manifest["source"]["path"]
+    )
+
     tool = _check_tool(args.lean, manifest, manifest_arg)
     if tool:
         return tool
 
-    if args.evidence is not None:
-        evidence_path = _evidence_argument_path(args.evidence, repo_root)
-        _check_evidence(evidence_path, args.evidence)
-
-    source_text = paths["source"].read_text(encoding="utf-8")
-    _check_source_boundary(source_text, manifest["source"]["path"])
     _run_lean_checks(
         args.lean,
         paths["source"],
@@ -811,6 +937,12 @@ def _run_checks(args: argparse.Namespace) -> list[Diagnostic]:
         manifest_arg,
         manifest["source"]["path"],
     )
+    if has_source_axiom:
+        raise Diagnostic(
+            "PROOF_SOURCE_BOUNDARY",
+            manifest["source"]["path"],
+            detail="declared axioms are outside the bounded source language",
+        )
     return []
 
 

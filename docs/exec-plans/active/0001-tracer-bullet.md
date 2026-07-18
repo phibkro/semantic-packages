@@ -215,8 +215,8 @@ semantic-packages worktree and the versioned review brief.
 | W3-P2 proof checker successor | depends on corrected W3-PF2; internal Codex implementation owner after two stalled Claude Sonnet 5 dispatches | exclusive `scripts/proof_check.py` and proof manifest/source as required | implementation checkpoint green: all 40 groups, direct checker/Lean, compilation, repository gate, and digest audit pass; theorem remains unchanged, universal, core-only, and axiom-free |
 | W3-PR2 proof successor review | challenges W3-P2; independent internal Codex plus Claude Fable 5 | read-only prior and novel theorem/linkage/provenance audit | blocked: actual-source output can precede and falsify the axiom audit while `#eval` executes; Evidence accepts arbitrary JSON; unused axiom/modifier-unsafe source passes; fake-only single-type observation reduces assurance; manifest runner is not bound to the executing checker |
 | W3-PF3 proof review successor controls | depends on W3-PR2; independent fixture owner | exclusive proof fixture/harness scope | complete red checkpoint: 8 successor groups / 42 cases (48 groups / 104 cases total) freeze source-command/axiom/unsafe rejection, unique dual type and axiom observations, exact proof Evidence semantics/provenance, and executing-runner identity; prior 40 groups remain green and the bounded run is red only on PF3 |
-| W3-P3 proof boundary successor | depends on W3-PF3 | exclusive checker/proof manifest/source scope as required | in progress |
-| W3-PR3 proof convergence review | challenges W3-P3 | read-only prior and novel theorem/Evidence/provenance audit | pending |
+| W3-P3 proof boundary successor | depends on W3-PF3; internal Codex implementation owner | exclusive checker/proof manifest/source scope as required | implementation checkpoint green: all 48 groups / 104 cases, direct checker with and without exact Evidence, direct Lean, compilation, and repository gate pass; theorem remains byte-for-byte unchanged |
+| W3-PR3 proof convergence review | challenges W3-P3 | read-only prior and novel theorem/Evidence/provenance audit | in progress |
 | W3-PG1 named-law evidence gate | depends on accepted W3-P3 successor, W3-PR3, and G1 | lead acceptance owner | pending |
 | W3-G1 execution-substrate convergence | depends on W3-LG1, W3-AG1, W3-PG1, and G0 | lead acceptance owner | pending |
 
@@ -705,6 +705,15 @@ not a grep or summary proxy.
   tool/result provenance; and identity between the executing checker and manifest
   runner. The full 48-group/104-case P2 run completed in about 33 seconds, kept all 40
   prior groups green, and failed only the new controls.
+- W3-P3 closes all 48 authored groups and 104 cases. It rejects the reviewed source
+  commands before Lean execution, preserves axiom-dependency precedence while rejecting
+  otherwise-unused declared axioms, requires unique independently named actual-type,
+  expected-type, and axiom observations, validates exact Evidence semantics and dynamic
+  provenance, and binds the executing file to the manifest runner. The theorem remains
+  byte-for-byte unchanged at digest
+  `c3c90ecfd256f4aa76c45b7c3bbd6bd8bf773090dde130ac91b9283ef1c3c943`;
+  the final checker digest is
+  `fc452d7d8b6f87377339f780b9dac8e1b40b243792dfb6c459173a22afcf0694`.
 
 ## Decision log
 
