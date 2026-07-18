@@ -655,6 +655,14 @@ not a grep or summary proxy.
   Evidence-input, structured-output, and timeout controls. The harness owns a three-
   second outer deadline and verifies that both version-query and proof-execution hangs
   leave no fake-Lean child process; this is a red checkpoint, not product acceptance.
+  A read-only implementation consultation then found that the first PF2 draft repeated
+  the PF1 Claim-reference and declaration-id mutations while demanding different sole
+  diagnostics. The lead removed those duplicate successor witnesses before P2 rather
+  than making diagnostic output depend on indistinguishable inputs; the original PF1
+  exact-link controls and PF2 coherent-alternate-graph control retain the requirements.
+  The same disposition makes the immutable-empty-axioms diagnostic precede proof
+  execution when a hostile manifest attempts to authorize a known axiom; PF1 still
+  observes both actual axiom-bearing sources under the accepted empty manifest.
 
 ## Decision log
 

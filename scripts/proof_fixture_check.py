@@ -575,24 +575,6 @@ def check_product_contract(lean: Path) -> tuple[list[str], int]:
                 },
             ),
             (
-                ("the accepted Claim address is constant",),
-                {
-                    "mutate": lambda manifest: manifest["claim"]["reference"].__setitem__(
-                        "id", "another-claim"
-                    ),
-                    "expected": f"PROOF_ACCEPTANCE_SCOPE {MANIFEST_LABEL}#/claim/reference",
-                },
-            ),
-            (
-                ("the accepted declaration id is constant",),
-                {
-                    "mutate": lambda manifest: manifest.__setitem__(
-                        "declarationId", "pop-push"
-                    ),
-                    "expected": f"PROOF_ACCEPTANCE_SCOPE {MANIFEST_LABEL}#/declarationId",
-                },
-            ),
-            (
                 ("the accepted theorem name is constant",),
                 {
                     "mutate": lambda manifest: manifest.__setitem__(
@@ -761,7 +743,10 @@ def check_product_contract(lean: Path) -> tuple[list[str], int]:
                     "mutate": lambda manifest: manifest.__setitem__(
                         "expectedAxioms", ["assumed_pop_empty"]
                     ),
-                    "expected": f"PROOF_AXIOM_DEPENDENCY {SOURCE_LABEL}#",
+                    "expected": (
+                        f"PROOF_EXPECTED_AXIOMS "
+                        f"{MANIFEST_LABEL}#/expectedAxioms"
+                    ),
                 },
             ),
             (
@@ -771,7 +756,10 @@ def check_product_contract(lean: Path) -> tuple[list[str], int]:
                     "mutate": lambda manifest: manifest.__setitem__(
                         "expectedAxioms", ["Classical.choice"]
                     ),
-                    "expected": f"PROOF_AXIOM_DEPENDENCY {SOURCE_LABEL}#",
+                    "expected": (
+                        f"PROOF_EXPECTED_AXIOMS "
+                        f"{MANIFEST_LABEL}#/expectedAxioms"
+                    ),
                 },
             ),
         ]
