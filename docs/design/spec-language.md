@@ -119,6 +119,10 @@ The Stack tracer fixes the following meaning without prescribing a representatio
 - Each invocation has a delimited adapter-emitted event trace and a declared observable
   event vocabulary. Passing excludes only matching events inside that boundary;
   adapter-external effects remain visible exclusions.
+- The Stack tracer's concrete process framing, opaque-handle lifecycle, tagged results,
+  and error boundary are defined in
+  [the adapter protocol](adapter-protocol.md); that protocol is not a universal
+  transport or semantic model.
 - The push-cost proposition names a profile, push-sequence workload, size function,
   aggregate cost measure, and amortized predicate such as total cost bounded by
   `a*n+b`. Evidence may instantiate a plural cost model; absent acceptable evidence,

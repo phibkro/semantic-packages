@@ -186,9 +186,11 @@ semantic-packages worktree and the versioned review brief.
 | W3-L1 loader implementation | depends on W3-LF1; Claude Sonnet 5 plus lead integration | isolated worktree; exclusive loader/checker implementation paths | pending |
 | W3-LR1 loader review | challenges W3-L1; independent reviewer | read-only actual-code and novel counterexamples | pending |
 | W3-LG1 loader convergence | depends on W3-L1, W3-LR1, and G1 | lead acceptance owner | pending |
-| W3-A0 in-process adapter contract | depends on DC1-G1 and W2-G1; concern owner to be assigned | read-only protocol and reference-model boundary | pending |
-| W3-AF1 model/adapter falsifiers | depends on W3-A0; fixture owner to be assigned | exclusive execution-substrate fixtures/tests | pending |
-| W3-A1 reference model and adapter | depends on W3-AF1; implementation owner to be assigned | isolated worktree and exclusive execution-substrate paths | pending |
+| W3-A0 adapter consultation | supports/challenges W3-A0L1; Claude Sonnet 5 | read-only protocol and reference-model boundary | complete static packet: separated the in-process semantic model from the canonical child-process adapter, proposed NDJSON framing, handles, events, and controls |
+| W3-A0R1 adapter skeptic | challenges W3-A0/W3-A0L1; independent internal GPT reviewer | read-only observable-semantics and trust-boundary audit | blocked the initial packet: normative handle freshness leaked representation, lifecycle/error behavior was incomplete, shared oracle code would be tautological, and performance instrumentation needed an explicit exclusion |
+| W3-A0L1 adapter contract successor | depends on DC1-G1, W2-G1, and the blocking W3-A0R1 review; informed by W3-A0; lead Codex | exclusive adapter design, ADR, plan, and guidance integration | accepted provisionally: independent harness oracle and Realization, child-process NDJSON, EOF lifecycle, opaque stable-denotation handles with fresh/interned tokens both valid, ordered reported events, and separate challenge/error classifications |
+| W3-AF1 model/adapter falsifiers | depends on W3-A0L1; fixture owner to be assigned | exclusive execution-substrate fixtures/tests | pending |
+| W3-A1 reference realization and adapter | depends on W3-AF1; implementation owner to be assigned | isolated worktree and exclusive execution-substrate paths | pending |
 | W3-AR1 adapter review | challenges W3-A1; independent reviewer | read-only observable-semantics audit | pending |
 | W3-AG1 reference-adapter convergence | depends on W3-A1, W3-AR1, and G1 | lead acceptance owner | pending |
 | W3-P0 bounded proof probe | depends on W3-LG1; concern owner to be assigned | isolated proof-integration paths; no universal foundation authority | pending |
@@ -204,6 +206,15 @@ only Read/Grep/Glob tools, performed no execution, writes, delegation, or web re
 and disclosed only the approved public semantic-packages paths and brief. Its import-DAG
 dissent remains visible; W3-L0 rejects the speculative constraint for this tracer and
 names the elaboration/namespace trigger that would reopen it.
+
+W3-A0 used Claude Code 2.1.212 through `agent-dispatch --read-only`, pagu-box
+`strict`, the Wave 3 worktree, exact `claude-sonnet-5`, and explicit high effort.
+Structured output reported auxiliary `claude-haiku-4-5-20251001` usage. The child had
+only Read/Grep/Glob tools, performed no execution, writes, delegation, or web research,
+and disclosed only the approved public semantic-packages paths and brief. W3-A0R1
+independently blocked its first packet; W3-A0L1 incorporates the representation,
+oracle-independence, lifecycle, error, and performance-scope corrections rather than
+treating model provenance as acceptance.
 
 ## Specification changes required before implementation
 
@@ -232,7 +243,8 @@ The design audit found prerequisites that the original implementation order omit
    illustrative until a parser is justified.
 5. Extend the existing link checker with a deterministic local file/directory loader,
    stable diagnostics, and no silent dropping of required or unsupported aspects.
-6. Define the adapter protocol and implement one in-process reference model.
+6. Define the child-process adapter protocol, implement one independent reference
+   Realization behind it, and keep the harness semantic oracle separate.
 7. Select one bounded proof integration and machine-check one named Stack law without
    treating that proof assistant as the platform's universal foundation.
 8. Add independently authored Rust and TypeScript realizations plus adapters.
@@ -465,6 +477,14 @@ command's exit status, not a grep or summary proxy.
   graphs. All 16 committed loader JSON records parse, the harness compiles, and the
   accepted 8/20/38/2 record gate remains green. Both explicit and recursively
   discovered lowercase JSON symlinks must fail with `INPUT_SYMLINK`.
+- W3-A0R1 rejected normative fresh handles because allocation is not observable, and
+  rejected sharing the Realization's Stack code as the harness oracle because it would
+  make tests tautological. The successor permits fresh or interned tokens with stable
+  denotations, uses an independent trace oracle, ends sessions through EOF, separates
+  protocol errors from semantic challenges, and explicitly leaves
+  `realization-steps` unsupported. An undetectable perfect shadow adapter is expected
+  to pass black-box behavior while retaining adapter-faithfulness and effect-
+  completeness assumptions.
 
 ## Decision log
 
@@ -500,6 +520,10 @@ command's exit status, not a grep or summary proxy.
   ordering, or compatibility semantics. See
   [ADR 0007](../../decisions/0007-local-loader-and-import-edges.md). This experimental
   choice was decided with retained dissent favoring an import DAG.
+- Use the tracer-scoped child-process Stack adapter while keeping expected traces in
+  the harness and handle identity unobservable. See
+  [ADR 0008](../../decisions/0008-tracer-child-process-adapter.md). This does not select
+  a universal transport or establish adapter faithfulness.
 
 ## Result
 
