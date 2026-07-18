@@ -77,6 +77,11 @@ This syntax is provisional. The initial parser may use JSON/YAML internally whil
 - A field-like declaration denotes an observation, not a memory slot.
 - Canonical records and references use exact typed addresses; surface names and
   declaration order do not create identity.
+- For the tracer, an import is an exact edge within the explicitly loaded local record
+  set. It does not acquire a file, create a namespace, re-export declarations, impose
+  order, or imply compatibility. Self-imports, cycles, diamonds, and repeated exact
+  edges are therefore structurally valid until an elaboration semantics demonstrates
+  a stronger requirement.
 - Equality over an abstract carrier denotes specification-defined observational
   equivalence, never host-language object or representation equality.
 - Every executable law must identify how its quantified values and results can be
@@ -114,6 +119,10 @@ The Stack tracer fixes the following meaning without prescribing a representatio
 - Each invocation has a delimited adapter-emitted event trace and a declared observable
   event vocabulary. Passing excludes only matching events inside that boundary;
   adapter-external effects remain visible exclusions.
+- The Stack tracer's concrete process framing, opaque-handle lifecycle, tagged results,
+  and error boundary are defined in
+  [the adapter protocol](adapter-protocol.md); that protocol is not a universal
+  transport or semantic model.
 - The push-cost proposition names a profile, push-sequence workload, size function,
   aggregate cost measure, and amortized predicate such as total cost bounded by
   `a*n+b`. Evidence may instantiate a plural cost model; absent acceptable evidence,

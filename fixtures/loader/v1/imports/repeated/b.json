@@ -1,0 +1,6 @@
+{
+  "kind": "specification",
+  "id": "repeated-b",
+  "version": "1",
+  "laws": [{"id": "law-b", "statement": "true"}]
+}

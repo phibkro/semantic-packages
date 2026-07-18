@@ -1,0 +1,44 @@
+{
+  "formatVersion": 1,
+  "specification": {
+    "reference": {
+      "kind": "specification",
+      "id": "stack",
+      "version": "0.1.0"
+    },
+    "path": "fixtures/records/valid/stack-spec.json",
+    "sha256": "dd083a71a4631cc44be051a16b8e20ff0cee7199e46d3823322665d1fdeec6c1"
+  },
+  "declarationId": "pop-empty",
+  "claim": {
+    "reference": {
+      "kind": "claim",
+      "id": "stack-pop-empty-law",
+      "version": "0.1.0"
+    },
+    "path": "fixtures/records/valid/pop-empty-spec-claim.json",
+    "sha256": "f3de2c39a1ecf85865aaff3dead75d55b76807e02d8a9b61d358a8f5688c3b6a"
+  },
+  "source": {
+    "path": "proofs/stack-pop-empty/StackPopEmpty.lean",
+    "sha256": "c3c90ecfd256f4aa76c45b7c3bbd6bd8bf773090dde130ac91b9283ef1c3c943"
+  },
+  "runner": {
+    "path": "scripts/proof_check.py",
+    "sha256": "6ecc1232c65eb99de758d180971631439dff02c566bee5607e9969817a328609"
+  },
+  "tool": {
+    "name": "Lean",
+    "version": "4.30.0",
+    "commit": "d024af099ca4bf2c86f649261ebf59565dc8c622",
+    "invocation": [
+      "$LEAN",
+      "--trust=0",
+      "--json",
+      "$GENERATED_SOURCE"
+    ]
+  },
+  "theoremName": "stack_pop_empty",
+  "expectedStatement": "∀ (A : Type u), pop (empty : ObservedStack A) = Option.none",
+  "expectedAxioms": []
+}

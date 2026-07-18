@@ -1,0 +1,9 @@
+{
+  "kind": "specification",
+  "id": "dangling-importer",
+  "version": "1",
+  "imports": [
+    {"kind": "specification", "id": "outside-target", "version": "1"}
+  ],
+  "laws": [{"id": "law", "statement": "true"}]
+}

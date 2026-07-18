@@ -1,0 +1,6 @@
+{
+  "kind": ["specification"],
+  "id": "bad-kind",
+  "version": "1",
+  "laws": [{"id": "law", "statement": "true"}]
+}

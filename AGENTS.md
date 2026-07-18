@@ -13,6 +13,7 @@ Read these before substantial work:
 3. `docs/design/core-model.md`
 4. the relevant concern document under `docs/design/`:
    - authoring and observation: `spec-language.md`;
+   - adapter execution: `adapter-protocol.md`;
    - claims and assurance: `evidence-model.md`;
    - resolution: `compatibility.md`;
    - work and gates: `lifecycle.md`;

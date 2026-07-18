@@ -174,6 +174,133 @@ nondeterminism, or network-dependent resolution; lead-executed gates supply the
 required runtime evidence. Disclosure remained limited to the approved
 semantic-packages worktree and the versioned review brief.
 
+### Current execution-substrate DAG: W3 revision 1
+
+| Node | Edges and owner | Scope / write boundary | Evidence and status |
+|---|---|---|---|
+| W3-S1 loader semantics | challenges/supports W3-L0; independent internal GPT reviewer | read-only governing docs, checker, and fixtures | complete: thin deterministic local source-set contract, phase barriers, visible-edge import semantics, and 12 decisive falsifiers proposed |
+| W3-S2 diverse loader skeptic | challenges/supports W3-L0; Claude Fable 5 | read-only actual-code and governing-document audit | complete static packet: supports thin loader and deterministic phase boundary; challenges with a proposed import DAG, realpath symlink following, and duplicate-import schema rule |
+| W3-F1 red-first design | challenges/supports W3-L0/W3-A0; independent internal GPT fixture specialist | read-only loader and Stack reference-model oracle design | complete: loader fixture layout plus minimal pure-model controls; proposed cycle rejection retained as dissent and adapter-dependent controls correctly blocked on protocol freeze |
+| W3-L0 loader/import contract | depends on W2-G1; informed by W3-S1, W3-S2, and W3-F1; lead Codex | exclusive design, ADR, plan, and backlog integration | accepted provisionally: lexical source normalization, recursive lowercase JSON discovery, symlink rejection, phase barriers, and exact visible import edges; self/cyclic/diamond/repeated imports are valid until stronger semantics exist |
+| W3-LF1 loader falsifiers | depends on W3-L0; independent internal GPT fixture owner | exclusive `fixtures/loader/` and `scripts/loader_fixture_check.py` | complete red checkpoint: 19 data/oracle files and 14 subprocess observations across 9 contract groups; current checker fails on directory discovery, aliases/overlap, extension and symlink policy, phase barriers, and directory-loaded import graphs while G1 remains green |
+| W3-L1 loader implementation | depends on W3-LF1; Claude Sonnet 5 plus lead integration | isolated worktree; child exclusively edited `scripts/record_check.py`, lead owns gate/README/plan integration | implementation checkpoint green under lead execution: 9 loader contract groups, accepted 8/20/38/2 record gate, and compilation pass; child execution was unavailable |
+| W3-LR1 loader review | challenges W3-L1; independent internal GPT reviewer | read-only actual-code and private-temp novel counterexamples | blocked convergence despite green authored gates: directory scan errors traceback, failing aliases and overlapping discovery duplicate diagnostics, empty-set labels depend on argv order, intermediate symlinks are followed, and base `/` labels remain absolute |
+| W3-LF2 loader successor falsifiers | depends on W3-LR1; same independent fixture owner | exclusive `fixtures/loader/` and loader harness scope | complete: 16 contract groups cover prior controls plus scan errors, failing-alias/overlap idempotence, intermediate symlinks, argv-independent empty labels, root-base labels, and unsupported special files |
+| W3-L2 loader successor | depends on W3-LF2; Claude Sonnet 5 plus lead integration | same exclusive loader/checker implementation paths | implementation checkpoint green: loader 16, accepted 8/20/38/2 record gate, compilation, two link-valid direct probes, and negative CLI; not converged because W3-LR2 found novel gaps |
+| W3-LR2 loader successor review | challenges W3-L2; independent internal GPT reviewer | read-only actual-code and prior/novel regression | blocked: exact `//` aliases duplicate one Linux source, per-entry classification errors traceback, and a regular-to-symlink concurrent substitution is followed |
+| W3-LF3 loader boundary successor | depends on W3-LR2 and lead exclusion disposition; independent fixture owner | exclusive loader harness scope | complete red checkpoint: prior 16 groups pass; POSIX double-slash idempotence and injected per-entry classification-error containment fail exactly as intended; concurrent mutation remains an explicit quiescent-tree exclusion in ADR 0007 |
+| W3-L3 loader boundary implementation | depends on W3-LF3; Claude Sonnet 5 plus lead verification | exclusive `scripts/record_check.py`; lead owns docs/gates | complete: all 18 loader groups, 8/20/38/2 record gate, compilation, direct CLI, and diff hygiene pass |
+| W3-LR3 loader boundary review | challenges W3-L3; independent internal GPT reviewer | read-only prior and novel regression | passed: all LR1/LR2 blockers and six novel quiescent-tree probes pass; no special-casing, nondeterminism, traceback, or record regression found |
+| W3-LG1 loader convergence | depends on W3-L3, W3-LR3, and G1 | lead acceptance owner | accepted: ADR/docs/checker/harness agree on deterministic local source-set semantics and explicit quiescent-tree/security exclusions |
+| W3-A0 adapter consultation | supports/challenges W3-A0L1; Claude Sonnet 5 | read-only protocol and reference-model boundary | complete static packet: separated the in-process semantic model from the canonical child-process adapter, proposed NDJSON framing, handles, events, and controls |
+| W3-A0R1 adapter skeptic | challenges W3-A0/W3-A0L1; independent internal GPT reviewer | read-only observable-semantics and trust-boundary audit | blocked the initial packet: normative handle freshness leaked representation, lifecycle/error behavior was incomplete, shared oracle code would be tautological, and performance instrumentation needed an explicit exclusion |
+| W3-A0L1 adapter contract successor | depends on DC1-G1, W2-G1, and the blocking W3-A0R1 review; informed by W3-A0; lead Codex | exclusive adapter design, ADR, plan, and guidance integration | accepted provisionally: independent harness oracle and Realization, child-process NDJSON, EOF lifecycle, opaque stable-denotation handles with fresh/interned tokens both valid, ordered reported events, and separate challenge/error classifications |
+| W3-AF1 model/adapter falsifiers | depends on W3-A0L1; independent internal GPT fixture owner | exclusive `tests/adapter/` and `fixtures/adapters/` | complete red checkpoint: future runner API plus semantic, persistence, event, transport, execution-error, and liar matrix; actual `python -m semantic_packages.stack_adapter` is required, and current failure is the missing product package |
+| W3-A1 reference realization and adapter | depends on W3-AF1; Claude Sonnet 5 | isolated worktree; exclusive `semantic_packages/**` | implementation checkpoint green: independent persistent realization, child adapter, and runner pass all 9 AF1 tests, compile, actual EOF probe, and full repository gate |
+| W3-AR1 adapter review | challenges W3-A1; independent internal GPT reviewer | read-only actual-code and novel observable-semantics/lifecycle audit | blocked despite AF1 green: EOF nonzero/hang/extra-output failures are accepted, process start escapes, stderr provenance is discarded, and a nonempty pushed source can be rebound undetected |
+| W3-AF2 adapter lifecycle successor | depends on W3-AR1; independent fixture owner | exclusive adapter fake/test scope | complete red checkpoint: prior 9 plus unterminated-line regression pass; six controls fail exactly on EOF exit/hang/extra-output, start error, stderr retention, and nonempty-source persistence |
+| W3-A2 adapter successor | depends on W3-AF2; Claude Sonnet 5 | exclusive `semantic_packages/**` | implementation checkpoint green on 16 tests: lifecycle outcomes, raw stderr, start failure, and every pushed source are retained; W3-AR2 still blocked convergence |
+| W3-AR2 adapter successor review | challenges W3-A2; independent internal GPT reviewer | read-only prior and novel regression | blocked: cleanup opens two fresh timeout windows after the declared deadline, unterminated post-EOF bytes are discarded, and empty command raises `IndexError` |
+| W3-AF3 adapter boundary successor | depends on W3-AR2; independent fixture owner | exclusive adapter fake/test scope | complete red checkpoint: 15 unaffected tests pass; calibrated one-deadline ceiling, post-EOF unterminated bytes, and empty command fail exactly as intended |
+| W3-A3 adapter boundary implementation | depends on W3-AF3; Claude Sonnet 5 | exclusive `semantic_packages/stack_runner.py` | complete: all 18 tests pass; timeout signals immediately then uses one cleanup grace, buffered EOF bytes fail, and empty command returns `PROCESS_START` |
+| W3-AR3 adapter boundary review | challenges W3-A3; independent internal GPT reviewer | read-only prior and novel regression | passed: stable repeated timing, seven post-EOF payload sizes, stdout-close hangs, termination stderr, cause precedence, command shapes, depths 1–4 persistence, immutability, and PID cleanup all pass |
+| W3-AG1 reference-adapter convergence | depends on W3-A3, W3-AR3, and G1 | lead acceptance owner | accepted: executable Realization/adapter `0.2.0`, 18-test shared suite, README, canonical record, and repository gate agree; Wave 2 `0.1.0` remains immutable |
+| W3-P0S1 bounded proof preflight | informs W3-P0L1; independent internal GPT concern owner | read-only law, local-tool, falsifier, and evidence-boundary analysis | complete: recommends experimental Lean-core universal `pop-empty` probe; found `sorry` exit-zero and admitted-axiom traps; keeps translation/tool trust and non-global authority explicit |
+| W3-P0R1 diverse proof skeptic | challenges W3-P0S1; Claude Fable 5 | read-only semantic-model, trust-boundary, and evidence-scope audit | complete REVISE: support only model satisfaction/pipeline evidence, pin the expected theorem statement, treat new Evidence as additional, and disposition the accepted fixture-only hazard; its `--trust=0` concern was directly falsified against Lean 4.30.0 help/execution |
+| W3-P0L1 bounded proof boundary | depends on W3-P0S1/P0R1 and W3-LG1; lead integration | exclusive proof design/plan acceptance; no universal foundation authority | accepted experimentally in ADR 0009 with all four bounded review corrections and explicit non-authority/revisit conditions |
+| W3-PF1 proof falsifiers | depends on W3-P0L1; independent internal GPT fixture owner | exclusive `fixtures/proofs/v1/**` and `scripts/proof_fixture_check.py` | complete red checkpoint: 25 future groups freeze theorem, warning, axiom, exact-statement, linkage, digest, tool, fixture-Evidence, manifest, and path behavior; only future checker/proof/manifest absence remains red |
+| W3-P1 named-law proof implementation | depends on W3-PF1; Claude Sonnet 5 | exclusive `scripts/proof_check.py` and `proofs/stack-pop-empty/**` | implementation checkpoint green: core-only universal theorem, pinned manifest, and standalone checker pass all 25 PF1 groups, direct Lean/checker, compilation, and record/loader gate |
+| W3-PR1 proof review | challenges W3-P1; independent internal GPT reviewer | read-only theorem, linkage, provenance, and evidence audit | blocked: 16 coherent manifest/record/theorem/warning/path/Evidence/output mutations falsely pass and Lean execution is unbounded; the theorem itself remains clean and axiom-free |
+| W3-PF2 proof boundary successor | depends on W3-PR1; independent fixture owner | exclusive proof fixture/harness scope | complete red checkpoint: 15 successor groups (40 total) pin semantic/tool constants, exact elaborated type, record validity, warnings, containment, Evidence validity, structured output, and bounded tool/version execution; P1 fails only those new controls and both hanging fake-Lean modes are killed within the harness deadline |
+| W3-P2 proof checker successor | depends on corrected W3-PF2; internal Codex implementation owner after two stalled Claude Sonnet 5 dispatches | exclusive `scripts/proof_check.py` and proof manifest/source as required | implementation checkpoint green: all 40 groups, direct checker/Lean, compilation, repository gate, and digest audit pass; theorem remains unchanged, universal, core-only, and axiom-free |
+| W3-PR2 proof successor review | challenges W3-P2; independent internal Codex plus Claude Fable 5 | read-only prior and novel theorem/linkage/provenance audit | blocked: actual-source output can precede and falsify the axiom audit while `#eval` executes; Evidence accepts arbitrary JSON; unused axiom/modifier-unsafe source passes; fake-only single-type observation reduces assurance; manifest runner is not bound to the executing checker |
+| W3-PF3 proof review successor controls | depends on W3-PR2; independent fixture owner | exclusive proof fixture/harness scope | complete red checkpoint: 8 successor groups / 42 cases (48 groups / 104 cases total) freeze source-command/axiom/unsafe rejection, unique dual type and axiom observations, exact proof Evidence semantics/provenance, and executing-runner identity; prior 40 groups remain green and the bounded run is red only on PF3 |
+| W3-P3 proof boundary successor | depends on W3-PF3; internal Codex implementation owner | exclusive checker/proof manifest/source scope as required | implementation checkpoint green: all 48 groups / 104 cases, direct checker with and without exact Evidence, direct Lean, compilation, and repository gate pass; theorem remains byte-for-byte unchanged |
+| W3-PR3 proof convergence review | challenges W3-P3; independent internal static reviewer plus attempted Fable replay | read-only prior and novel theorem/Evidence/provenance audit | blocked: valid `set_option ... in #eval/#print` wrappers bypass the line-anchored source-command scan, and exact Evidence omits the ADR-required checker/runner-correctness assumption; other PR2 mechanisms trace closed |
+| W3-PF4 final proof grammar controls | depends on W3-PR3; independent fixture owner | exclusive proof fixture/harness scope | complete red checkpoint: wrapped eval/print plus corrected Evidence assumptions bring the oracle to 49 groups / 106 cases; 86 cases remain green and the expected assumption-precedence cascade leaves 20 P3 reds across 4 groups |
+| W3-P4 final proof boundary successor | depends on W3-PF4; internal Codex implementation owner | exclusive checker/proof manifest/source scope as required | implementation checkpoint green: all 49 groups / 106 cases, direct checker with/without exact Evidence, direct Lean, compilation, and repository gate pass; theorem remains unchanged |
+| W3-PR4 final proof convergence review | challenges W3-P4; independent internal static reviewer | read-only prior blocker replay and bounded generality audit | passed: generic cleaned-source token matching covers direct/wrapped commands, exact Evidence assumptions/provenance agree, runner and manifest digests match, and all prior review mechanisms remain closed |
+| W3-PG1 named-law evidence gate | depends on accepted W3-P4 successor, W3-PR4, and G1 | lead acceptance owner | accepted: canonical specification-scoped model/pipeline Evidence passes exact checker linkage; the Wave 2 fixture-only record moved out of the canonical source set; the 49-group proof gate is integrated into G0 |
+| W3-G1 execution-substrate convergence | depends on W3-LG1, W3-AG1, W3-PG1, and G0 | lead acceptance owner | accepted: record/link 9/20/38/2, loader 18, adapter 18, proof 49, direct accepted Evidence, compilation, Markdown/JSON, and full repository gate agree |
+
+W3-S2 used Claude Code 2.1.212 through `agent-dispatch --read-only`, pagu-box
+`strict`, the Wave 2 worktree, exact `claude-fable-5`, and explicit high effort. The
+current shell profile did not expose `agent-dispatch`, so the lead invoked the immutable
+verified Home Manager generation through `nix shell` rather than modifying the host.
+Structured output reported auxiliary `claude-haiku-4-5-20251001` usage. The child had
+only Read/Grep/Glob tools, performed no execution, writes, delegation, or web research,
+and disclosed only the approved public semantic-packages paths and brief. Its import-DAG
+dissent remains visible; W3-L0 rejects the speculative constraint for this tracer and
+names the elaboration/namespace trigger that would reopen it.
+
+W3-A0 used Claude Code 2.1.212 through `agent-dispatch --read-only`, pagu-box
+`strict`, the Wave 3 worktree, exact `claude-sonnet-5`, and explicit high effort.
+Structured output reported auxiliary `claude-haiku-4-5-20251001` usage. The child had
+only Read/Grep/Glob tools, performed no execution, writes, delegation, or web research,
+and disclosed only the approved public semantic-packages paths and brief. W3-A0R1
+independently blocked its first packet; W3-A0L1 incorporates the representation,
+oracle-independence, lifecycle, error, and performance-scope corrections rather than
+treating model provenance as acceptance.
+
+W3-L1 used Claude Code 2.1.212 through `agent-dispatch`, pagu-box `strict`, writable
+PWD mode in the isolated Wave 3 worktree, exact `claude-sonnet-5`, explicit high
+effort, and exclusive `scripts/record_check.py` ownership. Structured output reported
+auxiliary `claude-haiku-4-5-20251001` usage. Git, Python, Nix, and out-of-worktree
+probes were denied inside the child, so it returned execution-blocked rather than
+claiming runtime success. The lead ran the unchanged red-first harness green, reran
+the accepted record/repository gate and compilation, and owns the separate README,
+repository-gate, and plan integration. Disclosure was limited to the approved public
+Wave 3 worktree and brief; no web research or delegation occurred.
+
+W3-L3 used Claude Code through `agent-dispatch`, pagu-box `strict`, writable PWD mode
+in the isolated Wave 3 worktree, exact `claude-sonnet-5`, explicit high effort, no
+fallback, and exclusive `scripts/record_check.py` ownership. The child used a Nix
+Python environment with jsonschema 4.26.0 to execute the unchanged 18-group and full
+repository gates; worktree Git metadata was denied, so the lead separately ran
+`git diff --check`. Disclosure was limited to the approved public worktree and brief;
+no web research, installs, unrelated data, or delegation occurred.
+
+W3-A1 used Claude Code through `agent-dispatch`, pagu-box `strict`, writable PWD mode
+in the isolated Wave 3 worktree, exact `claude-sonnet-5`, explicit high effort, no
+fallback, and exclusive `semantic_packages/**` ownership. The child and lead both ran
+the unchanged 9-test AF1 suite, compilation, actual adapter EOF, and the full repository
+gate green. Disclosure was limited to the approved public worktree and brief; no web,
+unrelated data, installs, or delegation occurred.
+
+W3-A2 used Claude Code through `agent-dispatch`, pagu-box `strict`, writable PWD mode
+in the isolated Wave 3 worktree, exact `claude-sonnet-5`, explicit high effort, no
+fallback, and exclusive `semantic_packages/**` ownership. It ran all 16 AF2 tests,
+compilation, and the full record/loader gate green. Its child sandbox could not access
+worktree Git metadata; the lead separately ran diff hygiene. Disclosure was limited to
+the approved public worktree and brief; no web, unrelated data, installs, or delegation
+occurred.
+
+W3-A3 used the same `agent-dispatch`/pagu-box strict writable boundary, exact
+`claude-sonnet-5`, explicit high effort, no fallback, and exclusive
+`semantic_packages/stack_runner.py` ownership. It ran the 18-test successor repeatedly,
+compilation, actual adapter behavior, and record/loader gate green. Worktree Git and
+the unrelated Lean executable were unavailable in the child; the lead owns those
+separate gates. Disclosure remained limited to the approved public worktree and brief;
+no web, unrelated data, or delegation occurred.
+
+W3-P0R1 used Claude Code through `agent-dispatch --read-only`, pagu-box `strict`, exact
+`claude-fable-5`, explicit high effort, and no fallback. It could not execute Lean in
+its sandbox, so its likely-Lean-3-only objection to `--trust=0` remained an inference;
+the lead directly verified the installed Lean 4.30.0 help and a successful
+`--stdin --trust=0` invocation. The statement-linkage, evidence-wording, additional-
+record, and fixture-hazard corrections were accepted. Disclosure was limited to the
+approved public worktree and brief; no writes, web, installs, unrelated data, or
+delegation occurred.
+
+W3-P1 used Claude Code through `agent-dispatch`, pagu-box `strict`, writable PWD mode
+in the isolated Wave 3 worktree, exact `claude-sonnet-5`, explicit high effort, no
+fallback, and exclusive proof/checker ownership. It used the existing Lean 4.30.0
+toolchain explicitly, with no store path committed, and ran the unchanged 25-group
+oracle, direct checker, compilation, and record/loader gate green. Worktree Git metadata
+was unavailable inside the child; the lead owns diff hygiene. Disclosure was limited
+to the approved public worktree and brief; no web, unrelated data, or delegation
+occurred.
+
 ## Specification changes required before implementation
 
 The design audit found prerequisites that the original implementation order omitted:
@@ -199,9 +326,10 @@ The design audit found prerequisites that the original implementation order omit
    mismatched subject/profile versions; validate them in the repository gate.
 4. Encode Stack as linked canonical records and keep `specs/stack.pspec` explicitly
    illustrative until a parser is justified.
-5. Implement a loader and link checker with stable diagnostics and no silent dropping
-   of required or unsupported aspects.
-6. Define the adapter protocol and implement one in-process reference model.
+5. Extend the existing link checker with a deterministic local file/directory loader,
+   stable diagnostics, and no silent dropping of required or unsupported aspects.
+6. Define the child-process adapter protocol, implement one independent reference
+   Realization behind it, and keep the harness semantic oracle separate.
 7. Select one bounded proof integration and machine-check one named Stack law without
    treating that proof assistant as the platform's universal foundation.
 8. Add independently authored Rust and TypeScript realizations plus adapters.
@@ -250,31 +378,41 @@ python3 -m pip install -r requirements-dev.txt
 python3 scripts/check_repo.py
 ```
 
-On a Nix host without the Python dependencies installed globally, the equivalent
-invocation used for W2-G1 is:
+On a Nix host without the Python dependencies installed globally, provide the exact
+Lean 4.30.0 binary through `LEAN` while using the W2 Python environment:
 
 ```sh
-nix shell --impure --expr \
+LEAN=/path/to/lean-4.30.0 nix shell --impure --expr \
   'with import <nixpkgs> {}; python3.withPackages (ps: with ps; [jsonschema rfc3339-validator])' \
   --command python3 scripts/check_repo.py
 ```
 
 Wave 2 pins `jsonschema[format]==4.26.0` and `rfc3339-validator==0.1.4`; the checker
-enables format assertion explicitly. W2-G1 also ran:
+enables format assertion explicitly. The current Wave 3 gate also runs:
 
 ```sh
 python3 -m py_compile scripts/check_repo.py scripts/record_check.py
+python3 scripts/loader_fixture_check.py
+python3 -m unittest discover -s tests/adapter -v
+python3 scripts/proof_fixture_check.py --lean "${LEAN:-lean}"
+python3 scripts/proof_check.py --manifest proofs/stack-pop-empty/manifest.json \
+  --evidence fixtures/records/valid/stack-pop-empty-model-proof-evidence.json \
+  --lean "${LEAN:-lean}"
+python3 -m py_compile semantic_packages/*.py tests/adapter/test_stack_runner.py fixtures/adapters/v1/fake_stack_adapter.py
 python3 scripts/record_check.py fixtures/records/valid/*.json
 python3 scripts/record_check.py fixtures/records/invalid/schema/spec/kind-array.json
 ```
 
-Expected repository observation: `Record fixture checks passed: 8 valid, 20
-schema-invalid, 38 link-invalid, 2 link-valid.` followed by `Repository checks passed.`
-with exit status 0. The direct positive graph reports `Graph is valid: 0 diagnostics.`
-with exit status 0; the negative graph reports `SCHEMA_KIND_TYPE #/kind` with the
-intended exit status 1. Each later milestone must add its executable command and
-expected observation here before its progress item may be marked complete. Gate the
-command's exit status, not a grep or summary proxy.
+Expected repository observation: `Record fixture checks passed: 9 valid, 20
+schema-invalid, 38 link-invalid, 2 link-valid.`, `Loader fixture checks passed: 18
+contract groups.`, `Adapter fixture checks passed: 18 tests.`, `Proof fixture checks
+passed: 49 contract groups.`, and `Repository checks passed.` with exit status 0. The
+direct accepted proof Evidence reports `Proof is valid: 0 diagnostics.`
+with exit status 0; the negative graph reports `SCHEMA_KIND_TYPE
+fixtures/records/invalid/schema/spec/kind-array.json#/kind` with the intended exit
+status 1. Each later milestone must add its executable command and expected observation
+here before its progress item may be marked complete. Gate the command's exit status,
+not a grep or summary proxy.
 
 ## Progress
 
@@ -291,12 +429,12 @@ command's exit status, not a grep or summary proxy.
 - [x] Design-closure ambiguity and counterexample review
 - [x] Six core JSON schemas
 - [x] Positive and negative schema fixtures
-- [ ] Spec loader
-- [ ] Reference model
+- [x] Spec loader
+- [x] Reference model
 - [ ] Proof integration
 - [ ] Rust realization
 - [ ] TypeScript realization
-- [ ] Shared conformance suite
+- [x] Shared conformance suite
 - [ ] Evidence records
 - [ ] Browser/CLI
 - [ ] Compatibility explanation
@@ -422,6 +560,196 @@ command's exit status, not a grep or summary proxy.
   promote coarse fallback schema diagnostics into exact oracles only when a new
   counterexample demands it. It also exposed the transitive RFC 3339 validator pin,
   which Wave 2 fixed before closing W2-G1.
+- W3-S1, W3-S2, and W3-F1 independently converged on a thin source-set loader and
+  phase barriers, but disagreed on symlinks, explicit extensions, and import cycles.
+  W3-L0 chooses the smallest deterministic filesystem surface and preserves imports as
+  exact visible edges only. The two cycle-rejection proposals are deferred, with
+  namespace, elaboration, initialization, or transitive acquisition semantics as the
+  reopen trigger; implementation order is not allowed to decide the question silently.
+- W3-LF1 made the accepted boundary executable before implementation. The current
+  checker reports directories as `INPUT_READ_ERROR`, accepts explicit non-JSON and
+  symlink inputs, and cannot load the positive self/cycle/diamond/repeated-import
+  graphs. All 16 committed loader JSON records parse, the harness compiles, and the
+  accepted 8/20/38/2 record gate remains green. Both explicit and recursively
+  discovered lowercase JSON symlinks must fail with `INPUT_SYMLINK`.
+- W3-A0R1 rejected normative fresh handles because allocation is not observable, and
+  rejected sharing the Realization's Stack code as the harness oracle because it would
+  make tests tautological. The successor permits fresh or interned tokens with stable
+  denotations, uses an independent trace oracle, ends sessions through EOF, separates
+  protocol errors from semantic challenges, and explicitly leaves
+  `realization-steps` unsupported. An undetectable perfect shadow adapter is expected
+  to pass black-box behavior while retaining adapter-faithfulness and effect-
+  completeness assumptions.
+- W3-L1 makes lexical source aliases and file/directory overlap idempotent, recursively
+  discovers lowercase JSON without following symlinks, preserves normalized source
+  labels as provenance, and retains the input/schema phase barrier. Making source
+  labels visible on schema diagnostics intentionally changes the earlier direct CLI
+  spelling from pointer-only output; the durable loader oracle now freezes
+  code/source/pointer/order together. W3-LR1 remains the independent generality gate.
+- W3-LR1 then falsified that checkpoint with unhandled directory scan errors, repeated
+  diagnostics for failing aliases and overlapping discovery, argv-dependent empty-set
+  labels, traversal through intermediate symlink components, and incorrect root-base
+  labels. Existing phase, direct-file, import-edge, address, and outside-base probes
+  passed. W3-LF2 converts every blocker into a permanent oracle before W3-L2; the
+  initial green checkpoint is not rewritten as convergence.
+- W3-L2 made all 16 successor groups green, but W3-LR2 still blocked convergence.
+  Exactly two leading slashes retain a special spelling under `posixpath.normpath`, and
+  per-entry `DirEntry` classification errors still escape as tracebacks. A third probe
+  replaced a classified regular file with a symlink before reading. ADR 0007 now states
+  the smallest coherent boundary explicitly: this deterministic loader consumes a
+  quiescent source tree and is not a secure traversal API for concurrent adversarial
+  mutation. W3-LF3 freezes the two in-boundary defects; the race remains a documented
+  exclusion and a future descriptor-based loader revisit condition rather than a
+  silently partial security mechanism.
+- W3-L3 closes both in-boundary defects. W3-LR3 reran the 18-group and full record
+  gates, every prior blocker, and six novel probes covering independent `is_dir` and
+  `is_file` errors, nested phase barriers, one-to-four leading slashes, reversed overlap
+  ordering, and `PathLike` inputs. No in-boundary violation remained, so W3-LG1 closes
+  with concurrent mutation and adversarial containment still explicit exclusions.
+- W3-AF1 freezes the child boundary without implementing it. Fake adapters exercise
+  reference-like, fresh/interned, destructive, wrong-result, nonterminating, event,
+  malformed transport, process-failure, catchable-liar, and perfect-shadow behavior.
+  A separate control requires the actual `semantic_packages.stack_adapter` command so
+  a runner implemented only against test children cannot close W3-A1. The test suite
+  compiles but currently fails at the intentionally absent product package.
+- W3-A1 supplies an independently implemented immutable linked Stack behind the child
+  adapter and a runner-owned expected-trace oracle. All 9 AF1 tests and the repository
+  gate pass, including the actual module boundary. W3-AR1 remains the independent
+  generality and lifecycle gate; authored green evidence does not close W3-AG1.
+- W3-AR1 blocked that checkpoint. Clean request/response behavior followed by nonzero
+  EOF exit, EOF hang, or extra EOF output is currently accepted as support; a missing
+  command escapes instead of returning an error; stderr is drained rather than retained
+  as provenance. A targeted child also showed that a nonempty pushed source can be
+  rebound on its next use because the runner retains empty/remainders but not every
+  constructed pushed handle. W3-AF2 freezes each observation before W3-A2.
+- W3-A2 closes those six controls, but W3-AR2 found three narrower boundary defects.
+  A SIGTERM-ignoring EOF hang consumes roughly three configured timeout windows;
+  non-newline bytes emitted only after EOF are retained internally but treated as clean
+  EOF; and an empty command escapes the `OSError` start boundary as `IndexError`.
+  Large binary stderr, semantic/lifecycle cause precedence, depth-three persistence,
+  and process cleanup otherwise passed. W3-AF3 freezes only the remaining defects.
+- W3-A3 closes those final controls. W3-AR3 repeated the full suite and added deadline,
+  large unterminated-output, stdout-close, termination-stderr, cause-precedence,
+  command-shape, deep-persistence, immutability, and leak probes without finding an
+  in-boundary violation. W3-AG1 adds executable Realization/adapter version `0.2.0`
+  rather than mutating published Wave 2 version `0.1.0`, deliberately re-baselines the
+  valid-record gate from eight to nine, and integrates all 18 adapter tests into G0.
+- W3-P0S1 found a locally available core-only Lean 4.30.0 route for universal
+  `pop-empty`, plus decisive `sorry` and admitted-axiom controls. W3-P0R1 challenged
+  overbroad evidence wording, name-only theorem linkage, nonexistent supersession
+  semantics, and the accepted `fixture-only` Evidence hazard. ADR 0009 accepts a
+  corrected experiment: model-satisfaction/pipeline support only, exact statement and
+  digest linkage, additional pending Evidence, and no authority over another law or
+  proof system. Direct execution resolved Fable's unverified `--trust=0` objection in
+  favor of the installed Lean 4.30.0 flag.
+- W3-PF1 converts that boundary into 25 contract groups before product code. All
+  committed Lean/JSON controls self-check against explicit Lean 4.30.0; the harness is
+  red only because `scripts/proof_check.py`, the actual proof source, and its manifest
+  do not yet exist. No canonical Evidence or schema changed.
+- W3-P1 supplies the core-only universal model theorem, self-digesting manifest, and
+  standalone phased checker. All 25 authored controls are green, including wrong-but-
+  true statements and axiom dependencies. W3-PR1 remains the independent generality
+  gate for coherent record/link drift, manifest authority, warnings, path boundaries,
+  tool completion, and exact-statement strength.
+- W3-PR1 confirmed the theorem is universal, core-only, and axiom-free, but blocked the
+  checker boundary. Sixteen coherent mutations passed: semantic constants and record
+  validity were not pinned, expected axioms could be widened, assignability stood in
+  for exact theorem type, warnings and manifest/Evidence/path containment were porous,
+  malformed structured output could forge success, and Lean execution had no timeout.
+  W3-PF2 converts those categories into durable controls before W3-P2. The PR1 handoff
+  also printed a conflicting Lean commit hash; repeated direct `lean --version` output,
+  the manifest, and PF1 agree on `d024af099ca4bf2c86f649261ebf59565dc8c622`, which
+  remains the accepted observed provenance rather than the reviewer transcript typo.
+- W3-PF2 freezes the blocking review as 15 permanent successor groups, bringing the
+  harness to 40 groups. The P1 checker remains green on all prior controls and red on
+  exact-scope, schema/link, axiom-authority, theorem-type, warning, canonical-path,
+  Evidence-input, structured-output, and timeout controls. The harness owns a three-
+  second outer deadline and verifies that both version-query and proof-execution hangs
+  leave no fake-Lean child process; this is a red checkpoint, not product acceptance.
+  A read-only implementation consultation then found that the first PF2 draft repeated
+  the PF1 Claim-reference and declaration-id mutations while demanding different sole
+  diagnostics. The lead removed those duplicate successor witnesses before P2 rather
+  than making diagnostic output depend on indistinguishable inputs; the original PF1
+  exact-link controls and PF2 coherent-alternate-graph control retain the requirements.
+  The same disposition makes the immutable-empty-axioms diagnostic precede proof
+  execution when a hostile manifest attempts to authorize a known axiom; PF1 still
+  observes both actual axiom-bearing sources under the accepted empty manifest.
+- Two W3-P2 Claude Code 2.1.212 attempts used `agent-dispatch`, pagu-box `strict`, the
+  isolated Wave 3 worktree, exact `claude-sonnet-5`, explicit high effort, and an
+  exclusive checker/proof write boundary. The disclosed scope was the governing docs,
+  checker/proof package, and committed proof fixtures. Both produced no handoff or
+  filesystem change and were interrupted after prolonged pre-edit silence; a direct
+  dispatcher-mediated `--version` health check succeeded. The lead therefore reassigned
+  implementation internally while retaining provider diversity at read-only review.
+- W3-P2 closes the authored successor harness at 40 groups. The checker now pins the
+  ADR boundary and exact tool descriptor, schema-validates the two proof inputs, checks
+  bounded semantic linkage, rejects manifest/Evidence/path escape and malformed Lean
+  output, observes independently elaborated actual and expected types, requires an
+  empty axiom audit, and bounds both Lean subprocess phases with process-group cleanup.
+  The manifest's final runner digest is
+  `148162e12e495a51b61947cc7f2babbde2e97f2f8d1ed682de714e72fdf19c04`;
+  W3-PR2 still owns novel false-acceptance review and Evidence-specific trust concerns.
+- W3-PR2 blocks P2 despite the 40 green authored groups. The internal static review
+  found that arbitrary JSON can serve as optional Evidence, unused declared axioms and
+  modifier-prefixed unsafe declarations are not rejected, a fixture-specific fallback
+  accepts only one theorem-type observation, and the manifest runner is not bound to
+  the executing checker. Fable 5 then demonstrated with real Lean that source-emitted
+  information can put a false no-axiom line before the appended audit, causing an
+  axiom-backed theorem to pass, and that source `#eval` can perform a filesystem write
+  during checking. These are acceptance-boundary failures, not translation-fidelity or
+  binary-attestation non-goals; W3-PF3 freezes them before P3.
+- W3-PR2's Fable consultation used Claude Code 2.1.212 through
+  `agent-dispatch --read-only`, pagu-box `strict`, exact `claude-fable-5`, explicit high
+  effort, and only the listed repository docs/code/fixtures. Runtime model provenance
+  was not separately disclosed. It used removed temporary sources, made no repository
+  edits, delegation, or web requests. Two broader internal dynamic-review briefs were
+  rejected by the safety classifier and produced no evidence; the successful internal
+  lane was therefore narrowed to static code/generalization review and normal gates.
+- W3-PF3 converts the five blocker categories into 8 groups and 42 cases. It requires
+  original proof sources to reject declared axioms, modifier-prefixed unsafe code,
+  `#eval`, and `#print` before Lean execution; exactly one independently named actual-
+  type, expected-type, and axiom observation; a schema-valid exact Evidence record with
+  bounded model wording, ADR assumptions/exclusions, and dynamic manifest/runner/input/
+  tool/result provenance; and identity between the executing checker and manifest
+  runner. The full 48-group/104-case P2 run completed in about 33 seconds, kept all 40
+  prior groups green, and failed only the new controls.
+- W3-P3 closes all 48 authored groups and 104 cases. It rejects the reviewed source
+  commands before Lean execution, preserves axiom-dependency precedence while rejecting
+  otherwise-unused declared axioms, requires unique independently named actual-type,
+  expected-type, and axiom observations, validates exact Evidence semantics and dynamic
+  provenance, and binds the executing file to the manifest runner. The theorem remains
+  byte-for-byte unchanged at digest
+  `c3c90ecfd256f4aa76c45b7c3bbd6bd8bf773090dde130ac91b9283ef1c3c943`;
+  the final checker digest is
+  `fc452d7d8b6f87377339f780b9dac8e1b40b243792dfb6c459173a22afcf0694`.
+- W3-PR3 finds one remaining Lean grammar hole: the P3 pattern rejects direct `#eval`
+  and `#print` but not valid `set_option ... in` wrapped forms, so the promised pre-
+  execution boundary is incomplete. It also finds that exact Evidence records kernel
+  correctness but not the separately required assumption that the identified checker/
+  runner correctly enforces its recorded checks. Static tracing accepts the remaining
+  PR2 dispositions. A broad Fable retry exhausted its turn cap without a verdict and a
+  focused replay produced no output before interruption; neither is counted as review
+  evidence, while Fable's prior real-Lean PR2 counterexample remains the governing case.
+- W3-PF4 adds two valid wrapped-command cases and corrects the Evidence template. The
+  oracle is now 49 groups / 106 cases. On P3, 86 cases stay green; the two wrapper false
+  accepts plus the deliberately changed positive Evidence baseline and its downstream
+  diagnostic-precedence cascade produce 20 expected reds across 4 groups. The wrapped
+  eval control emits the benign false no-axiom line under direct Lean, confirming it is
+  a real grammar case rather than a synthetic matcher fixture.
+- W3-P4 closes the 49-group/106-case gate with a deliberately narrow change: command
+  tokens are recognized anywhere after comments and strings are blanked, and exact
+  Evidence now records the assumption that the identified checker/runner correctly
+  enforce the recorded checks. The theorem remains unchanged; checker and manifest
+  digests are `6ecc1232c65eb99de758d180971631439dff02c566bee5607e9969817a328609`
+  and `18c0eb2f073a648b865f6db5ffbef03fd6410625d755acc1b5347504ae7236c5`.
+- W3-PR4 passes after static replay of every prior blocker mechanism and normal gates.
+  W3-PG1 then promotes `(evidence, stack-pop-empty-model-proof, 0.1.0)` as exact
+  specification-scoped model-satisfaction/pipeline Evidence and moves the Wave 2
+  `fixture-only` record into proof-fixture scope. This replaces the canonical hazard
+  without mutating its identity or inventing supersession; the canonical valid-record
+  count remains nine because one fixture record leaves as one reviewed Evidence enters.
+  `check_repo.py` now requires exact Lean through `LEAN` or `PATH`, runs all 49 proof
+  groups, and prints the proof summary alongside record, loader, and adapter summaries.
 
 ## Decision log
 
@@ -452,6 +780,19 @@ command's exit status, not a grep or summary proxy.
 - Treat the multi-provider capability and verification-status matrix and secure dispatch workflow as
   operational project memory, with versioned facts re-probed before reuse; see
   [the multi-provider workflow](../../operations/multi-provider-workflow.md).
+- Treat Wave 3 loading as deterministic discovery of one finite local source set and
+  imports as exact visible edges only; do not infer filesystem acquisition, namespace,
+  ordering, or compatibility semantics. See
+  [ADR 0007](../../decisions/0007-local-loader-and-import-edges.md). This experimental
+  choice was decided with retained dissent favoring an import DAG.
+- Use the tracer-scoped child-process Stack adapter while keeping expected traces in
+  the harness and handle identity unobservable. See
+  [ADR 0008](../../decisions/0008-tracer-child-process-adapter.md). This does not select
+  a universal transport or establish adapter faithfulness.
+- Use one core-only Lean 4 probe as replaceable, specification-scoped model-satisfaction
+  evidence for `pop-empty`, with exact statement/input/tool provenance and no authority
+  over another law or a project-wide proof foundation. See
+  [ADR 0009](../../decisions/0009-bounded-pop-empty-proof-probe.md).
 
 ## Result
 
@@ -459,10 +800,14 @@ Wave 1 design closure passed DC1-G1 after one rejected integration and a reviewe
 successor. Wave 2 passed W2-G1 after four rejected checker/oracle checkpoints and
 reviewed successors. The repository now carries seven strict schema files defining six
 canonical record kinds, positive and falsifying schema/reference fixtures, and a
-deterministic durable record gate. Wave 3 may begin the bounded loader and
-reference-model slice, including path normalization and explicit self/cyclic-import
-behavior. No realization, proof-assistant integration, conformance suite, or browser
-has started.
+deterministic durable record gate. W3-LG1 now closes the provisional loader/import
+slice after three implementation/review successors and 18 durable contract groups.
+W3-AG1 closes the executable Python reference Realization and shared adapter suite after
+three reviewed successors and 18 durable tests. W3-PG1 closes the bounded `pop-empty`
+proof boundary after four red/review successors, 49 durable groups / 106 cases, and one
+accepted specification-scoped Evidence record. W3-G1 therefore closes the execution
+substrate. No independent Rust or TypeScript realization, shared cross-language
+conformance run, compatibility resolver, or browser has started.
 
 ## Stop and escalation conditions
 
