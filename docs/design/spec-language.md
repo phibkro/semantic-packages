@@ -77,6 +77,11 @@ This syntax is provisional. The initial parser may use JSON/YAML internally whil
 - A field-like declaration denotes an observation, not a memory slot.
 - Canonical records and references use exact typed addresses; surface names and
   declaration order do not create identity.
+- For the tracer, an import is an exact edge within the explicitly loaded local record
+  set. It does not acquire a file, create a namespace, re-export declarations, impose
+  order, or imply compatibility. Self-imports, cycles, diamonds, and repeated exact
+  edges are therefore structurally valid until an elaboration semantics demonstrates
+  a stronger requirement.
 - Equality over an abstract carrier denotes specification-defined observational
   equivalence, never host-language object or representation equality.
 - Every executable law must identify how its quantified values and results can be

@@ -174,6 +174,37 @@ nondeterminism, or network-dependent resolution; lead-executed gates supply the
 required runtime evidence. Disclosure remained limited to the approved
 semantic-packages worktree and the versioned review brief.
 
+### Current execution-substrate DAG: W3 revision 1
+
+| Node | Edges and owner | Scope / write boundary | Evidence and status |
+|---|---|---|---|
+| W3-S1 loader semantics | challenges/supports W3-L0; independent internal GPT reviewer | read-only governing docs, checker, and fixtures | complete: thin deterministic local source-set contract, phase barriers, visible-edge import semantics, and 12 decisive falsifiers proposed |
+| W3-S2 diverse loader skeptic | challenges/supports W3-L0; Claude Fable 5 | read-only actual-code and governing-document audit | complete static packet: supports thin loader and deterministic phase boundary; challenges with a proposed import DAG, realpath symlink following, and duplicate-import schema rule |
+| W3-F1 red-first design | challenges/supports W3-L0/W3-A0; independent internal GPT fixture specialist | read-only loader and Stack reference-model oracle design | complete: loader fixture layout plus minimal pure-model controls; proposed cycle rejection retained as dissent and adapter-dependent controls correctly blocked on protocol freeze |
+| W3-L0 loader/import contract | depends on W2-G1; informed by W3-S1, W3-S2, and W3-F1; lead Codex | exclusive design, ADR, plan, and backlog integration | accepted provisionally: lexical source normalization, recursive lowercase JSON discovery, symlink rejection, phase barriers, and exact visible import edges; self/cyclic/diamond/repeated imports are valid until stronger semantics exist |
+| W3-LF1 loader falsifiers | depends on W3-L0; fixture owner to be assigned | exclusive loader fixture/test paths | pending |
+| W3-L1 loader implementation | depends on W3-LF1; Claude Sonnet 5 plus lead integration | isolated worktree; exclusive loader/checker implementation paths | pending |
+| W3-LR1 loader review | challenges W3-L1; independent reviewer | read-only actual-code and novel counterexamples | pending |
+| W3-LG1 loader convergence | depends on W3-L1, W3-LR1, and G1 | lead acceptance owner | pending |
+| W3-A0 in-process adapter contract | depends on DC1-G1 and W2-G1; concern owner to be assigned | read-only protocol and reference-model boundary | pending |
+| W3-AF1 model/adapter falsifiers | depends on W3-A0; fixture owner to be assigned | exclusive execution-substrate fixtures/tests | pending |
+| W3-A1 reference model and adapter | depends on W3-AF1; implementation owner to be assigned | isolated worktree and exclusive execution-substrate paths | pending |
+| W3-AR1 adapter review | challenges W3-A1; independent reviewer | read-only observable-semantics audit | pending |
+| W3-AG1 reference-adapter convergence | depends on W3-A1, W3-AR1, and G1 | lead acceptance owner | pending |
+| W3-P0 bounded proof probe | depends on W3-LG1; concern owner to be assigned | isolated proof-integration paths; no universal foundation authority | pending |
+| W3-PG1 named-law evidence gate | depends on accepted proof successor and G1 | lead acceptance owner | pending |
+| W3-G1 execution-substrate convergence | depends on W3-LG1, W3-AG1, W3-PG1, and G0 | lead acceptance owner | pending |
+
+W3-S2 used Claude Code 2.1.212 through `agent-dispatch --read-only`, pagu-box
+`strict`, the Wave 2 worktree, exact `claude-fable-5`, and explicit high effort. The
+current shell profile did not expose `agent-dispatch`, so the lead invoked the immutable
+verified Home Manager generation through `nix shell` rather than modifying the host.
+Structured output reported auxiliary `claude-haiku-4-5-20251001` usage. The child had
+only Read/Grep/Glob tools, performed no execution, writes, delegation, or web research,
+and disclosed only the approved public semantic-packages paths and brief. Its import-DAG
+dissent remains visible; W3-L0 rejects the speculative constraint for this tracer and
+names the elaboration/namespace trigger that would reopen it.
+
 ## Specification changes required before implementation
 
 The design audit found prerequisites that the original implementation order omitted:
@@ -199,8 +230,8 @@ The design audit found prerequisites that the original implementation order omit
    mismatched subject/profile versions; validate them in the repository gate.
 4. Encode Stack as linked canonical records and keep `specs/stack.pspec` explicitly
    illustrative until a parser is justified.
-5. Implement a loader and link checker with stable diagnostics and no silent dropping
-   of required or unsupported aspects.
+5. Extend the existing link checker with a deterministic local file/directory loader,
+   stable diagnostics, and no silent dropping of required or unsupported aspects.
 6. Define the adapter protocol and implement one in-process reference model.
 7. Select one bounded proof integration and machine-check one named Stack law without
    treating that proof assistant as the platform's universal foundation.
@@ -422,6 +453,12 @@ command's exit status, not a grep or summary proxy.
   promote coarse fallback schema diagnostics into exact oracles only when a new
   counterexample demands it. It also exposed the transitive RFC 3339 validator pin,
   which Wave 2 fixed before closing W2-G1.
+- W3-S1, W3-S2, and W3-F1 independently converged on a thin source-set loader and
+  phase barriers, but disagreed on symlinks, explicit extensions, and import cycles.
+  W3-L0 chooses the smallest deterministic filesystem surface and preserves imports as
+  exact visible edges only. The two cycle-rejection proposals are deferred, with
+  namespace, elaboration, initialization, or transitive acquisition semantics as the
+  reopen trigger; implementation order is not allowed to decide the question silently.
 
 ## Decision log
 
@@ -452,6 +489,11 @@ command's exit status, not a grep or summary proxy.
 - Treat the multi-provider capability and verification-status matrix and secure dispatch workflow as
   operational project memory, with versioned facts re-probed before reuse; see
   [the multi-provider workflow](../../operations/multi-provider-workflow.md).
+- Treat Wave 3 loading as deterministic discovery of one finite local source set and
+  imports as exact visible edges only; do not infer filesystem acquisition, namespace,
+  ordering, or compatibility semantics. See
+  [ADR 0007](../../decisions/0007-local-loader-and-import-edges.md). This experimental
+  choice was decided with retained dissent favoring an import DAG.
 
 ## Result
 
@@ -461,8 +503,9 @@ reviewed successors. The repository now carries seven strict schema files defini
 canonical record kinds, positive and falsifying schema/reference fixtures, and a
 deterministic durable record gate. Wave 3 may begin the bounded loader and
 reference-model slice, including path normalization and explicit self/cyclic-import
-behavior. No realization, proof-assistant integration, conformance suite, or browser
-has started.
+behavior. W3-L0 has frozen that provisional loader/import contract; falsifier and
+implementation nodes are active. No realization, proof-assistant integration,
+conformance suite, or browser has started.
 
 ## Stop and escalation conditions
 

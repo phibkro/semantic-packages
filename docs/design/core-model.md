@@ -40,6 +40,14 @@ well-formed record outside a requested profile is inapplicable; an incoherent re
 is invalid input, not inapplicable evidence. See
 [ADR 0005](../decisions/0005-exact-typed-references.md).
 
+The tracer loader treats supplied files and directories as one finite local source
+set. Normalized source paths are provenance, not record identity, and imports never
+search outside that set. A Specification import is provisionally only an exact visible
+graph edge: it does not merge namespaces, re-export declarations, impose evaluation
+order, or infer compatibility. Self-imports, cycles, diamonds, and repeated exact
+edges remain valid while those additional semantics are absent; see
+[ADR 0007](../decisions/0007-local-loader-and-import-edges.md).
+
 A specification contains propositions, but does not contain the assurance that they
 hold for a realization. For example, a law is a normative proposition. A `Claim`
 scopes that proposition to a subject and assumptions, while `Evidence` records what
