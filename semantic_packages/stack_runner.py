@@ -47,6 +47,14 @@ _DECLARATIONS: Tuple[str, ...] = (
     "stack-effects",
 )
 
+_SPECIFICATION_REFERENCE = ("specification", "stack", "0.1.0")
+_SPECIFICATION_SHA256 = "dd083a71a4631cc44be051a16b8e20ff0cee7199e46d3823322665d1fdeec6c1"
+_PROFILE_REFERENCE = ("realizationProfile", "stack-default", "0.1.0")
+_PROFILE_SHA256 = "2a51ed7d2e1266376cd4a58ef3f20d30244655d25cb884816576be989014eddb"
+_CAMPAIGN_ALGORITHM = "stack-conformance-campaign"
+_CAMPAIGN_ALGORITHM_VERSION = "1"
+_CAMPAIGN_SEED = 20260718
+
 
 @dataclass(frozen=True)
 class RecordInput:
@@ -200,19 +208,30 @@ def _case(
 def _generated_mixed_case(seed: int, max_depth: int, max_history: int) -> ConformanceCase:
     """Generate a reproducible bounded history without relying on host RNG details."""
     steps: List[PlanStep] = [PlanStep("empty", bind="g0")]
-    states: Dict[str, Tuple[int, ...]] = {"g0": ()}
     current = "g0"
     state: Tuple[int, ...] = ()
     word = seed & 0xFFFFFFFF
     next_binding = 1
 
-    while len(steps) < max_history:
-        # Numerical Recipes' 32-bit LCG is completely specified by these operations.
+    # Reach the profile boundary first, then retain that logical state while the
+    # remainder of the history mixes pushes and pops. This makes depth coverage a
+    # planned observation rather than an incidental transient.
+    while len(state) < max_depth and len(steps) < max_history:
         word = (1664525 * word + 1013904223) & 0xFFFFFFFF
-        choose_push = (word & 1) == 0
+        value = (word % 5) - 2
+        binding = f"g{next_binding}"
+        next_binding += 1
+        steps.append(PlanStep("push", source=current, bind=binding, value=value))
+        state = (value,) + state
+        current = binding
+
+    observed_binding = current
+    observed_state = state
+    while len(steps) < max_history:
+        word = (1664525 * word + 1013904223) & 0xFFFFFFFF
+        choose_push = ((word >> 16) & 1) == 0
         if not state:
-            # Retain some empty pops, but never let generation stall at depth zero.
-            choose_push = len(steps) % 4 != 0
+            choose_push = True
         elif len(state) >= max_depth:
             choose_push = False
 
@@ -222,26 +241,21 @@ def _generated_mixed_case(seed: int, max_depth: int, max_history: int) -> Confor
             next_binding += 1
             steps.append(PlanStep("push", source=current, bind=binding, value=value))
             state = (value,) + state
-            states[binding] = state
             current = binding
         else:
-            if state:
-                binding = f"g{next_binding}"
-                next_binding += 1
-                steps.append(PlanStep("pop", source=current, bind=binding))
-                state = state[1:]
-                states[binding] = state
-                current = binding
-            else:
-                steps.append(PlanStep("pop", source=current))
+            binding = f"g{next_binding}"
+            next_binding += 1
+            steps.append(PlanStep("pop", source=current, bind=binding))
+            state = state[1:]
+            current = binding
 
     return _case(
         f"generated-mixed-{seed}-v1",
         "generated",
         steps,
         "pop-push",
-        current,
-        state,
+        observed_binding,
+        observed_state,
     )
 
 
@@ -255,7 +269,7 @@ def default_stack_conformance_plan() -> StackConformancePlan:
         depth_values = (value,) + depth_values
         source = binding
 
-    seed = 20260718
+    seed = _CAMPAIGN_SEED
     cases = (
         _case(
             "curated-pop-empty-v1",
@@ -285,30 +299,33 @@ def default_stack_conformance_plan() -> StackConformancePlan:
             source,
             depth_values,
         ),
-        _case(
-            "curated-retained-source-push-v1",
-            "curated",
-            (
+        ConformanceCase(
+            case_id="curated-retained-source-push-v1",
+            origin="curated",
+            steps=(
                 PlanStep("empty", bind="root"),
                 PlanStep("push", source="root", bind="source", value=1),
                 PlanStep("push", source="source", bind="derived", value=2),
             ),
-            "persistence",
-            "source",
-            (1,),
+            observations=(
+                PlannedObservation("persistence", "root", ()),
+                PlannedObservation("persistence", "source", (1,)),
+            ),
         ),
-        _case(
-            "curated-retained-source-pop-v1",
-            "curated",
-            (
+        ConformanceCase(
+            case_id="curated-retained-source-pop-v1",
+            origin="curated",
+            steps=(
                 PlanStep("empty", bind="root"),
                 PlanStep("push", source="root", bind="one", value=1),
                 PlanStep("push", source="one", bind="source", value=2),
                 PlanStep("pop", source="source", bind="remainder"),
             ),
-            "persistence",
-            "source",
-            (2, 1),
+            observations=(
+                PlannedObservation("persistence", "root", ()),
+                PlannedObservation("persistence", "one", (1,)),
+                PlannedObservation("persistence", "source", (2, 1)),
+            ),
         ),
         _case(
             "curated-stack-effects-v1",
@@ -322,19 +339,19 @@ def default_stack_conformance_plan() -> StackConformancePlan:
     )
     plan = StackConformancePlan(
         specification=RecordInput(
-            ("specification", "stack", "0.1.0"),
-            "dd083a71a4631cc44be051a16b8e20ff0cee7199e46d3823322665d1fdeec6c1",
+            _SPECIFICATION_REFERENCE,
+            _SPECIFICATION_SHA256,
         ),
         profile=RecordInput(
-            ("realizationProfile", "stack-default", "0.1.0"),
-            "2a51ed7d2e1266376cd4a58ef3f20d30244655d25cb884816576be989014eddb",
+            _PROFILE_REFERENCE,
+            _PROFILE_SHA256,
         ),
         element_domain=(-2, -1, 0, 1, 2),
         max_depth=8,
         max_history=32,
         observation_limit=9,
-        algorithm="stack-conformance-campaign",
-        algorithm_version="1",
+        algorithm=_CAMPAIGN_ALGORITHM,
+        algorithm_version=_CAMPAIGN_ALGORITHM_VERSION,
         seed=seed,
         timeout_seconds=0.20,
         event_contract=EventContract(("io.*",), ("debug.emit",), "unspecified"),
@@ -356,6 +373,17 @@ def _valid_binding(binding: Any) -> bool:
 def validate_stack_conformance_plan(plan: StackConformancePlan) -> None:
     if not isinstance(plan, StackConformancePlan):
         raise ValueError("plan must be a StackConformancePlan")
+    if (
+        plan.algorithm != _CAMPAIGN_ALGORITHM
+        or plan.algorithm_version != _CAMPAIGN_ALGORITHM_VERSION
+    ):
+        raise ValueError("algorithm and version must match the tracer campaign")
+    if plan.specification != RecordInput(
+        _SPECIFICATION_REFERENCE, _SPECIFICATION_SHA256
+    ):
+        raise ValueError("specification input must match the canonical tracer record")
+    if plan.profile != RecordInput(_PROFILE_REFERENCE, _PROFILE_SHA256):
+        raise ValueError("profile input must match the canonical tracer record")
     if (
         isinstance(plan.max_depth, bool)
         or not isinstance(plan.max_depth, int)
@@ -407,7 +435,11 @@ def validate_stack_conformance_plan(plan: StackConformancePlan) -> None:
         raise ValueError("plan must contain cases")
     case_ids: set[str] = set()
     for case in plan.cases:
-        if not case.case_id or case.case_id in case_ids:
+        if (
+            not isinstance(case.case_id, str)
+            or not case.case_id
+            or case.case_id in case_ids
+        ):
             raise ValueError("case IDs must be nonempty and unique")
         case_ids.add(case.case_id)
         if case.origin not in ("curated", "generated"):
@@ -475,6 +507,13 @@ def validate_stack_conformance_plan(plan: StackConformancePlan) -> None:
                 raise ValueError("observation disagrees with derived logical state")
             if len(observation.top_first) + 1 > plan.observation_limit:
                 raise ValueError("observation exceeds plan limit")
+
+    generated = tuple(case for case in plan.cases if case.origin == "generated")
+    expected_generated = (
+        _generated_mixed_case(plan.seed, plan.max_depth, plan.max_history),
+    )
+    if generated != expected_generated:
+        raise ValueError("generated cases do not match seed, algorithm, and bounds")
 
 
 def _unique(items: Sequence[str]) -> Tuple[str, ...]:
@@ -621,7 +660,6 @@ class _Runner:
         self.causes: List[str] = []
         self.events: List[Tuple[str, str]] = []
         self.campaign_observations: List[CaseObservation] = []
-        self._campaign_known_causes: List[str] = []
         self.stderr: bytes = b""
         self._retained: List[Tuple[str, Tuple[int, ...]]] = []
 
@@ -948,35 +986,33 @@ class _Runner:
         if self._observe_raw(handle, expected, cause):
             self._retained.append((handle, expected))
 
-    def _observe_values(self, handle: str) -> Tuple[Tuple[int, ...], bool]:
+    def _observe_expected(
+        self, handle: str, expected: Tuple[int, ...]
+    ) -> Tuple[Tuple[int, ...], str]:
+        """Observe one plan-owned finite state and retain why traversal stopped."""
         obtained: List[int] = []
         current = handle
-        for _ in range(self.observation_limit):
+        for _expected_value in expected:
             tag, value, remainder = self._pop(current)
             if tag == "none":
-                return tuple(obtained), True
+                return tuple(obtained), "early-none"
             assert value is not None and remainder is not None
             obtained.append(value)
             current = remainder
-        return tuple(obtained), False
-
-    @staticmethod
-    def _observation_cause(declaration_id: str) -> str:
-        return {
-            "pop-empty": "POP_EMPTY",
-            "pop-push": "POP_PUSH_REMAINDER",
-            "persistence": "RETAINED_HANDLE_CHANGED",
-            "stack-effects": "OBSERVATION_ORDER",
-        }[declaration_id]
+        tag, value, _remainder = self._pop(current)
+        if tag == "none":
+            return tuple(obtained), "complete"
+        assert value is not None
+        obtained.append(value)
+        return tuple(obtained), "nonempty-tail"
 
     def run_campaign(self, plan: StackConformancePlan) -> Tuple[CaseObservation, ...]:
         """Execute logical histories while keeping all adapter tokens opaque."""
         self.campaign_observations = []
-        self._campaign_known_causes = []
         for case in plan.cases:
             handles: Dict[str, str] = {}
             states: Dict[str, Tuple[int, ...]] = {}
-            persistence_baselines: Dict[str, Tuple[int, ...]] = {}
+            persistence_baselines: Dict[str, Tuple[Tuple[int, ...], str]] = {}
             case_causes: Dict[str, List[str]] = {
                 declaration_id: [] for declaration_id in _DECLARATIONS
             }
@@ -988,12 +1024,9 @@ class _Runner:
                         and planned.binding in handles
                         and planned.binding not in persistence_baselines
                     ):
-                        baseline, terminated = self._observe_values(
-                            handles[planned.binding]
+                        persistence_baselines[planned.binding] = self._observe_expected(
+                            handles[planned.binding], planned.top_first
                         )
-                        if not terminated:
-                            case_causes["persistence"].append("OBSERVATION_LIMIT")
-                        persistence_baselines[planned.binding] = baseline
                 if step.op == "empty":
                     assert step.bind is not None
                     handles[step.bind] = self._empty()
@@ -1010,49 +1043,70 @@ class _Runner:
                     if not expected_source:
                         if tag != "none":
                             case_causes["pop-empty"].append("POP_EMPTY")
-                            self._campaign_known_causes.append("POP_EMPTY")
                     elif tag != "some" or remainder is None:
                         case_causes["pop-push"].append("POP_PUSH_VALUE")
-                        self._campaign_known_causes.append("POP_PUSH_VALUE")
                     else:
                         if value != expected_source[0]:
                             case_causes["pop-push"].append("POP_PUSH_VALUE")
-                            self._campaign_known_causes.append("POP_PUSH_VALUE")
                         assert step.bind is not None
                         handles[step.bind] = remainder
                         states[step.bind] = expected_source[1:]
 
             for planned in case.observations:
                 causes = list(case_causes[planned.declaration_id])
+                result = "supports"
                 if planned.binding not in handles:
                     observed: Tuple[int, ...] = ()
-                    causes.append(self._observation_cause(planned.declaration_id))
+                    result = "inconclusive"
+                elif planned.declaration_id == "stack-effects":
+                    # Effect evidence is the event trace already retained from every
+                    # invocation; Stack-state traversal cannot challenge this concern.
+                    observed = planned.top_first
+                elif planned.declaration_id == "persistence":
+                    observed, status = self._observe_expected(
+                        handles[planned.binding], planned.top_first
+                    )
+                    baseline = persistence_baselines.get(planned.binding)
+                    if baseline is None or baseline[1] != "complete":
+                        result = "inconclusive"
+                    elif status != "complete" or observed != baseline[0]:
+                        causes.append("RETAINED_HANDLE_CHANGED")
                 else:
-                    observed, terminated = self._observe_values(handles[planned.binding])
-                    if not terminated:
-                        causes.append("OBSERVATION_LIMIT")
-                    elif planned.declaration_id == "persistence":
-                        baseline = persistence_baselines.get(planned.binding)
-                        if baseline is None or observed != baseline:
-                            causes.append("RETAINED_HANDLE_CHANGED")
-                    elif observed != planned.top_first:
-                        if (
-                            planned.declaration_id == "pop-push"
-                            and "POP_PUSH_VALUE" in self._campaign_known_causes
-                        ):
-                            causes.append("POP_PUSH_VALUE")
+                    observed, status = self._observe_expected(
+                        handles[planned.binding], planned.top_first
+                    )
+                    if status == "nonempty-tail":
+                        if planned.declaration_id == "pop-empty":
+                            causes.append("POP_EMPTY")
                         else:
-                            causes.append(self._observation_cause(planned.declaration_id))
+                            result = "inconclusive"
+                            self.campaign_observations.append(
+                                CaseObservation(
+                                    case_id=case.case_id,
+                                    declaration_id="pop-empty",
+                                    result="challenges",
+                                    expected_top_first=(),
+                                    observed_top_first=(observed[-1],),
+                                    causes=("POP_EMPTY",),
+                                )
+                            )
+                    elif status == "early-none" or observed != planned.top_first:
+                        pop_bindings = {
+                            step.bind for step in case.steps if step.op == "pop"
+                        }
+                        if planned.binding in pop_bindings:
+                            causes.append("POP_PUSH_REMAINDER")
+                        else:
+                            causes.append("OBSERVATION_ORDER")
                 unique_causes = _unique(causes)
-                expected = planned.top_first
-                if planned.declaration_id == "persistence":
-                    expected = persistence_baselines.get(planned.binding, expected)
+                if unique_causes:
+                    result = "challenges"
                 self.campaign_observations.append(
                     CaseObservation(
                         case_id=case.case_id,
                         declaration_id=planned.declaration_id,
-                        result="challenges" if unique_causes else "supports",
-                        expected_top_first=expected,
+                        result=result,
+                        expected_top_first=planned.top_first,
                         observed_top_first=observed,
                         causes=unique_causes,
                     )

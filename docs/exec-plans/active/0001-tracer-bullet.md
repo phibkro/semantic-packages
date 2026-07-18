@@ -232,9 +232,12 @@ semantic-packages worktree and the versioned review brief.
 | W4-H1 shared-campaign implementation | depends on W4-HF1; internal fallback implementation owner | exclusive runner plan/report implementation | rejected checkpoint: authored 24-test and full repository gates pass, but W4-HR1 demonstrates a retained-ancestor false support and declaration/provenance attribution defects |
 | W4-HR1 campaign convergence review | challenges W4-H1; independent internal reviewer | read-only authored and novel depth/history/outcome audit | BLOCK: actual depth 8 and mixed length 32 execute, but a valid-protocol ancestor-mutating candidate passes persistence; empty-pop failure contaminates all four declarations; cause state leaks across cases; persistence expectations become child-derived; generated/input provenance is not independently bound |
 | W4-HF2 campaign successor controls | depends on W4-HR1; independent fixture owner | exclusive shared campaign/report successor fixtures and tests | complete red checkpoint: prior 18+6 tests stay green while seven new methods/14 instances freeze valid-protocol retained-ancestor detection, causal and case-local outcomes, plan-owned expectations, generated/input provenance binding, mixed length-32 depth-8 coverage, and explicit source/ancestor persistence observations |
-| W4-H2 campaign successor | depends on W4-HF2 | exclusive runner plan/report implementation | pending |
-| W4-HR2 campaign successor review | challenges W4-H2 | read-only prior-blocker replay and novel bounded audit | pending |
-| W4-CF1 cross-language candidate falsifiers | depends on W4-HR2 and W4-P0T1; independent fixture owner | exclusive build/candidate tests plus broken Rust/TypeScript fixture packages | pending |
+| W4-H2 campaign successor | depends on W4-HF2; internal implementation owner | exclusive runner plan/report implementation | rejected checkpoint: all 31 adapter tests and the full repository gate pass with prior HR1 mechanisms closed, but W4-HR2 finds an unchecked terminal remainder, an absent-binding crash, and no exact plan identity in reports |
+| W4-HR2 campaign successor review | challenges W4-H2; fresh independent internal reviewer | read-only prior-blocker replay and novel bounded audit | BLOCK: a protocol-valid final generated pop returns a wrong live remainder yet all declarations support; existing wrong-remainder reaches an uncaught missing-binding KeyError; internally consistent alternate plans execute without canonical identity retained in the report |
+| W4-HF3 final campaign controls | depends on W4-HR2; independent fixture owner | exclusive terminal-remainder, total-result, and canonical-plan identity tests/fixtures | pending |
+| W4-H3 final campaign successor | depends on W4-HF3 | exclusive runner plan/report implementation | pending |
+| W4-HR3 final campaign review | challenges W4-H3 | read-only all-blocker replay and novel totality/identity audit | pending |
+| W4-CF1 cross-language candidate falsifiers | depends on W4-HR3 and W4-P0T1; independent fixture owner | exclusive build/candidate tests plus broken Rust/TypeScript fixture packages | pending |
 | W4-R1 Rust Realization/adapter | depends on W4-CF1; independent implementation owner | exclusive `implementations/rust/**` | pending |
 | W4-T1 TypeScript Realization/adapter | depends on W4-CF1; independent implementation owner | exclusive `implementations/typescript/**` | pending |
 | W4-RR1 Rust review | challenges W4-R1 | read-only independence, codec, semantics, lifecycle, and provenance audit | pending |
@@ -806,6 +809,16 @@ not a grep or summary proxy.
   and replaces plan expectations; order causes leak across cases; metadata/digest
   mutations validate; the generated mixed history reaches only depth one; and retained
   ancestor observations are absent. This is the exact red boundary for W4-H2.
+- W4-H2 closes every HR1/HF2 mechanism: 31 adapter tests and the full repository gate
+  pass; retained-ancestor change challenges only persistence; empty-pop and order/value
+  causes remain local; exact expectations and generated depth bind correctly. W4-HR2
+  nevertheless blocks it with new evidence. A wrong live remainder returned by the
+  final generated pop is never observed and yields full support; the existing wrong-
+  remainder fixture can instead leave an absent binding that escapes as `KeyError`;
+  and alternate internally consistent plans execute while the report omits plan identity.
+  W4-HF3/H3 must close those three mechanisms. An unobserved derived push used only to
+  provoke persistence is retained as a bounded coverage concern, not mislabeled as a
+  `pop-push` challenge without a declared observation.
 
 ## Decision log
 
