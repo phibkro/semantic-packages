@@ -227,7 +227,7 @@ semantic-packages worktree and the versioned review brief.
 | W4-P0E1 record/Evidence preflight | informs W4-D0/W4-EG1; independent internal graph concern owner | read-only schemas, identities, provenance, fixture-hazard audit | complete REVISE: schemas suffice without expansion, but Claims/Evidence must be declaration-scoped; the accepted Wave 2 fixture Realization/Claim/Evidence triple must leave the canonical product set when actual packets replace it |
 | W4-P0F1 diverse boundary skeptic | challenges W4 preflight; requested Claude Fable 5 | read-only toolchain/campaign/Claim deliberation | no evidence: exact Fable/high/strict attempt produced no verdict in ten minutes and was interrupted; internal concern results and lead disposition govern W4-D0 |
 | W4-D0 cross-language boundary | depends on W4-P0T1/P0S1/P0E1; lead integration owner | exclusive ADR/plan decision; no implementation authority | accepted experimentally in ADR 0010: deterministic profile-sized logical-history plans, granular declaration outcomes, Deno TypeScript, direct-rustc std-only codec with dissent, explicit build argv, and declaration-scoped Evidence |
-| W4-HF1 shared-campaign falsifiers | depends on W4-D0; independent fixture owner | exclusive shared campaign/report fixtures and tests | pending |
+| W4-HF1 shared-campaign falsifiers | depends on W4-D0; independent fixture owner plus lead boundary review | exclusive shared campaign/report fixtures and tests | complete red checkpoint: six focused controls pin exact inputs/bounds/generation, actual depth-8 and mixed length-32 cases, logical bindings, deterministic serialization, unsafe-plan rejection, granular declaration outcomes, and execution-error coexistence; the existing 18 runner tests remain green and the new module fails only on the absent additive API |
 | W4-H1 shared-campaign implementation | depends on W4-HF1 | exclusive runner plan/report implementation | pending |
 | W4-HR1 campaign convergence review | challenges W4-H1 | read-only authored and novel depth/history/outcome audit | pending |
 | W4-CF1 cross-language candidate falsifiers | depends on W4-HR1 and W4-P0T1; independent fixture owner | exclusive build/candidate tests plus broken Rust/TypeScript fixture packages | pending |
@@ -776,6 +776,12 @@ not a grep or summary proxy.
   rustc codec only for valid v1 request shapes, with order/whitespace falsifiers and
   retained dissent favoring locked/vendored `serde_json`. A requested Fable review
   produced no verdict and is retained as provider failure rather than assurance.
+- W4-HF1 freezes the new campaign boundary before implementation. Lead review removes
+  a representation-shaped logical-name restriction and adds direct proof that the
+  existing runner consumes the immutable plan, retains curated/generated provenance,
+  rejects duplicate logical bindings, and returns declaration-granular observations.
+  The prior 18 runner/protocol tests remain green; the new module is red only because
+  W4-H1's four additive API names and `plan=` execution path do not yet exist.
 
 ## Decision log
 
