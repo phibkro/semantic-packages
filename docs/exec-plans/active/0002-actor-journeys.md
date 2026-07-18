@@ -204,10 +204,10 @@ J0 vocabulary/lifecycle/map gate
 | PR-GT5 installer telemetry successor | lead CI integrator; depends on PR-GR3; same exclusive CI surface | complete: `DETSYS_IDS_TELEMETRY=disabled` is constructed inside both privileged child environments; empty diagnostic endpoint retained as defense-in-depth |
 | PR-GR4 final CI/security review | independent read-only reviewer; depends on PR-GT5 | PASS: fixed hash fails closed before privilege, action and installer transports are no-op, and all lock/tool/evidence/fork/permission/range/shell boundaries replay |
 | PR-GO operator convergence | operator; depends on accepted PR-GR4 | complete hosted-policy checkpoint on 2026-07-19 after explicit user authorization: original 59-commit DAG branch retained, clean `agent/actor-complete-tracer` branch prepared from `master` as one conventional squash, merge/rebase disabled, squash PR-title/PR-body defaults enabled, Actions SHA pinning required, and active no-bypass ruleset `19155146` requires PR-only squash, linear history, no deletion/force-push, resolved conversations, and strict `prospective metadata` plus `repository contract` checks; advisory app permissions remain unchanged pending observable PR activity |
-| PR-GG release-governance gate | lead acceptance; depends on PR-GR4, PR-GO, local/hosted gates | accepted hosted checkpoint on draft PR 4 at `3bb74fe`: `prospective metadata` passes in 1m32s, `repository contract` passes in 2m55s, active ruleset `19155146` reports no bypass, and the PR is CLEAN; CodeRabbit/Claude produced no observable review while draft and remain advisory |
+| PR-GG release-governance gate | lead acceptance; depends on PR-GR4, PR-GO, local/hosted gates | accepted hosted checkpoint on draft PR 4: initial `3bb74fe` and status successor `c24f355` both pass; latest `prospective metadata` is 1m33s and `repository contract` 2m42s, active ruleset `19155146` reports no bypass, and the PR is CLEAN. One synchronize run cancelled when the PR-body edit superseded it and contributes no failure evidence; CodeRabbit/Claude produced no observable review while draft and remain advisory |
 | JG-R1 independent fresh-clone review | independent internal reviewer; depends on PR-GG/J5 and exact published `3bb74fe`; read-only `/tmp/semantic-packages-pr4-fresh` | BLOCK despite exact checkout, clean tree, sole Conventional Commit, prospective range, full 127-journey/20-governance/2-report/8-Evidence/49-proof gate, and diff hygiene passing: stale system-map and user-journey status prose contradicted accepted executable J2–J5 state |
 | JG-S1 status-memory successor | journey continuity owner; depends on JG-R1; exclusive system map, user journeys, and this plan | implementation checkpoint: stale “next/designed/open” claims now state J1–J5 executable while keeping hosted release and cold-human acceptance open; rejected JG-R1 retained rather than relabeled |
-| JG-R2 fresh-clone successor review | independent reviewer; depends on JG-S1 and republished exact commit | planned replay of JG-R1 status claims, exact clean checkout, prospective metadata, full locked gate, exclusions, and cold-human recommendation |
+| JG-R2 fresh-clone successor review | same independent internal reviewer; depends on JG-S1 and republished exact `c24f355` | PASS: exact published checkout and origin, clean tree, two linear Conventional Commits, prospective range, diff hygiene, 127 journeys, 20 governance checks, two fresh reports/eight Evidence records, and 49 proof groups reproduce; JG-R1 remains retained, status contradictions close, hosted/automatic exclusions hold, and the cold-human recommendation remains explicitly unobserved |
 | JG journey release | lead acceptance; depends on JG-R2 plus J5 and PR-GG; read-only fresh-checkout acceptance with no repository write scope and ephemeral outputs only under an allocated temporary directory | all four terminal outcomes and bounded maintenance reproduce without hosted/automatic overclaim; cold human journey remains a pre-merge recommendation; pending |
 
 Parallel work is read-only or owns non-overlapping paths. From J3-F2 onward, the user
@@ -521,6 +521,12 @@ may be the smallest local test/CLI projection and must not become a universal tr
   stale status claims, retains the rejected review, and requires a fresh successor
   replay rather than treating executable evidence as permission to ignore conflicting
   project memory.
+- JG-R2 independently replays exact published successor `c24f355` and reports PASS:
+  both Conventional Commits, diff hygiene, the full locked gate, corrected status
+  claims, exclusions, and retained JG-R1 history agree. The matching hosted successor
+  passes metadata in 1m33s and the repository contract in 2m42s. A zero-second stale
+  check display traced to a concurrency-cancelled run superseded by the PR-body edit;
+  the CI inspection helper found no live failure and no code change was warranted.
 - `CONTRIBUTING.md` encoded a serial all-stages lifecycle while the governing lifecycle
   uses proportional revisioned DAG nodes; J0 makes them consistent.
 
@@ -560,9 +566,10 @@ without selecting one. J5-R1 and the full locked gate pass at `56c4114`; ADR 001
 J5-G are accepted. PR-GO and PR-GG then converge squash-only protected hosted policy
 and both required checks on draft PR 4. The first independent fresh-checkout reviewer
 reproduces every executable gate but BLOCKs on contradictory status prose; JG-S1
-reconciles that durable memory without changing product behavior. JG now waits on the
-independent successor replay and the retained cold-human pre-merge recommendation,
-not further product-journey implementation.
+reconciles that durable memory without changing product behavior. JG-R2 and both
+hosted successor checks then pass at `c24f355`. JG now waits only on the retained
+cold-human pre-merge recommendation, not further product-journey implementation or
+release-governance automation.
 
 ## Stop and escalation conditions
 
