@@ -128,10 +128,10 @@ control socket was unavailable inside the sandbox.
 | W2-C3 final checker integration | depends on W2-F5; lead Codex | exclusive `scripts/` integrator | kind typing, category-set indexes, and complete plural candidate diagnostics landed; exact lead gate passes |
 | W2-CR3 final checker review | challenges/supports W2-C3; same independent reviewer | read-only mutation and actual-code regression | passed with no dissent: 280 wrong-type mutations, duplicate cascades, multi-candidates, and all prior blockers rechecked |
 | W2-CG1 durable-checker convergence | depends on W2-C3, W2-CR3, and G0 | lead acceptance owner | passed: exact fixture gate, repository gate, compilation, CLI red controls, and diff check |
-| W2-R2 final records convergence | challenges/supports W2-P1/W2-CG1; Claude Fable 5 | read-only integrated actual-diff audit | pending |
-| W2-G1 records gate | depends on W2-P1, W2-CG1, W2-R2, and G0 | lead acceptance owner | pending |
+| W2-R2 final records convergence | challenges/supports W2-P1/W2-CG1; Claude Fable 5 | read-only integrated actual-diff audit | passed static convergence review with no material schema, documentation, checker, determinism, or resolution objection; child execution remained unavailable and was independently supplied by the lead |
+| W2-G1 records gate | depends on W2-P1, W2-CG1, W2-R2, and G0 | lead acceptance owner | passed: seven schema files defining six canonical record kinds, 8 flat valid records, 20 schema negatives, 38 link negatives, 2 link-valid graphs, and the durable repository gate converge |
 
-The published design baseline is commit `87ffbb1` and draft PR #1. Wave 2 runs on a
+The published design baseline is commit `d0fa6d0` and draft PR #1. Wave 2 runs on a
 stacked isolated branch so schema implementation cannot silently expand that review.
 Delegated briefs retain the same approved external disclosure scope as DC1 and add only
 the schema/fixture/checker artifacts created in this worktree.
@@ -162,6 +162,17 @@ denied inside the children; both correctly returned execution-blocked, and the l
 ran the exact pinned controls. Disclosure remained limited to the approved
 semantic-packages worktree and versioned briefs; neither child delegated or used web
 research.
+
+W2-R2 used Claude Code 2.1.212 through `agent-dispatch --read-only`, pagu-box
+`strict`, the isolated Wave 2 worktree, explicit high effort, and no web research or
+delegation. The requested and runtime primary model was `claude-fable-5`; structured
+provenance also reported auxiliary `claude-haiku-4-5-20251001` usage despite the
+narrative reporting no auxiliary model, so the structured provenance and mismatch are
+retained. Git, Python, and Nix were denied inside the child. Its static actual-diff
+review found no material contradiction, false acceptance, erased concern,
+nondeterminism, or network-dependent resolution; lead-executed gates supply the
+required runtime evidence. Disclosure remained limited to the approved
+semantic-packages worktree and the versioned review brief.
 
 ## Specification changes required before implementation
 
@@ -239,20 +250,31 @@ python3 -m pip install -r requirements-dev.txt
 python3 scripts/check_repo.py
 ```
 
-On a host without ambient Python, the equivalent reproducible invocation currently is:
+On a Nix host without the Python dependencies installed globally, the equivalent
+invocation used for W2-G1 is:
 
 ```sh
-nix shell nixpkgs#python3 --command python3 scripts/check_repo.py
+nix shell --impure --expr \
+  'with import <nixpkgs> {}; python3.withPackages (ps: with ps; [jsonschema rfc3339-validator])' \
+  --command python3 scripts/check_repo.py
 ```
 
-Schema milestones additionally use `jsonschema[format]==4.26.0`; the checker must
-enable format assertion explicitly. A Nix-only equivalent is a temporary Python
-environment composed with `python3Packages.jsonschema` and its format dependencies.
+Wave 2 pins `jsonschema[format]==4.26.0` and `rfc3339-validator==0.1.4`; the checker
+enables format assertion explicitly. W2-G1 also ran:
 
-Expected observation: `Repository checks passed.` with exit status 0. Each later
-milestone must add its executable command and expected observation here before its
-progress item may be marked complete. Gate the command's exit status, not a grep or
-summary proxy.
+```sh
+python3 -m py_compile scripts/check_repo.py scripts/record_check.py
+python3 scripts/record_check.py fixtures/records/valid/*.json
+python3 scripts/record_check.py fixtures/records/invalid/schema/spec/kind-array.json
+```
+
+Expected repository observation: `Record fixture checks passed: 8 valid, 20
+schema-invalid, 38 link-invalid, 2 link-valid.` followed by `Repository checks passed.`
+with exit status 0. The direct positive graph reports `Graph is valid: 0 diagnostics.`
+with exit status 0; the negative graph reports `SCHEMA_KIND_TYPE #/kind` with the
+intended exit status 1. Each later milestone must add its executable command and
+expected observation here before its progress item may be marked complete. Gate the
+command's exit status, not a grep or summary proxy.
 
 ## Progress
 
@@ -267,8 +289,8 @@ summary proxy.
 - [x] Consumer treatment of evidence states
 - [x] Conditional specification/realization claim and evidence scope
 - [x] Design-closure ambiguity and counterexample review
-- [ ] Six core JSON schemas
-- [ ] Positive and negative schema fixtures
+- [x] Six core JSON schemas
+- [x] Positive and negative schema fixtures
 - [ ] Spec loader
 - [ ] Reference model
 - [ ] Proof integration
@@ -394,6 +416,12 @@ summary proxy.
   reports all candidate kinds and versions. W2-CR3 passed the exact gate and repeated
   280 systematic wrong-type mutations with no exception or false acceptance. Failed
   CR1 and CR2 remain part of the checker assurance trail.
+- W2-R2 found no material convergence blocker. It identified three deliberately
+  deferred loader/oracle concerns: normalize input paths before identity and duplicate
+  handling, define self-import and cyclic-import behavior when the loader exists, and
+  promote coarse fallback schema diagnostics into exact oracles only when a new
+  counterexample demands it. It also exposed the transitive RFC 3339 validator pin,
+  which Wave 2 fixed before closing W2-G1.
 
 ## Decision log
 
@@ -428,9 +456,13 @@ summary proxy.
 ## Result
 
 Wave 1 design closure passed DC1-G1 after one rejected integration and a reviewed
-successor. No product implementation has started. Wave 2 is authorized: define the six
-linked provisional schemas, positive fixtures, and falsifying fixtures, then close the
-schema/reference-integrity gate before loader work begins.
+successor. Wave 2 passed W2-G1 after three rejected checker/oracle checkpoints and
+reviewed successors. The repository now carries seven strict schema files defining six
+canonical record kinds, positive and falsifying schema/reference fixtures, and a
+deterministic durable record gate. Wave 3 may begin the bounded loader and
+reference-model slice, including path normalization and explicit self/cyclic-import
+behavior. No realization, proof-assistant integration, conformance suite, or browser
+has started.
 
 ## Stop and escalation conditions
 

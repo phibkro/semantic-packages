@@ -3,14 +3,16 @@
 ## Now
 
 1. Complete ExecPlan 0001.
-2. Define strict linked schemas for Specification, Realization, Claim, Evidence, RealizationProfile, and ConsumerPolicy.
-3. Add positive and falsifying schema/reference fixtures and wire them into the G1 record gate.
-4. Select one bounded proof-checking integration for the Stack law.
-5. Add a minimal reproducible development environment for the documented Python and schema-validation gates.
+2. Implement the bounded specification loader and reference model for the tracer bullet.
+3. Normalize loader input paths before duplicate and identity handling.
+4. Define and falsify specification self-import and cyclic-import behavior.
+5. Select one bounded proof-checking integration for the Stack law.
+6. Add a minimal reproducible development environment for the documented Python and schema-validation gates.
 
 ## Next
 
-- Extend `scripts/check_repo.py` with schema validation, linked-fixture checks, and negative cases as those artifacts land.
+- Promote fallback schema diagnostics into exact actionable oracles when a new
+  counterexample demonstrates that the coarse diagnostic is insufficient.
 - Define how adapter correctness is claimed and evidenced.
 - Add generated indexes or richer orientation tooling only when multiple plans or derived views create measurable drift.
 - Add effect classification and erasure/noninterference tests.
