@@ -1,0 +1,1 @@
+LINK_POLICY_EVENT_PATTERN_MISMATCH records/policy.json#/prohibitions/0/eventPattern: requested event pattern network.*, effect declaration stack-effects forbids io.*

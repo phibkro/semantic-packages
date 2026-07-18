@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/package-spec-language/realization-profile.schema.json",
+  "title": "RealizationProfile record",
+  "type": "object",
+  "required": ["kind", "id", "version"],
+  "properties": {
+    "kind": { "const": "realizationProfile" },
+    "id": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+    "version": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+    "platform": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+    "hostCapabilities": {
+      "$ref": "common.schema.json#/$defs/nonEmptyStringArray"
+    },
+    "scale": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+    "concurrency": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+    "trust": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+    "portability": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+    "workloads": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/workloadDeclaration" }
+    },
+    "costMeasures": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/costMeasureDeclaration" }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "workloadDeclaration": {
+      "type": "object",
+      "required": ["id", "startingState", "sizeFunction", "definition"],
+      "properties": {
+        "id": { "$ref": "common.schema.json#/$defs/localDeclarationId" },
+        "startingState": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+        "sizeFunction": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+        "definition": { "$ref": "common.schema.json#/$defs/nonEmptyString" }
+      },
+      "additionalProperties": false
+    },
+    "costMeasureDeclaration": {
+      "type": "object",
+      "required": ["id", "unit", "aggregation", "instrumentation"],
+      "properties": {
+        "id": { "$ref": "common.schema.json#/$defs/localDeclarationId" },
+        "unit": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+        "aggregation": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+        "instrumentation": { "$ref": "common.schema.json#/$defs/nonEmptyString" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

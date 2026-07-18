@@ -1,0 +1,19 @@
+{
+  "kind": "consumerPolicy",
+  "id": "dangling-proposition-policy",
+  "version": "0.1.0",
+  "specification": { "kind": "specification", "id": "stack", "version": "0.1.0" },
+  "profile": { "kind": "realizationProfile", "id": "stack-default", "version": "0.1.0" },
+  "concerns": [],
+  "prohibitions": [
+    {
+      "proposition": {
+        "specification": { "kind": "specification", "id": "stack", "version": "0.1.0" },
+        "declarationId": "absent-effect"
+      },
+      "description": "No io.* events.",
+      "eventPattern": "io.*",
+      "acceptedEvidenceScope": ["adapter-invocation-trace"]
+    }
+  ]
+}

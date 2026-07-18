@@ -1,0 +1,30 @@
+{
+  "kind": "claim",
+  "id": "schema-assurance-badge",
+  "version": "0.1.0",
+  "subject": {
+    "kind": "specification",
+    "id": "stack",
+    "version": "0.1.0"
+  },
+  "governingSpecification": {
+    "kind": "specification",
+    "id": "stack",
+    "version": "0.1.0"
+  },
+  "proposition": {
+    "specification": {
+      "kind": "specification",
+      "id": "stack",
+      "version": "0.1.0"
+    },
+    "declarationId": "pop-empty"
+  },
+  "concern": "law.conformance",
+  "scope": "schema counterexample",
+  "assumptions": [],
+  "exclusions": [],
+  "applicableProfiles": [],
+  "state": "active",
+  "assurance": "proved"
+}

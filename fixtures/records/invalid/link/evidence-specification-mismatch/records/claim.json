@@ -1,0 +1,17 @@
+{
+  "kind": "claim",
+  "id": "stack-a-claim",
+  "version": "0.1.0",
+  "subject": { "kind": "specification", "id": "stack-a", "version": "0.1.0" },
+  "governingSpecification": { "kind": "specification", "id": "stack-a", "version": "0.1.0" },
+  "proposition": {
+    "specification": { "kind": "specification", "id": "stack-a", "version": "0.1.0" },
+    "declarationId": "law-a"
+  },
+  "concern": "law.conformance",
+  "scope": "link counterexample",
+  "assumptions": [],
+  "exclusions": [],
+  "applicableProfiles": [],
+  "state": "active"
+}

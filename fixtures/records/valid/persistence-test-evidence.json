@@ -1,0 +1,54 @@
+{
+  "kind": "evidence",
+  "id": "stack-reference-persistence-test",
+  "version": "0.1.0",
+  "claim": {
+    "kind": "claim",
+    "id": "stack-reference-persistence",
+    "version": "0.1.0"
+  },
+  "specification": {
+    "kind": "specification",
+    "id": "stack",
+    "version": "0.1.0"
+  },
+  "scope": "realization",
+  "realization": {
+    "kind": "realization",
+    "id": "stack-reference",
+    "version": "0.1.0"
+  },
+  "adapter": {
+    "id": "stack-json-adapter",
+    "version": "0.1.0"
+  },
+  "mechanism": "property-test",
+  "result": "supports",
+  "reviewState": "accepted",
+  "method": "retained-handle witness against construction-implied traces",
+  "environment": {
+    "runner": "stack-runner-json-v1",
+    "seed": 7301
+  },
+  "freshness": {
+    "producedAt": "2026-07-18T00:00:00Z"
+  },
+  "assumptions": ["The adapter faithfully exposes the realization."],
+  "exclusions": ["Effects outside the adapter event boundary are not observed."],
+  "applicability": {
+    "profiles": [
+      {
+        "kind": "realizationProfile",
+        "id": "stack-default",
+        "version": "0.1.0"
+      }
+    ],
+    "parameters": {
+      "maximumDepth": 8,
+      "maximumHistory": 32
+    }
+  },
+  "provenance": {
+    "artifact": "fixture:persistence-test"
+  }
+}

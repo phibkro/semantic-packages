@@ -1,0 +1,36 @@
+{
+  "kind": "realization",
+  "id": "stack-reference",
+  "version": "0.1.0",
+  "specification": {
+    "kind": "specification",
+    "id": "stack",
+    "version": "0.1.0"
+  },
+  "adapter": {
+    "id": "stack-json-adapter",
+    "version": "0.1.0",
+    "protocol": "stack-runner-json-v1",
+    "entrypoint": "fixtures.adapters.stack_reference",
+    "assumptions": ["The harness owns expected traces and comparison."]
+  },
+  "implementation": {
+    "language": "Python",
+    "languageVersion": "3",
+    "target": "portable interpreter",
+    "runtime": "CPython",
+    "interfaceMechanism": "JSON messages over a child process",
+    "buildSystem": "none",
+    "buildInstructions": "No build step.",
+    "executionInstructions": "Launch the adapter entrypoint."
+  },
+  "capabilities": ["stack.empty", "stack.push", "stack.pop"],
+  "limitations": ["Tracer fixture only; no executable adapter is supplied in Wave 2."],
+  "supportedProfiles": [
+    {
+      "kind": "realizationProfile",
+      "id": "stack-default",
+      "version": "0.1.0"
+    }
+  ]
+}

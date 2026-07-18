@@ -1,0 +1,11 @@
+{
+  "kind": "realization",
+  "id": "stack-realization",
+  "version": "0.1.0",
+  "specification": { "kind": "specification", "id": "stack", "version": "0.1.0" },
+  "adapter": { "id": "declared-adapter", "version": "0.1.0", "protocol": "fixture-v1", "entrypoint": "fixture", "assumptions": [] },
+  "implementation": { "language": "fixture", "languageVersion": "1", "target": "fixture", "runtime": "fixture", "interfaceMechanism": "fixture", "buildSystem": "fixture", "buildInstructions": "fixture", "executionInstructions": "fixture" },
+  "capabilities": [],
+  "limitations": [],
+  "supportedProfiles": []
+}

@@ -1,0 +1,1 @@
+LINK_POLICY_SPECIFICATION_MISMATCH records/policy.json#/prohibitions/0/proposition/specification: requested (specification, stack-b, 0.1.0), ConsumerPolicy specification is (specification, stack-a, 0.1.0)

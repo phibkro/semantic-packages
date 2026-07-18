@@ -103,6 +103,45 @@ control socket was unavailable inside the sandbox.
 | MPW-R3 successor review | challenges/supports MPW-L2; independent Codex reviewer | read-only focused regression review | passed after one final mandatory-entrypoint wording correction; no material objection remains |
 | MPW-G1 repository-memory convergence | depends on MPW-L2, MPW-R3, and G0 | lead acceptance owner | passed; `git diff --check` and Nix-backed `python3 scripts/check_repo.py` both passed |
 
+### Current record-schema DAG: W2 revision 1
+
+| Node | Edges and owner | Scope / write boundary | Closure evidence |
+|---|---|---|---|
+| W2-S1 schema realization | depends on DC1-G1; Claude Sonnet 5 | isolated `agent/wave2-schemas` worktree; exclusive `schemas/` writer | seven-file family returned; exact primary runtime `claude-sonnet-5`; lead metaschema validation passed |
+| W2-GPT1 schema skeptic | challenges W2-S1/W2-G1; internal Codex collaboration agent | read-only same governing concern | 26-case counterexample matrix returned; exposed hidden seventh Adapter-record risk |
+| W2-L1 schema integration | depends on W2-S1 and W2-GPT1; lead Codex | exclusive shared-surface integrator | adapter fixed as nested Realization descriptor; strict schema interfaces frozen for fixtures |
+| W2-F1 fixture authoring | depends on W2-L1; independent GPT fixture writer | exclusive `fixtures/records/` | 8 valid records, 11 schema-negative records, and 8 isolated link-negative graphs returned; schema controls passed |
+| W2-D1 diagnostic-oracle review | challenges W2-F1/W2-G1; independent internal Codex reviewer | read-only fixture and expected-diagnostic audit | blocked checkpoint: wrong-kind/version and reference-surface controls were missing, and diagnostics were not yet actionable exact oracles |
+| W2-R1 semantic convergence review | challenges/supports W2-L1/W2-F1; Claude Fable 5 | read-only actual-diff audit | no schema redesign blocker; exposed Claim-state, adapter-shape, profile-set, policy-event, date-format, and expected-reason gaps retained for the successor |
+| W2-L2 successor integration | depends on W2-D1/W2-R1; lead Codex | exclusive schema, core-model, dependency, and plan surfaces | bounded Claim lifecycle, exact profile-set semantics, policy event resolution, and asserted date validation landed; lead schema controls pass |
+| W2-F2 successor fixture oracle | depends on W2-L2; independent GPT fixture writer | exclusive `fixtures/records/` | complete: 15 schema-negative controls with expected reasons and 21 isolated link graphs with actionable exact diagnostics |
+| W2-D2 successor oracle review | challenges W2-L2/W2-F2; same independent internal Codex reviewer | read-only actual-diff regression review | blocked checkpoint: order-independent profile-set equality and typed reference-role paths still lacked decisive controls |
+| W2-F3 final oracle successor | depends on W2-D2; independent GPT fixture writer | exclusive `fixtures/records/` | complete: one zero-diagnostic order-independence graph and eight remaining typed-role/coherence falsifiers; 15 schema and 29 link negatives total |
+| W2-D3 checkpoint review | challenges/supports W2-F3; same independent reviewer | read-only focused regression review | passed; all W2-D2 gaps closed with isolated exact controls |
+| W2-P1 reviewed checkpoint | depends on W2-L2, W2-F3, W2-D3, and lead controls | lead acceptance owner | passed for checkpoint: 7 metaschemas, 8 flat valid records, 15 schema negatives, 29 link negatives, 1 valid link graph, 105 parsed JSON; does not imply W2-G1 acceptance |
+| W2-C1 durable record gate | depends on W2-P1; Claude Sonnet 5 plus lead integration | isolated checker worktree; exclusive checker surfaces | pending |
+| W2-G1 records gate | depends on W2-L2, W2-F2, W2-C1, successor review, and G0 | lead acceptance owner | pending |
+
+The published design baseline is commit `87ffbb1` and draft PR #1. Wave 2 runs on a
+stacked isolated branch so schema implementation cannot silently expand that review.
+Delegated briefs retain the same approved external disclosure scope as DC1 and add only
+the schema/fixture/checker artifacts created in this worktree.
+
+W2-S1 used Claude Code 2.1.212 through `agent-dispatch`, pagu-box `strict`, read-write
+PWD mode in the isolated worktree, explicit high effort, and no web research. The
+requested and runtime primary model was `claude-sonnet-5`; Claude also reported
+auxiliary `claude-haiku-4-5-20251001` usage. Its exclusive scope was `schemas/` and the
+lead independently reran the repository and JSON Schema metaschema gates.
+
+W2-R1 used Claude Code 2.1.212 through `agent-dispatch --read-only`, pagu-box
+`strict`, the isolated worktree PWD, explicit high effort, and no web research. The
+requested and runtime primary model was `claude-fable-5`; auxiliary
+`claude-haiku-4-5-20251001` usage was reported. Git/Python probes were denied inside
+the child, so its manual artifact review does not replace lead-executed validation.
+W2-D1 was an independent internal Codex collaboration node and did execute the fixture
+shape controls. Both reviews received the same governing worktree independently and
+neither model identity nor Fable's PASS overrode W2-D1's decisive missing falsifiers.
+
 ## Specification changes required before implementation
 
 The design audit found prerequisites that the original implementation order omitted:
@@ -175,6 +214,7 @@ The design audit found prerequisites that the original implementation order omit
 Current repository-structure gate:
 
 ```sh
+python3 -m pip install -r requirements-dev.txt
 python3 scripts/check_repo.py
 ```
 
@@ -183,6 +223,10 @@ On a host without ambient Python, the equivalent reproducible invocation current
 ```sh
 nix shell nixpkgs#python3 --command python3 scripts/check_repo.py
 ```
+
+Schema milestones additionally use `jsonschema[format]==4.26.0`; the checker must
+enable format assertion explicitly. A Nix-only equivalent is a temporary Python
+environment composed with `python3Packages.jsonschema` and its format dependencies.
 
 Expected observation: `Repository checks passed.` with exit status 0. Each later
 milestone must add its executable command and expected observation here before its
@@ -288,6 +332,33 @@ summary proxy.
   aggregation, bound, and supporting methods, and makes realization/adapter scope
   conditional on claim subject and evidence mechanism. The failed review remains in
   the DAG rather than being rewritten as an initial pass.
+- W2-GPT1 found that treating an adapter as a canonical exact reference would silently
+  create a seventh record kind. For the tracer, each immutable Realization instead
+  embeds one versioned adapter descriptor; realization-executing Evidence repeats its
+  `(id, version)` selector and the link checker requires an exact match. Multiple
+  independently versioned adapters remain deferred until they justify another local
+  namespace or canonical kind.
+- W2-D1 proved that eight cleanly isolated link-negative graphs were still an
+  insufficient oracle: a checker could ignore wrong-kind and exact-version handling or
+  skip several reference-bearing surfaces and pass. W2-F2 therefore expands controls
+  before checker implementation and makes each expected diagnostic include a code,
+  source path, JSON pointer, and requested target.
+- W2-R1 found that free-form Claim lifecycle could smuggle result/assurance language,
+  JSON Schema date formats are annotations unless the validator asserts them, and
+  policy event patterns could drift from the referenced effect contract. The successor
+  uses a provisional lifecycle enum, explicit exact-set Evidence profile scope, asserted
+  date validation, and a link rule binding policy patterns to declared events.
+- W2-D2 rejected the first expanded oracle because unequal profile sets did not prove
+  order-independent equality and typed local-role paths remained skippable. W2-F3 adds
+  one zero-diagnostic `[A, B]` versus `[B, A]` graph plus isolated cost-measure,
+  carrier, operation-family, Claim, and policy coherence falsifiers. W2-D3 passed the
+  successor; the failed checkpoint review remains visible rather than being rewritten.
+- The W2-P1 lead control used `jsonschema` 4.26.0 with `rfc3339-validator` 0.1.4
+  and an explicit `FormatChecker`: all 7 schemas passed metaschema validation; 8 flat
+  valid records and all valid/link-graph records passed shape validation; all 15 schema
+  negatives rejected; all 105 JSON files parsed. This temporary lead control supports
+  a checkpoint only; W2-C1 must make the same observations durable in the repository
+  before W2-G1 can close.
 
 ## Decision log
 

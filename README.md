@@ -38,6 +38,7 @@ The first milestone is deliberately narrow: publish one nontrivial specification
 Run the repository quality gate:
 
 ```sh
+python3 -m pip install -r requirements-dev.txt
 python3 scripts/check_repo.py
 ```
 
