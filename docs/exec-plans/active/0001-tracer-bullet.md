@@ -211,8 +211,8 @@ semantic-packages worktree and the versioned review brief.
 | W3-PF1 proof falsifiers | depends on W3-P0L1; independent internal GPT fixture owner | exclusive `fixtures/proofs/v1/**` and `scripts/proof_fixture_check.py` | complete red checkpoint: 25 future groups freeze theorem, warning, axiom, exact-statement, linkage, digest, tool, fixture-Evidence, manifest, and path behavior; only future checker/proof/manifest absence remains red |
 | W3-P1 named-law proof implementation | depends on W3-PF1; Claude Sonnet 5 | exclusive `scripts/proof_check.py` and `proofs/stack-pop-empty/**` | implementation checkpoint green: core-only universal theorem, pinned manifest, and standalone checker pass all 25 PF1 groups, direct Lean/checker, compilation, and record/loader gate |
 | W3-PR1 proof review | challenges W3-P1; independent internal GPT reviewer | read-only theorem, linkage, provenance, and evidence audit | blocked: 16 coherent manifest/record/theorem/warning/path/Evidence/output mutations falsely pass and Lean execution is unbounded; the theorem itself remains clean and axiom-free |
-| W3-PF2 proof boundary successor | depends on W3-PR1; independent fixture owner | exclusive proof fixture/harness scope | in progress: pin semantic/tool constants, exact elaborated type, record validity, warnings, containment, Evidence validity, structured output, and timeouts |
-| W3-P2 proof checker successor | depends on W3-PF2 | exclusive `scripts/proof_check.py` and proof manifest/source as required | pending |
+| W3-PF2 proof boundary successor | depends on W3-PR1; independent fixture owner | exclusive proof fixture/harness scope | complete red checkpoint: 15 successor groups (40 total) pin semantic/tool constants, exact elaborated type, record validity, warnings, containment, Evidence validity, structured output, and bounded tool/version execution; P1 fails only those new controls and both hanging fake-Lean modes are killed within the harness deadline |
+| W3-P2 proof checker successor | depends on W3-PF2; Claude Sonnet 5 | exclusive `scripts/proof_check.py` and proof manifest/source as required | in progress |
 | W3-PR2 proof successor review | challenges W3-P2 | read-only prior and novel theorem/linkage/provenance audit | pending |
 | W3-PG1 named-law evidence gate | depends on accepted W3-P2 successor, W3-PR2, and G1 | lead acceptance owner | pending |
 | W3-G1 execution-substrate convergence | depends on W3-LG1, W3-AG1, W3-PG1, and G0 | lead acceptance owner | pending |
@@ -645,7 +645,16 @@ not a grep or summary proxy.
   validity were not pinned, expected axioms could be widened, assignability stood in
   for exact theorem type, warnings and manifest/Evidence/path containment were porous,
   malformed structured output could forge success, and Lean execution had no timeout.
-  W3-PF2 converts those categories into durable controls before W3-P2.
+  W3-PF2 converts those categories into durable controls before W3-P2. The PR1 handoff
+  also printed a conflicting Lean commit hash; repeated direct `lean --version` output,
+  the manifest, and PF1 agree on `d024af099ca4bf2c86f649261ebf59565dc8c622`, which
+  remains the accepted observed provenance rather than the reviewer transcript typo.
+- W3-PF2 freezes the blocking review as 15 permanent successor groups, bringing the
+  harness to 40 groups. The P1 checker remains green on all prior controls and red on
+  exact-scope, schema/link, axiom-authority, theorem-type, warning, canonical-path,
+  Evidence-input, structured-output, and timeout controls. The harness owns a three-
+  second outer deadline and verifies that both version-query and proof-execution hangs
+  leave no fake-Lean child process; this is a red checkpoint, not product acceptance.
 
 ## Decision log
 

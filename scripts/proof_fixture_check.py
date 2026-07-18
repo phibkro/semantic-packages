@@ -15,10 +15,12 @@ import hashlib
 import json
 import os
 import re
+import signal
 import shutil
 import subprocess
 import sys
 import tempfile
+import time
 from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
@@ -43,6 +45,7 @@ SUCCESS = "Proof is valid: 0 diagnostics."
 LEAN_VERSION = "4.30.0"
 LEAN_COMMIT = "d024af099ca4bf2c86f649261ebf59565dc8c622"
 DIAGNOSTIC_HEAD = re.compile(r"^[A-Z][A-Z0-9_]+ [^#]+#(?:/.*)?$")
+HARNESS_TIMEOUT_SECONDS = 3.0
 
 
 @dataclass(frozen=True)
@@ -104,22 +107,34 @@ def _invoke(
     process_environment = os.environ.copy()
     if environment:
         process_environment.update(environment)
-    completed = subprocess.run(
+    process = subprocess.Popen(
         command,
         cwd=cwd,
-        check=False,
-        capture_output=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
         text=True,
         encoding="utf-8",
         env=process_environment,
+        start_new_session=True,
     )
-    signatures, parse_errors = _parse_signatures(completed.stdout)
+    timed_out = False
+    try:
+        stdout, stderr = process.communicate(timeout=HARNESS_TIMEOUT_SECONDS)
+    except subprocess.TimeoutExpired:
+        timed_out = True
+        os.killpg(process.pid, signal.SIGKILL)
+        stdout, stderr = process.communicate()
+    signatures, parse_errors = _parse_signatures(stdout)
+    if timed_out:
+        parse_errors.append(
+            f"checker exceeded the {HARNESS_TIMEOUT_SECONDS:.1f}s harness deadline"
+        )
     return (
         Observation(
-            exit_status=completed.returncode,
+            exit_status=124 if timed_out else process.returncode,
             signatures=signatures,
-            stdout=completed.stdout,
-            stderr=completed.stderr,
+            stdout=stdout,
+            stderr=stderr,
         ),
         parse_errors,
     )
@@ -175,6 +190,8 @@ def _materialize(
     fake_lean = repository / FIXTURES.relative_to(ROOT) / "fake_lean.py"
 
     _copy(CHECKER, checker)
+    _copy(ROOT / "scripts" / "record_check.py", repository / "scripts" / "record_check.py")
+    shutil.copytree(ROOT / "schemas", repository / "schemas")
     _copy(FIXTURES / source_name, source)
     _copy(SPECIFICATION, specification)
     _copy(CLAIM, claim)
@@ -223,6 +240,7 @@ def _case(
     evidence: bool = False,
     fake_mode: str | None = None,
     malformed_manifest: bool = False,
+    prepare: Callable[[Path, dict[str, Any]], None] | None = None,
 ) -> list[str]:
     with tempfile.TemporaryDirectory(prefix="semantic-proof-fixture-") as raw:
         (
@@ -235,6 +253,8 @@ def _case(
         ) = _materialize(raw, source_name)
         if mutate:
             mutate(manifest)
+        if prepare:
+            prepare(repository, manifest)
         if malformed_manifest:
             manifest_path.write_text("{ not json\n", encoding="utf-8")
         else:
@@ -317,6 +337,9 @@ def check_fixture_inputs(lean: Path | None) -> list[str]:
         "wrong-true-statement.lean": 0,
         "finite-specialization.lean": 0,
         "warning-policy-too-late.lean": 0,
+        "defaulted-extra-binder.lean": 0,
+        "autoparam-extra-binder.lean": 0,
+        "warning-policy-comment.lean": 0,
     }
     for name, status in expected_exit.items():
         completed = _run_lean(lean, FIXTURES / name)
@@ -359,6 +382,12 @@ def check_product_contract(lean: Path) -> tuple[list[str], int]:
         nonlocal groups
         groups += 1
         failures.extend(_case(*args, lean=lean, **kwargs))
+
+    def run_group(cases: list[tuple[tuple[Any, ...], dict[str, Any]]]) -> None:
+        nonlocal groups
+        groups += 1
+        for positional, keyword in cases:
+            failures.extend(_case(*positional, lean=lean, **keyword))
 
     run("clean universal model satisfies the proof boundary")
     run(
@@ -508,6 +537,511 @@ def check_product_contract(lean: Path) -> tuple[list[str], int]:
             0,
             [],
         )
+    )
+
+    # PF2 acceptance-boundary successor groups. Each group may contain multiple
+    # isolated witnesses, but every witness retains one exact diagnostic oracle.
+    run_group(
+        [
+            (
+                ("only proof-manifest format version 1 is accepted",),
+                {
+                    "mutate": lambda manifest: manifest.__setitem__("formatVersion", 2),
+                    "expected": f"PROOF_MANIFEST_VERSION {MANIFEST_LABEL}#/formatVersion",
+                },
+            )
+        ]
+    )
+
+    def prepare_alias_theorem(repository: Path, manifest: dict[str, Any]) -> None:
+        source = repository / manifest["source"]["path"]
+        source.write_text(
+            source.read_text(encoding="utf-8")
+            + "\ntheorem alternate_pop_empty (A : Type u) :\n"
+            + "    pop (empty : ObservedStack A) = Option.none := stack_pop_empty A\n",
+            encoding="utf-8",
+        )
+        manifest["source"]["sha256"] = _sha256(source)
+
+    run_group(
+        [
+            (
+                ("the accepted Specification address is constant",),
+                {
+                    "mutate": lambda manifest: manifest["specification"]["reference"].__setitem__(
+                        "id", "another-specification"
+                    ),
+                    "expected": f"PROOF_ACCEPTANCE_SCOPE {MANIFEST_LABEL}#/specification/reference",
+                },
+            ),
+            (
+                ("the accepted Claim address is constant",),
+                {
+                    "mutate": lambda manifest: manifest["claim"]["reference"].__setitem__(
+                        "id", "another-claim"
+                    ),
+                    "expected": f"PROOF_ACCEPTANCE_SCOPE {MANIFEST_LABEL}#/claim/reference",
+                },
+            ),
+            (
+                ("the accepted declaration id is constant",),
+                {
+                    "mutate": lambda manifest: manifest.__setitem__(
+                        "declarationId", "pop-push"
+                    ),
+                    "expected": f"PROOF_ACCEPTANCE_SCOPE {MANIFEST_LABEL}#/declarationId",
+                },
+            ),
+            (
+                ("the accepted theorem name is constant",),
+                {
+                    "mutate": lambda manifest: manifest.__setitem__(
+                        "theoremName", "alternate_pop_empty"
+                    ),
+                    "prepare": prepare_alias_theorem,
+                    "expected": f"PROOF_ACCEPTANCE_SCOPE {MANIFEST_LABEL}#/theoremName",
+                },
+            ),
+            (
+                ("the accepted statement spelling is constant",),
+                {
+                    "mutate": lambda manifest: manifest.__setitem__(
+                        "expectedStatement",
+                        "∀ (A : Type u), pop (empty : ObservedStack A) = none",
+                    ),
+                    "expected": f"PROOF_ACCEPTANCE_SCOPE {MANIFEST_LABEL}#/expectedStatement",
+                },
+            ),
+        ]
+    )
+
+    run_group(
+        [
+            (
+                ("the proof tool name is exactly Lean",),
+                {
+                    "mutate": lambda manifest: manifest["tool"].__setitem__(
+                        "name", "CompatibleLean"
+                    ),
+                    "expected": f"PROOF_TOOL_IDENTITY {MANIFEST_LABEL}#/tool/name",
+                },
+            ),
+            (
+                ("the generated-source invocation is exact",),
+                {
+                    "mutate": lambda manifest: manifest["tool"].__setitem__(
+                        "invocation", ["$LEAN", "--json", "$GENERATED_SOURCE"]
+                    ),
+                    "expected": f"PROOF_TOOL_INVOCATION {MANIFEST_LABEL}#/tool/invocation",
+                },
+            ),
+        ]
+    )
+
+    run_group(
+        [
+            (
+                ("the accepted manifest cannot pre-authorize axioms",),
+                {
+                    "mutate": lambda manifest: manifest.__setitem__(
+                        "expectedAxioms", ["Classical.choice"]
+                    ),
+                    "expected": f"PROOF_EXPECTED_AXIOMS {MANIFEST_LABEL}#/expectedAxioms",
+                },
+            )
+        ]
+    )
+
+    def prepare_record_input(
+        field: str, *, malformed: bool
+    ) -> Callable[[Path, dict[str, Any]], None]:
+        def prepare(repository: Path, manifest: dict[str, Any]) -> None:
+            path = repository / manifest[field]["path"]
+            if malformed:
+                path.write_text("{ not json\n", encoding="utf-8")
+            else:
+                record = json.loads(path.read_text(encoding="utf-8"))
+                record["unexpected"] = True
+                path.write_text(
+                    json.dumps(record, indent=2, ensure_ascii=False) + "\n",
+                    encoding="utf-8",
+                )
+            manifest[field]["sha256"] = _sha256(path)
+
+        return prepare
+
+    run_group(
+        [
+            (
+                ("malformed Specification input is diagnosed after digest verification",),
+                {
+                    "prepare": prepare_record_input("specification", malformed=True),
+                    "expected": (
+                        "PROOF_INPUT_JSON "
+                        "fixtures/records/valid/stack-spec.json#"
+                    ),
+                },
+            ),
+            (
+                ("schema-invalid Specification input is rejected",),
+                {
+                    "prepare": prepare_record_input("specification", malformed=False),
+                    "expected": (
+                        "PROOF_INPUT_SCHEMA "
+                        "fixtures/records/valid/stack-spec.json#/unexpected"
+                    ),
+                },
+            ),
+            (
+                ("malformed Claim input is diagnosed after digest verification",),
+                {
+                    "prepare": prepare_record_input("claim", malformed=True),
+                    "expected": (
+                        "PROOF_INPUT_JSON "
+                        "fixtures/records/valid/pop-empty-spec-claim.json#"
+                    ),
+                },
+            ),
+            (
+                ("schema-invalid Claim input is rejected",),
+                {
+                    "prepare": prepare_record_input("claim", malformed=False),
+                    "expected": (
+                        "PROOF_INPUT_SCHEMA "
+                        "fixtures/records/valid/pop-empty-spec-claim.json#/unexpected"
+                    ),
+                },
+            ),
+        ]
+    )
+
+    def prepare_alternate_graph(repository: Path, manifest: dict[str, Any]) -> None:
+        spec_path = repository / manifest["specification"]["path"]
+        claim_path = repository / manifest["claim"]["path"]
+        specification = json.loads(spec_path.read_text(encoding="utf-8"))
+        claim = json.loads(claim_path.read_text(encoding="utf-8"))
+        specification["id"] = "alternate-stack"
+        specification["laws"][0]["id"] = "alternate-pop-empty"
+        alternate_spec = {
+            "kind": "specification",
+            "id": "alternate-stack",
+            "version": "0.1.0",
+        }
+        claim["id"] = "alternate-pop-empty-claim"
+        claim["subject"] = dict(alternate_spec)
+        claim["governingSpecification"] = dict(alternate_spec)
+        claim["proposition"]["specification"] = dict(alternate_spec)
+        claim["proposition"]["declarationId"] = "alternate-pop-empty"
+        spec_path.write_text(json.dumps(specification, indent=2) + "\n", encoding="utf-8")
+        claim_path.write_text(json.dumps(claim, indent=2) + "\n", encoding="utf-8")
+        manifest["specification"]["reference"] = dict(alternate_spec)
+        manifest["claim"]["reference"]["id"] = "alternate-pop-empty-claim"
+        manifest["declarationId"] = "alternate-pop-empty"
+        manifest["specification"]["sha256"] = _sha256(spec_path)
+        manifest["claim"]["sha256"] = _sha256(claim_path)
+
+    run_group(
+        [
+            (
+                ("a coherent alternate record and declaration graph is outside acceptance",),
+                {
+                    "prepare": prepare_alternate_graph,
+                    "expected": f"PROOF_ACCEPTANCE_SCOPE {MANIFEST_LABEL}#/specification/reference",
+                },
+            )
+        ]
+    )
+
+    run_group(
+        [
+            (
+                ("a manifest cannot authorize a declared proof axiom",),
+                {
+                    "source_name": "injected-axiom.lean",
+                    "mutate": lambda manifest: manifest.__setitem__(
+                        "expectedAxioms", ["assumed_pop_empty"]
+                    ),
+                    "expected": f"PROOF_AXIOM_DEPENDENCY {SOURCE_LABEL}#",
+                },
+            ),
+            (
+                ("a manifest cannot authorize Classical.choice",),
+                {
+                    "source_name": "classical-choice.lean",
+                    "mutate": lambda manifest: manifest.__setitem__(
+                        "expectedAxioms", ["Classical.choice"]
+                    ),
+                    "expected": f"PROOF_AXIOM_DEPENDENCY {SOURCE_LABEL}#",
+                },
+            ),
+        ]
+    )
+
+    run_group(
+        [
+            (
+                ("a defaulted extra theorem binder is not exact type equality",),
+                {
+                    "source_name": "defaulted-extra-binder.lean",
+                    "expected": (
+                        f"PROOF_THEOREM_TYPE_MISMATCH "
+                        f"{MANIFEST_LABEL}#/expectedStatement"
+                    ),
+                },
+            ),
+            (
+                ("an autoParam extra theorem binder is not exact type equality",),
+                {
+                    "source_name": "autoparam-extra-binder.lean",
+                    "expected": (
+                        f"PROOF_THEOREM_TYPE_MISMATCH "
+                        f"{MANIFEST_LABEL}#/expectedStatement"
+                    ),
+                },
+            ),
+        ]
+    )
+
+    run_group(
+        [
+            (
+                ("a warning-policy phrase inside a comment is not a command",),
+                {
+                    "source_name": "warning-policy-comment.lean",
+                    "expected": f"PROOF_WARNING_POLICY_ORDER {SOURCE_LABEL}#",
+                },
+            ),
+            (
+                ("every structured Lean warning is rejected",),
+                {
+                    "fake_mode": "warning-with-forged-positive",
+                    "expected": f"PROOF_LEAN_WARNING {SOURCE_LABEL}#",
+                },
+            ),
+        ]
+    )
+
+    def run_argument_case(mode: str) -> list[str]:
+        with tempfile.TemporaryDirectory(prefix="semantic-proof-argument-") as raw:
+            repository, checker, manifest_path, _evidence, _fake, manifest = _materialize(raw)
+            _write_manifest(manifest_path, manifest)
+            benign_evidence = repository / "evidence" / "clean.json"
+            benign_evidence.parent.mkdir(parents=True, exist_ok=True)
+            benign_evidence.write_text("{}\n", encoding="utf-8")
+            manifest_arg: Path = Path(MANIFEST_LABEL)
+            evidence_arg: Path | None = None
+            if mode == "manifest-absolute":
+                manifest_arg = manifest_path
+            elif mode == "manifest-traversal":
+                manifest_arg = Path(
+                    "proofs/stack-pop-empty/../../proofs/stack-pop-empty/manifest.json"
+                )
+            elif mode == "manifest-symlink":
+                external = repository.parent / f"{repository.name}-manifest.json"
+                external.write_text(manifest_path.read_text(encoding="utf-8"), encoding="utf-8")
+                (repository / "manifest-link.json").symlink_to(external)
+                manifest_arg = Path("manifest-link.json")
+            elif mode == "evidence-absolute":
+                evidence_arg = benign_evidence
+            elif mode == "evidence-traversal":
+                evidence_arg = Path("evidence/../evidence/clean.json")
+            elif mode == "evidence-symlink":
+                external = repository.parent / f"{repository.name}-evidence.json"
+                external.write_text("{}\n", encoding="utf-8")
+                (repository / "evidence-link.json").symlink_to(external)
+                evidence_arg = Path("evidence-link.json")
+            else:
+                raise AssertionError(mode)
+            selected = manifest_arg if mode.startswith("manifest") else evidence_arg
+            assert selected is not None
+            try:
+                return _expect(
+                    f"{mode} is rejected at the CLI boundary",
+                    checker,
+                    repository,
+                    manifest_arg,
+                    lean,
+                    1,
+                    [f"PROOF_ARGUMENT_PATH_INVALID {selected}#"],
+                    evidence=evidence_arg,
+                )
+            finally:
+                for suffix in ("manifest.json", "evidence.json"):
+                    external = repository.parent / f"{repository.name}-{suffix}"
+                    if external.exists():
+                        external.unlink()
+
+    groups += 1
+    for argument_mode in (
+        "manifest-absolute",
+        "manifest-traversal",
+        "manifest-symlink",
+        "evidence-absolute",
+        "evidence-traversal",
+        "evidence-symlink",
+    ):
+        failures.extend(run_argument_case(argument_mode))
+
+    external_owned_paths = {
+        "specification": SPECIFICATION,
+        "claim": CLAIM,
+        "source": FIXTURES / "positive.lean",
+        "runner": CHECKER,
+    }
+
+    def prepare_owned_symlink(
+        field: str,
+    ) -> Callable[[Path, dict[str, Any]], None]:
+        def prepare(repository: Path, manifest: dict[str, Any]) -> None:
+            path = repository / manifest[field]["path"]
+            path.unlink()
+            path.symlink_to(external_owned_paths[field])
+
+        return prepare
+
+    run_group(
+        [
+            (
+                (f"manifest-owned {field} paths cannot escape through symlinks",),
+                {
+                    "prepare": prepare_owned_symlink(field),
+                    "expected": f"PROOF_PATH_INVALID {MANIFEST_LABEL}#/{field}/path",
+                },
+            )
+            for field in ("specification", "claim", "source", "runner")
+        ]
+    )
+
+    def run_evidence_case(mode: str) -> list[str]:
+        with tempfile.TemporaryDirectory(prefix="semantic-proof-evidence-") as raw:
+            repository, checker, manifest_path, _evidence, _fake, manifest = _materialize(raw)
+            _write_manifest(manifest_path, manifest)
+            relative = Path("evidence") / f"{mode}.json"
+            path = repository / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            expected_code = {
+                "missing": "PROOF_EVIDENCE_NOT_FOUND",
+                "directory": "PROOF_EVIDENCE_TYPE",
+                "unreadable": "PROOF_EVIDENCE_READ",
+                "malformed": "PROOF_EVIDENCE_JSON",
+            }[mode]
+            original_mode: int | None = None
+            if mode == "directory":
+                path.mkdir()
+            elif mode == "unreadable":
+                path.write_text("{}\n", encoding="utf-8")
+                original_mode = path.stat().st_mode & 0o7777
+                path.chmod(0)
+                if os.access(path, os.R_OK):
+                    path.chmod(original_mode)
+                    return ["unreadable Evidence control: permissions were not enforced"]
+            elif mode == "malformed":
+                path.write_text("{ not json\n", encoding="utf-8")
+            try:
+                return _expect(
+                    f"{mode} Evidence is diagnosed",
+                    checker,
+                    repository,
+                    Path(MANIFEST_LABEL),
+                    lean,
+                    1,
+                    [f"{expected_code} {relative.as_posix()}#"],
+                    evidence=relative,
+                )
+            finally:
+                if original_mode is not None:
+                    path.chmod(original_mode)
+
+    groups += 1
+    for evidence_mode in ("missing", "directory", "unreadable", "malformed"):
+        failures.extend(run_evidence_case(evidence_mode))
+
+    def process_is_gone(pid: int) -> bool:
+        deadline = time.monotonic() + 0.5
+        while time.monotonic() < deadline:
+            try:
+                os.kill(pid, 0)
+            except ProcessLookupError:
+                return True
+            time.sleep(0.01)
+        return False
+
+    def run_timeout_case(mode: str, expected: str) -> list[str]:
+        with tempfile.TemporaryDirectory(prefix="semantic-proof-timeout-") as raw:
+            repository, checker, manifest_path, _evidence, fake_lean, manifest = _materialize(raw)
+            _write_manifest(manifest_path, manifest)
+            marker = repository / "fake-lean.pid"
+            started = time.monotonic()
+            case_failures = _expect(
+                f"{mode} is bounded and diagnosed",
+                checker,
+                repository,
+                Path(MANIFEST_LABEL),
+                fake_lean,
+                1,
+                [expected],
+                environment={
+                    "FAKE_LEAN_MODE": mode,
+                    "FAKE_LEAN_PID_MARKER": str(marker),
+                },
+            )
+            elapsed = time.monotonic() - started
+            if elapsed > HARNESS_TIMEOUT_SECONDS + 1.0:
+                case_failures.append(f"{mode}: unbounded harness return after {elapsed:.3f}s")
+            if not marker.is_file():
+                case_failures.append(f"{mode}: fake Lean did not publish its PID")
+            else:
+                pid = int(marker.read_text(encoding="ascii"))
+                if not process_is_gone(pid):
+                    case_failures.append(f"{mode}: fake Lean PID {pid} remained alive")
+            return case_failures
+
+    groups += 1
+    failures.extend(
+        run_timeout_case(
+            "timeout-version",
+            f"PROOF_TOOL_TIMEOUT {MANIFEST_LABEL}#/tool/version",
+        )
+    )
+    failures.extend(
+        run_timeout_case(
+            "timeout-execution",
+            f"PROOF_EXECUTION_TIMEOUT {SOURCE_LABEL}#",
+        )
+    )
+
+    run_group(
+        [
+            (
+                ("non-JSON Lean output cannot precede a forged positive audit",),
+                {
+                    "fake_mode": "malformed-output-forged-positive",
+                    "expected": f"PROOF_LEAN_OUTPUT_INVALID {SOURCE_LABEL}#",
+                },
+            ),
+            (
+                ("unexpected structured Lean output cannot precede a forged positive audit",),
+                {
+                    "fake_mode": "unexpected-output-forged-positive",
+                    "expected": f"PROOF_LEAN_OUTPUT_INVALID {SOURCE_LABEL}#",
+                },
+            ),
+        ]
+    )
+
+    run_group(
+        [
+            (
+                ("an empty-axiom message cannot replace exact theorem-type observation",),
+                {
+                    "fake_mode": "axiom-only-positive",
+                    "expected": (
+                        f"PROOF_THEOREM_AUDIT_MISSING "
+                        f"{MANIFEST_LABEL}#/expectedStatement"
+                    ),
+                },
+            )
+        ]
     )
     return failures, groups
 
