@@ -196,14 +196,17 @@ semantic-packages worktree and the versioned review brief.
 | W3-A0R1 adapter skeptic | challenges W3-A0/W3-A0L1; independent internal GPT reviewer | read-only observable-semantics and trust-boundary audit | blocked the initial packet: normative handle freshness leaked representation, lifecycle/error behavior was incomplete, shared oracle code would be tautological, and performance instrumentation needed an explicit exclusion |
 | W3-A0L1 adapter contract successor | depends on DC1-G1, W2-G1, and the blocking W3-A0R1 review; informed by W3-A0; lead Codex | exclusive adapter design, ADR, plan, and guidance integration | accepted provisionally: independent harness oracle and Realization, child-process NDJSON, EOF lifecycle, opaque stable-denotation handles with fresh/interned tokens both valid, ordered reported events, and separate challenge/error classifications |
 | W3-AF1 model/adapter falsifiers | depends on W3-A0L1; independent internal GPT fixture owner | exclusive `tests/adapter/` and `fixtures/adapters/` | complete red checkpoint: future runner API plus semantic, persistence, event, transport, execution-error, and liar matrix; actual `python -m semantic_packages.stack_adapter` is required, and current failure is the missing product package |
-| W3-A1 reference realization and adapter | depends on W3-AF1; implementation owner to be assigned | isolated worktree and exclusive execution-substrate paths | pending |
-| W3-AR1 adapter review | challenges W3-A1; independent reviewer | read-only observable-semantics audit | pending |
-| W3-AG1 reference-adapter convergence | depends on W3-A1, W3-AR1, and G1 | lead acceptance owner | pending |
+| W3-A1 reference realization and adapter | depends on W3-AF1; Claude Sonnet 5 | isolated worktree; exclusive `semantic_packages/**` | implementation checkpoint green: independent persistent realization, child adapter, and runner pass all 9 AF1 tests, compile, actual EOF probe, and full repository gate |
+| W3-AR1 adapter review | challenges W3-A1; independent internal GPT reviewer | read-only actual-code and novel observable-semantics/lifecycle audit | blocked despite AF1 green: EOF nonzero/hang/extra-output failures are accepted, process start escapes, stderr provenance is discarded, and a nonempty pushed source can be rebound undetected |
+| W3-AF2 adapter lifecycle successor | depends on W3-AR1; independent fixture owner | exclusive adapter fake/test scope | complete red checkpoint: prior 9 plus unterminated-line regression pass; six controls fail exactly on EOF exit/hang/extra-output, start error, stderr retention, and nonempty-source persistence |
+| W3-A2 adapter successor | depends on W3-AF2; Claude Sonnet 5 | exclusive `semantic_packages/**` | in progress |
+| W3-AR2 adapter successor review | challenges W3-A2 | read-only prior and novel regression | pending |
+| W3-AG1 reference-adapter convergence | depends on W3-A2, W3-AR2, and G1 | lead acceptance owner | pending |
 | W3-P0S1 bounded proof preflight | informs W3-P0L1; independent internal GPT concern owner | read-only law, local-tool, falsifier, and evidence-boundary analysis | complete: recommends experimental Lean-core universal `pop-empty` probe; found `sorry` exit-zero and admitted-axiom traps; keeps translation/tool trust and non-global authority explicit |
-| W3-P0R1 diverse proof skeptic | challenges W3-P0S1; Claude Fable 5 | read-only semantic-model, trust-boundary, and evidence-scope audit | in progress |
-| W3-P0L1 bounded proof boundary | depends on W3-P0S1/P0R1 and W3-LG1; lead integration | exclusive proof design/plan acceptance; no universal foundation authority | pending |
-| W3-PF1 proof falsifiers | depends on W3-P0L1 | exclusive proof fixture/checker oracle | pending |
-| W3-P1 named-law proof implementation | depends on W3-PF1 | isolated proof artifact boundary | pending |
+| W3-P0R1 diverse proof skeptic | challenges W3-P0S1; Claude Fable 5 | read-only semantic-model, trust-boundary, and evidence-scope audit | complete REVISE: support only model satisfaction/pipeline evidence, pin the expected theorem statement, treat new Evidence as additional, and disposition the accepted fixture-only hazard; its `--trust=0` concern was directly falsified against Lean 4.30.0 help/execution |
+| W3-P0L1 bounded proof boundary | depends on W3-P0S1/P0R1 and W3-LG1; lead integration | exclusive proof design/plan acceptance; no universal foundation authority | accepted experimentally in ADR 0009 with all four bounded review corrections and explicit non-authority/revisit conditions |
+| W3-PF1 proof falsifiers | depends on W3-P0L1; independent internal GPT fixture owner | exclusive `fixtures/proofs/v1/**` and `scripts/proof_fixture_check.py` | complete red checkpoint: 25 future groups freeze theorem, warning, axiom, exact-statement, linkage, digest, tool, fixture-Evidence, manifest, and path behavior; only future checker/proof/manifest absence remains red |
+| W3-P1 named-law proof implementation | depends on W3-PF1; Claude Sonnet 5 | exclusive `scripts/proof_check.py` and `proofs/stack-pop-empty/**` | in progress |
 | W3-PR1 proof review | challenges W3-P1 | independent theorem, linkage, provenance, and evidence audit | pending |
 | W3-PG1 named-law evidence gate | depends on accepted W3-P1 successor, W3-PR1, and G1 | lead acceptance owner | pending |
 | W3-G1 execution-substrate convergence | depends on W3-LG1, W3-AG1, W3-PG1, and G0 | lead acceptance owner | pending |
@@ -244,6 +247,22 @@ Python environment with jsonschema 4.26.0 to execute the unchanged 18-group and 
 repository gates; worktree Git metadata was denied, so the lead separately ran
 `git diff --check`. Disclosure was limited to the approved public worktree and brief;
 no web research, installs, unrelated data, or delegation occurred.
+
+W3-A1 used Claude Code through `agent-dispatch`, pagu-box `strict`, writable PWD mode
+in the isolated Wave 3 worktree, exact `claude-sonnet-5`, explicit high effort, no
+fallback, and exclusive `semantic_packages/**` ownership. The child and lead both ran
+the unchanged 9-test AF1 suite, compilation, actual adapter EOF, and the full repository
+gate green. Disclosure was limited to the approved public worktree and brief; no web,
+unrelated data, installs, or delegation occurred.
+
+W3-P0R1 used Claude Code through `agent-dispatch --read-only`, pagu-box `strict`, exact
+`claude-fable-5`, explicit high effort, and no fallback. It could not execute Lean in
+its sandbox, so its likely-Lean-3-only objection to `--trust=0` remained an inference;
+the lead directly verified the installed Lean 4.30.0 help and a successful
+`--stdin --trust=0` invocation. The statement-linkage, evidence-wording, additional-
+record, and fixture-hazard corrections were accepted. Disclosure was limited to the
+approved public worktree and brief; no writes, web, installs, unrelated data, or
+delegation occurred.
 
 ## Specification changes required before implementation
 
@@ -337,6 +356,8 @@ enables format assertion explicitly. W2-G1 also ran:
 ```sh
 python3 -m py_compile scripts/check_repo.py scripts/record_check.py
 python3 scripts/loader_fixture_check.py
+python3 -m unittest discover -s tests/adapter -v
+python3 -m py_compile semantic_packages/*.py tests/adapter/test_stack_runner.py fixtures/adapters/v1/fake_stack_adapter.py
 python3 scripts/record_check.py fixtures/records/valid/*.json
 python3 scripts/record_check.py fixtures/records/invalid/schema/spec/kind-array.json
 ```
@@ -549,6 +570,28 @@ not a grep or summary proxy.
   A separate control requires the actual `semantic_packages.stack_adapter` command so
   a runner implemented only against test children cannot close W3-A1. The test suite
   compiles but currently fails at the intentionally absent product package.
+- W3-A1 supplies an independently implemented immutable linked Stack behind the child
+  adapter and a runner-owned expected-trace oracle. All 9 AF1 tests and the repository
+  gate pass, including the actual module boundary. W3-AR1 remains the independent
+  generality and lifecycle gate; authored green evidence does not close W3-AG1.
+- W3-AR1 blocked that checkpoint. Clean request/response behavior followed by nonzero
+  EOF exit, EOF hang, or extra EOF output is currently accepted as support; a missing
+  command escapes instead of returning an error; stderr is drained rather than retained
+  as provenance. A targeted child also showed that a nonempty pushed source can be
+  rebound on its next use because the runner retains empty/remainders but not every
+  constructed pushed handle. W3-AF2 freezes each observation before W3-A2.
+- W3-P0S1 found a locally available core-only Lean 4.30.0 route for universal
+  `pop-empty`, plus decisive `sorry` and admitted-axiom controls. W3-P0R1 challenged
+  overbroad evidence wording, name-only theorem linkage, nonexistent supersession
+  semantics, and the accepted `fixture-only` Evidence hazard. ADR 0009 accepts a
+  corrected experiment: model-satisfaction/pipeline support only, exact statement and
+  digest linkage, additional pending Evidence, and no authority over another law or
+  proof system. Direct execution resolved Fable's unverified `--trust=0` objection in
+  favor of the installed Lean 4.30.0 flag.
+- W3-PF1 converts that boundary into 25 contract groups before product code. All
+  committed Lean/JSON controls self-check against explicit Lean 4.30.0; the harness is
+  red only because `scripts/proof_check.py`, the actual proof source, and its manifest
+  do not yet exist. No canonical Evidence or schema changed.
 
 ## Decision log
 
@@ -588,6 +631,10 @@ not a grep or summary proxy.
   the harness and handle identity unobservable. See
   [ADR 0008](../../decisions/0008-tracer-child-process-adapter.md). This does not select
   a universal transport or establish adapter faithfulness.
+- Use one core-only Lean 4 probe as replaceable, specification-scoped model-satisfaction
+  evidence for `pop-empty`, with exact statement/input/tool provenance and no authority
+  over another law or a project-wide proof foundation. See
+  [ADR 0009](../../decisions/0009-bounded-pop-empty-proof-probe.md).
 
 ## Result
 

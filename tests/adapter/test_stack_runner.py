@@ -7,8 +7,10 @@ operations: expected behavior stays in this harness and the child is opaque.
 
 from __future__ import annotations
 
+import os
 import sys
 import tempfile
+import time
 import unittest
 from pathlib import Path
 
@@ -129,6 +131,53 @@ class StackRunnerContractTests(unittest.TestCase):
         self.assertIn("adapter-event-completeness", report.assumptions)
         self.assertIn("adapter-external-effects", report.exclusions)
         self.assertIn("realization-steps", report.exclusions)
+
+    def test_nonempty_source_handle_is_retained_before_reuse(self) -> None:
+        self.assert_result(
+            "destructive-push-nonempty",
+            "challenges",
+            "RETAINED_HANDLE_CHANGED",
+        )
+
+    def test_successful_responses_then_nonzero_eof_exit_are_an_error(self) -> None:
+        self.assert_result("eof-nonzero", "error", "PROCESS_EXIT")
+
+    def test_successful_responses_then_post_eof_timeout_is_killed(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            marker = Path(directory) / "pid.txt"
+            started = time.monotonic()
+            report = self.run_mode("eof-timeout", str(marker))
+            elapsed = time.monotonic() - started
+
+            self.assertLess(elapsed, 3.0, report)
+            pid = int(marker.read_text(encoding="ascii"))
+            try:
+                os.kill(pid, 0)
+            except ProcessLookupError:
+                pass
+            else:
+                self.fail(f"adapter process {pid} remained after bounded teardown")
+            self.assertEqual("error", report.result, report)
+            self.assertIn("TIMEOUT", report.causes, report)
+
+    def test_extra_stdout_emitted_only_after_eof_is_an_error(self) -> None:
+        self.assert_result("eof-extra-stdout", "error", "EXTRA_STDOUT")
+
+    def test_unterminated_extra_stdout_remains_detectable(self) -> None:
+        self.assert_result("extra-stdout-unterminated", "error", "EXTRA_STDOUT")
+
+    def test_process_start_failure_is_a_returned_report(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            missing = Path(directory) / "missing-adapter-command"
+            report = self.run_command((str(missing),))
+        self.assertEqual("error", report.result, report)
+        self.assertIn("PROCESS_START", report.causes, report)
+
+    def test_raw_stderr_is_retained_without_decoding(self) -> None:
+        report = self.run_mode("stderr-bytes")
+        self.assertEqual("supports", report.result, report)
+        self.assertIsInstance(report.stderr, bytes)
+        self.assertEqual(b"adapter diagnostic: \xff\x00\n", report.stderr)
 
 
 if __name__ == "__main__":

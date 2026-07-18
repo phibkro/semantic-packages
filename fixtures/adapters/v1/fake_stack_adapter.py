@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 import os
+import signal
 import sys
 import time
 from pathlib import Path
@@ -17,6 +18,24 @@ from typing import Any
 
 MODE = sys.argv[1] if len(sys.argv) > 1 else "reference"
 MODE_ARGUMENTS = sys.argv[2:]
+
+PUSH_MUTATIONS = {
+    "destructive-push": "every-source-new-handle",
+    "destructive-push-nonempty": "nonempty-source-same-handle",
+}
+IMMEDIATE_EXTRA_STDOUT = {
+    "extra-stdout": '{"extra":true}\n',
+    "extra-stdout-unterminated": '{"extra":true}',
+}
+POST_EOF_ACTIONS = {
+    "eof-marker": "marker",
+    "eof-nonzero": "nonzero",
+    "eof-timeout": "ignore-term-and-wait",
+    "eof-extra-stdout": "extra-stdout",
+}
+STDERR_PAYLOADS = {
+    "stderr-bytes": b"adapter diagnostic: \xff\x00\n",
+}
 
 
 class FakeStackAdapter:
@@ -107,9 +126,13 @@ class FakeStackAdapter:
         elif op == "push":
             source = args["stack"]
             value = args["value"]
-            if self.mode == "destructive-push":
+            mutation = PUSH_MUTATIONS.get(self.mode)
+            if mutation == "every-source-new-handle":
                 self.states[source].insert(0, value)
                 stack = self._new_handle(self.states[source])
+            elif mutation == "nonempty-source-same-handle" and self.states[source]:
+                self.states[source].insert(0, value)
+                stack = source
             else:
                 stack = self._new_handle([value, *self.states[source]])
             result = {"stack": stack}
@@ -159,12 +182,18 @@ def write_response(response: dict[str, Any]) -> None:
         sys.stdout.buffer.write(b"\xff\n")
     else:
         sys.stdout.write(json.dumps(response, separators=(",", ":")) + "\n")
-        if MODE == "extra-stdout":
-            sys.stdout.write('{"extra":true}\n')
+        extra = IMMEDIATE_EXTRA_STDOUT.get(MODE)
+        if extra is not None:
+            sys.stdout.write(extra)
     sys.stdout.flush()
 
 
 def main() -> int:
+    stderr_payload = STDERR_PAYLOADS.get(MODE)
+    if stderr_payload is not None:
+        sys.stderr.buffer.write(stderr_payload)
+        sys.stderr.buffer.flush()
+
     adapter = FakeStackAdapter(MODE)
     expected_seq = 0
     for line in sys.stdin.buffer:
@@ -182,10 +211,23 @@ def main() -> int:
         write_response(response)
         expected_seq += 1
 
-    if MODE == "eof-marker":
+    eof_action = POST_EOF_ACTIONS.get(MODE)
+    if eof_action == "marker":
         if len(MODE_ARGUMENTS) != 1:
             return 9
         Path(MODE_ARGUMENTS[0]).write_text("stdin-closed\n", encoding="utf-8")
+    elif eof_action == "nonzero":
+        return 7
+    elif eof_action == "ignore-term-and-wait":
+        if len(MODE_ARGUMENTS) != 1:
+            return 9
+        signal.signal(signal.SIGTERM, signal.SIG_IGN)
+        Path(MODE_ARGUMENTS[0]).write_text(str(os.getpid()) + "\n", encoding="ascii")
+        while True:
+            time.sleep(10)
+    elif eof_action == "extra-stdout":
+        sys.stdout.write('{"extra":true}\n')
+        sys.stdout.flush()
     return 0
 
 
