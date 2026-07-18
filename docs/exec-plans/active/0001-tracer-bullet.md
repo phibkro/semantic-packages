@@ -238,7 +238,9 @@ semantic-packages worktree and the versioned review brief.
 | W4-H3 final campaign successor | depends on W4-HF3; internal implementation owner | exclusive runner plan/report implementation | accepted implementation checkpoint: terminal remainders are immediately checked, unavailable bindings remain causal/total, exact plan identity is enforced before launch and retained in reports, and all 36 adapter tests plus G0 pass |
 | W4-HR3 final campaign review | challenges W4-H3; fresh independent internal reviewer | read-only all-blocker replay and novel totality/identity audit | PASS: 21 semantic modes and 14 process/protocol modes return total correctly scoped reports; all prior blockers replay closed; alternate plans reject with zero child starts; exact plan digest survives failures; no well-formed-response assertion or missing-binding path remains |
 | W4-HG1 shared-campaign convergence | depends on W4-HR3 and G0; lead acceptance owner | exact plan/report, fixture, review, and repository-gate disposition | accepted: canonical plan `e055eab…` reaches depth 8 and mixed history 32; campaign 18 plus legacy 18 tests, record/loader/proof gates, and independent totality/identity review agree |
-| W4-CF1 cross-language candidate falsifiers | depends on W4-HG1 and W4-P0T1; independent fixture owner | exclusive build/candidate tests plus broken Rust/TypeScript fixture packages | pending |
+| W4-CF1R Rust candidate falsifier | depends on W4-HG1 and W4-P0T1; independent Rust fixture owner | exclusive protocol-correct Rust law-breaker fixture package; direct-rustc build/run evidence | complete: std-only edition-2024 fixture builds with rustc 1.96.1/GCC 15.2, accepts reordered/whitespace valid requests, closes cleanly, and exact plan challenges only pop-push with sole `POP_PUSH_VALUE` |
+| W4-CF1T TypeScript candidate falsifier | depends on W4-HG1 and W4-P0T1; independent TypeScript fixture owner | exclusive protocol-correct TypeScript persistence-breaker fixture package; offline-Deno check/run evidence | complete: dependency-free Deno 2.9.2/TS 6.0.3 fixture checks offline, accepts reordered/whitespace valid requests, closes cleanly, and exact plan challenges only persistence with sole `RETAINED_HANDLE_CHANGED` |
+| W4-CF1 cross-language candidate controls | depends on W4-CF1R/CF1T; independent matrix fixture owner plus lead integration | exclusive build argv, codec/framing, semantic outcome, and absent-correct-candidate controls | complete red checkpoint: six breaker/toolchain controls pass with exact offline tools and six separately named correct-candidate build/codec/semantic controls fail only on the four absent owned source paths; prior 36 adapter tests remain green |
 | W4-R1 Rust Realization/adapter | depends on W4-CF1; independent implementation owner | exclusive `implementations/rust/**` | pending |
 | W4-T1 TypeScript Realization/adapter | depends on W4-CF1; independent implementation owner | exclusive `implementations/typescript/**` | pending |
 | W4-RR1 Rust review | challenges W4-R1 | read-only independence, codec, semantics, lifecycle, and provenance audit | pending |
@@ -837,6 +839,14 @@ not a grep or summary proxy.
   `CaseObservation` rows; causes/outcomes deduplicate, and rows must not be counted as
   independent cases or Evidence. Revisit before per-step assurance metrics or a new
   campaign algorithm/operation/declaration.
+- W4-CF1R/T supply independent external negative packages before correct candidates.
+  Direct-rustc Rust accepts reordered valid JSON and challenges only `pop-push` with
+  `POP_PUSH_VALUE`; offline-Deno TypeScript does the same at the process boundary and
+  challenges only `persistence` with `RETAINED_HANDLE_CHANGED`. The independent CF1
+  matrix uses shell-free explicit build/check argv and environment-first tool selection:
+  six fixture/toolchain tests pass, while six correct-candidate tests fail only because
+  `implementations/{rust,typescript}` source files do not yet exist. Raw host store
+  paths remain run provenance, not repository build instructions.
 
 ## Decision log
 
