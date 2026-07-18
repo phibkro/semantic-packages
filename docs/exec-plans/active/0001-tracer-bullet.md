@@ -228,9 +228,13 @@ semantic-packages worktree and the versioned review brief.
 | W4-P0F1 diverse boundary skeptic | challenges W4 preflight; requested Claude Fable 5 | read-only toolchain/campaign/Claim deliberation | no evidence: exact Fable/high/strict attempt produced no verdict in ten minutes and was interrupted; internal concern results and lead disposition govern W4-D0 |
 | W4-D0 cross-language boundary | depends on W4-P0T1/P0S1/P0E1; lead integration owner | exclusive ADR/plan decision; no implementation authority | accepted experimentally in ADR 0010: deterministic profile-sized logical-history plans, granular declaration outcomes, Deno TypeScript, direct-rustc std-only codec with dissent, explicit build argv, and declaration-scoped Evidence |
 | W4-HF1 shared-campaign falsifiers | depends on W4-D0; independent fixture owner plus lead boundary review | exclusive shared campaign/report fixtures and tests | complete red checkpoint: six focused controls pin exact inputs/bounds/generation, actual depth-8 and mixed length-32 cases, logical bindings, deterministic serialization, unsafe-plan rejection, granular declaration outcomes, and execution-error coexistence; the existing 18 runner tests remain green and the new module fails only on the absent additive API |
-| W4-H1 shared-campaign implementation | depends on W4-HF1 | exclusive runner plan/report implementation | pending |
-| W4-HR1 campaign convergence review | challenges W4-H1 | read-only authored and novel depth/history/outcome audit | pending |
-| W4-CF1 cross-language candidate falsifiers | depends on W4-HR1 and W4-P0T1; independent fixture owner | exclusive build/candidate tests plus broken Rust/TypeScript fixture packages | pending |
+| W4-H1C0 diverse campaign implementation attempt | depends on W4-HF1; requested Claude Sonnet 5 | writable strict child in an isolated worktree with exclusive runner scope | no evidence: Claude Code 2.1.210, exact Sonnet/high attempt produced no output or edits in three minutes and was interrupted; the internal fallback owns W4-H1 |
+| W4-H1 shared-campaign implementation | depends on W4-HF1; internal fallback implementation owner | exclusive runner plan/report implementation | rejected checkpoint: authored 24-test and full repository gates pass, but W4-HR1 demonstrates a retained-ancestor false support and declaration/provenance attribution defects |
+| W4-HR1 campaign convergence review | challenges W4-H1; independent internal reviewer | read-only authored and novel depth/history/outcome audit | BLOCK: actual depth 8 and mixed length 32 execute, but a valid-protocol ancestor-mutating candidate passes persistence; empty-pop failure contaminates all four declarations; cause state leaks across cases; persistence expectations become child-derived; generated/input provenance is not independently bound |
+| W4-HF2 campaign successor controls | depends on W4-HR1; independent fixture owner | exclusive shared campaign/report successor fixtures and tests | pending: freeze retained-ancestor push/pop checks, causal/inconclusive declaration attribution, case-local causes, plan-owned expectations, generated metadata consistency, exact input content binding, and meaningful mixed-depth coverage |
+| W4-H2 campaign successor | depends on W4-HF2 | exclusive runner plan/report implementation | pending |
+| W4-HR2 campaign successor review | challenges W4-H2 | read-only prior-blocker replay and novel bounded audit | pending |
+| W4-CF1 cross-language candidate falsifiers | depends on W4-HR2 and W4-P0T1; independent fixture owner | exclusive build/candidate tests plus broken Rust/TypeScript fixture packages | pending |
 | W4-R1 Rust Realization/adapter | depends on W4-CF1; independent implementation owner | exclusive `implementations/rust/**` | pending |
 | W4-T1 TypeScript Realization/adapter | depends on W4-CF1; independent implementation owner | exclusive `implementations/typescript/**` | pending |
 | W4-RR1 Rust review | challenges W4-R1 | read-only independence, codec, semantics, lifecycle, and provenance audit | pending |
@@ -782,6 +786,19 @@ not a grep or summary proxy.
   rejects duplicate logical bindings, and returns declaration-granular observations.
   The prior 18 runner/protocol tests remain green; the new module is red only because
   W4-H1's four additive API names and `plan=` execution path do not yet exist.
+- W4-H1C0 requests exact Claude Sonnet 5/high through `agent-dispatch`, Claude Code
+  2.1.210, writable pagu-box `strict`, isolated `/tmp/semantic-packages-wave4-h1`, and
+  exclusive `semantic_packages/stack_runner.py` scope. The disclosed scope is the
+  listed public governing documents, runner, and tests; no secrets or network source is
+  authorized. The child produces no runtime model packet, output, or edits in three
+  minutes and exits 130 when interrupted, so it contributes no implementation evidence.
+- The internal W4-H1 fallback turns all 24 adapter tests and the full repository gate
+  green, but W4-HR1 blocks acceptance. Its independent candidate changes a retained
+  ancestor while keeping the immediate source and result correct, and the campaign
+  reports support. It also finds empty-pop nontermination attributed to persistence and
+  effects, campaign-global cause leakage, child-derived persistence expectations, and
+  generated/input provenance mutations that validation accepts. W4-HF2/H2 retain this
+  failed checkpoint and must close each mechanism before W4-CF1 opens.
 
 ## Decision log
 

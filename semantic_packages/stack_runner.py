@@ -20,7 +20,9 @@ Runner classifications (see the adapter-protocol table):
 
 from __future__ import annotations
 
+import hashlib
 import json
+import math
 import os
 import select
 import subprocess
@@ -37,6 +39,500 @@ EXCLUSIONS: Tuple[str, ...] = ("adapter-external-effects", "realization-steps")
 # still-illustrative .pspec surface syntax.
 _OPTIONAL_EXACT_EVENT = "debug.emit"
 _FORBIDDEN_PREFIX = "io."
+
+_DECLARATIONS: Tuple[str, ...] = (
+    "pop-empty",
+    "pop-push",
+    "persistence",
+    "stack-effects",
+)
+
+
+@dataclass(frozen=True)
+class RecordInput:
+    reference: Tuple[str, str, str]
+    sha256: str
+
+
+@dataclass(frozen=True)
+class EventContract:
+    forbidden: Tuple[str, ...]
+    optional: Tuple[str, ...]
+    default: str
+
+
+@dataclass(frozen=True)
+class PlanStep:
+    op: str
+    source: Optional[str] = None
+    bind: Optional[str] = None
+    value: Optional[int] = None
+
+
+@dataclass(frozen=True)
+class PlannedObservation:
+    declaration_id: str
+    binding: str
+    top_first: Tuple[int, ...]
+
+
+@dataclass(frozen=True)
+class ConformanceCase:
+    case_id: str
+    origin: str
+    steps: Tuple[PlanStep, ...]
+    observations: Tuple[PlannedObservation, ...]
+
+
+def _canonical_value(value: Any) -> Any:
+    """Return the JSON value used for stable plan and case provenance."""
+    if isinstance(value, RecordInput):
+        return {"reference": list(value.reference), "sha256": value.sha256}
+    if isinstance(value, EventContract):
+        return {
+            "default": value.default,
+            "forbidden": list(value.forbidden),
+            "optional": list(value.optional),
+        }
+    if isinstance(value, PlanStep):
+        result: Dict[str, Any] = {"op": value.op}
+        if value.source is not None:
+            result["source"] = value.source
+        if value.bind is not None:
+            result["bind"] = value.bind
+        if value.value is not None:
+            result["value"] = value.value
+        return result
+    if isinstance(value, PlannedObservation):
+        return {
+            "binding": value.binding,
+            "declaration_id": value.declaration_id,
+            "top_first": list(value.top_first),
+        }
+    if isinstance(value, ConformanceCase):
+        return {
+            "case_id": value.case_id,
+            "observations": [_canonical_value(item) for item in value.observations],
+            "origin": value.origin,
+            "steps": [_canonical_value(item) for item in value.steps],
+        }
+    if isinstance(value, StackConformancePlan):
+        return {
+            "algorithm": value.algorithm,
+            "algorithm_version": value.algorithm_version,
+            "cases": [_canonical_value(item) for item in value.cases],
+            "element_domain": list(value.element_domain),
+            "event_contract": _canonical_value(value.event_contract),
+            "max_depth": value.max_depth,
+            "max_history": value.max_history,
+            "observation_limit": value.observation_limit,
+            "profile": _canonical_value(value.profile),
+            "seed": value.seed,
+            "specification": _canonical_value(value.specification),
+            "timeout_seconds": value.timeout_seconds,
+        }
+    raise TypeError(f"no canonical JSON form for {type(value).__name__}")
+
+
+@dataclass(frozen=True)
+class StackConformancePlan:
+    specification: RecordInput
+    profile: RecordInput
+    element_domain: Tuple[int, ...]
+    max_depth: int
+    max_history: int
+    observation_limit: int
+    algorithm: str
+    algorithm_version: str
+    seed: int
+    timeout_seconds: float
+    event_contract: EventContract
+    cases: Tuple[ConformanceCase, ...]
+
+    def canonical_json(self) -> str:
+        return json.dumps(
+            _canonical_value(self),
+            ensure_ascii=False,
+            separators=(",", ":"),
+            sort_keys=True,
+        )
+
+    @property
+    def sha256(self) -> str:
+        return hashlib.sha256(self.canonical_json().encode("utf-8")).hexdigest()
+
+
+@dataclass(frozen=True)
+class CaseObservation:
+    case_id: str
+    declaration_id: str
+    result: str
+    expected_top_first: Tuple[int, ...]
+    observed_top_first: Tuple[int, ...]
+    causes: Tuple[str, ...] = ()
+
+
+@dataclass(frozen=True)
+class DeclarationOutcome:
+    declaration_id: str
+    result: str
+    causes: Tuple[str, ...] = ()
+
+
+def _case(
+    case_id: str,
+    origin: str,
+    steps: Sequence[PlanStep],
+    declaration_id: str,
+    binding: str,
+    top_first: Sequence[int],
+) -> ConformanceCase:
+    return ConformanceCase(
+        case_id=case_id,
+        origin=origin,
+        steps=tuple(steps),
+        observations=(
+            PlannedObservation(declaration_id, binding, tuple(top_first)),
+        ),
+    )
+
+
+def _generated_mixed_case(seed: int, max_depth: int, max_history: int) -> ConformanceCase:
+    """Generate a reproducible bounded history without relying on host RNG details."""
+    steps: List[PlanStep] = [PlanStep("empty", bind="g0")]
+    states: Dict[str, Tuple[int, ...]] = {"g0": ()}
+    current = "g0"
+    state: Tuple[int, ...] = ()
+    word = seed & 0xFFFFFFFF
+    next_binding = 1
+
+    while len(steps) < max_history:
+        # Numerical Recipes' 32-bit LCG is completely specified by these operations.
+        word = (1664525 * word + 1013904223) & 0xFFFFFFFF
+        choose_push = (word & 1) == 0
+        if not state:
+            # Retain some empty pops, but never let generation stall at depth zero.
+            choose_push = len(steps) % 4 != 0
+        elif len(state) >= max_depth:
+            choose_push = False
+
+        if choose_push:
+            value = (word % 5) - 2
+            binding = f"g{next_binding}"
+            next_binding += 1
+            steps.append(PlanStep("push", source=current, bind=binding, value=value))
+            state = (value,) + state
+            states[binding] = state
+            current = binding
+        else:
+            if state:
+                binding = f"g{next_binding}"
+                next_binding += 1
+                steps.append(PlanStep("pop", source=current, bind=binding))
+                state = state[1:]
+                states[binding] = state
+                current = binding
+            else:
+                steps.append(PlanStep("pop", source=current))
+
+    return _case(
+        f"generated-mixed-{seed}-v1",
+        "generated",
+        steps,
+        "pop-push",
+        current,
+        state,
+    )
+
+
+def default_stack_conformance_plan() -> StackConformancePlan:
+    depth_steps: List[PlanStep] = [PlanStep("empty", bind="d0")]
+    depth_values: Tuple[int, ...] = ()
+    source = "d0"
+    for index, value in enumerate((-2, -1, 0, 1, 2, -2, 1, 0), start=1):
+        binding = f"d{index}"
+        depth_steps.append(PlanStep("push", source=source, bind=binding, value=value))
+        depth_values = (value,) + depth_values
+        source = binding
+
+    seed = 20260718
+    cases = (
+        _case(
+            "curated-pop-empty-v1",
+            "curated",
+            (PlanStep("empty", bind="empty"), PlanStep("pop", source="empty")),
+            "pop-empty",
+            "empty",
+            (),
+        ),
+        _case(
+            "curated-pop-push-v1",
+            "curated",
+            (
+                PlanStep("empty", bind="base"),
+                PlanStep("push", source="base", bind="one", value=2),
+                PlanStep("pop", source="one", bind="remainder"),
+            ),
+            "pop-push",
+            "remainder",
+            (),
+        ),
+        _case(
+            "curated-depth-eight-repeated-v1",
+            "curated",
+            depth_steps,
+            "pop-push",
+            source,
+            depth_values,
+        ),
+        _case(
+            "curated-retained-source-push-v1",
+            "curated",
+            (
+                PlanStep("empty", bind="root"),
+                PlanStep("push", source="root", bind="source", value=1),
+                PlanStep("push", source="source", bind="derived", value=2),
+            ),
+            "persistence",
+            "source",
+            (1,),
+        ),
+        _case(
+            "curated-retained-source-pop-v1",
+            "curated",
+            (
+                PlanStep("empty", bind="root"),
+                PlanStep("push", source="root", bind="one", value=1),
+                PlanStep("push", source="one", bind="source", value=2),
+                PlanStep("pop", source="source", bind="remainder"),
+            ),
+            "persistence",
+            "source",
+            (2, 1),
+        ),
+        _case(
+            "curated-stack-effects-v1",
+            "curated",
+            (PlanStep("empty", bind="effect_state"),),
+            "stack-effects",
+            "effect_state",
+            (),
+        ),
+        _generated_mixed_case(seed, 8, 32),
+    )
+    plan = StackConformancePlan(
+        specification=RecordInput(
+            ("specification", "stack", "0.1.0"),
+            "dd083a71a4631cc44be051a16b8e20ff0cee7199e46d3823322665d1fdeec6c1",
+        ),
+        profile=RecordInput(
+            ("realizationProfile", "stack-default", "0.1.0"),
+            "2a51ed7d2e1266376cd4a58ef3f20d30244655d25cb884816576be989014eddb",
+        ),
+        element_domain=(-2, -1, 0, 1, 2),
+        max_depth=8,
+        max_history=32,
+        observation_limit=9,
+        algorithm="stack-conformance-campaign",
+        algorithm_version="1",
+        seed=seed,
+        timeout_seconds=0.20,
+        event_contract=EventContract(("io.*",), ("debug.emit",), "unspecified"),
+        cases=cases,
+    )
+    validate_stack_conformance_plan(plan)
+    return plan
+
+
+def _valid_binding(binding: Any) -> bool:
+    if not isinstance(binding, str) or not binding:
+        return False
+    return binding[0].islower() and all(
+        character.islower() or character.isdigit() or character == "_"
+        for character in binding
+    )
+
+
+def validate_stack_conformance_plan(plan: StackConformancePlan) -> None:
+    if not isinstance(plan, StackConformancePlan):
+        raise ValueError("plan must be a StackConformancePlan")
+    if (
+        isinstance(plan.max_depth, bool)
+        or not isinstance(plan.max_depth, int)
+        or isinstance(plan.max_history, bool)
+        or not isinstance(plan.max_history, int)
+        or plan.max_depth < 1
+        or plan.max_history < 1
+    ):
+        raise ValueError("plan bounds must be positive")
+    if (
+        isinstance(plan.observation_limit, bool)
+        or not isinstance(plan.observation_limit, int)
+        or plan.observation_limit < plan.max_depth + 1
+    ):
+        raise ValueError("observation limit must exceed maximum depth")
+    if (
+        isinstance(plan.timeout_seconds, bool)
+        or not isinstance(plan.timeout_seconds, (int, float))
+        or not math.isfinite(plan.timeout_seconds)
+        or plan.timeout_seconds <= 0
+    ):
+        raise ValueError("timeout must be positive")
+    if not plan.element_domain or any(
+        isinstance(value, bool) or not isinstance(value, int)
+        for value in plan.element_domain
+    ):
+        raise ValueError("element domain must contain JSON integers")
+    if len(set(plan.element_domain)) != len(plan.element_domain):
+        raise ValueError("element domain values must be unique")
+    if not plan.algorithm or not plan.algorithm_version or isinstance(plan.seed, bool):
+        raise ValueError("algorithm, version, and integer seed are required")
+    if not isinstance(plan.seed, int):
+        raise ValueError("algorithm seed must be an integer")
+    for record_input in (plan.specification, plan.profile):
+        if (
+            len(record_input.reference) != 3
+            or any(not isinstance(item, str) or not item for item in record_input.reference)
+            or len(record_input.sha256) != 64
+            or any(character not in "0123456789abcdef" for character in record_input.sha256)
+        ):
+            raise ValueError("record input reference and sha256 must be exact")
+    if plan.event_contract.default != "unspecified":
+        raise ValueError("event contract default must be unspecified")
+    event_patterns = plan.event_contract.forbidden + plan.event_contract.optional
+    if any(not isinstance(item, str) or not item for item in event_patterns):
+        raise ValueError("event patterns must be nonempty strings")
+
+    if not plan.cases:
+        raise ValueError("plan must contain cases")
+    case_ids: set[str] = set()
+    for case in plan.cases:
+        if not case.case_id or case.case_id in case_ids:
+            raise ValueError("case IDs must be nonempty and unique")
+        case_ids.add(case.case_id)
+        if case.origin not in ("curated", "generated"):
+            raise ValueError("case origin must be curated or generated")
+        if not case.steps or len(case.steps) > plan.max_history:
+            raise ValueError("case history exceeds plan bounds")
+
+        bindings: Dict[str, Tuple[int, ...]] = {}
+        for step in case.steps:
+            if step.op == "empty":
+                if step.source is not None or step.value is not None or step.bind is None:
+                    raise ValueError("empty operation shape is invalid")
+                state: Tuple[int, ...] = ()
+            elif step.op == "push":
+                if (
+                    not _valid_binding(step.source)
+                    or step.source not in bindings
+                    or step.bind is None
+                    or step.value not in plan.element_domain
+                    or isinstance(step.value, bool)
+                ):
+                    raise ValueError("push operation has an unknown binding or value")
+                state = (step.value,) + bindings[step.source]  # type: ignore[operator]
+            elif step.op == "pop":
+                if (
+                    not _valid_binding(step.source)
+                    or step.source not in bindings
+                    or step.value is not None
+                ):
+                    raise ValueError("pop operation has an unknown binding")
+                source_state = bindings[step.source]
+                if source_state:
+                    if step.bind is None:
+                        raise ValueError("nonempty pop must bind its remainder")
+                    state = source_state[1:]
+                else:
+                    if step.bind is not None:
+                        raise ValueError("empty pop cannot bind a remainder")
+                    continue
+            else:
+                raise ValueError("operation must be empty, push, or pop")
+
+            if not _valid_binding(step.bind):
+                raise ValueError("binding names must be logical lowercase identifiers")
+            assert step.bind is not None
+            if step.bind in bindings:
+                raise ValueError("binding names must be unique within a case")
+            if len(state) > plan.max_depth:
+                raise ValueError("case depth exceeds plan bounds")
+            bindings[step.bind] = state
+
+        if not case.observations:
+            raise ValueError("each case needs at least one observation")
+        observation_keys: set[Tuple[str, str]] = set()
+        for observation in case.observations:
+            if observation.declaration_id not in _DECLARATIONS:
+                raise ValueError("observation declaration is unknown")
+            if observation.binding not in bindings:
+                raise ValueError("observation references an unknown binding")
+            observation_key = (observation.declaration_id, observation.binding)
+            if observation_key in observation_keys:
+                raise ValueError("duplicate case observation")
+            observation_keys.add(observation_key)
+            if tuple(observation.top_first) != bindings[observation.binding]:
+                raise ValueError("observation disagrees with derived logical state")
+            if len(observation.top_first) + 1 > plan.observation_limit:
+                raise ValueError("observation exceeds plan limit")
+
+
+def _unique(items: Sequence[str]) -> Tuple[str, ...]:
+    return tuple(dict.fromkeys(items))
+
+
+def summarize_stack_conformance(
+    observations: Sequence[CaseObservation],
+    *,
+    events: Sequence[Tuple[str, str]] = (),
+    execution_causes: Sequence[str] = (),
+    assumptions: Sequence[str] = ASSUMPTIONS,
+    exclusions: Sequence[str] = EXCLUSIONS,
+    stderr: bytes = b"",
+) -> ConformanceReport:
+    retained_observations = tuple(observations)
+    retained_events = tuple(events)
+    outcomes: List[DeclarationOutcome] = []
+    semantic_causes: List[str] = []
+    for declaration_id in _DECLARATIONS:
+        selected = tuple(
+            item for item in retained_observations if item.declaration_id == declaration_id
+        )
+        causes = [cause for item in selected for cause in item.causes]
+        if declaration_id == "stack-effects" and any(
+            disposition == "forbidden" for _name, disposition in retained_events
+        ):
+            causes.append("FORBIDDEN_EVENT")
+        unique_causes = _unique(causes)
+        semantic_causes.extend(unique_causes)
+        if unique_causes or any(item.result == "challenges" for item in selected):
+            result = "challenges"
+        elif selected and all(item.result == "supports" for item in selected):
+            result = "supports"
+        else:
+            result = "inconclusive"
+        outcomes.append(DeclarationOutcome(declaration_id, result, unique_causes))
+
+    execution = _unique(tuple(execution_causes))
+    causes = _unique(execution + tuple(semantic_causes))
+    if execution:
+        result = "error"
+    elif any(item.result == "challenges" for item in outcomes):
+        result = "challenges"
+    elif all(item.result == "supports" for item in outcomes):
+        result = "supports"
+    else:
+        result = "inconclusive"
+    return ConformanceReport(
+        result=result,
+        causes=causes,
+        events=retained_events,
+        assumptions=tuple(assumptions),
+        exclusions=tuple(exclusions),
+        stderr=stderr,
+        observations=retained_observations,
+        declaration_outcomes=tuple(outcomes),
+    )
 
 
 def _classify_event(name: str) -> str:
@@ -55,6 +551,8 @@ class ConformanceReport:
     assumptions: Tuple[str, ...]
     exclusions: Tuple[str, ...]
     stderr: bytes = b""
+    observations: Tuple[CaseObservation, ...] = ()
+    declaration_outcomes: Tuple[DeclarationOutcome, ...] = ()
 
 
 class _AdapterError(Exception):
@@ -111,15 +609,19 @@ class _Runner:
         max_history: int,
         observation_limit: int,
         timeout_seconds: float,
+        event_contract: Optional[EventContract] = None,
     ) -> None:
         self.values = tuple(values)
         self.max_depth = max_depth
         self.max_history = max_history
         self.observation_limit = observation_limit
         self.timeout_seconds = timeout_seconds
+        self.event_contract = event_contract
 
         self.causes: List[str] = []
         self.events: List[Tuple[str, str]] = []
+        self.campaign_observations: List[CaseObservation] = []
+        self._campaign_known_causes: List[str] = []
         self.stderr: bytes = b""
         self._retained: List[Tuple[str, Tuple[int, ...]]] = []
 
@@ -348,10 +850,30 @@ class _Runner:
 
     def _record_events(self, events: Sequence[str]) -> None:
         for name in events:
-            disposition = _classify_event(name)
+            disposition = self._event_disposition(name)
             self.events.append((name, disposition))
             if disposition == "forbidden":
                 self.add_cause("FORBIDDEN_EVENT")
+
+    def _event_disposition(self, name: str) -> str:
+        contract = self.event_contract
+        if contract is None:
+            return _classify_event(name)
+        for pattern in contract.forbidden:
+            if pattern.endswith(".*"):
+                prefix = pattern[:-1]
+                if name.startswith(prefix) and len(name) > len(prefix):
+                    return "forbidden"
+            elif name == pattern:
+                return "forbidden"
+        for pattern in contract.optional:
+            if pattern.endswith(".*"):
+                prefix = pattern[:-1]
+                if name.startswith(prefix) and len(name) > len(prefix):
+                    return "optional"
+            elif name == pattern:
+                return "optional"
+        return contract.default
 
     def _call(self, op: str, args: Dict[str, Any]) -> Dict[str, Any]:
         seq = self._seq
@@ -426,6 +948,133 @@ class _Runner:
         if self._observe_raw(handle, expected, cause):
             self._retained.append((handle, expected))
 
+    def _observe_values(self, handle: str) -> Tuple[Tuple[int, ...], bool]:
+        obtained: List[int] = []
+        current = handle
+        for _ in range(self.observation_limit):
+            tag, value, remainder = self._pop(current)
+            if tag == "none":
+                return tuple(obtained), True
+            assert value is not None and remainder is not None
+            obtained.append(value)
+            current = remainder
+        return tuple(obtained), False
+
+    @staticmethod
+    def _observation_cause(declaration_id: str) -> str:
+        return {
+            "pop-empty": "POP_EMPTY",
+            "pop-push": "POP_PUSH_REMAINDER",
+            "persistence": "RETAINED_HANDLE_CHANGED",
+            "stack-effects": "OBSERVATION_ORDER",
+        }[declaration_id]
+
+    def run_campaign(self, plan: StackConformancePlan) -> Tuple[CaseObservation, ...]:
+        """Execute logical histories while keeping all adapter tokens opaque."""
+        self.campaign_observations = []
+        self._campaign_known_causes = []
+        for case in plan.cases:
+            handles: Dict[str, str] = {}
+            states: Dict[str, Tuple[int, ...]] = {}
+            persistence_baselines: Dict[str, Tuple[int, ...]] = {}
+            case_causes: Dict[str, List[str]] = {
+                declaration_id: [] for declaration_id in _DECLARATIONS
+            }
+            for step in case.steps:
+                for planned in case.observations:
+                    if (
+                        planned.declaration_id == "persistence"
+                        and step.source == planned.binding
+                        and planned.binding in handles
+                        and planned.binding not in persistence_baselines
+                    ):
+                        baseline, terminated = self._observe_values(
+                            handles[planned.binding]
+                        )
+                        if not terminated:
+                            case_causes["persistence"].append("OBSERVATION_LIMIT")
+                        persistence_baselines[planned.binding] = baseline
+                if step.op == "empty":
+                    assert step.bind is not None
+                    handles[step.bind] = self._empty()
+                    states[step.bind] = ()
+                elif step.op == "push":
+                    assert step.source is not None and step.bind is not None
+                    assert step.value is not None
+                    handles[step.bind] = self._push(handles[step.source], step.value)
+                    states[step.bind] = (step.value,) + states[step.source]
+                else:
+                    assert step.op == "pop" and step.source is not None
+                    expected_source = states[step.source]
+                    tag, value, remainder = self._pop(handles[step.source])
+                    if not expected_source:
+                        if tag != "none":
+                            case_causes["pop-empty"].append("POP_EMPTY")
+                            self._campaign_known_causes.append("POP_EMPTY")
+                    elif tag != "some" or remainder is None:
+                        case_causes["pop-push"].append("POP_PUSH_VALUE")
+                        self._campaign_known_causes.append("POP_PUSH_VALUE")
+                    else:
+                        if value != expected_source[0]:
+                            case_causes["pop-push"].append("POP_PUSH_VALUE")
+                            self._campaign_known_causes.append("POP_PUSH_VALUE")
+                        assert step.bind is not None
+                        handles[step.bind] = remainder
+                        states[step.bind] = expected_source[1:]
+
+            for planned in case.observations:
+                causes = list(case_causes[planned.declaration_id])
+                if planned.binding not in handles:
+                    observed: Tuple[int, ...] = ()
+                    causes.append(self._observation_cause(planned.declaration_id))
+                else:
+                    observed, terminated = self._observe_values(handles[planned.binding])
+                    if not terminated:
+                        causes.append("OBSERVATION_LIMIT")
+                    elif planned.declaration_id == "persistence":
+                        baseline = persistence_baselines.get(planned.binding)
+                        if baseline is None or observed != baseline:
+                            causes.append("RETAINED_HANDLE_CHANGED")
+                    elif observed != planned.top_first:
+                        if (
+                            planned.declaration_id == "pop-push"
+                            and "POP_PUSH_VALUE" in self._campaign_known_causes
+                        ):
+                            causes.append("POP_PUSH_VALUE")
+                        else:
+                            causes.append(self._observation_cause(planned.declaration_id))
+                unique_causes = _unique(causes)
+                expected = planned.top_first
+                if planned.declaration_id == "persistence":
+                    expected = persistence_baselines.get(planned.binding, expected)
+                self.campaign_observations.append(
+                    CaseObservation(
+                        case_id=case.case_id,
+                        declaration_id=planned.declaration_id,
+                        result="challenges" if unique_causes else "supports",
+                        expected_top_first=expected,
+                        observed_top_first=observed,
+                        causes=unique_causes,
+                    )
+                )
+            planned_declarations = {
+                observation.declaration_id for observation in case.observations
+            }
+            for declaration_id, causes in case_causes.items():
+                if causes and declaration_id not in planned_declarations:
+                    unique_causes = _unique(causes)
+                    self.campaign_observations.append(
+                        CaseObservation(
+                            case_id=case.case_id,
+                            declaration_id=declaration_id,
+                            result="challenges",
+                            expected_top_first=(),
+                            observed_top_first=(),
+                            causes=unique_causes,
+                        )
+                    )
+        return tuple(self.campaign_observations)
+
     def run_plan(self) -> None:
         depth = max(0, min(self.max_depth, self.max_history, len(self.values)))
 
@@ -453,12 +1102,72 @@ class _Runner:
 def run_stack_conformance(
     command: Sequence[str],
     *,
-    values: Sequence[int],
-    max_depth: int,
-    max_history: int,
-    observation_limit: int,
-    timeout_seconds: float,
+    values: Optional[Sequence[int]] = None,
+    max_depth: Optional[int] = None,
+    max_history: Optional[int] = None,
+    observation_limit: Optional[int] = None,
+    timeout_seconds: Optional[float] = None,
+    plan: Optional[StackConformancePlan] = None,
 ) -> ConformanceReport:
+    if plan is not None:
+        if any(
+            item is not None
+            for item in (
+                values,
+                max_depth,
+                max_history,
+                observation_limit,
+                timeout_seconds,
+            )
+        ):
+            raise ValueError("plan cannot be combined with legacy campaign arguments")
+        validate_stack_conformance_plan(plan)
+        runner = _Runner(
+            values=plan.element_domain,
+            max_depth=plan.max_depth,
+            max_history=plan.max_history,
+            observation_limit=plan.observation_limit,
+            timeout_seconds=plan.timeout_seconds,
+            event_contract=plan.event_contract,
+        )
+        execution_causes: List[str] = []
+        observations: Tuple[CaseObservation, ...] = ()
+        started = True
+        try:
+            runner.start(command)
+        except OSError:
+            execution_causes.append("PROCESS_START")
+            started = False
+
+        if started:
+            try:
+                try:
+                    observations = runner.run_campaign(plan)
+                except _AdapterError as error:
+                    execution_causes.append(error.cause)
+                    observations = tuple(runner.campaign_observations)
+            finally:
+                closure_cause = runner.close()
+                if closure_cause is not None:
+                    execution_causes.append(closure_cause)
+
+        return summarize_stack_conformance(
+            observations,
+            events=runner.events,
+            execution_causes=execution_causes,
+            stderr=runner.stderr,
+        )
+
+    if any(
+        item is None
+        for item in (values, max_depth, max_history, observation_limit, timeout_seconds)
+    ):
+        raise TypeError("legacy campaign arguments are required when plan is absent")
+    assert values is not None
+    assert max_depth is not None
+    assert max_history is not None
+    assert observation_limit is not None
+    assert timeout_seconds is not None
     runner = _Runner(
         values=values,
         max_depth=max_depth,
