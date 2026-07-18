@@ -182,7 +182,7 @@ semantic-packages worktree and the versioned review brief.
 | W3-S2 diverse loader skeptic | challenges/supports W3-L0; Claude Fable 5 | read-only actual-code and governing-document audit | complete static packet: supports thin loader and deterministic phase boundary; challenges with a proposed import DAG, realpath symlink following, and duplicate-import schema rule |
 | W3-F1 red-first design | challenges/supports W3-L0/W3-A0; independent internal GPT fixture specialist | read-only loader and Stack reference-model oracle design | complete: loader fixture layout plus minimal pure-model controls; proposed cycle rejection retained as dissent and adapter-dependent controls correctly blocked on protocol freeze |
 | W3-L0 loader/import contract | depends on W2-G1; informed by W3-S1, W3-S2, and W3-F1; lead Codex | exclusive design, ADR, plan, and backlog integration | accepted provisionally: lexical source normalization, recursive lowercase JSON discovery, symlink rejection, phase barriers, and exact visible import edges; self/cyclic/diamond/repeated imports are valid until stronger semantics exist |
-| W3-LF1 loader falsifiers | depends on W3-L0; fixture owner to be assigned | exclusive loader fixture/test paths | pending |
+| W3-LF1 loader falsifiers | depends on W3-L0; independent internal GPT fixture owner | exclusive `fixtures/loader/` and `scripts/loader_fixture_check.py` | complete red checkpoint: 19 data/oracle files and 14 subprocess observations across 9 contract groups; current checker fails on directory discovery, aliases/overlap, extension and symlink policy, phase barriers, and directory-loaded import graphs while G1 remains green |
 | W3-L1 loader implementation | depends on W3-LF1; Claude Sonnet 5 plus lead integration | isolated worktree; exclusive loader/checker implementation paths | pending |
 | W3-LR1 loader review | challenges W3-L1; independent reviewer | read-only actual-code and novel counterexamples | pending |
 | W3-LG1 loader convergence | depends on W3-L1, W3-LR1, and G1 | lead acceptance owner | pending |
@@ -459,6 +459,12 @@ command's exit status, not a grep or summary proxy.
   exact visible edges only. The two cycle-rejection proposals are deferred, with
   namespace, elaboration, initialization, or transitive acquisition semantics as the
   reopen trigger; implementation order is not allowed to decide the question silently.
+- W3-LF1 made the accepted boundary executable before implementation. The current
+  checker reports directories as `INPUT_READ_ERROR`, accepts explicit non-JSON and
+  symlink inputs, and cannot load the positive self/cycle/diamond/repeated-import
+  graphs. All 16 committed loader JSON records parse, the harness compiles, and the
+  accepted 8/20/38/2 record gate remains green. Both explicit and recursively
+  discovered lowercase JSON symlinks must fail with `INPUT_SYMLINK`.
 
 ## Decision log
 

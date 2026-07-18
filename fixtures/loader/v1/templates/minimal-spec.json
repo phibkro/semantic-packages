@@ -1,0 +1,11 @@
+{
+  "kind": "specification",
+  "id": "minimal",
+  "version": "1",
+  "laws": [
+    {
+      "id": "law",
+      "statement": "true"
+    }
+  ]
+}
