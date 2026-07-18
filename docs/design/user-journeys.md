@@ -3,9 +3,10 @@
 ## Purpose
 
 The tracer is complete only when four actors can finish bounded tasks against the
-same canonical records. These contracts are intended to become executable acceptance
-journeys; today only their named substrate is executable. They are not personas or a
-promise of hosted infrastructure.
+same canonical records. J1–J5 now make those four terminal outcomes and bounded
+maintenance executable; JG still governs hosted release convergence and independent
+fresh-checkout acceptance. These contracts are not personas or a promise of hosted
+infrastructure.
 
 For this tracer, a **registry** is one curated finite local source set of immutable,
 exact-version records. To **publish** or **register** is to add records to that set and
@@ -86,8 +87,9 @@ For Rust and TypeScript independently:
 - a green report alone is never treated as accepted Evidence.
 
 Wave 4 closes the bounded implementation, campaign, and Evidence-binding substrate.
-Package-author registration remains open until J2 adds those records to the curated
-product source set and passes its publication gate.
+J2 registers both exact package packets with actor-owned roles in the curated product
+source set, rejects missing, unexpected, moved, aliased, or mutated inputs, and retains
+explicit build/campaign reproduction as Evidence rather than registry-driven execution.
 
 ### J3 — converge one honest graph
 

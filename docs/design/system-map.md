@@ -52,11 +52,11 @@ flowchart LR
     N --> G
 ```
 
-Solid incoming graph edges exist as canonical record forms today. Proof checking,
-child-process conformance, reviewed Rust/TypeScript Evidence, and the finite Stack
-theory-publication inspection are executable. Package registration and convergence of
-the full curated product graph remain next; resolver, consumer projections, and the
-maintenance loop are designed but not yet executable.
+Solid graph edges exist as executable bounded Stack tracer increments today. They cover
+finite theory publication, independent package registration, one honest curated graph,
+proof checking, child-process conformance, reviewed Rust/TypeScript Evidence, both
+consumer projections, and exact successor recovery. Hosted release convergence and a
+cold human journey run remain open; they do not change the local product semantics.
 
 For the tracer, **registry** means one curated finite local source set of immutable
 exact-version records. It does not yet mean hosted acquisition, authentication,

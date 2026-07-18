@@ -204,8 +204,11 @@ J0 vocabulary/lifecycle/map gate
 | PR-GT5 installer telemetry successor | lead CI integrator; depends on PR-GR3; same exclusive CI surface | complete: `DETSYS_IDS_TELEMETRY=disabled` is constructed inside both privileged child environments; empty diagnostic endpoint retained as defense-in-depth |
 | PR-GR4 final CI/security review | independent read-only reviewer; depends on PR-GT5 | PASS: fixed hash fails closed before privilege, action and installer transports are no-op, and all lock/tool/evidence/fork/permission/range/shell boundaries replay |
 | PR-GO operator convergence | operator; depends on accepted PR-GR4 | complete hosted-policy checkpoint on 2026-07-19 after explicit user authorization: original 59-commit DAG branch retained, clean `agent/actor-complete-tracer` branch prepared from `master` as one conventional squash, merge/rebase disabled, squash PR-title/PR-body defaults enabled, Actions SHA pinning required, and active no-bypass ruleset `19155146` requires PR-only squash, linear history, no deletion/force-push, resolved conversations, and strict `prospective metadata` plus `repository contract` checks; advisory app permissions remain unchanged pending observable PR activity |
-| PR-GG release-governance gate | lead acceptance; depends on PR-GR4, PR-GO, local/hosted gates | planned hard predecessor only of JG; deterministic checks required, CodeRabbit/Claude advisory; remote settings/apps escalate to operator |
-| JG journey release | lead acceptance; depends on J5, PR-G, G0–G3; read-only fresh-checkout acceptance with no repository write scope and ephemeral outputs only under an allocated temporary directory; independent fresh-clone reviewer | documented gate and all four terminal outcomes reproduce; protected-success changes escalate to user; pending |
+| PR-GG release-governance gate | lead acceptance; depends on PR-GR4, PR-GO, local/hosted gates | accepted hosted checkpoint on draft PR 4 at `3bb74fe`: `prospective metadata` passes in 1m32s, `repository contract` passes in 2m55s, active ruleset `19155146` reports no bypass, and the PR is CLEAN; CodeRabbit/Claude produced no observable review while draft and remain advisory |
+| JG-R1 independent fresh-clone review | independent internal reviewer; depends on PR-GG/J5 and exact published `3bb74fe`; read-only `/tmp/semantic-packages-pr4-fresh` | BLOCK despite exact checkout, clean tree, sole Conventional Commit, prospective range, full 127-journey/20-governance/2-report/8-Evidence/49-proof gate, and diff hygiene passing: stale system-map and user-journey status prose contradicted accepted executable J2–J5 state |
+| JG-S1 status-memory successor | journey continuity owner; depends on JG-R1; exclusive system map, user journeys, and this plan | implementation checkpoint: stale “next/designed/open” claims now state J1–J5 executable while keeping hosted release and cold-human acceptance open; rejected JG-R1 retained rather than relabeled |
+| JG-R2 fresh-clone successor review | independent reviewer; depends on JG-S1 and republished exact commit | planned replay of JG-R1 status claims, exact clean checkout, prospective metadata, full locked gate, exclusions, and cold-human recommendation |
+| JG journey release | lead acceptance; depends on JG-R2 plus J5 and PR-GG; read-only fresh-checkout acceptance with no repository write scope and ephemeral outputs only under an allocated temporary directory | all four terminal outcomes and bounded maintenance reproduce without hosted/automatic overclaim; cold human journey remains a pre-merge recommendation; pending |
 
 Parallel work is read-only or owns non-overlapping paths. From J3-F2 onward, the user
 authorized a bounded process canary for this small repository: one continuity owner
@@ -300,7 +303,7 @@ may be the smallest local test/CLI projection and must not become a universal tr
 - [x] J5 successor/staleness recovery
 - [x] PR-GP0 release-governance preflight
 - [x] PR-GF1 governance falsifier checkpoint and review
-- [ ] PR/release governance convergence
+- [x] PR/release governance convergence
 - [ ] JG journey-complete release
 
 ## Discoveries and changed assumptions
@@ -478,8 +481,9 @@ may be the smallest local test/CLI projection and must not become a universal tr
   but used a stale garbage-collected GCC wrapper path; candidate and Evidence checks
   failed before execution with an explicit unavailable-`CC` diagnostic. Re-run with
   the extant exact GCC 15.2.0 wrapper; this is environment evidence, not a product pass.
-- The hosted workflow does not yet provision every tool required by the now-expanded
-  local repository gate, so local reproduction does not close the release gate.
+- The hosted workflow originally lacked the expanded toolchain and did not close the
+  release gate. Its accepted locked Nix successor now reproduces the complete gate on
+  draft PR 4: metadata passes in 1m32s and the repository contract in 2m55s.
 - The first PR-GT1 pin selected the correct compiler releases but not the accepted GCC
   wrapper closure: nixpkgs `bbacb131…` moved glibc from 2.42-61 to 2.42-67 and changed
   four Wave 4 Rust binary hashes. Signed release pin `e8210c6…` realizes the exact
@@ -510,6 +514,13 @@ may be the smallest local test/CLI projection and must not become a universal tr
   `19155146` requiring PRs, linear history, resolved conversations, strict deterministic
   checks, and no deletion or force-push. CodeRabbit/Claude remain advisory and their
   permissions were not expanded without actual PR evidence.
+- JG-R1 independently reproduced the exact published `3bb74fe` checkout, sole
+  Conventional Commit, prospective range, diff hygiene, and full locked gate, but
+  correctly BLOCKed technical release because early system-map and user-journey prose
+  still called accepted J2–J5 work open or merely designed. JG-S1 changes only those
+  stale status claims, retains the rejected review, and requires a fresh successor
+  replay rather than treating executable evidence as permission to ignore conflicting
+  project memory.
 - `CONTRIBUTING.md` encoded a serial all-stages lifecycle while the governing lifecycle
   uses proportional revisioned DAG nodes; J0 makes them consistent.
 
@@ -546,8 +557,12 @@ four actor terminal outcomes. J5 then retains the immutable predecessor inside a
 explicit 31-record successor snapshot, rejects Evidence migration, exposes the failed
 0.2.0 result through both consumer views, and reports exact 0.1.0 recovery candidates
 without selecting one. J5-R1 and the full locked gate pass at `56c4114`; ADR 0014 and
-J5-G are accepted. JG now waits on release-governance operator convergence and an
-independent fresh-checkout reproduction, not further product-journey implementation.
+J5-G are accepted. PR-GO and PR-GG then converge squash-only protected hosted policy
+and both required checks on draft PR 4. The first independent fresh-checkout reviewer
+reproduces every executable gate but BLOCKs on contradictory status prose; JG-S1
+reconciles that durable memory without changing product behavior. JG now waits on the
+independent successor replay and the retained cold-human pre-merge recommendation,
+not further product-journey implementation.
 
 ## Stop and escalation conditions
 
