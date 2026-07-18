@@ -40,8 +40,24 @@ Run the repository quality gate:
 
 ```sh
 python3 -m pip install -r requirements-dev.txt
+# Lean must resolve to 4.30.0, commit d024af099ca4bf2c86f649261ebf59565dc8c622.
+# Set LEAN=/path/to/lean when that binary is not on PATH.
 python3 scripts/check_repo.py
 ```
+
+The gate includes record/link fixtures, 18 loader groups, 18 adapter tests, and the
+49-group bounded proof boundary. Check the accepted proof Evidence directly with:
+
+```sh
+python3 scripts/proof_check.py \
+  --manifest proofs/stack-pop-empty/manifest.json \
+  --evidence fixtures/records/valid/stack-pop-empty-model-proof-evidence.json \
+  --lean "${LEAN:-lean}"
+```
+
+This supports only model satisfaction and operation of the proof-evidence pipeline
+for Stack `pop-empty`. It does not establish Realization or adapter conformance, the
+whole Specification, or general authority for Lean.
 
 Validate one local canonical-record source set directly:
 

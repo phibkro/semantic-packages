@@ -219,9 +219,9 @@ semantic-packages worktree and the versioned review brief.
 | W3-PR3 proof convergence review | challenges W3-P3; independent internal static reviewer plus attempted Fable replay | read-only prior and novel theorem/Evidence/provenance audit | blocked: valid `set_option ... in #eval/#print` wrappers bypass the line-anchored source-command scan, and exact Evidence omits the ADR-required checker/runner-correctness assumption; other PR2 mechanisms trace closed |
 | W3-PF4 final proof grammar controls | depends on W3-PR3; independent fixture owner | exclusive proof fixture/harness scope | complete red checkpoint: wrapped eval/print plus corrected Evidence assumptions bring the oracle to 49 groups / 106 cases; 86 cases remain green and the expected assumption-precedence cascade leaves 20 P3 reds across 4 groups |
 | W3-P4 final proof boundary successor | depends on W3-PF4; internal Codex implementation owner | exclusive checker/proof manifest/source scope as required | implementation checkpoint green: all 49 groups / 106 cases, direct checker with/without exact Evidence, direct Lean, compilation, and repository gate pass; theorem remains unchanged |
-| W3-PR4 final proof convergence review | challenges W3-P4 | read-only prior blocker replay and bounded generality audit | in progress |
-| W3-PG1 named-law evidence gate | depends on accepted W3-P4 successor, W3-PR4, and G1 | lead acceptance owner | pending |
-| W3-G1 execution-substrate convergence | depends on W3-LG1, W3-AG1, W3-PG1, and G0 | lead acceptance owner | pending |
+| W3-PR4 final proof convergence review | challenges W3-P4; independent internal static reviewer | read-only prior blocker replay and bounded generality audit | passed: generic cleaned-source token matching covers direct/wrapped commands, exact Evidence assumptions/provenance agree, runner and manifest digests match, and all prior review mechanisms remain closed |
+| W3-PG1 named-law evidence gate | depends on accepted W3-P4 successor, W3-PR4, and G1 | lead acceptance owner | accepted: canonical specification-scoped model/pipeline Evidence passes exact checker linkage; the Wave 2 fixture-only record moved out of the canonical source set; the 49-group proof gate is integrated into G0 |
+| W3-G1 execution-substrate convergence | depends on W3-LG1, W3-AG1, W3-PG1, and G0 | lead acceptance owner | accepted: record/link 9/20/38/2, loader 18, adapter 18, proof 49, direct accepted Evidence, compilation, Markdown/JSON, and full repository gate agree |
 
 W3-S2 used Claude Code 2.1.212 through `agent-dispatch --read-only`, pagu-box
 `strict`, the Wave 2 worktree, exact `claude-fable-5`, and explicit high effort. The
@@ -378,11 +378,11 @@ python3 -m pip install -r requirements-dev.txt
 python3 scripts/check_repo.py
 ```
 
-On a Nix host without the Python dependencies installed globally, the equivalent
-invocation used for W2-G1 is:
+On a Nix host without the Python dependencies installed globally, provide the exact
+Lean 4.30.0 binary through `LEAN` while using the W2 Python environment:
 
 ```sh
-nix shell --impure --expr \
+LEAN=/path/to/lean-4.30.0 nix shell --impure --expr \
   'with import <nixpkgs> {}; python3.withPackages (ps: with ps; [jsonschema rfc3339-validator])' \
   --command python3 scripts/check_repo.py
 ```
@@ -394,6 +394,10 @@ enables format assertion explicitly. The current Wave 3 gate also runs:
 python3 -m py_compile scripts/check_repo.py scripts/record_check.py
 python3 scripts/loader_fixture_check.py
 python3 -m unittest discover -s tests/adapter -v
+python3 scripts/proof_fixture_check.py --lean "${LEAN:-lean}"
+python3 scripts/proof_check.py --manifest proofs/stack-pop-empty/manifest.json \
+  --evidence fixtures/records/valid/stack-pop-empty-model-proof-evidence.json \
+  --lean "${LEAN:-lean}"
 python3 -m py_compile semantic_packages/*.py tests/adapter/test_stack_runner.py fixtures/adapters/v1/fake_stack_adapter.py
 python3 scripts/record_check.py fixtures/records/valid/*.json
 python3 scripts/record_check.py fixtures/records/invalid/schema/spec/kind-array.json
@@ -401,8 +405,9 @@ python3 scripts/record_check.py fixtures/records/invalid/schema/spec/kind-array.
 
 Expected repository observation: `Record fixture checks passed: 9 valid, 20
 schema-invalid, 38 link-invalid, 2 link-valid.`, `Loader fixture checks passed: 18
-contract groups.`, `Adapter fixture checks passed: 18 tests.`, and `Repository checks
-passed.` with exit status 0. The direct positive graph reports `Graph is valid: 0 diagnostics.`
+contract groups.`, `Adapter fixture checks passed: 18 tests.`, `Proof fixture checks
+passed: 49 contract groups.`, and `Repository checks passed.` with exit status 0. The
+direct accepted proof Evidence reports `Proof is valid: 0 diagnostics.`
 with exit status 0; the negative graph reports `SCHEMA_KIND_TYPE
 fixtures/records/invalid/schema/spec/kind-array.json#/kind` with the intended exit
 status 1. Each later milestone must add its executable command and expected observation
@@ -737,6 +742,14 @@ not a grep or summary proxy.
   enforce the recorded checks. The theorem remains unchanged; checker and manifest
   digests are `6ecc1232c65eb99de758d180971631439dff02c566bee5607e9969817a328609`
   and `18c0eb2f073a648b865f6db5ffbef03fd6410625d755acc1b5347504ae7236c5`.
+- W3-PR4 passes after static replay of every prior blocker mechanism and normal gates.
+  W3-PG1 then promotes `(evidence, stack-pop-empty-model-proof, 0.1.0)` as exact
+  specification-scoped model-satisfaction/pipeline Evidence and moves the Wave 2
+  `fixture-only` record into proof-fixture scope. This replaces the canonical hazard
+  without mutating its identity or inventing supersession; the canonical valid-record
+  count remains nine because one fixture record leaves as one reviewed Evidence enters.
+  `check_repo.py` now requires exact Lean through `LEAN` or `PATH`, runs all 49 proof
+  groups, and prints the proof summary alongside record, loader, and adapter summaries.
 
 ## Decision log
 
@@ -789,10 +802,12 @@ reviewed successors. The repository now carries seven strict schema files defini
 canonical record kinds, positive and falsifying schema/reference fixtures, and a
 deterministic durable record gate. W3-LG1 now closes the provisional loader/import
 slice after three implementation/review successors and 18 durable contract groups.
-W3-AG1 now closes the executable Python reference Realization and shared adapter suite
-after three reviewed successors and 18 durable tests. The bounded proof checker remains
-active at its PF2 successor. No independent Rust or TypeScript realization, proof
-Evidence gate, or browser has started.
+W3-AG1 closes the executable Python reference Realization and shared adapter suite after
+three reviewed successors and 18 durable tests. W3-PG1 closes the bounded `pop-empty`
+proof boundary after four red/review successors, 49 durable groups / 106 cases, and one
+accepted specification-scoped Evidence record. W3-G1 therefore closes the execution
+substrate. No independent Rust or TypeScript realization, shared cross-language
+conformance run, compatibility resolver, or browser has started.
 
 ## Stop and escalation conditions
 
