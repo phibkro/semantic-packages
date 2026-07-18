@@ -1,0 +1,106 @@
+[
+  {
+    "name": "legacy-subject",
+    "subject": "Add Wave 3 execution substrate",
+    "parentCount": 1,
+    "expected": [
+      "commit subject must match '<type>[optional scope][!]: <description>'; see CONTRIBUTING.md#conventional-commits"
+    ]
+  },
+  {
+    "name": "uppercase-type",
+    "subject": "FEAT: add resolver",
+    "parentCount": 1,
+    "expected": [
+      "commit subject must match '<type>[optional scope][!]: <description>'; see CONTRIBUTING.md#conventional-commits"
+    ]
+  },
+  {
+    "name": "unsupported-type",
+    "subject": "security: harden workflow",
+    "parentCount": 1,
+    "expected": [
+      "unsupported commit type 'security'; allowed types: feat, fix, refactor, perf, docs, test, build, ci, chore, revert, style"
+    ]
+  },
+  {
+    "name": "malformed-separator",
+    "subject": "fix(governance) reject malformed subject",
+    "parentCount": 1,
+    "expected": [
+      "commit subject must match '<type>[optional scope][!]: <description>'; see CONTRIBUTING.md#conventional-commits"
+    ]
+  },
+  {
+    "name": "empty-scope",
+    "subject": "fix(): retain evidence",
+    "parentCount": 1,
+    "expected": [
+      "commit subject must match '<type>[optional scope][!]: <description>'; see CONTRIBUTING.md#conventional-commits"
+    ]
+  },
+  {
+    "name": "whitespace-only-scope",
+    "subject": "fix(   ): retain evidence",
+    "parentCount": 1,
+    "expected": [
+      "commit subject must match '<type>[optional scope][!]: <description>'; see CONTRIBUTING.md#conventional-commits"
+    ]
+  },
+  {
+    "name": "missing-description-and-space",
+    "subject": "fix:",
+    "parentCount": 1,
+    "expected": [
+      "commit subject must match '<type>[optional scope][!]: <description>'; see CONTRIBUTING.md#conventional-commits"
+    ]
+  },
+  {
+    "name": "whitespace-only-description",
+    "subject": "fix:    ",
+    "parentCount": 1,
+    "expected": [
+      "commit description must contain non-whitespace text"
+    ]
+  },
+  {
+    "name": "fixup-prefix",
+    "subject": "fixup! docs: explain contributor workflow",
+    "parentCount": 1,
+    "expected": [
+      "commit subject must not use fixup! or squash! prefixes"
+    ]
+  },
+  {
+    "name": "squash-prefix",
+    "subject": "squash! feat(records): add canonical records",
+    "parentCount": 1,
+    "expected": [
+      "commit subject must not use fixup! or squash! prefixes"
+    ]
+  },
+  {
+    "name": "overlong-subject",
+    "subject": "docs: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "parentCount": 1,
+    "expected": [
+      "commit subject exceeds 72 characters (73)"
+    ]
+  },
+  {
+    "name": "merge-commit",
+    "subject": "chore: reconcile branches",
+    "parentCount": 2,
+    "expected": [
+      "pull request history must not contain merge commits"
+    ]
+  },
+  {
+    "name": "octopus-merge",
+    "subject": "chore: reconcile several branches",
+    "parentCount": 3,
+    "expected": [
+      "pull request history must not contain merge commits"
+    ]
+  }
+]

@@ -1,0 +1,1 @@
+LINK_DECLARATION_KIND_MISMATCH records/spec.json#/equivalences/0/carrier: requested local ID not-a-carrier as carrier in (specification, stack, 0.1.0), found law

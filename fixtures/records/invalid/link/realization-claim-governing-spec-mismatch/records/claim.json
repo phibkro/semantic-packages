@@ -1,0 +1,17 @@
+{
+  "kind": "claim",
+  "id": "mismatched-realization-claim",
+  "version": "0.1.0",
+  "subject": { "kind": "realization", "id": "stack-a-realization", "version": "0.1.0" },
+  "governingSpecification": { "kind": "specification", "id": "stack-b", "version": "0.1.0" },
+  "proposition": {
+    "specification": { "kind": "specification", "id": "stack-b", "version": "0.1.0" },
+    "declarationId": "law-b"
+  },
+  "concern": "law.conformance",
+  "scope": "link counterexample",
+  "assumptions": [],
+  "exclusions": [],
+  "applicableProfiles": [],
+  "state": "active"
+}

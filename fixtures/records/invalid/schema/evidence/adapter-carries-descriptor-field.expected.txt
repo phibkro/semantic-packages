@@ -1,0 +1,1 @@
+SCHEMA_ADAPTER_SELECTOR #/adapter/protocol

@@ -1,0 +1,87 @@
+{
+  "kind": "evidence",
+  "id": "stack-typescript-persistence-conformance",
+  "version": "0.1.0",
+  "claim": {
+    "kind": "claim",
+    "id": "stack-typescript-persistence",
+    "version": "0.1.0"
+  },
+  "specification": {
+    "kind": "specification",
+    "id": "stack",
+    "version": "0.1.0"
+  },
+  "scope": "realization",
+  "realization": {
+    "kind": "realization",
+    "id": "stack-typescript",
+    "version": "0.1.0"
+  },
+  "adapter": {
+    "id": "stack-typescript-json-adapter",
+    "version": "0.1.0"
+  },
+  "mechanism": "bounded-conformance-campaign",
+  "result": "supports",
+  "reviewState": "accepted",
+  "method": "Retained-handle and ancestor campaign plus persistence-breaker and novel persistence review.",
+  "environment": {
+    "runner": "stack-runner-json-v1",
+    "python": "3.14.6",
+    "deno": "2.9.2",
+    "typescript": "6.0.3",
+    "mode": "offline"
+  },
+  "freshness": {
+    "producedAt": "2026-07-18T13:00:00Z"
+  },
+  "assumptions": [
+    "The adapter faithfully exposes the named Realization.",
+    "The runner and independent review correctly enforce the recorded checks."
+  ],
+  "exclusions": [
+    "Support is bounded to the exact plan and one process session.",
+    "No post-termination, performance, concurrency, remote, or interoperation conclusion."
+  ],
+  "applicability": {
+    "profiles": [
+      {
+        "kind": "realizationProfile",
+        "id": "stack-default",
+        "version": "0.1.0"
+      }
+    ],
+    "parameters": {
+      "maximumDepth": 8,
+      "maximumHistory": 32,
+      "observationLimit": 9
+    }
+  },
+  "provenance": {
+    "declaration": "persistence",
+    "planSha256": "e055eab406683a01a32e8b563ef2e299169ddb2745685b5ad3ffae3297d93f6c",
+    "checkArgv": ["$DENO", "check", "--no-config", "--no-lock", "--no-npm", "--no-remote", "implementations/typescript/adapter.ts", "implementations/typescript/stack.ts"],
+    "campaignArgv": ["$DENO", "run", "--no-config", "--no-lock", "--no-npm", "--no-remote", "--no-prompt", "implementations/typescript/adapter.ts"],
+    "inputs": {
+      "specification": {"path": "fixtures/records/valid/stack-spec.json", "sha256": "dd083a71a4631cc44be051a16b8e20ff0cee7199e46d3823322665d1fdeec6c1"},
+      "profile": {"path": "fixtures/records/valid/stack-profile.json", "sha256": "2a51ed7d2e1266376cd4a58ef3f20d30244655d25cb884816576be989014eddb"},
+      "candidateMatrix": {"path": "tests/candidates/test_cross_language_candidates.py", "sha256": "7ce3b1c832810d549e1161ad988d3716e6eef304f1b8b1e508f95cf4e6feff43"},
+      "breakerAdapter": {"path": "fixtures/candidates/wave4/typescript_persistence_breaker/adapter.ts", "sha256": "dbaed225613c391c313c43f559b79727ee766cfbb509ef048caadf67289e0a1d"},
+      "breakerStack": {"path": "fixtures/candidates/wave4/typescript_persistence_breaker/stack.ts", "sha256": "408eca0723c9a59e80eb410bc5293213b8e0386ee3967d338b4849a6a2c8610f"}
+    },
+    "report": {
+      "path": "evidence/wave4/typescript-campaign-report.json",
+      "sha256": "df52d79c0889a38e0ccbe096805ec805282b27ee04227e4c69c443af91c063c6"
+    },
+    "runner": {
+      "path": "semantic_packages/stack_runner.py",
+      "sha256": "50ec63e52c9f943cfe1f35f0463b1b4135c9abead19885af8e9629ccc7e031e1"
+    },
+    "sources": {
+      "adapter": "c63ff07d936b5575c0868c10b0831d98d978a83ef07a7c7a8b1dde5a93f917de",
+      "stack": "94d6f38af8a25e6d7f2e365dd769e150409be1bf90f2094d8d512a5322577711"
+    },
+    "review": "W4-TR2 PASS; persistence breaker challenged only persistence"
+  }
+}

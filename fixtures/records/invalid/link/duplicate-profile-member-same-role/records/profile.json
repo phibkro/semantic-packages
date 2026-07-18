@@ -1,0 +1,9 @@
+{
+  "kind": "realizationProfile",
+  "id": "duplicate-profile-members",
+  "version": "0.1.0",
+  "workloads": [
+    { "id": "duplicate-workload", "startingState": "empty", "sizeFunction": "n", "definition": "first definition" },
+    { "id": "duplicate-workload", "startingState": "empty", "sizeFunction": "n + 1", "definition": "second definition" }
+  ]
+}

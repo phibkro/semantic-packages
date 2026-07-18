@@ -1,0 +1,6 @@
+{
+  "kind": "specification",
+  "id": "explicit-non-json",
+  "version": "1",
+  "laws": [{"id": "law", "statement": "true"}]
+}

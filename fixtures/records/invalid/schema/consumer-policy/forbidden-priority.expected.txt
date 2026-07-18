@@ -1,0 +1,1 @@
+SCHEMA_PRIORITY_ENUM #/concerns/0/priority

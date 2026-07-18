@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/package-spec-language/claim.schema.json",
+  "title": "Claim record",
+  "type": "object",
+  "required": [
+    "kind",
+    "id",
+    "version",
+    "subject",
+    "governingSpecification",
+    "proposition",
+    "concern", "scope", "assumptions", "exclusions", "applicableProfiles",
+    "state"
+  ],
+  "properties": {
+    "kind": { "const": "claim" },
+    "id": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+    "version": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+    "subject": { "$ref": "common.schema.json#/$defs/subjectReference" },
+    "governingSpecification": {
+      "$ref": "common.schema.json#/$defs/specificationReference"
+    },
+    "proposition": {
+      "$ref": "common.schema.json#/$defs/declarationReference"
+    },
+    "concern": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+    "scope": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+    "assumptions": {
+      "$ref": "common.schema.json#/$defs/nonEmptyStringArray"
+    },
+    "exclusions": {
+      "$ref": "common.schema.json#/$defs/nonEmptyStringArray"
+    },
+    "applicableProfiles": {
+      "type": "array",
+      "items": { "$ref": "common.schema.json#/$defs/realizationProfileReference" },
+      "uniqueItems": true
+    },
+    "state": { "$ref": "common.schema.json#/$defs/claimLifecycleState" }
+  },
+  "additionalProperties": false
+}

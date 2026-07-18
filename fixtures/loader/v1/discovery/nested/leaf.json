@@ -1,0 +1,6 @@
+{
+  "kind": "specification",
+  "id": "discovery-leaf",
+  "version": "1",
+  "laws": [{"id": "leaf-law", "statement": "true"}]
+}

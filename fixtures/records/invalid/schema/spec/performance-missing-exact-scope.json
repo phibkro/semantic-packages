@@ -1,0 +1,13 @@
+{
+  "kind": "specification",
+  "id": "schema-performance-scope",
+  "version": "0.1.0",
+  "performancePropositions": [
+    {
+      "id": "push-cost",
+      "operationFamily": ["push"],
+      "predicate": "total cost <= a*n+b",
+      "permittedEvidenceMethods": ["benchmark"]
+    }
+  ]
+}

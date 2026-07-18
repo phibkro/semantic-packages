@@ -1,0 +1,1 @@
+"""Adapter protocol falsification tests."""

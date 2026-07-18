@@ -1,0 +1,19 @@
+{
+  "kind": "consumerPolicy",
+  "id": "optional-event-policy",
+  "version": "0.1.0",
+  "specification": { "kind": "specification", "id": "stack", "version": "0.1.0" },
+  "profile": { "kind": "realizationProfile", "id": "stack-default", "version": "0.1.0" },
+  "concerns": [],
+  "prohibitions": [
+    {
+      "proposition": {
+        "specification": { "kind": "specification", "id": "stack", "version": "0.1.0" },
+        "declarationId": "stack-effects"
+      },
+      "description": "Consumer forbids debug.emit inside the accepted observation boundary.",
+      "eventPattern": "debug.emit",
+      "acceptedEvidenceScope": ["adapter-invocation-trace"]
+    }
+  ]
+}

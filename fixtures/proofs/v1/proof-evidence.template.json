@@ -1,0 +1,75 @@
+{
+  "kind": "evidence",
+  "id": "stack-pop-empty-model-proof",
+  "version": "0.1.0",
+  "claim": {
+    "kind": "claim",
+    "id": "stack-pop-empty-law",
+    "version": "0.1.0"
+  },
+  "specification": {
+    "kind": "specification",
+    "id": "stack",
+    "version": "0.1.0"
+  },
+  "scope": "specification",
+  "mechanism": "proof",
+  "result": "supports",
+  "reviewState": "accepted",
+  "method": "Lean model-satisfaction and proof-pipeline check for Stack pop-empty",
+  "environment": {
+    "execution": "local",
+    "kernel": "Lean 4.30.0"
+  },
+  "freshness": {
+    "producedAt": "2026-07-18T00:00:00Z"
+  },
+  "assumptions": [
+    "The hand-reviewed translation from the Stack law to the Lean observation model is faithful.",
+    "Finite Lean lists faithfully model the Specification's finite top-first Stack observation space.",
+    "Lean 4.30.0 and its trusted kernel correctly check the generated proof audit.",
+    "The identified provenance checker and runner correctly enforce the recorded checks."
+  ],
+  "exclusions": [
+    "This Evidence does not establish conformance of any Realization or adapter.",
+    "This Evidence does not prove every Stack law or the complete Specification.",
+    "This Evidence grants no global authority to Lean or to this proof pipeline."
+  ],
+  "applicability": {
+    "profiles": []
+  },
+  "provenance": {
+    "manifest": {
+      "path": "proofs/stack-pop-empty/manifest.json",
+      "sha256": "$MANIFEST_SHA256"
+    },
+    "runner": {
+      "path": "scripts/proof_check.py",
+      "sha256": "$RUNNER_SHA256"
+    },
+    "inputs": {
+      "specification": {
+        "path": "fixtures/records/valid/stack-spec.json",
+        "sha256": "$SPECIFICATION_SHA256"
+      },
+      "claim": {
+        "path": "fixtures/records/valid/pop-empty-spec-claim.json",
+        "sha256": "$CLAIM_SHA256"
+      },
+      "source": {
+        "path": "proofs/stack-pop-empty/StackPopEmpty.lean",
+        "sha256": "$SOURCE_SHA256"
+      }
+    },
+    "tool": {
+      "name": "Lean",
+      "version": "4.30.0",
+      "commit": "d024af099ca4bf2c86f649261ebf59565dc8c622",
+      "invocation": ["$LEAN", "--trust=0", "--json", "$GENERATED_SOURCE"]
+    },
+    "result": {
+      "completed": true,
+      "outputSha256": "$SUCCESS_SHA256"
+    }
+  }
+}

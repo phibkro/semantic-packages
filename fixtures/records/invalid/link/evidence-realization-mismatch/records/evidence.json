@@ -1,0 +1,20 @@
+{
+  "kind": "evidence",
+  "id": "mismatched-realization-evidence",
+  "version": "0.1.0",
+  "claim": { "kind": "claim", "id": "realization-a-claim", "version": "0.1.0" },
+  "specification": { "kind": "specification", "id": "stack", "version": "0.1.0" },
+  "scope": "realization",
+  "realization": { "kind": "realization", "id": "realization-b", "version": "0.1.0" },
+  "adapter": { "id": "adapter-b", "version": "0.1.0" },
+  "mechanism": "property-test",
+  "result": "supports",
+  "reviewState": "accepted",
+  "method": "link counterexample",
+  "environment": {},
+  "freshness": { "producedAt": "2026-07-18T00:00:00Z" },
+  "assumptions": [],
+  "exclusions": [],
+  "applicability": { "profiles": [] },
+  "provenance": {}
+}

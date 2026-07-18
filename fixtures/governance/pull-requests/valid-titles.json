@@ -1,0 +1,13 @@
+[
+  "feat: add a consumer-visible capability",
+  "fix: correct evidence selection",
+  "refactor(checker): separate Markdown scanning",
+  "perf(checker): avoid repeated heading scans",
+  "docs: explain contributor workflow",
+  "test(governance): cover merge ancestry",
+  "build(toolchain): pin reviewed dependencies",
+  "ci(governance): enforce metadata checks",
+  "chore: maintain governance fixtures",
+  "revert: restore prior metadata policy",
+  "style: format governance fixtures"
+]

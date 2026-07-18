@@ -1,0 +1,6 @@
+{
+  "kind": "specification",
+  "id": "stack-b",
+  "version": "0.1.0",
+  "laws": [{ "id": "law-b", "statement": "true" }]
+}

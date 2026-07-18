@@ -1,0 +1,1 @@
+LINK_EVIDENCE_REALIZATION_SPECIFICATION_MISMATCH records/evidence.json#/realization: requested (realization, stack-b-realization, 0.1.0), Realization governs (specification, stack-b, 0.1.0) but Evidence governs (specification, stack-a, 0.1.0)

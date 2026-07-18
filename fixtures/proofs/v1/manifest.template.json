@@ -1,0 +1,39 @@
+{
+  "formatVersion": 1,
+  "specification": {
+    "reference": {
+      "kind": "specification",
+      "id": "stack",
+      "version": "0.1.0"
+    },
+    "path": "fixtures/records/valid/stack-spec.json",
+    "sha256": "$SPECIFICATION_SHA256"
+  },
+  "declarationId": "pop-empty",
+  "claim": {
+    "reference": {
+      "kind": "claim",
+      "id": "stack-pop-empty-law",
+      "version": "0.1.0"
+    },
+    "path": "fixtures/records/valid/pop-empty-spec-claim.json",
+    "sha256": "$CLAIM_SHA256"
+  },
+  "source": {
+    "path": "proofs/stack-pop-empty/StackPopEmpty.lean",
+    "sha256": "$SOURCE_SHA256"
+  },
+  "runner": {
+    "path": "scripts/proof_check.py",
+    "sha256": "$RUNNER_SHA256"
+  },
+  "tool": {
+    "name": "Lean",
+    "version": "4.30.0",
+    "commit": "d024af099ca4bf2c86f649261ebf59565dc8c622",
+    "invocation": ["$LEAN", "--trust=0", "--json", "$GENERATED_SOURCE"]
+  },
+  "theoremName": "stack_pop_empty",
+  "expectedStatement": "∀ (A : Type u), pop (empty : ObservedStack A) = Option.none",
+  "expectedAxioms": []
+}

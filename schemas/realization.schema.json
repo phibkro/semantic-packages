@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/package-spec-language/realization.schema.json",
+  "title": "Realization record",
+  "type": "object",
+  "required": ["kind", "id", "version", "specification", "adapter", "implementation", "capabilities", "limitations", "supportedProfiles"],
+  "properties": {
+    "kind": { "const": "realization" },
+    "id": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+    "version": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+    "specification": {
+      "$ref": "common.schema.json#/$defs/specificationReference"
+    },
+    "adapter": { "$ref": "common.schema.json#/$defs/adapterDescriptor" },
+    "implementation": { "$ref": "#/$defs/implementationMetadata" },
+    "capabilities": {
+      "$ref": "common.schema.json#/$defs/nonEmptyStringArray"
+    },
+    "limitations": {
+      "$ref": "common.schema.json#/$defs/nonEmptyStringArray"
+    },
+    "supportedProfiles": {
+      "type": "array",
+      "items": { "$ref": "common.schema.json#/$defs/realizationProfileReference" },
+      "uniqueItems": true
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "implementationMetadata": {
+      "type": "object",
+      "required": ["language", "languageVersion", "target", "runtime", "interfaceMechanism", "buildSystem", "buildInstructions", "executionInstructions"],
+      "properties": {
+        "language": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+        "languageVersion": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+        "target": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+        "runtime": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+        "interfaceMechanism": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+        "abi": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+        "memoryModel": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+        "buildSystem": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+        "buildInstructions": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+        "executionInstructions": { "$ref": "common.schema.json#/$defs/nonEmptyString" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

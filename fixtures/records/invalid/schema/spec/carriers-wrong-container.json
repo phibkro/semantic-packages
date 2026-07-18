@@ -1,0 +1,8 @@
+{
+  "kind": "specification",
+  "id": "schema-carriers-wrong-container",
+  "version": "0.1.0",
+  "carriers": {
+    "id": "Stack"
+  }
+}

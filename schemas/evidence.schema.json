@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/package-spec-language/evidence.schema.json",
+  "title": "Evidence record",
+  "type": "object",
+  "required": [
+    "kind",
+    "id",
+    "version",
+    "claim",
+    "specification",
+    "scope",
+    "mechanism",
+    "result",
+    "reviewState",
+    "method",
+    "environment",
+    "freshness", "assumptions", "exclusions", "applicability", "provenance"
+  ],
+  "properties": {
+    "kind": { "const": "evidence" },
+    "id": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+    "version": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+    "claim": { "$ref": "common.schema.json#/$defs/claimReference" },
+    "specification": {
+      "$ref": "common.schema.json#/$defs/specificationReference"
+    },
+    "scope": { "enum": ["specification", "realization"] },
+    "realization": {
+      "$ref": "common.schema.json#/$defs/realizationReference"
+    },
+    "adapter": { "$ref": "common.schema.json#/$defs/adapterSelector" },
+    "mechanism": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+    "result": { "$ref": "common.schema.json#/$defs/evidenceResult" },
+    "reviewState": {
+      "$ref": "common.schema.json#/$defs/evidenceReviewState"
+    },
+    "method": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+    "environment": { "type": "object" },
+    "assumptions": {
+      "$ref": "common.schema.json#/$defs/nonEmptyStringArray"
+    },
+    "exclusions": {
+      "$ref": "common.schema.json#/$defs/nonEmptyStringArray"
+    },
+    "applicability": { "$ref": "#/$defs/applicability" },
+    "provenance": { "type": "object" },
+    "freshness": { "$ref": "#/$defs/freshness" }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "required": ["scope"],
+        "properties": { "scope": { "const": "specification" } }
+      },
+      "then": {
+        "not": {
+          "anyOf": [{ "required": ["realization"] }, { "required": ["adapter"] }]
+        }
+      }
+    },
+    {
+      "if": {
+        "required": ["scope"],
+        "properties": { "scope": { "const": "realization" } }
+      },
+      "then": { "required": ["realization", "adapter"] }
+    }
+  ],
+  "$defs": {
+    "applicability": {
+      "type": "object",
+      "required": ["profiles"],
+      "properties": {
+        "profiles": {
+          "type": "array",
+          "items": { "$ref": "common.schema.json#/$defs/realizationProfileReference" },
+          "uniqueItems": true
+        },
+        "parameters": { "type": "object" }
+      },
+      "additionalProperties": false
+    },
+    "freshness": {
+      "type": "object",
+      "required": ["producedAt"],
+      "properties": {
+        "producedAt": { "type": "string", "format": "date-time" },
+        "expiresAt": { "type": "string", "format": "date-time" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

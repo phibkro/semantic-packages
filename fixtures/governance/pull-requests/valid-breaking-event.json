@@ -1,0 +1,6 @@
+{
+  "pull_request": {
+    "title": "feat(records)!: require exact declaration references",
+    "body": "## Outcome\nMake change metadata reviewable before merge.\n\n## Change class and lifecycle\nGovernance experiment for the PR-G release-support node.\n\n## Governing scope\nOnly repository-local pull-request metadata checks are affected.\n\n## Design and changes\nAdd deterministic fixtures and a checker with no GitHub mutation.\n\n## Evidence\n### Baseline / falsifier\nA legacy subject and incomplete body must be rejected.\n\n### Verification\nRun the governance test suite.\n\n## Risks, assumptions, and exclusions\nHosted rules remain operator-owned.\n\n## Recovery, maintenance, and reopen triggers\nRevert if valid work is rejected.\n\n## Review plan and dispositions\nIndependent review is required."
+  }
+}

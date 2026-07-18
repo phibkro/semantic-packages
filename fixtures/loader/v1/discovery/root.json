@@ -1,0 +1,13 @@
+{
+  "kind": "specification",
+  "id": "discovery-root",
+  "version": "1",
+  "imports": [
+    {
+      "kind": "specification",
+      "id": "discovery-leaf",
+      "version": "1"
+    }
+  ],
+  "laws": [{"id": "root-law", "statement": "true"}]
+}

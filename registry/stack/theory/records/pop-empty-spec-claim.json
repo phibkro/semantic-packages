@@ -1,0 +1,29 @@
+{
+  "kind": "claim",
+  "id": "stack-pop-empty-law",
+  "version": "0.1.0",
+  "subject": {
+    "kind": "specification",
+    "id": "stack",
+    "version": "0.1.0"
+  },
+  "governingSpecification": {
+    "kind": "specification",
+    "id": "stack",
+    "version": "0.1.0"
+  },
+  "proposition": {
+    "specification": {
+      "kind": "specification",
+      "id": "stack",
+      "version": "0.1.0"
+    },
+    "declarationId": "pop-empty"
+  },
+  "concern": "law.conformance",
+  "scope": "The named law as a proposition of Stack 0.1.0.",
+  "assumptions": ["Classical equality for Option values."],
+  "exclusions": ["No realization behavior is asserted by this claim."],
+  "applicableProfiles": [],
+  "state": "active"
+}

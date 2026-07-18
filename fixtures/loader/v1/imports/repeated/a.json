@@ -1,0 +1,10 @@
+{
+  "kind": "specification",
+  "id": "repeated-a",
+  "version": "1",
+  "imports": [
+    {"kind": "specification", "id": "repeated-b", "version": "1"},
+    {"kind": "specification", "id": "repeated-b", "version": "1"}
+  ],
+  "laws": [{"id": "law-a", "statement": "true"}]
+}

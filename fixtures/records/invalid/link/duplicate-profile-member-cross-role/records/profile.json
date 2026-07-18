@@ -1,0 +1,11 @@
+{
+  "kind": "realizationProfile",
+  "id": "duplicate-profile-members",
+  "version": "0.1.0",
+  "workloads": [
+    { "id": "shared-profile-member", "startingState": "empty", "sizeFunction": "n", "definition": "workload definition" }
+  ],
+  "costMeasures": [
+    { "id": "shared-profile-member", "unit": "step", "aggregation": "sum", "instrumentation": "cost definition" }
+  ]
+}
