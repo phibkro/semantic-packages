@@ -456,7 +456,7 @@ command's exit status, not a grep or summary proxy.
 ## Result
 
 Wave 1 design closure passed DC1-G1 after one rejected integration and a reviewed
-successor. Wave 2 passed W2-G1 after three rejected checker/oracle checkpoints and
+successor. Wave 2 passed W2-G1 after four rejected checker/oracle checkpoints and
 reviewed successors. The repository now carries seven strict schema files defining six
 canonical record kinds, positive and falsifying schema/reference fixtures, and a
 deterministic durable record gate. Wave 3 may begin the bounded loader and
