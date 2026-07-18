@@ -203,6 +203,194 @@ def check_symlink_rejection() -> list[str]:
         return failures
 
 
+def check_unreadable_explicit_directory() -> list[str]:
+    with tempfile.TemporaryDirectory(prefix="semantic-loader-unreadable-") as raw:
+        source = Path(raw)
+        directory = source / "unreadable"
+        _copy(FIXTURES / "templates" / "minimal-spec.json", directory / "record.json")
+        original_mode = directory.stat().st_mode & 0o7777
+        failures: list[str] = []
+        try:
+            directory.chmod(0)
+        except OSError as error:
+            return [f"an unreadable explicit directory is rejected: chmod failed: {error}"]
+        try:
+            if os.access(directory, os.R_OK | os.X_OK):
+                failures.append(
+                    "an unreadable explicit directory is rejected: "
+                    "platform did not enforce removed read/search permissions"
+                )
+            else:
+                failures.extend(
+                    _expect(
+                        "an unreadable explicit directory becomes one stable input diagnostic",
+                        source,
+                        ["unreadable"],
+                        1,
+                        ["INPUT_READ_ERROR unreadable#"],
+                    )
+                )
+        finally:
+            directory.chmod(original_mode)
+        return failures
+
+
+def check_failing_source_alias_deduplication() -> list[str]:
+    with tempfile.TemporaryDirectory(prefix="semantic-loader-failing-alias-") as raw:
+        source = Path(raw)
+        (source / "nested").mkdir()
+        _copy(FIXTURES / "templates" / "valid-record.txt", source / "record.txt")
+        try:
+            os.symlink("absent-target.json", source / "broken.json")
+        except (OSError, NotImplementedError) as error:
+            return [f"failing source aliases are deduplicated: could not create test symlink: {error}"]
+
+        failures = _expect(
+            "lexical aliases of one missing JSON source produce one diagnostic",
+            source,
+            [
+                "missing.json",
+                "./missing.json",
+                "nested/../missing.json",
+                "missing.json",
+            ],
+            1,
+            ["INPUT_NOT_FOUND missing.json#"],
+        )
+        failures.extend(
+            _expect(
+                "lexical aliases of one explicit non-JSON source produce one diagnostic",
+                source,
+                ["record.txt", "./record.txt", "nested/../record.txt", "record.txt"],
+                1,
+                ["INPUT_NON_JSON record.txt#"],
+            )
+        )
+        failures.extend(
+            _expect(
+                "lexical aliases of one broken symbolic link produce one diagnostic",
+                source,
+                ["broken.json", "./broken.json", "nested/../broken.json", "broken.json"],
+                1,
+                ["INPUT_SYMLINK broken.json#"],
+            )
+        )
+        return failures
+
+
+def check_intermediate_directory_symlinks() -> list[str]:
+    with tempfile.TemporaryDirectory(prefix="semantic-loader-intermediate-link-") as raw:
+        source = Path(raw)
+        _copy(
+            FIXTURES / "templates" / "minimal-spec.json",
+            source / "real-directory" / "item.json",
+        )
+        try:
+            os.symlink("real-directory", source / "link-directory")
+            os.symlink("absent-directory", source / "broken-directory")
+        except (OSError, NotImplementedError) as error:
+            return [f"intermediate directory symlinks are rejected: could not create links: {error}"]
+
+        failures = _expect(
+            "an explicit file reached through an intermediate directory symlink is rejected",
+            source,
+            ["link-directory/item.json"],
+            1,
+            ["INPUT_SYMLINK link-directory/item.json#"],
+        )
+        failures.extend(
+            _expect(
+                "an explicit file below a broken intermediate directory symlink is rejected",
+                source,
+                ["broken-directory/item.json"],
+                1,
+                ["INPUT_SYMLINK broken-directory/item.json#"],
+            )
+        )
+        return failures
+
+
+def check_discovered_symlink_overlap_deduplication() -> list[str]:
+    with tempfile.TemporaryDirectory(prefix="semantic-loader-discovered-link-overlap-") as raw:
+        source = Path(raw)
+        _copy(
+            FIXTURES / "templates" / "minimal-spec.json",
+            source / "registry" / "nested" / "record.json",
+        )
+        try:
+            os.symlink("record.json", source / "registry" / "nested" / "record-link.json")
+        except (OSError, NotImplementedError) as error:
+            return [f"overlapping symlink discovery is deduplicated: could not create link: {error}"]
+        return _expect(
+            "file/directory overlap emits one discovered symlink diagnostic",
+            source,
+            ["registry", "registry/nested"],
+            1,
+            ["INPUT_SYMLINK registry/nested/record-link.json#"],
+        )
+
+
+def check_multiple_empty_directory_order() -> list[str]:
+    with tempfile.TemporaryDirectory(prefix="semantic-loader-empty-order-") as raw:
+        source = Path(raw)
+        for name in ("a-empty", "z-empty"):
+            directory = source / name
+            directory.mkdir()
+            (directory / "README.txt").write_text("ignored\n", encoding="utf-8")
+        expected = ["INPUT_EMPTY_SOURCE_SET a-empty#"]
+        failures = _expect(
+            "multiple empty directories select the smallest label (reverse argv)",
+            source,
+            ["z-empty", "a-empty"],
+            1,
+            expected,
+        )
+        failures.extend(
+            _expect(
+                "multiple empty directories select the smallest label (forward argv)",
+                source,
+                ["a-empty", "z-empty"],
+                1,
+                expected,
+            )
+        )
+        return failures
+
+
+def check_root_base_source_label() -> list[str]:
+    with tempfile.TemporaryDirectory(prefix="semantic-loader-root-label-", dir="/tmp") as raw:
+        source = Path(raw)
+        invalid = source / "invalid.json"
+        _copy(FIXTURES / "schema-invalid" / "kind-array.json", invalid)
+        relative_label = invalid.as_posix().lstrip("/")
+        return _expect(
+            "an absolute source under root receives a relative POSIX label",
+            Path("/"),
+            [invalid.as_posix()],
+            1,
+            [f"SCHEMA_KIND_TYPE {relative_label}#/kind"],
+        )
+
+
+def check_explicit_special_file() -> list[str]:
+    with tempfile.TemporaryDirectory(prefix="semantic-loader-special-") as raw:
+        source = Path(raw)
+        fifo = source / "pipe.json"
+        if not hasattr(os, "mkfifo"):
+            return ["an explicit special JSON path is rejected: os.mkfifo is unavailable"]
+        try:
+            os.mkfifo(fifo)
+        except OSError as error:
+            return [f"an explicit special JSON path is rejected: could not create FIFO: {error}"]
+        return _expect(
+            "an explicit FIFO receives an actionable unsupported-type diagnostic",
+            source,
+            ["pipe.json"],
+            1,
+            ["INPUT_UNSUPPORTED_TYPE pipe.json#"],
+        )
+
+
 def check_stable_source_order() -> list[str]:
     with tempfile.TemporaryDirectory(prefix="semantic-loader-order-") as raw:
         source = Path(raw)
@@ -304,13 +492,20 @@ def check_visible_import_edges() -> list[str]:
     return failures
 
 
-def main() -> int:
+def run_loader_fixture_checks() -> tuple[list[str], str]:
     checks = [
         check_alias_and_overlap,
         check_recursive_discovery_and_ignored_files,
         check_explicit_non_json,
         check_empty_source_set,
         check_symlink_rejection,
+        check_unreadable_explicit_directory,
+        check_failing_source_alias_deduplication,
+        check_intermediate_directory_symlinks,
+        check_discovered_symlink_overlap_deduplication,
+        check_multiple_empty_directory_order,
+        check_root_base_source_label,
+        check_explicit_special_file,
         check_stable_source_order,
         check_distinct_file_duplicate_address,
         check_input_schema_phase_barrier,
@@ -319,12 +514,17 @@ def main() -> int:
     failures: list[str] = []
     for check in checks:
         failures.extend(check())
+    return failures, "Loader fixture checks passed: 16 contract groups."
+
+
+def main() -> int:
+    failures, summary = run_loader_fixture_checks()
     if failures:
         print("Loader fixture checks failed:")
         for failure in failures:
             print(f"- {failure}")
         return 1
-    print("Loader fixture checks passed: 9 contract groups.")
+    print(summary)
     return 0
 
 
