@@ -1,0 +1,136 @@
+[
+  {
+    "name": "empty-envelope",
+    "event": {},
+    "expected": [
+      "pull request event missing object 'pull_request'"
+    ]
+  },
+  {
+    "name": "null-pull-request",
+    "event": {
+      "pull_request": null
+    },
+    "expected": [
+      "pull request event field 'pull_request' must be an object"
+    ]
+  },
+  {
+    "name": "missing-title",
+    "event": {
+      "pull_request": {
+        "body": "present"
+      }
+    },
+    "expected": [
+      "pull request event missing string 'pull_request.title'"
+    ]
+  },
+  {
+    "name": "null-title",
+    "event": {
+      "pull_request": {
+        "title": null,
+        "body": "present"
+      }
+    },
+    "expected": [
+      "pull request event field 'pull_request.title' must be a string"
+    ]
+  },
+  {
+    "name": "non-string-title",
+    "event": {
+      "pull_request": {
+        "title": 42,
+        "body": "present"
+      }
+    },
+    "expected": [
+      "pull request event field 'pull_request.title' must be a string"
+    ]
+  },
+  {
+    "name": "missing-body",
+    "event": {
+      "pull_request": {
+        "title": "docs: explain metadata"
+      }
+    },
+    "expected": [
+      "pull request event missing 'pull_request.body'"
+    ]
+  },
+  {
+    "name": "null-body",
+    "event": {
+      "pull_request": {
+        "title": "docs: explain metadata",
+        "body": null
+      }
+    },
+    "expected": [
+      "pull request body is required"
+    ]
+  },
+  {
+    "name": "non-string-body",
+    "event": {
+      "pull_request": {
+        "title": "docs: explain metadata",
+        "body": ["not", "markdown"]
+      }
+    },
+    "expected": [
+      "pull request event field 'pull_request.body' must be a string or null"
+    ]
+  },
+  {
+    "name": "null-event",
+    "event": null,
+    "expected": [
+      "pull request event must be an object"
+    ]
+  },
+  {
+    "name": "list-event",
+    "event": [],
+    "expected": [
+      "pull request event must be an object"
+    ]
+  },
+  {
+    "name": "string-event",
+    "event": "opened",
+    "expected": [
+      "pull request event must be an object"
+    ]
+  },
+  {
+    "name": "list-pull-request",
+    "event": {
+      "pull_request": []
+    },
+    "expected": [
+      "pull request event field 'pull_request' must be an object"
+    ]
+  },
+  {
+    "name": "string-pull-request",
+    "event": {
+      "pull_request": "opened"
+    },
+    "expected": [
+      "pull request event field 'pull_request' must be an object"
+    ]
+  },
+  {
+    "name": "number-pull-request",
+    "event": {
+      "pull_request": 7
+    },
+    "expected": [
+      "pull request event field 'pull_request' must be an object"
+    ]
+  }
+]

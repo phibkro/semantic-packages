@@ -1,0 +1,46 @@
+{
+  "requiredSections": [
+    "## Outcome",
+    "## Change class and lifecycle",
+    "## Governing scope",
+    "## Design and changes",
+    "## Evidence",
+    "## Risks, assumptions, and exclusions",
+    "## Recovery, maintenance, and reopen triggers",
+    "## Review plan and dispositions"
+  ],
+  "requiredEvidenceSubsections": [
+    "### Baseline / falsifier",
+    "### Verification"
+  ],
+  "nonSubstantiveContent": [
+    "",
+    "TBD",
+    "N/A",
+    "N-A",
+    "TODO",
+    "<!-- Complete this section before review. -->"
+  ],
+  "hiddenHeadingControls": [
+    {
+      "name": "html-comment",
+      "replacement": "<!-- ## Governing scope -->"
+    },
+    {
+      "name": "fenced-code",
+      "replacement": "```markdown\n## Governing scope\n```"
+    },
+    {
+      "name": "blockquote",
+      "replacement": "> ## Governing scope"
+    },
+    {
+      "name": "near-miss",
+      "replacement": "## Governing scope draft"
+    },
+    {
+      "name": "indented-code",
+      "replacement": "    ## Governing scope"
+    }
+  ]
+}

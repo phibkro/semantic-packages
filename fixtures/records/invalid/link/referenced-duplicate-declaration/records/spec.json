@@ -1,0 +1,23 @@
+{
+  "kind": "specification",
+  "id": "stack",
+  "version": "0.1.0",
+  "carriers": [{ "id": "shared-declaration", "description": "same ID also exists as an operation" }],
+  "operations": [{ "id": "shared-declaration", "signature": "Stack[A] * A -> Stack[A]" }],
+  "performancePropositions": [
+    {
+      "id": "push-cost",
+      "operationFamily": ["shared-declaration"],
+      "workload": {
+        "profile": { "kind": "realizationProfile", "id": "stack-default", "version": "0.1.0" },
+        "localId": "push-sequence"
+      },
+      "costMeasure": {
+        "profile": { "kind": "realizationProfile", "id": "stack-default", "version": "0.1.0" },
+        "localId": "realization-steps"
+      },
+      "predicate": "total cost <= a*n+b",
+      "permittedEvidenceMethods": ["proof"]
+    }
+  ]
+}

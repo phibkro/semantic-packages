@@ -1,0 +1,19 @@
+{
+  "kind": "evidence",
+  "id": "schema-specification-with-adapter",
+  "version": "0.1.0",
+  "claim": { "kind": "claim", "id": "claim", "version": "0.1.0" },
+  "specification": { "kind": "specification", "id": "stack", "version": "0.1.0" },
+  "scope": "specification",
+  "adapter": { "id": "forbidden-adapter", "version": "0.1.0" },
+  "mechanism": "proof",
+  "result": "supports",
+  "reviewState": "accepted",
+  "method": "schema counterexample",
+  "environment": {},
+  "freshness": { "producedAt": "2026-07-18T00:00:00Z" },
+  "assumptions": [],
+  "exclusions": [],
+  "applicability": { "profiles": [] },
+  "provenance": {}
+}

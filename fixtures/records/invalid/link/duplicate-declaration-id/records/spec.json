@@ -1,0 +1,11 @@
+{
+  "kind": "specification",
+  "id": "duplicate-declaration-stack",
+  "version": "0.1.0",
+  "laws": [
+    { "id": "reused-local-id", "statement": "true" }
+  ],
+  "resources": [
+    { "id": "reused-local-id", "rule": "observable resource rule" }
+  ]
+}

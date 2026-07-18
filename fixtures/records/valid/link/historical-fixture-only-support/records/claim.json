@@ -1,0 +1,35 @@
+{
+  "kind": "claim",
+  "id": "stack-reference-persistence",
+  "version": "0.1.0",
+  "subject": {
+    "kind": "realization",
+    "id": "stack-reference",
+    "version": "0.1.0"
+  },
+  "governingSpecification": {
+    "kind": "specification",
+    "id": "stack",
+    "version": "0.1.0"
+  },
+  "proposition": {
+    "specification": {
+      "kind": "specification",
+      "id": "stack",
+      "version": "0.1.0"
+    },
+    "declarationId": "persistence"
+  },
+  "concern": "resource.persistence",
+  "scope": "The stack-reference realization through stack-json-adapter under stack-default.",
+  "assumptions": ["Adapter handles remain valid for the duration of one test."],
+  "exclusions": ["Behavior after process termination is not observed."],
+  "applicableProfiles": [
+    {
+      "kind": "realizationProfile",
+      "id": "stack-default",
+      "version": "0.1.0"
+    }
+  ],
+  "state": "active"
+}

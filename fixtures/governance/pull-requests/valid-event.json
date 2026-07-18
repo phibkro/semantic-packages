@@ -1,0 +1,6 @@
+{
+  "pull_request": {
+    "title": "ci(governance): enforce change metadata contracts",
+    "body": "## Outcome\nMake change metadata reviewable before merge.\n\n## Change class and lifecycle\nGovernance experiment for the PR-G release-support node.\n\n## Governing scope\nOnly repository-local pull-request metadata checks are affected.\n\n## Design and changes\nAdd deterministic fixtures and a checker with no GitHub mutation.\n\n## Evidence\n### Baseline / falsifier\nA legacy subject and incomplete body must be rejected.\n\n### Verification\nRun `python3 -m unittest discover -s tests/governance -v`.\n\n## Risks, assumptions, and exclusions\nHosted rules and application installation remain operator-owned.\n\n## Recovery, maintenance, and reopen triggers\nRevert the governance commit if valid low-risk work is rejected.\n\n## Review plan and dispositions\nAn independent CI and security reviewer challenges the successor."
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "kind": "consumerPolicy",
+  "id": "dangling-profile-policy",
+  "version": "0.1.0",
+  "specification": { "kind": "specification", "id": "stack", "version": "0.1.0" },
+  "profile": { "kind": "realizationProfile", "id": "absent-profile", "version": "0.1.0" },
+  "concerns": [],
+  "prohibitions": []
+}

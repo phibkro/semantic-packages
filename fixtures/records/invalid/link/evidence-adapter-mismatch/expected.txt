@@ -1,0 +1,1 @@
+LINK_EVIDENCE_ADAPTER_MISMATCH records/evidence.json#/adapter: requested adapter (other-adapter, 0.1.0), Realization descriptor is (declared-adapter, 0.1.0)

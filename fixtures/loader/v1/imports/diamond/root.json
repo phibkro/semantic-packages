@@ -1,0 +1,10 @@
+{
+  "kind": "specification",
+  "id": "diamond-root",
+  "version": "1",
+  "imports": [
+    {"kind": "specification", "id": "diamond-left", "version": "1"},
+    {"kind": "specification", "id": "diamond-right", "version": "1"}
+  ],
+  "laws": [{"id": "root-law", "statement": "true"}]
+}

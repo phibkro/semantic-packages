@@ -1,0 +1,9 @@
+{
+  "kind": "specification",
+  "id": "stack",
+  "version": "0.1.0",
+  "carriers": [{ "id": "Stack", "description": "abstract stack" }],
+  "equivalences": [
+    { "id": "stack-equivalence", "carrier": "MissingCarrier", "definition": "pointwise observation equality" }
+  ]
+}

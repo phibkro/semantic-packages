@@ -1,0 +1,19 @@
+{
+  "kind": "claim",
+  "id": "dangling-applicable-profile",
+  "version": "0.1.0",
+  "subject": { "kind": "specification", "id": "stack", "version": "0.1.0" },
+  "governingSpecification": { "kind": "specification", "id": "stack", "version": "0.1.0" },
+  "proposition": {
+    "specification": { "kind": "specification", "id": "stack", "version": "0.1.0" },
+    "declarationId": "law"
+  },
+  "concern": "law.conformance",
+  "scope": "link counterexample",
+  "assumptions": [],
+  "exclusions": [],
+  "applicableProfiles": [
+    { "kind": "realizationProfile", "id": "absent-profile", "version": "0.1.0" }
+  ],
+  "state": "active"
+}

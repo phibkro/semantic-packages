@@ -1,0 +1,9 @@
+{
+  "kind": "specification",
+  "id": "importing-stack",
+  "version": "0.1.0",
+  "imports": [
+    { "kind": "specification", "id": "absent-import", "version": "0.1.0" }
+  ],
+  "laws": [{ "id": "law", "statement": "true" }]
+}

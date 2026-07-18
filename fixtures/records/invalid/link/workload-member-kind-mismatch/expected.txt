@@ -1,0 +1,1 @@
+LINK_PROFILE_MEMBER_KIND_MISMATCH records/spec.json#/performancePropositions/0/workload/localId: requested local ID shared-member as workload in (realizationProfile, stack-default, 0.1.0), found costMeasure

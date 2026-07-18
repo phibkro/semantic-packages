@@ -1,17 +1,167 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://example.invalid/package-spec-language/spec.schema.json",
-  "title": "Provisional semantic specification record",
+  "title": "Specification record",
   "type": "object",
-  "required": ["id", "version", "vocabulary", "claims"],
+  "required": ["kind", "id", "version"],
   "properties": {
-    "id": {"type": "string", "minLength": 1},
-    "version": {"type": "string", "minLength": 1},
-    "vocabulary": {"type": "object"},
-    "laws": {"type": "array", "items": {"type": "object"}},
-    "effects": {"type": "object"},
-    "resources": {"type": "object"},
-    "claims": {"type": "array", "items": {"type": "object"}}
+    "kind": { "const": "specification" },
+    "id": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+    "version": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+    "imports": {
+      "type": "array",
+      "items": { "$ref": "common.schema.json#/$defs/specificationReference" }
+    },
+    "carriers": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/carrierDeclaration" }
+    },
+    "operations": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/operationDeclaration" }
+    },
+    "observations": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/operationDeclaration" }
+    },
+    "derivedObservations": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/derivedObservationDeclaration" }
+    },
+    "equivalences": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/equivalenceDeclaration" }
+    },
+    "laws": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/lawDeclaration" }
+    },
+    "effects": { "$ref": "#/$defs/effectContract" },
+    "resources": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/resourceDeclaration" }
+    },
+    "performancePropositions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/performancePropositionDeclaration" }
+    }
   },
-  "additionalProperties": true
+  "additionalProperties": false,
+  "anyOf": [
+    { "required": ["carriers"] },
+    { "required": ["operations"] },
+    { "required": ["observations"] },
+    { "required": ["derivedObservations"] },
+    { "required": ["equivalences"] },
+    { "required": ["laws"] },
+    { "required": ["effects"] },
+    { "required": ["resources"] },
+    { "required": ["performancePropositions"] }
+  ],
+  "$defs": {
+    "carrierDeclaration": {
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "id": { "$ref": "common.schema.json#/$defs/localDeclarationId" },
+        "description": { "$ref": "common.schema.json#/$defs/nonEmptyString" }
+      },
+      "additionalProperties": false
+    },
+    "operationDeclaration": {
+      "type": "object",
+      "required": ["id", "signature"],
+      "properties": {
+        "id": { "$ref": "common.schema.json#/$defs/localDeclarationId" },
+        "signature": { "$ref": "common.schema.json#/$defs/nonEmptyString" }
+      },
+      "additionalProperties": false
+    },
+    "derivedObservationDeclaration": {
+      "type": "object",
+      "required": ["id", "definition"],
+      "properties": {
+        "id": { "$ref": "common.schema.json#/$defs/localDeclarationId" },
+        "definition": { "$ref": "common.schema.json#/$defs/nonEmptyString" }
+      },
+      "additionalProperties": false
+    },
+    "equivalenceDeclaration": {
+      "type": "object",
+      "required": ["id", "carrier", "definition"],
+      "properties": {
+        "id": { "$ref": "common.schema.json#/$defs/localDeclarationId" },
+        "carrier": { "$ref": "common.schema.json#/$defs/localDeclarationId" },
+        "definition": { "$ref": "common.schema.json#/$defs/nonEmptyString" }
+      },
+      "additionalProperties": false
+    },
+    "lawDeclaration": {
+      "type": "object",
+      "required": ["id", "statement"],
+      "properties": {
+        "id": { "$ref": "common.schema.json#/$defs/localDeclarationId" },
+        "statement": { "$ref": "common.schema.json#/$defs/nonEmptyString" }
+      },
+      "additionalProperties": false
+    },
+    "resourceDeclaration": {
+      "type": "object",
+      "required": ["id", "rule"],
+      "properties": {
+        "id": { "$ref": "common.schema.json#/$defs/localDeclarationId" },
+        "rule": { "$ref": "common.schema.json#/$defs/nonEmptyString" }
+      },
+      "additionalProperties": false
+    },
+    "performancePropositionDeclaration": {
+      "type": "object",
+      "required": [
+        "id",
+        "operationFamily",
+        "workload",
+        "costMeasure",
+        "predicate",
+        "permittedEvidenceMethods"
+      ],
+      "properties": {
+        "id": { "$ref": "common.schema.json#/$defs/localDeclarationId" },
+        "operationFamily": {
+          "type": "array",
+          "items": { "$ref": "common.schema.json#/$defs/localDeclarationId" },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "workload": { "$ref": "common.schema.json#/$defs/profileMemberReference" },
+        "costMeasure": { "$ref": "common.schema.json#/$defs/profileMemberReference" },
+        "predicate": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+        "permittedEvidenceMethods": {
+          "$ref": "common.schema.json#/$defs/nonEmptyStringArray",
+          "minItems": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "effectContract": {
+      "type": "object",
+      "required": ["id", "default"],
+      "properties": {
+        "id": { "$ref": "common.schema.json#/$defs/localDeclarationId" },
+        "forbidden": {
+          "$ref": "common.schema.json#/$defs/nonEmptyStringArray"
+        },
+        "required": {
+          "$ref": "common.schema.json#/$defs/nonEmptyStringArray"
+        },
+        "permitted": {
+          "$ref": "common.schema.json#/$defs/nonEmptyStringArray"
+        },
+        "optional": {
+          "$ref": "common.schema.json#/$defs/nonEmptyStringArray"
+        },
+        "default": { "$ref": "common.schema.json#/$defs/effectDisposition" }
+      },
+      "additionalProperties": false
+    }
+  }
 }

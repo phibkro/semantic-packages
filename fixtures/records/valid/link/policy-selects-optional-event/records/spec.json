@@ -1,0 +1,11 @@
+{
+  "kind": "specification",
+  "id": "stack",
+  "version": "0.1.0",
+  "effects": {
+    "id": "stack-effects",
+    "forbidden": ["io.*"],
+    "optional": ["debug.emit"],
+    "default": "unspecified"
+  }
+}

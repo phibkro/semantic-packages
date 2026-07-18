@@ -1,0 +1,18 @@
+{
+  "kind": "realization", "id": "stack-typescript", "version": "0.1.0",
+  "specification": {"kind": "specification", "id": "stack", "version": "0.1.0"},
+  "adapter": {
+    "id": "stack-typescript-json-adapter", "version": "0.1.0", "protocol": "stack-runner-json-v1",
+    "entrypoint": "implementations/typescript/adapter.ts",
+    "assumptions": ["The adapter faithfully exposes the TypeScript Realization.", "Reported events are complete for the adapter-observed boundary."]
+  },
+  "implementation": {
+    "language": "TypeScript", "languageVersion": "6.0.3", "target": "local Deno child process",
+    "runtime": "Deno 2.9.2", "interfaceMechanism": "NDJSON messages over stdin and stdout",
+    "buildSystem": "dependency-free Deno check", "buildInstructions": "Run the offline Deno check documented in implementations/typescript/README.md.",
+    "executionInstructions": "Run adapter.ts with Deno's no-config, no-lock, no-npm, no-remote, and no-prompt flags."
+  },
+  "capabilities": ["stack.empty", "stack.push", "stack.pop"],
+  "limitations": ["Tracer profile only; element values are integers from -2 through 2.", "Sequence integers use canonical nonnegative decimal spelling; alternate integral JSON spellings reopen the protocol boundary.", "No performance, concurrency, remote transport, registry discovery, or cross-language interoperation claim."],
+  "supportedProfiles": [{"kind": "realizationProfile", "id": "stack-default", "version": "0.1.0"}]
+}

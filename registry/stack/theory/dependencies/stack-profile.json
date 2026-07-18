@@ -1,0 +1,27 @@
+{
+  "kind": "realizationProfile",
+  "id": "stack-default",
+  "version": "0.1.0",
+  "platform": "portable-json-runner",
+  "hostCapabilities": ["process.execution"],
+  "scale": "stack depth at most 8 and operation histories at most 32",
+  "concurrency": "single-threaded",
+  "trust": "adapter output is untrusted until checked by the harness",
+  "portability": "JSON integer elements from -2 through 2",
+  "workloads": [
+    {
+      "id": "push-sequence",
+      "startingState": "empty",
+      "sizeFunction": "n is the number of consecutive push operations",
+      "definition": "For arbitrary n >= 0, start at empty and apply n consecutive pushes."
+    }
+  ],
+  "costMeasures": [
+    {
+      "id": "realization-steps",
+      "unit": "primitive realization step",
+      "aggregation": "sum over the workload",
+      "instrumentation": "The realization adapter reports a nonnegative step count for every push invocation."
+    }
+  ]
+}

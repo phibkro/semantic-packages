@@ -1,0 +1,1 @@
+LINK_EVIDENCE_RUNTIME_SCOPE_REQUIRED records/evidence.json#/scope: requested realization scope with matching Realization and adapter for Claim subject (realization, stack-realization, 0.1.0)

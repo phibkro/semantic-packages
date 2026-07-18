@@ -1,17 +1,34 @@
 #!/usr/bin/env python3
 """Minimal repository quality gate.
 
-Checks required project-memory files and local Markdown links. This is intentionally
-small so the first tracer bullet has an executable governance gate without locking
-in a larger toolchain.
+Checks required project-memory files, local Markdown links, JSON syntax, the canonical
+record schemas (including offline metaschema validation), the registry manifest
+schema, and every record fixture (valid, schema-invalid, link-invalid, link-valid) against their exact
+diagnostic oracles. It also exercises the deterministic local loader's discovery,
+normalization, phase, and import-edge fixtures, the tracer-scoped Stack adapter suite,
+the independent Rust/TypeScript candidates and their bound Evidence reports, the
+accepted actor-journey and repository-governance contracts, and ADR 0009's bounded
+Lean proof boundary.
 """
 
 from __future__ import annotations
 
+import io
+import json
+import os
 import re
+import shutil
+import subprocess
 import sys
+import unittest
 from pathlib import Path
 from urllib.parse import unquote
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import record_check  # noqa: E402
+import loader_fixture_check  # noqa: E402
+import proof_fixture_check  # noqa: E402
+import wave4_evidence_check  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 REQUIRED = [
@@ -21,11 +38,40 @@ REQUIRED = [
     "docs/vision/constitution.md",
     "docs/research/synthesis.md",
     "docs/design/core-model.md",
+    "docs/design/system-map.md",
+    "docs/design/user-journeys.md",
     "docs/design/spec-language.md",
+    "docs/design/adapter-protocol.md",
+    "docs/design/evidence-model.md",
+    "docs/design/compatibility.md",
+    "docs/design/lifecycle.md",
     "docs/design/tracer-bullet.md",
+    "docs/operations/multi-provider-workflow.md",
+    ".agent/PLANS.md",
     "docs/exec-plans/active/0001-tracer-bullet.md",
+    "docs/exec-plans/active/0002-actor-journeys.md",
+    "semantic_packages/__init__.py",
+    "semantic_packages/graph.py",
+    "semantic_packages/maintenance.py",
+    "semantic_packages/publication.py",
+    "semantic_packages/resolver.py",
+    "semantic_packages/stack_realization.py",
+    "semantic_packages/stack_adapter.py",
+    "semantic_packages/stack_runner.py",
+    "semantic_packages/theory_projection.py",
+    "scripts/proof_check.py",
+    "scripts/check_change_metadata.py",
+    "scripts/wave4_evidence_check.py",
+    ".github/pull_request_template.md",
+    "proofs/stack-pop-empty/StackPopEmpty.lean",
+    "proofs/stack-pop-empty/manifest.json",
+    "registry/stack/manifest.json",
+    "registry/stack/successor-manifest.json",
+    "docs/decisions/0014-revisioned-successor-source-set.md",
+    "schemas/registry-manifest.schema.json",
 ]
 LINK_RE = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
+JSON_EXCLUDED_DIRS = {".git", ".direnv", "node_modules"}
 
 
 def check_required() -> list[str]:
@@ -51,13 +97,100 @@ def check_markdown_links() -> list[str]:
     return errors
 
 
+def check_json_syntax() -> list[str]:
+    errors: list[str] = []
+    for path in ROOT.rglob("*.json"):
+        relative = path.relative_to(ROOT)
+        if JSON_EXCLUDED_DIRS.intersection(relative.parts):
+            continue
+        try:
+            json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, UnicodeError, json.JSONDecodeError) as error:
+            errors.append(f"{relative}: invalid JSON: {error}")
+    return errors
+
+
+def run_adapter_checks() -> tuple[list[str], str]:
+    sys.path.insert(0, str(ROOT))
+    stream = io.StringIO()
+    suite = unittest.defaultTestLoader.discover(str(ROOT / "tests" / "adapter"))
+    result = unittest.TextTestRunner(stream=stream, verbosity=2).run(suite)
+    if not result.wasSuccessful():
+        return [f"adapter conformance suite failed:\n{stream.getvalue()}"], ""
+    return [], f"Adapter fixture checks passed: {result.testsRun} tests."
+
+
+def run_candidate_checks() -> tuple[list[str], str]:
+    sys.path.insert(0, str(ROOT))
+    stream = io.StringIO()
+    suite = unittest.defaultTestLoader.discover(str(ROOT / "tests" / "candidates"))
+    result = unittest.TextTestRunner(stream=stream, verbosity=2).run(suite)
+    if not result.wasSuccessful():
+        return [f"cross-language candidate suite failed:\n{stream.getvalue()}"], ""
+    return [], f"Cross-language candidate checks passed: {result.testsRun} tests."
+
+
+def run_contract_checks(directory: str, label: str) -> tuple[list[str], str]:
+    sys.path.insert(0, str(ROOT))
+    stream = io.StringIO()
+    suite = unittest.defaultTestLoader.discover(str(ROOT / "tests" / directory))
+    result = unittest.TextTestRunner(stream=stream, verbosity=2).run(suite)
+    if not result.wasSuccessful():
+        return [f"{label} suite failed:\n{stream.getvalue()}"], ""
+    return [], f"{label} checks passed: {result.testsRun} tests."
+
+
+def run_proof_checks() -> tuple[list[str], str]:
+    configured = Path(os.environ["LEAN"]) if os.environ.get("LEAN") else None
+    if configured is None:
+        discovered = shutil.which("lean")
+        configured = Path(discovered) if discovered else None
+    if configured is None:
+        return ["proof gate requires Lean via LEAN or PATH"], ""
+    errors = proof_fixture_check.check_fixture_inputs(configured)
+    product_errors, groups = proof_fixture_check.check_product_contract(configured)
+    errors.extend(product_errors)
+    return errors, f"Proof fixture checks passed: {groups} contract groups."
+
+
 def main() -> int:
-    errors = check_required() + check_markdown_links()
+    errors = check_required() + check_markdown_links() + check_json_syntax()
+    record_errors, record_summary = record_check.run_fixture_checks()
+    errors += record_errors
+    loader_errors, loader_summary = loader_fixture_check.run_loader_fixture_checks()
+    errors += loader_errors
+    adapter_errors, adapter_summary = run_adapter_checks()
+    errors += adapter_errors
+    candidate_errors, candidate_summary = run_candidate_checks()
+    errors += candidate_errors
+    journey_errors, journey_summary = run_contract_checks(
+        "journeys", "Actor journey"
+    )
+    errors += journey_errors
+    governance_errors, governance_summary = run_contract_checks(
+        "governance", "Change governance"
+    )
+    errors += governance_errors
+    try:
+        wave4_errors, wave4_summary = wave4_evidence_check.run_wave4_evidence_checks()
+    except (OSError, RuntimeError, subprocess.SubprocessError) as error:
+        wave4_errors, wave4_summary = [f"Wave 4 Evidence check failed: {error}"], ""
+    errors += wave4_errors
+    proof_errors, proof_summary = run_proof_checks()
+    errors += proof_errors
     if errors:
         print("Repository checks failed:")
         for error in errors:
             print(f"- {error}")
         return 1
+    print(record_summary)
+    print(loader_summary)
+    print(adapter_summary)
+    print(candidate_summary)
+    print(journey_summary)
+    print(governance_summary)
+    print(wave4_summary)
+    print(proof_summary)
     print("Repository checks passed.")
     return 0
 

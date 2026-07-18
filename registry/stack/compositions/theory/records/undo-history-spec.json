@@ -1,0 +1,18 @@
+{
+  "kind": "specification",
+  "id": "undo-history",
+  "version": "0.1.0",
+  "imports": [
+    {
+      "kind": "specification",
+      "id": "stack",
+      "version": "0.1.0"
+    }
+  ],
+  "carriers": [
+    {
+      "id": "UndoHistory",
+      "description": "An abstract finite history whose most recently recorded action is the next action selected for undo."
+    }
+  ]
+}

@@ -1,0 +1,206 @@
+[
+  {
+    "name": "bad-title",
+    "event": {
+      "pull_request": {
+        "title": "Add change metadata checks",
+        "body": "## Outcome\nMake change metadata reviewable before merge.\n\n## Change class and lifecycle\nGovernance experiment for the PR-G release-support node.\n\n## Governing scope\nOnly repository-local pull-request metadata checks are affected.\n\n## Design and changes\nAdd deterministic fixtures and a checker with no GitHub mutation.\n\n## Evidence\n### Baseline / falsifier\nA legacy subject and incomplete body must be rejected.\n\n### Verification\nRun the governance test suite.\n\n## Risks, assumptions, and exclusions\nHosted rules remain operator-owned.\n\n## Recovery, maintenance, and reopen triggers\nRevert if valid work is rejected.\n\n## Review plan and dispositions\nIndependent review is required."
+      }
+    },
+    "expected": [
+      "pull request title must match '<type>[optional scope][!]: <description>'; see CONTRIBUTING.md#conventional-commits"
+    ]
+  },
+  {
+    "name": "empty-title-scope",
+    "event": {
+      "pull_request": {
+        "title": "fix(): retain evidence",
+        "body": "## Outcome\nMake metadata reviewable.\n\n## Change class and lifecycle\nGovernance experiment.\n\n## Governing scope\nRepository-local metadata only.\n\n## Design and changes\nAdd deterministic checks.\n\n## Evidence\n### Baseline / falsifier\nAn empty Conventional Commit scope must fail.\n\n### Verification\nRun the governance suite.\n\n## Risks, assumptions, and exclusions\nHosted rules are excluded.\n\n## Recovery, maintenance, and reopen triggers\nRevert on false rejection.\n\n## Review plan and dispositions\nIndependent review is required."
+      }
+    },
+    "expected": [
+      "pull request title must match '<type>[optional scope][!]: <description>'; see CONTRIBUTING.md#conventional-commits"
+    ]
+  },
+  {
+    "name": "whitespace-only-title-scope",
+    "event": {
+      "pull_request": {
+        "title": "fix(   ): retain evidence",
+        "body": "## Outcome\nMake metadata reviewable.\n\n## Change class and lifecycle\nGovernance experiment.\n\n## Governing scope\nRepository-local metadata only.\n\n## Design and changes\nAdd deterministic checks.\n\n## Evidence\n### Baseline / falsifier\nA whitespace-only Conventional Commit scope must fail.\n\n### Verification\nRun the governance suite.\n\n## Risks, assumptions, and exclusions\nHosted rules are excluded.\n\n## Recovery, maintenance, and reopen triggers\nRevert on false rejection.\n\n## Review plan and dispositions\nIndependent review is required."
+      }
+    },
+    "expected": [
+      "pull request title must match '<type>[optional scope][!]: <description>'; see CONTRIBUTING.md#conventional-commits"
+    ]
+  },
+  {
+    "name": "missing-title-description-and-space",
+    "event": {
+      "pull_request": {
+        "title": "fix:",
+        "body": "## Outcome\nMake metadata reviewable.\n\n## Change class and lifecycle\nGovernance experiment.\n\n## Governing scope\nRepository-local metadata only.\n\n## Design and changes\nAdd deterministic checks.\n\n## Evidence\n### Baseline / falsifier\nAn empty title description must fail.\n\n### Verification\nRun the governance suite.\n\n## Risks, assumptions, and exclusions\nHosted rules are excluded.\n\n## Recovery, maintenance, and reopen triggers\nRevert on false rejection.\n\n## Review plan and dispositions\nIndependent review is required."
+      }
+    },
+    "expected": [
+      "pull request title must match '<type>[optional scope][!]: <description>'; see CONTRIBUTING.md#conventional-commits"
+    ]
+  },
+  {
+    "name": "whitespace-only-title-description",
+    "event": {
+      "pull_request": {
+        "title": "fix:    ",
+        "body": "## Outcome\nMake metadata reviewable.\n\n## Change class and lifecycle\nGovernance experiment.\n\n## Governing scope\nRepository-local metadata only.\n\n## Design and changes\nAdd deterministic checks.\n\n## Evidence\n### Baseline / falsifier\nA whitespace-only title description must fail.\n\n### Verification\nRun the governance suite.\n\n## Risks, assumptions, and exclusions\nHosted rules are excluded.\n\n## Recovery, maintenance, and reopen triggers\nRevert on false rejection.\n\n## Review plan and dispositions\nIndependent review is required."
+      }
+    },
+    "expected": [
+      "pull request description must contain non-whitespace text"
+    ]
+  },
+  {
+    "name": "unsupported-title-type",
+    "event": {
+      "pull_request": {
+        "title": "security: harden workflow",
+        "body": "## Outcome\nMake metadata reviewable.\n\n## Change class and lifecycle\nGovernance experiment.\n\n## Governing scope\nRepository-local metadata only.\n\n## Design and changes\nAdd deterministic checks.\n\n## Evidence\n### Baseline / falsifier\nUnsupported types must fail.\n\n### Verification\nRun the governance suite.\n\n## Risks, assumptions, and exclusions\nHosted rules are excluded.\n\n## Recovery, maintenance, and reopen triggers\nRevert on false rejection.\n\n## Review plan and dispositions\nIndependent review is required."
+      }
+    },
+    "expected": [
+      "unsupported pull request type 'security'; allowed types: feat, fix, refactor, perf, docs, test, build, ci, chore, revert, style"
+    ]
+  },
+  {
+    "name": "autosquash-title",
+    "event": {
+      "pull_request": {
+        "title": "fixup! ci(governance): enforce metadata",
+        "body": "## Outcome\nMake metadata reviewable.\n\n## Change class and lifecycle\nGovernance experiment.\n\n## Governing scope\nRepository-local metadata only.\n\n## Design and changes\nAdd deterministic checks.\n\n## Evidence\n### Baseline / falsifier\nAutosquash titles must fail.\n\n### Verification\nRun the governance suite.\n\n## Risks, assumptions, and exclusions\nHosted rules are excluded.\n\n## Recovery, maintenance, and reopen triggers\nRevert on false rejection.\n\n## Review plan and dispositions\nIndependent review is required."
+      }
+    },
+    "expected": [
+      "pull request title must not use fixup! or squash! prefixes"
+    ]
+  },
+  {
+    "name": "squash-title",
+    "event": {
+      "pull_request": {
+        "title": "squash! ci(governance): enforce metadata",
+        "body": "## Outcome\nMake metadata reviewable.\n\n## Change class and lifecycle\nGovernance experiment.\n\n## Governing scope\nRepository-local metadata only.\n\n## Design and changes\nAdd deterministic checks.\n\n## Evidence\n### Baseline / falsifier\nAutosquash titles must fail.\n\n### Verification\nRun the governance suite.\n\n## Risks, assumptions, and exclusions\nHosted rules are excluded.\n\n## Recovery, maintenance, and reopen triggers\nRevert on false rejection.\n\n## Review plan and dispositions\nIndependent review is required."
+      }
+    },
+    "expected": [
+      "pull request title must not use fixup! or squash! prefixes"
+    ]
+  },
+  {
+    "name": "overlong-title",
+    "event": {
+      "pull_request": {
+        "title": "docs: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "body": "## Outcome\nMake metadata reviewable.\n\n## Change class and lifecycle\nGovernance experiment.\n\n## Governing scope\nRepository-local metadata only.\n\n## Design and changes\nAdd deterministic checks.\n\n## Evidence\n### Baseline / falsifier\nOverlong titles must fail.\n\n### Verification\nRun the governance suite.\n\n## Risks, assumptions, and exclusions\nHosted rules are excluded.\n\n## Recovery, maintenance, and reopen triggers\nRevert on false rejection.\n\n## Review plan and dispositions\nIndependent review is required."
+      }
+    },
+    "expected": [
+      "pull request title exceeds 72 characters (73)"
+    ]
+  },
+  {
+    "name": "missing-section",
+    "event": {
+      "pull_request": {
+        "title": "ci(governance): enforce change metadata contracts",
+        "body": "## Outcome\nMake metadata reviewable.\n\n## Change class and lifecycle\nGovernance experiment.\n\n## Design and changes\nAdd deterministic checks.\n\n## Evidence\n### Baseline / falsifier\nIncomplete metadata must fail.\n\n### Verification\nRun the governance suite.\n\n## Risks, assumptions, and exclusions\nHosted rules are excluded.\n\n## Recovery, maintenance, and reopen triggers\nRevert on false rejection.\n\n## Review plan and dispositions\nIndependent review is required."
+      }
+    },
+    "expected": [
+      "pull request body missing required section '## Governing scope'"
+    ]
+  },
+  {
+    "name": "duplicate-section",
+    "event": {
+      "pull_request": {
+        "title": "ci(governance): enforce change metadata contracts",
+        "body": "## Outcome\nMake metadata reviewable.\n\n## Outcome\nRetain a duplicate heading falsifier.\n\n## Change class and lifecycle\nGovernance experiment.\n\n## Governing scope\nRepository-local metadata only.\n\n## Design and changes\nAdd deterministic checks.\n\n## Evidence\n### Baseline / falsifier\nDuplicate headings must fail.\n\n### Verification\nRun the governance suite.\n\n## Risks, assumptions, and exclusions\nHosted rules are excluded.\n\n## Recovery, maintenance, and reopen triggers\nRevert on false rejection.\n\n## Review plan and dispositions\nIndependent review is required."
+      }
+    },
+    "expected": [
+      "pull request body repeats required section '## Outcome'"
+    ]
+  },
+  {
+    "name": "reordered-sections",
+    "event": {
+      "pull_request": {
+        "title": "ci(governance): enforce change metadata contracts",
+        "body": "## Change class and lifecycle\nGovernance experiment.\n\n## Outcome\nMake metadata reviewable.\n\n## Governing scope\nRepository-local metadata only.\n\n## Design and changes\nAdd deterministic checks.\n\n## Evidence\n### Baseline / falsifier\nReordered headings must fail.\n\n### Verification\nRun the governance suite.\n\n## Risks, assumptions, and exclusions\nHosted rules are excluded.\n\n## Recovery, maintenance, and reopen triggers\nRevert on false rejection.\n\n## Review plan and dispositions\nIndependent review is required."
+      }
+    },
+    "expected": [
+      "pull request body sections must appear in the documented order"
+    ]
+  },
+  {
+    "name": "placeholder-only-section",
+    "event": {
+      "pull_request": {
+        "title": "ci(governance): enforce change metadata contracts",
+        "body": "## Outcome\nTBD\n\n## Change class and lifecycle\nGovernance experiment.\n\n## Governing scope\nRepository-local metadata only.\n\n## Design and changes\nAdd deterministic checks.\n\n## Evidence\n### Baseline / falsifier\nPlaceholder content must fail.\n\n### Verification\nRun the governance suite.\n\n## Risks, assumptions, and exclusions\nHosted rules are excluded.\n\n## Recovery, maintenance, and reopen triggers\nRevert on false rejection.\n\n## Review plan and dispositions\nIndependent review is required."
+      }
+    },
+    "expected": [
+      "pull request section '## Outcome' must contain substantive content"
+    ]
+  },
+  {
+    "name": "comments-only-section",
+    "event": {
+      "pull_request": {
+        "title": "ci(governance): enforce change metadata contracts",
+        "body": "## Outcome\n<!-- Explain the observable outcome. -->\n\n## Change class and lifecycle\nGovernance experiment.\n\n## Governing scope\nRepository-local metadata only.\n\n## Design and changes\nAdd deterministic checks.\n\n## Evidence\n### Baseline / falsifier\nComments-only content must fail.\n\n### Verification\nRun the governance suite.\n\n## Risks, assumptions, and exclusions\nHosted rules are excluded.\n\n## Recovery, maintenance, and reopen triggers\nRevert on false rejection.\n\n## Review plan and dispositions\nIndependent review is required."
+      }
+    },
+    "expected": [
+      "pull request section '## Outcome' must contain substantive content"
+    ]
+  },
+  {
+    "name": "null-body",
+    "event": {
+      "pull_request": {
+        "title": "ci(governance): enforce change metadata contracts",
+        "body": null
+      }
+    },
+    "expected": [
+      "pull request body is required"
+    ]
+  },
+  {
+    "name": "missing-baseline-subsection",
+    "event": {
+      "pull_request": {
+        "title": "ci(governance): enforce change metadata contracts",
+        "body": "## Outcome\nMake metadata reviewable.\n\n## Change class and lifecycle\nGovernance experiment.\n\n## Governing scope\nRepository-local metadata only.\n\n## Design and changes\nAdd deterministic checks.\n\n## Evidence\nThe adverse observation is intentionally retained.\n\n### Verification\nRun the governance suite.\n\n## Risks, assumptions, and exclusions\nHosted rules are excluded.\n\n## Recovery, maintenance, and reopen triggers\nRevert on false rejection.\n\n## Review plan and dispositions\nIndependent review is required."
+      }
+    },
+    "expected": [
+      "pull request Evidence section missing required subsection '### Baseline / falsifier'"
+    ]
+  },
+  {
+    "name": "missing-verification-subsection",
+    "event": {
+      "pull_request": {
+        "title": "ci(governance): enforce change metadata contracts",
+        "body": "## Outcome\nMake metadata reviewable.\n\n## Change class and lifecycle\nGovernance experiment.\n\n## Governing scope\nRepository-local metadata only.\n\n## Design and changes\nAdd deterministic checks.\n\n## Evidence\n### Baseline / falsifier\nMissing verification metadata must fail.\n\nThe exact command is intentionally absent.\n\n## Risks, assumptions, and exclusions\nHosted rules are excluded.\n\n## Recovery, maintenance, and reopen triggers\nRevert on false rejection.\n\n## Review plan and dispositions\nIndependent review is required."
+      }
+    },
+    "expected": [
+      "pull request Evidence section missing required subsection '### Verification'"
+    ]
+  }
+]

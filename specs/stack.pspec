@@ -5,22 +5,38 @@ spec Stack[A] version 0.1.0 {
   op push  : Stack * A -> Stack
   obs pop  : Stack -> Option[A * Stack]
 
+  observe elements(s: Stack):
+    top_first_sequence_by_repeated_pop_until_none(s)
+
+  equivalence Stack:
+    pointwise_equal(elements(left), elements(right))
+
+  law pop_empty:
+    pop(empty) == None
+
   law pop_push(s: Stack, x: A):
     pop(push(s, x)) == Some((x, s))
 
   effects {
     forbidden: io.*
     optional: debug.emit
+    default: unspecified
   }
 
   resources {
-    persistence: old_state_remains_valid
+    persistence: retained_values_remain_observationally_unchanged
   }
 
   claim push_cost {
     concern: performance
     proposition: amortized_O(1)
-    profile: default
-    status: asserted
+    profile: ref(realizationProfile, stack-default, 0.1.0)
+    workload: push-sequence
+    cost_measure: realization-steps
+    starting_state: empty
+    size: push_count_n
+    aggregate: sum
+    predicate: exists a,b >= 0 . total_cost(n) <= a*n+b
+    supporting_methods: checked_proof | accepted_proof_audit
   }
 }

@@ -1,0 +1,62 @@
+[
+  {
+    "name": "unscoped",
+    "subject": "docs: explain contributor workflow",
+    "parentCount": 1
+  },
+  {
+    "name": "scoped",
+    "subject": "fix(resolver): retain challenged evidence",
+    "parentCount": 1
+  },
+  {
+    "name": "breaking",
+    "subject": "feat(records)!: require exact declaration references",
+    "parentCount": 1
+  },
+  {
+    "name": "exactly-72-characters",
+    "subject": "docs: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "parentCount": 1
+  },
+  {
+    "name": "refactor-type",
+    "subject": "refactor(checker): separate Markdown scanning",
+    "parentCount": 1
+  },
+  {
+    "name": "perf-type",
+    "subject": "perf(checker): avoid repeated heading scans",
+    "parentCount": 1
+  },
+  {
+    "name": "test-type",
+    "subject": "test(governance): cover merge ancestry",
+    "parentCount": 1
+  },
+  {
+    "name": "build-type",
+    "subject": "build(toolchain): pin reviewed dependencies",
+    "parentCount": 1
+  },
+  {
+    "name": "ci-type",
+    "subject": "ci(governance): enforce metadata checks",
+    "parentCount": 1
+  },
+  {
+    "name": "chore-type",
+    "subject": "chore: maintain governance fixtures",
+    "parentCount": 1
+  },
+  {
+    "name": "revert-type",
+    "subject": "revert: restore prior metadata policy",
+    "parentCount": 1
+  },
+  {
+    "name": "style-type",
+    "subject": "style: format governance fixtures",
+    "parentCount": 1
+  }
+]

@@ -1,0 +1,9 @@
+{
+  "kind": "specification",
+  "id": "cycle-a",
+  "version": "1",
+  "imports": [
+    {"kind": "specification", "id": "cycle-b", "version": "1"}
+  ],
+  "laws": [{"id": "law-a", "statement": "true"}]
+}

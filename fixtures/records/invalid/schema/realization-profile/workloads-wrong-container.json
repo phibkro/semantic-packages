@@ -1,0 +1,8 @@
+{
+  "kind": "realizationProfile",
+  "id": "schema-workloads-wrong-container",
+  "version": "0.1.0",
+  "workloads": {
+    "id": "workload"
+  }
+}

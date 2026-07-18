@@ -1,0 +1,12 @@
+{
+  "kind": "realizationProfile",
+  "id": "stack-default",
+  "version": "0.1.0",
+  "workloads": [
+    { "id": "push-sequence", "startingState": "empty", "sizeFunction": "n", "definition": "n pushes" },
+    { "id": "shared-member", "startingState": "empty", "sizeFunction": "n", "definition": "wrong role control" }
+  ],
+  "costMeasures": [
+    { "id": "realization-steps", "unit": "step", "aggregation": "sum", "instrumentation": "adapter counter" }
+  ]
+}

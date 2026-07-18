@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/package-spec-language/common.schema.json",
+  "title": "Shared definitions for canonical semantic-package records",
+  "$defs": {
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "nonEmptyStringArray": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/nonEmptyString" },
+      "uniqueItems": true
+    },
+    "localDeclarationId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "specificationReference": {
+      "type": "object",
+      "required": ["kind", "id", "version"],
+      "properties": {
+        "kind": { "const": "specification" },
+        "id": { "$ref": "#/$defs/nonEmptyString" },
+        "version": { "$ref": "#/$defs/nonEmptyString" }
+      },
+      "additionalProperties": false
+    },
+    "realizationReference": {
+      "type": "object",
+      "required": ["kind", "id", "version"],
+      "properties": {
+        "kind": { "const": "realization" },
+        "id": { "$ref": "#/$defs/nonEmptyString" },
+        "version": { "$ref": "#/$defs/nonEmptyString" }
+      },
+      "additionalProperties": false
+    },
+    "claimReference": {
+      "type": "object",
+      "required": ["kind", "id", "version"],
+      "properties": {
+        "kind": { "const": "claim" },
+        "id": { "$ref": "#/$defs/nonEmptyString" },
+        "version": { "$ref": "#/$defs/nonEmptyString" }
+      },
+      "additionalProperties": false
+    },
+    "evidenceReference": {
+      "type": "object",
+      "required": ["kind", "id", "version"],
+      "properties": {
+        "kind": { "const": "evidence" },
+        "id": { "$ref": "#/$defs/nonEmptyString" },
+        "version": { "$ref": "#/$defs/nonEmptyString" }
+      },
+      "additionalProperties": false
+    },
+    "realizationProfileReference": {
+      "type": "object",
+      "required": ["kind", "id", "version"],
+      "properties": {
+        "kind": { "const": "realizationProfile" },
+        "id": { "$ref": "#/$defs/nonEmptyString" },
+        "version": { "$ref": "#/$defs/nonEmptyString" }
+      },
+      "additionalProperties": false
+    },
+    "consumerPolicyReference": {
+      "type": "object",
+      "required": ["kind", "id", "version"],
+      "properties": {
+        "kind": { "const": "consumerPolicy" },
+        "id": { "$ref": "#/$defs/nonEmptyString" },
+        "version": { "$ref": "#/$defs/nonEmptyString" }
+      },
+      "additionalProperties": false
+    },
+    "subjectReference": {
+      "oneOf": [
+        { "$ref": "#/$defs/specificationReference" },
+        { "$ref": "#/$defs/realizationReference" }
+      ]
+    },
+    "declarationReference": {
+      "type": "object",
+      "required": ["specification", "declarationId"],
+      "properties": {
+        "specification": { "$ref": "#/$defs/specificationReference" },
+        "declarationId": { "$ref": "#/$defs/localDeclarationId" }
+      },
+      "additionalProperties": false
+    },
+    "adapterSelector": {
+      "type": "object",
+      "required": ["id", "version"],
+      "properties": {
+        "id": { "$ref": "#/$defs/nonEmptyString" },
+        "version": { "$ref": "#/$defs/nonEmptyString" }
+      },
+      "additionalProperties": false
+    },
+    "adapterDescriptor": {
+      "type": "object",
+      "required": ["id", "version", "protocol", "entrypoint", "assumptions"],
+      "properties": {
+        "id": { "$ref": "#/$defs/nonEmptyString" },
+        "version": { "$ref": "#/$defs/nonEmptyString" },
+        "protocol": { "$ref": "#/$defs/nonEmptyString" },
+        "entrypoint": { "$ref": "#/$defs/nonEmptyString" },
+        "assumptions": { "$ref": "#/$defs/nonEmptyStringArray" }
+      },
+      "additionalProperties": false
+    },
+    "profileMemberReference": {
+      "type": "object",
+      "required": ["profile", "localId"],
+      "properties": {
+        "profile": { "$ref": "#/$defs/realizationProfileReference" },
+        "localId": { "$ref": "#/$defs/localDeclarationId" }
+      },
+      "additionalProperties": false
+    },
+    "concernPriority": {
+      "enum": ["required", "preferred", "optional", "ignored"]
+    },
+    "evidenceResult": {
+      "enum": ["supports", "challenges", "inconclusive", "error"]
+    },
+    "evidenceReviewState": {
+      "enum": [
+        "unverified",
+        "pending",
+        "accepted",
+        "rejected",
+        "superseded",
+        "revoked"
+      ]
+    },
+    "claimLifecycleState": {
+      "enum": ["draft", "active", "retired", "withdrawn"]
+    },
+    "effectDisposition": {
+      "enum": ["forbidden", "required", "permitted", "optional", "unspecified"]
+    }
+  }
+}
