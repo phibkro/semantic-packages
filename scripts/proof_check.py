@@ -69,6 +69,7 @@ EVIDENCE_ASSUMPTIONS = [
     "The hand-reviewed translation from the Stack law to the Lean observation model is faithful.",
     "Finite Lean lists faithfully model the Specification's finite top-first Stack observation space.",
     "Lean 4.30.0 and its trusted kernel correctly check the generated proof audit.",
+    "The identified provenance checker and runner correctly enforce the recorded checks.",
 ]
 EVIDENCE_EXCLUSIONS = [
     "This Evidence does not establish conformance of any Realization or adapter.",
@@ -119,7 +120,7 @@ _LEADING_WARNING_OPTION = re.compile(
 )
 _SOURCE_AXIOM = re.compile(r"\baxiom\b")
 _SOURCE_UNSAFE = re.compile(r"\bunsafe\b")
-_SOURCE_EXECUTING_COMMAND = re.compile(r"(?m)^\s*#\s*(?:eval|print)\b")
+_SOURCE_EXECUTING_COMMAND = re.compile(r"#\s*(?:eval|print)\b")
 
 _LEAN_MESSAGE_KEYS = {
     "caption",

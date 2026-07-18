@@ -218,8 +218,8 @@ semantic-packages worktree and the versioned review brief.
 | W3-P3 proof boundary successor | depends on W3-PF3; internal Codex implementation owner | exclusive checker/proof manifest/source scope as required | implementation checkpoint green: all 48 groups / 104 cases, direct checker with and without exact Evidence, direct Lean, compilation, and repository gate pass; theorem remains byte-for-byte unchanged |
 | W3-PR3 proof convergence review | challenges W3-P3; independent internal static reviewer plus attempted Fable replay | read-only prior and novel theorem/Evidence/provenance audit | blocked: valid `set_option ... in #eval/#print` wrappers bypass the line-anchored source-command scan, and exact Evidence omits the ADR-required checker/runner-correctness assumption; other PR2 mechanisms trace closed |
 | W3-PF4 final proof grammar controls | depends on W3-PR3; independent fixture owner | exclusive proof fixture/harness scope | complete red checkpoint: wrapped eval/print plus corrected Evidence assumptions bring the oracle to 49 groups / 106 cases; 86 cases remain green and the expected assumption-precedence cascade leaves 20 P3 reds across 4 groups |
-| W3-P4 final proof boundary successor | depends on W3-PF4 | exclusive checker/proof manifest/source scope as required | in progress |
-| W3-PR4 final proof convergence review | challenges W3-P4 | read-only prior blocker replay and bounded generality audit | pending |
+| W3-P4 final proof boundary successor | depends on W3-PF4; internal Codex implementation owner | exclusive checker/proof manifest/source scope as required | implementation checkpoint green: all 49 groups / 106 cases, direct checker with/without exact Evidence, direct Lean, compilation, and repository gate pass; theorem remains unchanged |
+| W3-PR4 final proof convergence review | challenges W3-P4 | read-only prior blocker replay and bounded generality audit | in progress |
 | W3-PG1 named-law evidence gate | depends on accepted W3-P4 successor, W3-PR4, and G1 | lead acceptance owner | pending |
 | W3-G1 execution-substrate convergence | depends on W3-LG1, W3-AG1, W3-PG1, and G0 | lead acceptance owner | pending |
 
@@ -731,6 +731,12 @@ not a grep or summary proxy.
   diagnostic-precedence cascade produce 20 expected reds across 4 groups. The wrapped
   eval control emits the benign false no-axiom line under direct Lean, confirming it is
   a real grammar case rather than a synthetic matcher fixture.
+- W3-P4 closes the 49-group/106-case gate with a deliberately narrow change: command
+  tokens are recognized anywhere after comments and strings are blanked, and exact
+  Evidence now records the assumption that the identified checker/runner correctly
+  enforce the recorded checks. The theorem remains unchanged; checker and manifest
+  digests are `6ecc1232c65eb99de758d180971631439dff02c566bee5607e9969817a328609`
+  and `18c0eb2f073a648b865f6db5ffbef03fd6410625d755acc1b5347504ae7236c5`.
 
 ## Decision log
 
