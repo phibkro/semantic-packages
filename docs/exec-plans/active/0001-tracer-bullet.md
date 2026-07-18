@@ -222,6 +222,21 @@ semantic-packages worktree and the versioned review brief.
 | W3-PR4 final proof convergence review | challenges W3-P4; independent internal static reviewer | read-only prior blocker replay and bounded generality audit | passed: generic cleaned-source token matching covers direct/wrapped commands, exact Evidence assumptions/provenance agree, runner and manifest digests match, and all prior review mechanisms remain closed |
 | W3-PG1 named-law evidence gate | depends on accepted W3-P4 successor, W3-PR4, and G1 | lead acceptance owner | accepted: canonical specification-scoped model/pipeline Evidence passes exact checker linkage; the Wave 2 fixture-only record moved out of the canonical source set; the 49-group proof gate is integrated into G0 |
 | W3-G1 execution-substrate convergence | depends on W3-LG1, W3-AG1, W3-PG1, and G0 | lead acceptance owner | accepted: record/link 9/20/38/2, loader 18, adapter 18, proof 49, direct accepted Evidence, compilation, Markdown/JSON, and full repository gate agree |
+| W4-P0T1 toolchain preflight | informs W4-D0; independent internal toolchain concern owner | read-only exact Rust/TypeScript build/runtime and provenance probe | complete: offline Deno 2.9.2/TypeScript 6.0.3 works; exact rustc 1.96.1 plus GCC links; Cargo/tsc are absent, registry/Nix acquisition is unavailable, and raw store paths cannot become canonical instructions |
+| W4-P0S1 shared-suite audit | challenges current runner evidence scope; independent internal semantic concern owner | read-only campaign, oracle, lifecycle, and broken-candidate audit | complete BLOCK: current arguments reach depth 5 rather than profile depth 8, generate no mixed length-32 histories, observation limit 8 cannot close depth 8, and aggregate results cannot back declaration-scoped Evidence |
+| W4-P0E1 record/Evidence preflight | informs W4-D0/W4-EG1; independent internal graph concern owner | read-only schemas, identities, provenance, fixture-hazard audit | complete REVISE: schemas suffice without expansion, but Claims/Evidence must be declaration-scoped; the accepted Wave 2 fixture Realization/Claim/Evidence triple must leave the canonical product set when actual packets replace it |
+| W4-P0F1 diverse boundary skeptic | challenges W4 preflight; requested Claude Fable 5 | read-only toolchain/campaign/Claim deliberation | no evidence: exact Fable/high/strict attempt produced no verdict in ten minutes and was interrupted; internal concern results and lead disposition govern W4-D0 |
+| W4-D0 cross-language boundary | depends on W4-P0T1/P0S1/P0E1; lead integration owner | exclusive ADR/plan decision; no implementation authority | accepted experimentally in ADR 0010: deterministic profile-sized logical-history plans, granular declaration outcomes, Deno TypeScript, direct-rustc std-only codec with dissent, explicit build argv, and declaration-scoped Evidence |
+| W4-HF1 shared-campaign falsifiers | depends on W4-D0; independent fixture owner | exclusive shared campaign/report fixtures and tests | pending |
+| W4-H1 shared-campaign implementation | depends on W4-HF1 | exclusive runner plan/report implementation | pending |
+| W4-HR1 campaign convergence review | challenges W4-H1 | read-only authored and novel depth/history/outcome audit | pending |
+| W4-CF1 cross-language candidate falsifiers | depends on W4-HR1 and W4-P0T1; independent fixture owner | exclusive build/candidate tests plus broken Rust/TypeScript fixture packages | pending |
+| W4-R1 Rust Realization/adapter | depends on W4-CF1; independent implementation owner | exclusive `implementations/rust/**` | pending |
+| W4-T1 TypeScript Realization/adapter | depends on W4-CF1; independent implementation owner | exclusive `implementations/typescript/**` | pending |
+| W4-RR1 Rust review | challenges W4-R1 | read-only independence, codec, semantics, lifecycle, and provenance audit | pending |
+| W4-TR1 TypeScript review | challenges W4-T1 | read-only independence, integer/runtime, semantics, lifecycle, and provenance audit | pending |
+| W4-EG1 cross-language record/Evidence gate | depends on accepted W4-R1/T1 reviews and G1 | lead canonical graph/provenance integration owner | pending |
+| W4-G1 independent-realization convergence | depends on W4-HR1, W4-RR1, W4-TR1, W4-EG1, and G0 | lead acceptance owner | pending |
 
 W3-S2 used Claude Code 2.1.212 through `agent-dispatch --read-only`, pagu-box
 `strict`, the Wave 2 worktree, exact `claude-fable-5`, and explicit high effort. The
@@ -750,6 +765,17 @@ not a grep or summary proxy.
   count remains nine because one fixture record leaves as one reviewed Evidence enters.
   `check_repo.py` now requires exact Lean through `LEAN` or `PATH`, runs all 49 proof
   groups, and prints the proof summary alongside record, loader, and adapter summaries.
+- W4 preflight finds that the child-process boundary remains language-neutral but the
+  current campaign does not exercise its declared profile: five element values cap the
+  depth, no mixed histories reach length 32, and observation limit 8 cannot observe a
+  depth-8 terminal `None`. It also finds that one aggregate report cannot honestly back
+  unrelated declaration-scoped Claims. ADR 0010 therefore puts campaign/report
+  hardening before candidate code and separates build argv from semantic execution.
+- Deno provides the smallest offline TypeScript route. Rust has exact offline compiler
+  and linker binaries but no Cargo/vendor graph. ADR 0010 accepts a std-only direct-
+  rustc codec only for valid v1 request shapes, with order/whitespace falsifiers and
+  retained dissent favoring locked/vendored `serde_json`. A requested Fable review
+  produced no verdict and is retained as provider failure rather than assurance.
 
 ## Decision log
 
@@ -793,6 +819,10 @@ not a grep or summary proxy.
   evidence for `pop-empty`, with exact statement/input/tool provenance and no authority
   over another law or a project-wide proof foundation. See
   [ADR 0009](../../decisions/0009-bounded-pop-empty-proof-probe.md).
+- Keep Wave 4's Python oracle, candidate build boundary, Deno route, experimental
+  direct-rustc codec, granular proposition results, and declaration-scoped Evidence
+  tracer-local as decided in
+  [ADR 0010](../../decisions/0010-wave4-cross-language-conformance-boundary.md).
 
 ## Result
 

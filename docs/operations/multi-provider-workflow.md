@@ -17,8 +17,8 @@ the active ExecPlan.
 | Route | Current use | Boundary and status |
 |---|---|---|
 | Lead Codex and product collaboration agents | integration, bounded implementation, independent GPT-family concern/review nodes | Available through the agent product's collaboration controls and inherited sandbox. This is not permission to invoke a raw `codex` process. |
-| Claude Sonnet 5 | routine implementation, structured analysis, bounded execution | Verified through Claude Code 2.1.212 using `agent-dispatch claude`; request exact `claude-sonnet-5` and high effort. |
-| Claude Fable 5 | complex reasoning, skepticism, convergence review | Verified through Claude Code 2.1.212 using `agent-dispatch claude`; request exact `claude-fable-5` and high effort. |
+| Claude Sonnet 5 | routine implementation, structured analysis, bounded execution | Route/version verified through Claude Code 2.1.212 using `agent-dispatch claude`; request exact `claude-sonnet-5` and high effort. Two Wave 3 write attempts later stalled without edits, so bound retries and retain an internal fallback. |
+| Claude Fable 5 | complex reasoning, skepticism, convergence review | Route/version and one decisive Wave 3 review verified through Claude Code 2.1.212 using `agent-dispatch claude`; request exact `claude-fable-5` and high effort. Several later Wave 3/4 consultations exhausted turns or produced no verdict, so do not make availability a silent hard dependency. |
 | Delegated external Codex | possible cross-provider child work | The `agent-dispatch codex` entrypoint is advertised; execution is unverified. Probe the model, version, and task behavior before making it a plan dependency. Never invoke delegated `codex` directly. |
 | Herdr | lead-side panes, pane output, status, interaction, and worktree organization | Optional observable control plane. It is neither the sandbox nor provider boundary. The Herdr control socket and `HERDR_*` control environment never enter delegated children. |
 | OpenCode / Kimi | potential future diversity route | Not supported by the current dispatcher contract. Do not invoke directly; first add and review a bounded dispatcher/provider adapter. |
