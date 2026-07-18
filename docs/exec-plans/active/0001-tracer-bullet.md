@@ -213,8 +213,11 @@ semantic-packages worktree and the versioned review brief.
 | W3-PR1 proof review | challenges W3-P1; independent internal GPT reviewer | read-only theorem, linkage, provenance, and evidence audit | blocked: 16 coherent manifest/record/theorem/warning/path/Evidence/output mutations falsely pass and Lean execution is unbounded; the theorem itself remains clean and axiom-free |
 | W3-PF2 proof boundary successor | depends on W3-PR1; independent fixture owner | exclusive proof fixture/harness scope | complete red checkpoint: 15 successor groups (40 total) pin semantic/tool constants, exact elaborated type, record validity, warnings, containment, Evidence validity, structured output, and bounded tool/version execution; P1 fails only those new controls and both hanging fake-Lean modes are killed within the harness deadline |
 | W3-P2 proof checker successor | depends on corrected W3-PF2; internal Codex implementation owner after two stalled Claude Sonnet 5 dispatches | exclusive `scripts/proof_check.py` and proof manifest/source as required | implementation checkpoint green: all 40 groups, direct checker/Lean, compilation, repository gate, and digest audit pass; theorem remains unchanged, universal, core-only, and axiom-free |
-| W3-PR2 proof successor review | challenges W3-P2; independent diverse reviewer | read-only prior and novel theorem/linkage/provenance audit | in progress |
-| W3-PG1 named-law evidence gate | depends on accepted W3-P2 successor, W3-PR2, and G1 | lead acceptance owner | pending |
+| W3-PR2 proof successor review | challenges W3-P2; independent internal Codex plus Claude Fable 5 | read-only prior and novel theorem/linkage/provenance audit | blocked: actual-source output can precede and falsify the axiom audit while `#eval` executes; Evidence accepts arbitrary JSON; unused axiom/modifier-unsafe source passes; fake-only single-type observation reduces assurance; manifest runner is not bound to the executing checker |
+| W3-PF3 proof review successor controls | depends on W3-PR2; independent fixture owner | exclusive proof fixture/harness scope | complete red checkpoint: 8 successor groups / 42 cases (48 groups / 104 cases total) freeze source-command/axiom/unsafe rejection, unique dual type and axiom observations, exact proof Evidence semantics/provenance, and executing-runner identity; prior 40 groups remain green and the bounded run is red only on PF3 |
+| W3-P3 proof boundary successor | depends on W3-PF3 | exclusive checker/proof manifest/source scope as required | in progress |
+| W3-PR3 proof convergence review | challenges W3-P3 | read-only prior and novel theorem/Evidence/provenance audit | pending |
+| W3-PG1 named-law evidence gate | depends on accepted W3-P3 successor, W3-PR3, and G1 | lead acceptance owner | pending |
 | W3-G1 execution-substrate convergence | depends on W3-LG1, W3-AG1, W3-PG1, and G0 | lead acceptance owner | pending |
 
 W3-S2 used Claude Code 2.1.212 through `agent-dispatch --read-only`, pagu-box
@@ -678,6 +681,30 @@ not a grep or summary proxy.
   The manifest's final runner digest is
   `148162e12e495a51b61947cc7f2babbde2e97f2f8d1ed682de714e72fdf19c04`;
   W3-PR2 still owns novel false-acceptance review and Evidence-specific trust concerns.
+- W3-PR2 blocks P2 despite the 40 green authored groups. The internal static review
+  found that arbitrary JSON can serve as optional Evidence, unused declared axioms and
+  modifier-prefixed unsafe declarations are not rejected, a fixture-specific fallback
+  accepts only one theorem-type observation, and the manifest runner is not bound to
+  the executing checker. Fable 5 then demonstrated with real Lean that source-emitted
+  information can put a false no-axiom line before the appended audit, causing an
+  axiom-backed theorem to pass, and that source `#eval` can perform a filesystem write
+  during checking. These are acceptance-boundary failures, not translation-fidelity or
+  binary-attestation non-goals; W3-PF3 freezes them before P3.
+- W3-PR2's Fable consultation used Claude Code 2.1.212 through
+  `agent-dispatch --read-only`, pagu-box `strict`, exact `claude-fable-5`, explicit high
+  effort, and only the listed repository docs/code/fixtures. Runtime model provenance
+  was not separately disclosed. It used removed temporary sources, made no repository
+  edits, delegation, or web requests. Two broader internal dynamic-review briefs were
+  rejected by the safety classifier and produced no evidence; the successful internal
+  lane was therefore narrowed to static code/generalization review and normal gates.
+- W3-PF3 converts the five blocker categories into 8 groups and 42 cases. It requires
+  original proof sources to reject declared axioms, modifier-prefixed unsafe code,
+  `#eval`, and `#print` before Lean execution; exactly one independently named actual-
+  type, expected-type, and axiom observation; a schema-valid exact Evidence record with
+  bounded model wording, ADR assumptions/exclusions, and dynamic manifest/runner/input/
+  tool/result provenance; and identity between the executing checker and manifest
+  runner. The full 48-group/104-case P2 run completed in about 33 seconds, kept all 40
+  prior groups green, and failed only the new controls.
 
 ## Decision log
 

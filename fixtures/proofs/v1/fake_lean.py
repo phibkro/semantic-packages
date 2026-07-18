@@ -19,11 +19,16 @@ from pathlib import Path
 
 VERSION = "4.30.0"
 COMMIT = "d024af099ca4bf2c86f649261ebf59565dc8c622"
-STATEMENT = (
+ACTUAL_STATEMENT = (
     "stack_pop_empty : ∀ (A : Type u), "
     "pop (empty : ObservedStack A) = Option.none"
 )
+EXPECTED_STATEMENT = (
+    "__semantic_packages_expected_type : ∀ (A : Type u), "
+    "pop (empty : ObservedStack A) = Option.none"
+)
 NO_AXIOMS = "'stack_pop_empty' does not depend on any axioms"
+HAS_AXIOMS = "'stack_pop_empty' depends on axioms: [forged_axiom]"
 
 
 def message(
@@ -59,6 +64,12 @@ def hang() -> None:
         time.sleep(10)
 
 
+def type_audits() -> None:
+    """Emit separate observations for actual and independently expected types."""
+    message(ACTUAL_STATEMENT)
+    message(EXPECTED_STATEMENT)
+
+
 def main() -> int:
     mode = os.environ.get("FAKE_LEAN_MODE", "missing-axiom-audit")
     if "--version" in sys.argv:
@@ -75,27 +86,50 @@ def main() -> int:
 
     if mode == "timeout-execution":
         hang()
+    if mode == "source-command-forged-positive":
+        marker = os.environ.get("FAKE_LEAN_EXECUTION_MARKER")
+        if marker:
+            Path(marker).write_text("proof phase executed\n", encoding="utf-8")
+        type_audits()
+        message(NO_AXIOMS)
+        return 0
     if mode == "malformed-output-forged-positive":
         print("not-json")
-        message(STATEMENT)
+        type_audits()
         message(NO_AXIOMS)
         return 0
     if mode == "unexpected-output-forged-positive":
         print(json.dumps({"unexpected": True}, separators=(",", ":")))
-        message(STATEMENT)
+        type_audits()
         message(NO_AXIOMS)
         return 0
     if mode == "warning-with-forged-positive":
         message("injected warning", severity="warning", kind="warning")
-        message(STATEMENT)
+        type_audits()
         message(NO_AXIOMS)
         return 0
     if mode == "axiom-only-positive":
         message(NO_AXIOMS)
         return 0
+    if mode == "actual-type-only":
+        message(ACTUAL_STATEMENT)
+        message(NO_AXIOMS)
+        return 0
+    if mode == "axiom-positive-then-negative":
+        type_audits()
+        message(NO_AXIOMS)
+        message(HAS_AXIOMS)
+        return 0
+    if mode == "axiom-duplicate-positive":
+        type_audits()
+        message(NO_AXIOMS)
+        message(NO_AXIOMS)
+        return 0
 
-    message(STATEMENT)
-    if mode == "invalid-axiom-audit":
+    type_audits()
+    if mode == "complete-positive":
+        message(NO_AXIOMS)
+    elif mode == "invalid-axiom-audit":
         message("'stack_pop_empty' axiom audit is unavailable")
     elif mode != "missing-axiom-audit":
         print(f"unknown fake Lean mode: {mode}", file=sys.stderr)

@@ -26,6 +26,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+import record_check
+
 
 ROOT = Path(__file__).resolve().parents[1]
 CHECKER = ROOT / "scripts" / "proof_check.py"
@@ -38,10 +40,13 @@ CLAIM = ROOT / "fixtures" / "records" / "valid" / "pop-empty-spec-claim.json"
 PLACEHOLDER_EVIDENCE = (
     ROOT / "fixtures" / "records" / "valid" / "pop-empty-proof-evidence.json"
 )
+PROOF_EVIDENCE_TEMPLATE = FIXTURES / "proof-evidence.template.json"
 MANIFEST_LABEL = "proofs/stack-pop-empty/manifest.json"
 SOURCE_LABEL = "proofs/stack-pop-empty/StackPopEmpty.lean"
 EVIDENCE_LABEL = "fixtures/records/valid/pop-empty-proof-evidence.json"
+PROOF_EVIDENCE_LABEL = "fixtures/proofs/v1/stack-pop-empty-model-proof.json"
 SUCCESS = "Proof is valid: 0 diagnostics."
+FALSE_SOURCE_AXIOM_MESSAGE = "'stack_pop_empty' does not depend on any axioms"
 LEAN_VERSION = "4.30.0"
 LEAN_COMMIT = "d024af099ca4bf2c86f649261ebf59565dc8c622"
 DIAGNOSTIC_HEAD = re.compile(r"^[A-Z][A-Z0-9_]+ [^#]+#(?:/.*)?$")
@@ -230,6 +235,34 @@ def _write_manifest(path: Path, manifest: dict[str, Any]) -> None:
     )
 
 
+def _materialize_proof_evidence(
+    repository: Path,
+    manifest_path: Path,
+    manifest: dict[str, Any],
+) -> tuple[Path, dict[str, Any]]:
+    substitutions = {
+        "$MANIFEST_SHA256": _sha256(manifest_path),
+        "$RUNNER_SHA256": manifest["runner"]["sha256"],
+        "$SPECIFICATION_SHA256": manifest["specification"]["sha256"],
+        "$CLAIM_SHA256": manifest["claim"]["sha256"],
+        "$SOURCE_SHA256": manifest["source"]["sha256"],
+        "$SUCCESS_SHA256": hashlib.sha256(
+            f"{SUCCESS}\n".encode("utf-8")
+        ).hexdigest(),
+    }
+    rendered = PROOF_EVIDENCE_TEMPLATE.read_text(encoding="utf-8")
+    for token, value in substitutions.items():
+        rendered = rendered.replace(token, value)
+    data = json.loads(rendered)
+    path = repository / PROOF_EVIDENCE_LABEL
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps(data, indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
+    return path, data
+
+
 def _case(
     name: str,
     lean: Path,
@@ -297,6 +330,31 @@ def check_fixture_inputs(lean: Path | None) -> list[str]:
         "∀ (A : Type u), pop (empty : ObservedStack A) = Option.none"
     ):
         failures.append("fixture manifest pins the exact universal expected statement")
+    try:
+        evidence_template = json.loads(
+            PROOF_EVIDENCE_TEMPLATE.read_text(encoding="utf-8")
+        )
+    except (OSError, UnicodeError, json.JSONDecodeError) as error:
+        failures.append(f"proof Evidence template is valid JSON: {error}")
+        evidence_template = None
+    if evidence_template is not None:
+        schemas = record_check.SchemaRegistry()
+        if schemas.metaschema_errors:
+            failures.append(
+                "proof Evidence template schema registry is valid: "
+                f"{schemas.metaschema_errors[0]}"
+            )
+        else:
+            diagnostic = record_check.validate_record(
+                schemas,
+                PROOF_EVIDENCE_TEMPLATE.relative_to(ROOT).as_posix(),
+                evidence_template,
+            )
+            if diagnostic is not None:
+                failures.append(
+                    "proof Evidence template is schema-valid: "
+                    f"{diagnostic.format()}"
+                )
     for source in sorted(FIXTURES.glob("*.lean")):
         try:
             source.read_text(encoding="utf-8")
@@ -340,6 +398,10 @@ def check_fixture_inputs(lean: Path | None) -> list[str]:
         "defaulted-extra-binder.lean": 0,
         "autoparam-extra-binder.lean": 0,
         "warning-policy-comment.lean": 0,
+        "unused-axiom.lean": 0,
+        "modifier-unsafe.lean": 0,
+        "source-eval.lean": 0,
+        "source-print.lean": 0,
     }
     for name, status in expected_exit.items():
         completed = _run_lean(lean, FIXTURES / name)
@@ -349,9 +411,18 @@ def check_fixture_inputs(lean: Path | None) -> list[str]:
                 f"{completed.returncode}; stdout={completed.stdout!r}, "
                 f"stderr={completed.stderr!r}"
             )
+        if (
+            name == "source-eval.lean"
+            and FALSE_SOURCE_AXIOM_MESSAGE not in completed.stdout
+        ):
+            failures.append(
+                "source-eval.lean emits the benign false no-axioms message: "
+                f"stdout={completed.stdout!r}, stderr={completed.stderr!r}"
+            )
 
     axiom_expectations = {
         "positive.lean": "does not depend on any axioms",
+        "unused-axiom.lean": "does not depend on any axioms",
         "injected-axiom.lean": "depends on axioms",
         "classical-choice.lean": "depends on axioms",
     }
@@ -1031,6 +1102,344 @@ def check_product_contract(lean: Path) -> tuple[list[str], int]:
             )
         ]
     )
+
+    # PF3 review-successor controls. These freeze the original-source command and
+    # declaration boundary, cardinality of independent Lean audits, the exact
+    # proof-support Evidence packet, and executing-runner identity.
+    run_group(
+        [
+            (
+                ("an unused source axiom is outside the bounded proof language",),
+                {
+                    "source_name": "unused-axiom.lean",
+                    "expected": f"PROOF_SOURCE_BOUNDARY {SOURCE_LABEL}#",
+                },
+            ),
+            (
+                ("declaration modifiers cannot hide an unsafe definition",),
+                {
+                    "source_name": "modifier-unsafe.lean",
+                    "expected": f"PROOF_SOURCE_BOUNDARY {SOURCE_LABEL}#",
+                },
+            ),
+        ]
+    )
+
+    def run_source_command_case(source_name: str) -> list[str]:
+        with tempfile.TemporaryDirectory(prefix="semantic-proof-command-") as raw:
+            repository, checker, manifest_path, _evidence, fake_lean, manifest = (
+                _materialize(raw, source_name)
+            )
+            _write_manifest(manifest_path, manifest)
+            marker = repository / "proof-phase-executed"
+            case_failures = _expect(
+                f"{source_name} is rejected before proof execution",
+                checker,
+                repository,
+                Path(MANIFEST_LABEL),
+                fake_lean,
+                1,
+                [f"PROOF_SOURCE_BOUNDARY {SOURCE_LABEL}#"],
+                environment={
+                    "FAKE_LEAN_MODE": "source-command-forged-positive",
+                    "FAKE_LEAN_EXECUTION_MARKER": str(marker),
+                },
+            )
+            if marker.exists():
+                case_failures.append(
+                    f"{source_name}: source containing a command reached proof execution"
+                )
+            return case_failures
+
+    groups += 1
+    failures.extend(run_source_command_case("source-eval.lean"))
+    failures.extend(run_source_command_case("source-print.lean"))
+
+    run_group(
+        [
+            (
+                ("a later axiom dependency contradicts an earlier empty audit",),
+                {
+                    "fake_mode": "axiom-positive-then-negative",
+                    "expected": f"PROOF_AXIOM_AUDIT_INVALID {SOURCE_LABEL}#",
+                },
+            ),
+            (
+                ("duplicate empty-axiom audits are not one independent observation",),
+                {
+                    "fake_mode": "axiom-duplicate-positive",
+                    "expected": f"PROOF_AXIOM_AUDIT_INVALID {SOURCE_LABEL}#",
+                },
+            ),
+        ]
+    )
+
+    run_group(
+        [
+            (
+                ("the fake positive path emits both independently named type audits",),
+                {"fake_mode": "complete-positive"},
+            ),
+            (
+                ("an actual-type-only fake cannot use a synthetic expected observation",),
+                {
+                    "fake_mode": "actual-type-only",
+                    "expected": (
+                        f"PROOF_THEOREM_AUDIT_MISSING "
+                        f"{MANIFEST_LABEL}#/expectedStatement"
+                    ),
+                },
+            ),
+        ]
+    )
+
+    def run_proof_evidence_case(
+        name: str,
+        *,
+        expected: str | None = None,
+        mutate_evidence: Callable[[Any], Any] | None = None,
+    ) -> list[str]:
+        with tempfile.TemporaryDirectory(prefix="semantic-proof-support-") as raw:
+            repository, checker, manifest_path, _placeholder, _fake, manifest = (
+                _materialize(raw)
+            )
+            _write_manifest(manifest_path, manifest)
+            evidence_path, evidence = _materialize_proof_evidence(
+                repository, manifest_path, manifest
+            )
+            if mutate_evidence is not None:
+                replacement = mutate_evidence(evidence)
+                if replacement is not None:
+                    evidence = replacement
+                evidence_path.write_text(
+                    json.dumps(evidence, indent=2, ensure_ascii=False) + "\n",
+                    encoding="utf-8",
+                )
+            return _expect(
+                name,
+                checker,
+                repository,
+                Path(MANIFEST_LABEL),
+                lean,
+                1 if expected else 0,
+                [expected] if expected else [],
+                evidence=Path(PROOF_EVIDENCE_LABEL),
+            )
+
+    def replace_with(value: Any) -> Callable[[Any], Any]:
+        return lambda _evidence: value
+
+    groups += 1
+    failures.extend(
+        run_proof_evidence_case(
+            "the materialized proof-local Evidence template is accepted"
+        )
+    )
+    for name, replacement in (
+        ("an empty object is not proof Evidence", {}),
+        ("a scalar is not proof Evidence", "proof"),
+    ):
+        failures.extend(
+            run_proof_evidence_case(
+                name,
+                expected=f"PROOF_EVIDENCE_SCHEMA {PROOF_EVIDENCE_LABEL}#",
+                mutate_evidence=replace_with(replacement),
+            )
+        )
+
+    def mutate_field(key: str, value: Any) -> Callable[[Any], None]:
+        def mutate(evidence: dict[str, Any]) -> None:
+            evidence[key] = value
+
+        return mutate
+
+    def realization_scope(evidence: dict[str, Any]) -> None:
+        evidence["scope"] = "realization"
+        evidence["realization"] = {
+            "kind": "realization",
+            "id": "stack-reference",
+            "version": "0.2.0",
+        }
+        evidence["adapter"] = {"id": "stack-json-adapter", "version": "0.2.0"}
+
+    def add_realization(evidence: dict[str, Any]) -> None:
+        evidence["realization"] = {
+            "kind": "realization",
+            "id": "stack-reference",
+            "version": "0.2.0",
+        }
+
+    def add_adapter(evidence: dict[str, Any]) -> None:
+        evidence["adapter"] = {"id": "stack-json-adapter", "version": "0.2.0"}
+
+    def wrong_claim(evidence: dict[str, Any]) -> None:
+        evidence["claim"]["id"] = "another-claim"
+
+    def wrong_specification(evidence: dict[str, Any]) -> None:
+        evidence["specification"]["id"] = "another-specification"
+
+    def add_profile(evidence: dict[str, Any]) -> None:
+        evidence["applicability"]["profiles"] = [
+            {
+                "kind": "realizationProfile",
+                "id": "stack-default",
+                "version": "0.1.0",
+            }
+        ]
+
+    semantic_evidence_cases = [
+        (
+            "proof Evidence identity is exact",
+            mutate_field("id", "another-proof"),
+            f"PROOF_EVIDENCE_IDENTITY {PROOF_EVIDENCE_LABEL}#/id",
+        ),
+        (
+            "proof Evidence is specification-scoped",
+            realization_scope,
+            f"PROOF_EVIDENCE_SCOPE {PROOF_EVIDENCE_LABEL}#/scope",
+        ),
+        (
+            "specification proof Evidence cannot carry a Realization",
+            add_realization,
+            f"PROOF_EVIDENCE_SCHEMA {PROOF_EVIDENCE_LABEL}#",
+        ),
+        (
+            "specification proof Evidence cannot carry an adapter",
+            add_adapter,
+            f"PROOF_EVIDENCE_SCHEMA {PROOF_EVIDENCE_LABEL}#",
+        ),
+        (
+            "proof Evidence links the pinned Claim",
+            wrong_claim,
+            f"PROOF_EVIDENCE_LINK {PROOF_EVIDENCE_LABEL}#/claim",
+        ),
+        (
+            "proof Evidence links the pinned Specification",
+            wrong_specification,
+            f"PROOF_EVIDENCE_LINK {PROOF_EVIDENCE_LABEL}#/specification",
+        ),
+        (
+            "proof Evidence has mechanism proof",
+            mutate_field("mechanism", "assertion"),
+            f"PROOF_EVIDENCE_MECHANISM {PROOF_EVIDENCE_LABEL}#/mechanism",
+        ),
+        (
+            "proof Evidence records supporting completion",
+            mutate_field("result", "challenges"),
+            f"PROOF_EVIDENCE_RESULT {PROOF_EVIDENCE_LABEL}#/result",
+        ),
+        (
+            "proof Evidence has no profile scope",
+            add_profile,
+            f"PROOF_EVIDENCE_SCOPE {PROOF_EVIDENCE_LABEL}#/applicability/profiles",
+        ),
+        (
+            "proof Evidence review state is the accepted gate decision",
+            mutate_field("reviewState", "pending"),
+            f"PROOF_EVIDENCE_SEMANTICS {PROOF_EVIDENCE_LABEL}#/reviewState",
+        ),
+        (
+            "proof Evidence method retains the bounded model wording",
+            mutate_field("method", "the Stack Specification is proved"),
+            f"PROOF_EVIDENCE_SEMANTICS {PROOF_EVIDENCE_LABEL}#/method",
+        ),
+        (
+            "proof Evidence retains the exact local Lean kernel environment",
+            mutate_field(
+                "environment",
+                {"execution": "remote", "kernel": "CompatibleLean 4.30.0"},
+            ),
+            f"PROOF_EVIDENCE_SEMANTICS {PROOF_EVIDENCE_LABEL}#/environment",
+        ),
+        (
+            "proof Evidence assumptions cannot broaden model satisfaction",
+            mutate_field(
+                "assumptions",
+                ["The Lean theorem proves every law of the Stack Specification."],
+            ),
+            f"PROOF_EVIDENCE_SEMANTICS {PROOF_EVIDENCE_LABEL}#/assumptions",
+        ),
+        (
+            "proof Evidence exclusions retain no-realization and no-global-authority",
+            mutate_field(
+                "exclusions",
+                ["This Evidence establishes conformance of every Stack Realization."],
+            ),
+            f"PROOF_EVIDENCE_SEMANTICS {PROOF_EVIDENCE_LABEL}#/exclusions",
+        ),
+    ]
+    groups += 1
+    for name, mutation, expected in semantic_evidence_cases:
+        failures.extend(
+            run_proof_evidence_case(
+                name,
+                expected=expected,
+                mutate_evidence=mutation,
+            )
+        )
+
+    def mutate_nested(path: tuple[str, ...], value: Any) -> Callable[[Any], None]:
+        def mutate(evidence: dict[str, Any]) -> None:
+            current = evidence
+            for part in path[:-1]:
+                current = current[part]
+            current[path[-1]] = value
+
+        return mutate
+
+    provenance_mutations: list[tuple[tuple[str, ...], Any]] = [
+        (("manifest", "path"), "proofs/stack-pop-empty/other-manifest.json"),
+        (("manifest", "sha256"), "0" * 64),
+        (("runner", "path"), "scripts/other-proof-check.py"),
+        (("runner", "sha256"), "0" * 64),
+        (("inputs", "specification", "path"), "fixtures/records/other-spec.json"),
+        (("inputs", "specification", "sha256"), "0" * 64),
+        (("inputs", "claim", "path"), "fixtures/records/other-claim.json"),
+        (("inputs", "claim", "sha256"), "0" * 64),
+        (("inputs", "source", "path"), "proofs/stack-pop-empty/Other.lean"),
+        (("inputs", "source", "sha256"), "0" * 64),
+        (("tool", "name"), "CompatibleLean"),
+        (("tool", "version"), "4.29.0"),
+        (("tool", "commit"), "0" * 40),
+        (("tool", "invocation"), ["$LEAN", "--json", "$GENERATED_SOURCE"]),
+        (("result", "completed"), False),
+        (("result", "outputSha256"), "0" * 64),
+    ]
+    groups += 1
+    for path, value in provenance_mutations:
+        pointer = "/provenance/" + "/".join(path)
+        failures.extend(
+            run_proof_evidence_case(
+                f"proof Evidence provenance pins {pointer}",
+                expected=(
+                    f"PROOF_EVIDENCE_PROVENANCE "
+                    f"{PROOF_EVIDENCE_LABEL}#{pointer}"
+                ),
+                mutate_evidence=mutate_nested(("provenance", *path), value),
+            )
+        )
+
+    groups += 1
+    with tempfile.TemporaryDirectory(prefix="semantic-proof-runner-") as raw:
+        repository, checker, manifest_path, _evidence, _fake, manifest = _materialize(raw)
+        _write_manifest(manifest_path, manifest)
+        copied_checker = repository / "tools" / "copied-proof-check.py"
+        _copy(checker, copied_checker)
+        _copy(
+            repository / "scripts" / "record_check.py",
+            repository / "tools" / "record_check.py",
+        )
+        failures.extend(
+            _expect(
+                "a copied checker cannot attest the manifest's repository runner",
+                copied_checker,
+                repository,
+                Path(MANIFEST_LABEL),
+                lean,
+                1,
+                [f"PROOF_RUNNER_IDENTITY {MANIFEST_LABEL}#/runner/path"],
+            )
+        )
     return failures, groups
 
 
