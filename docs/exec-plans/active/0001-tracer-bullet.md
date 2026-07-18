@@ -212,8 +212,8 @@ semantic-packages worktree and the versioned review brief.
 | W3-P1 named-law proof implementation | depends on W3-PF1; Claude Sonnet 5 | exclusive `scripts/proof_check.py` and `proofs/stack-pop-empty/**` | implementation checkpoint green: core-only universal theorem, pinned manifest, and standalone checker pass all 25 PF1 groups, direct Lean/checker, compilation, and record/loader gate |
 | W3-PR1 proof review | challenges W3-P1; independent internal GPT reviewer | read-only theorem, linkage, provenance, and evidence audit | blocked: 16 coherent manifest/record/theorem/warning/path/Evidence/output mutations falsely pass and Lean execution is unbounded; the theorem itself remains clean and axiom-free |
 | W3-PF2 proof boundary successor | depends on W3-PR1; independent fixture owner | exclusive proof fixture/harness scope | complete red checkpoint: 15 successor groups (40 total) pin semantic/tool constants, exact elaborated type, record validity, warnings, containment, Evidence validity, structured output, and bounded tool/version execution; P1 fails only those new controls and both hanging fake-Lean modes are killed within the harness deadline |
-| W3-P2 proof checker successor | depends on W3-PF2; Claude Sonnet 5 | exclusive `scripts/proof_check.py` and proof manifest/source as required | in progress |
-| W3-PR2 proof successor review | challenges W3-P2 | read-only prior and novel theorem/linkage/provenance audit | pending |
+| W3-P2 proof checker successor | depends on corrected W3-PF2; internal Codex implementation owner after two stalled Claude Sonnet 5 dispatches | exclusive `scripts/proof_check.py` and proof manifest/source as required | implementation checkpoint green: all 40 groups, direct checker/Lean, compilation, repository gate, and digest audit pass; theorem remains unchanged, universal, core-only, and axiom-free |
+| W3-PR2 proof successor review | challenges W3-P2; independent diverse reviewer | read-only prior and novel theorem/linkage/provenance audit | in progress |
 | W3-PG1 named-law evidence gate | depends on accepted W3-P2 successor, W3-PR2, and G1 | lead acceptance owner | pending |
 | W3-G1 execution-substrate convergence | depends on W3-LG1, W3-AG1, W3-PG1, and G0 | lead acceptance owner | pending |
 
@@ -663,6 +663,21 @@ not a grep or summary proxy.
   The same disposition makes the immutable-empty-axioms diagnostic precede proof
   execution when a hostile manifest attempts to authorize a known axiom; PF1 still
   observes both actual axiom-bearing sources under the accepted empty manifest.
+- Two W3-P2 Claude Code 2.1.212 attempts used `agent-dispatch`, pagu-box `strict`, the
+  isolated Wave 3 worktree, exact `claude-sonnet-5`, explicit high effort, and an
+  exclusive checker/proof write boundary. The disclosed scope was the governing docs,
+  checker/proof package, and committed proof fixtures. Both produced no handoff or
+  filesystem change and were interrupted after prolonged pre-edit silence; a direct
+  dispatcher-mediated `--version` health check succeeded. The lead therefore reassigned
+  implementation internally while retaining provider diversity at read-only review.
+- W3-P2 closes the authored successor harness at 40 groups. The checker now pins the
+  ADR boundary and exact tool descriptor, schema-validates the two proof inputs, checks
+  bounded semantic linkage, rejects manifest/Evidence/path escape and malformed Lean
+  output, observes independently elaborated actual and expected types, requires an
+  empty axiom audit, and bounds both Lean subprocess phases with process-group cleanup.
+  The manifest's final runner digest is
+  `148162e12e495a51b61947cc7f2babbde2e97f2f8d1ed682de714e72fdf19c04`;
+  W3-PR2 still owns novel false-acceptance review and Evidence-specific trust concerns.
 
 ## Decision log
 
