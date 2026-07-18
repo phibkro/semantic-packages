@@ -235,9 +235,10 @@ semantic-packages worktree and the versioned review brief.
 | W4-H2 campaign successor | depends on W4-HF2; internal implementation owner | exclusive runner plan/report implementation | rejected checkpoint: all 31 adapter tests and the full repository gate pass with prior HR1 mechanisms closed, but W4-HR2 finds an unchecked terminal remainder, an absent-binding crash, and no exact plan identity in reports |
 | W4-HR2 campaign successor review | challenges W4-H2; fresh independent internal reviewer | read-only prior-blocker replay and novel bounded audit | BLOCK: a protocol-valid final generated pop returns a wrong live remainder yet all declarations support; existing wrong-remainder reaches an uncaught missing-binding KeyError; internally consistent alternate plans execute without canonical identity retained in the report |
 | W4-HF3 final campaign controls | depends on W4-HR2; independent fixture owner | exclusive terminal-remainder, total-result, and canonical-plan identity tests/fixtures | complete red checkpoint: prior 31 tests remain green while five new methods freeze the terminal generated-pop remainder, causal report totality, exact pre-launch plan identity, report plan digest, and late-error observation retention; all fail only on H3's absent behavior |
-| W4-H3 final campaign successor | depends on W4-HF3 | exclusive runner plan/report implementation | pending |
-| W4-HR3 final campaign review | challenges W4-H3 | read-only all-blocker replay and novel totality/identity audit | pending |
-| W4-CF1 cross-language candidate falsifiers | depends on W4-HR3 and W4-P0T1; independent fixture owner | exclusive build/candidate tests plus broken Rust/TypeScript fixture packages | pending |
+| W4-H3 final campaign successor | depends on W4-HF3; internal implementation owner | exclusive runner plan/report implementation | accepted implementation checkpoint: terminal remainders are immediately checked, unavailable bindings remain causal/total, exact plan identity is enforced before launch and retained in reports, and all 36 adapter tests plus G0 pass |
+| W4-HR3 final campaign review | challenges W4-H3; fresh independent internal reviewer | read-only all-blocker replay and novel totality/identity audit | PASS: 21 semantic modes and 14 process/protocol modes return total correctly scoped reports; all prior blockers replay closed; alternate plans reject with zero child starts; exact plan digest survives failures; no well-formed-response assertion or missing-binding path remains |
+| W4-HG1 shared-campaign convergence | depends on W4-HR3 and G0; lead acceptance owner | exact plan/report, fixture, review, and repository-gate disposition | accepted: canonical plan `e055eab…` reaches depth 8 and mixed history 32; campaign 18 plus legacy 18 tests, record/loader/proof gates, and independent totality/identity review agree |
+| W4-CF1 cross-language candidate falsifiers | depends on W4-HG1 and W4-P0T1; independent fixture owner | exclusive build/candidate tests plus broken Rust/TypeScript fixture packages | pending |
 | W4-R1 Rust Realization/adapter | depends on W4-CF1; independent implementation owner | exclusive `implementations/rust/**` | pending |
 | W4-T1 TypeScript Realization/adapter | depends on W4-CF1; independent implementation owner | exclusive `implementations/typescript/**` | pending |
 | W4-RR1 Rust review | challenges W4-R1 | read-only independence, codec, semantics, lifecycle, and provenance audit | pending |
@@ -827,6 +828,15 @@ not a grep or summary proxy.
   retained `plan_sha256`, and preservation of prior observations on later execution
   failure. The terminal trigger deliberately belongs to the canonical plan and must be
   revisited with any plan version change.
+- W4-H3/HR3 close the shared campaign gate. All 36 adapter tests and the full repository
+  gate pass. A fresh review executes 21 protocol-valid semantic modes and 14 process or
+  protocol failure modes, replays every HR1/HR2 blocker, confirms zero child starts for
+  alternate structurally valid plans, and finds no unchecked well-formed response path.
+  Exact plan digest `e055eab406683a01a32e8b563ef2e299169ddb2745685b5ad3ffae3297d93f6c`
+  is retained even on execution errors. Repeated operations may emit duplicate
+  `CaseObservation` rows; causes/outcomes deduplicate, and rows must not be counted as
+  independent cases or Evidence. Revisit before per-step assurance metrics or a new
+  campaign algorithm/operation/declaration.
 
 ## Decision log
 

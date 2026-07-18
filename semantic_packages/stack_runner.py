@@ -528,6 +528,7 @@ def summarize_stack_conformance(
     assumptions: Sequence[str] = ASSUMPTIONS,
     exclusions: Sequence[str] = EXCLUSIONS,
     stderr: bytes = b"",
+    plan_sha256: Optional[str] = None,
 ) -> ConformanceReport:
     retained_observations = tuple(observations)
     retained_events = tuple(events)
@@ -571,6 +572,7 @@ def summarize_stack_conformance(
         stderr=stderr,
         observations=retained_observations,
         declaration_outcomes=tuple(outcomes),
+        plan_sha256=plan_sha256,
     )
 
 
@@ -592,6 +594,7 @@ class ConformanceReport:
     stderr: bytes = b""
     observations: Tuple[CaseObservation, ...] = ()
     declaration_outcomes: Tuple[DeclarationOutcome, ...] = ()
+    plan_sha256: Optional[str] = None
 
 
 class _AdapterError(Exception):
@@ -1006,26 +1009,45 @@ class _Runner:
         obtained.append(value)
         return tuple(obtained), "nonempty-tail"
 
+    def _record_campaign_observation(
+        self,
+        *,
+        case_id: str,
+        declaration_id: str,
+        result: str,
+        expected: Tuple[int, ...],
+        observed: Tuple[int, ...],
+        causes: Sequence[str] = (),
+    ) -> None:
+        self.campaign_observations.append(
+            CaseObservation(
+                case_id=case_id,
+                declaration_id=declaration_id,
+                result=result,
+                expected_top_first=expected,
+                observed_top_first=observed,
+                causes=_unique(causes),
+            )
+        )
+
     def run_campaign(self, plan: StackConformancePlan) -> Tuple[CaseObservation, ...]:
         """Execute logical histories while keeping all adapter tokens opaque."""
         self.campaign_observations = []
         for case in plan.cases:
-            handles: Dict[str, str] = {}
+            handles: Dict[str, Optional[str]] = {}
             states: Dict[str, Tuple[int, ...]] = {}
             persistence_baselines: Dict[str, Tuple[Tuple[int, ...], str]] = {}
-            case_causes: Dict[str, List[str]] = {
-                declaration_id: [] for declaration_id in _DECLARATIONS
-            }
             for step in case.steps:
                 for planned in case.observations:
+                    baseline_handle = handles.get(planned.binding)
                     if (
                         planned.declaration_id == "persistence"
                         and step.source == planned.binding
-                        and planned.binding in handles
+                        and baseline_handle is not None
                         and planned.binding not in persistence_baselines
                     ):
                         persistence_baselines[planned.binding] = self._observe_expected(
-                            handles[planned.binding], planned.top_first
+                            baseline_handle, planned.top_first
                         )
                 if step.op == "empty":
                     assert step.bind is not None
@@ -1034,28 +1056,101 @@ class _Runner:
                 elif step.op == "push":
                     assert step.source is not None and step.bind is not None
                     assert step.value is not None
-                    handles[step.bind] = self._push(handles[step.source], step.value)
+                    source_handle = handles.get(step.source)
+                    handles[step.bind] = (
+                        self._push(source_handle, step.value)
+                        if source_handle is not None
+                        else None
+                    )
                     states[step.bind] = (step.value,) + states[step.source]
                 else:
                     assert step.op == "pop" and step.source is not None
                     expected_source = states[step.source]
-                    tag, value, remainder = self._pop(handles[step.source])
+                    source_handle = handles.get(step.source)
+                    if source_handle is None:
+                        if expected_source:
+                            assert step.bind is not None
+                            handles[step.bind] = None
+                            states[step.bind] = expected_source[1:]
+                        continue
+                    tag, value, remainder = self._pop(source_handle)
                     if not expected_source:
                         if tag != "none":
-                            case_causes["pop-empty"].append("POP_EMPTY")
+                            self._record_campaign_observation(
+                                case_id=case.case_id,
+                                declaration_id="pop-empty",
+                                result="challenges",
+                                expected=(),
+                                observed=(() if value is None else (value,)),
+                                causes=("POP_EMPTY",),
+                            )
                     elif tag != "some" or remainder is None:
-                        case_causes["pop-push"].append("POP_PUSH_VALUE")
+                        assert step.bind is not None
+                        handles[step.bind] = None
+                        states[step.bind] = expected_source[1:]
+                        self._record_campaign_observation(
+                            case_id=case.case_id,
+                            declaration_id="pop-push",
+                            result="challenges",
+                            expected=(expected_source[0],),
+                            observed=(),
+                            causes=("POP_PUSH_VALUE",),
+                        )
                     else:
                         if value != expected_source[0]:
-                            case_causes["pop-push"].append("POP_PUSH_VALUE")
+                            assert value is not None
+                            self._record_campaign_observation(
+                                case_id=case.case_id,
+                                declaration_id="pop-push",
+                                result="challenges",
+                                expected=(expected_source[0],),
+                                observed=(value,),
+                                causes=("POP_PUSH_VALUE",),
+                            )
                         assert step.bind is not None
                         handles[step.bind] = remainder
-                        states[step.bind] = expected_source[1:]
+                        expected_remainder = expected_source[1:]
+                        states[step.bind] = expected_remainder
+                        observed_remainder, remainder_status = self._observe_expected(
+                            remainder, expected_remainder
+                        )
+                        if (
+                            remainder_status == "nonempty-tail"
+                            and observed_remainder[:-1] == expected_remainder
+                        ):
+                            self._record_campaign_observation(
+                                case_id=case.case_id,
+                                declaration_id="pop-empty",
+                                result="challenges",
+                                expected=(),
+                                observed=(observed_remainder[-1],),
+                                causes=("POP_EMPTY",),
+                            )
+                            self._record_campaign_observation(
+                                case_id=case.case_id,
+                                declaration_id="pop-push",
+                                result="inconclusive",
+                                expected=expected_remainder,
+                                observed=observed_remainder,
+                            )
+                        elif (
+                            remainder_status != "complete"
+                            or observed_remainder != expected_remainder
+                        ):
+                            self._record_campaign_observation(
+                                case_id=case.case_id,
+                                declaration_id="pop-push",
+                                result="challenges",
+                                expected=expected_remainder,
+                                observed=observed_remainder,
+                                causes=("POP_PUSH_REMAINDER",),
+                            )
 
             for planned in case.observations:
-                causes = list(case_causes[planned.declaration_id])
+                causes: List[str] = []
                 result = "supports"
-                if planned.binding not in handles:
+                planned_handle = handles.get(planned.binding)
+                if planned_handle is None:
                     observed: Tuple[int, ...] = ()
                     result = "inconclusive"
                 elif planned.declaration_id == "stack-effects":
@@ -1064,7 +1159,7 @@ class _Runner:
                     observed = planned.top_first
                 elif planned.declaration_id == "persistence":
                     observed, status = self._observe_expected(
-                        handles[planned.binding], planned.top_first
+                        planned_handle, planned.top_first
                     )
                     baseline = persistence_baselines.get(planned.binding)
                     if baseline is None or baseline[1] != "complete":
@@ -1073,22 +1168,23 @@ class _Runner:
                         causes.append("RETAINED_HANDLE_CHANGED")
                 else:
                     observed, status = self._observe_expected(
-                        handles[planned.binding], planned.top_first
+                        planned_handle, planned.top_first
                     )
-                    if status == "nonempty-tail":
+                    if (
+                        status == "nonempty-tail"
+                        and observed[:-1] == planned.top_first
+                    ):
                         if planned.declaration_id == "pop-empty":
                             causes.append("POP_EMPTY")
                         else:
                             result = "inconclusive"
-                            self.campaign_observations.append(
-                                CaseObservation(
-                                    case_id=case.case_id,
-                                    declaration_id="pop-empty",
-                                    result="challenges",
-                                    expected_top_first=(),
-                                    observed_top_first=(observed[-1],),
-                                    causes=("POP_EMPTY",),
-                                )
+                            self._record_campaign_observation(
+                                case_id=case.case_id,
+                                declaration_id="pop-empty",
+                                result="challenges",
+                                expected=(),
+                                observed=(observed[-1],),
+                                causes=("POP_EMPTY",),
                             )
                     elif status == "early-none" or observed != planned.top_first:
                         pop_bindings = {
@@ -1101,32 +1197,14 @@ class _Runner:
                 unique_causes = _unique(causes)
                 if unique_causes:
                     result = "challenges"
-                self.campaign_observations.append(
-                    CaseObservation(
-                        case_id=case.case_id,
-                        declaration_id=planned.declaration_id,
-                        result=result,
-                        expected_top_first=planned.top_first,
-                        observed_top_first=observed,
-                        causes=unique_causes,
-                    )
+                self._record_campaign_observation(
+                    case_id=case.case_id,
+                    declaration_id=planned.declaration_id,
+                    result=result,
+                    expected=planned.top_first,
+                    observed=observed,
+                    causes=unique_causes,
                 )
-            planned_declarations = {
-                observation.declaration_id for observation in case.observations
-            }
-            for declaration_id, causes in case_causes.items():
-                if causes and declaration_id not in planned_declarations:
-                    unique_causes = _unique(causes)
-                    self.campaign_observations.append(
-                        CaseObservation(
-                            case_id=case.case_id,
-                            declaration_id=declaration_id,
-                            result="challenges",
-                            expected_top_first=(),
-                            observed_top_first=(),
-                            causes=unique_causes,
-                        )
-                    )
         return tuple(self.campaign_observations)
 
     def run_plan(self) -> None:
@@ -1176,6 +1254,8 @@ def run_stack_conformance(
         ):
             raise ValueError("plan cannot be combined with legacy campaign arguments")
         validate_stack_conformance_plan(plan)
+        if plan != default_stack_conformance_plan():
+            raise ValueError("evidence execution requires the exact default campaign plan")
         runner = _Runner(
             values=plan.element_domain,
             max_depth=plan.max_depth,
@@ -1210,6 +1290,7 @@ def run_stack_conformance(
             events=runner.events,
             execution_causes=execution_causes,
             stderr=runner.stderr,
+            plan_sha256=plan.sha256,
         )
 
     if any(
