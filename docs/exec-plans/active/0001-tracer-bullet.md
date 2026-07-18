@@ -216,8 +216,11 @@ semantic-packages worktree and the versioned review brief.
 | W3-PR2 proof successor review | challenges W3-P2; independent internal Codex plus Claude Fable 5 | read-only prior and novel theorem/linkage/provenance audit | blocked: actual-source output can precede and falsify the axiom audit while `#eval` executes; Evidence accepts arbitrary JSON; unused axiom/modifier-unsafe source passes; fake-only single-type observation reduces assurance; manifest runner is not bound to the executing checker |
 | W3-PF3 proof review successor controls | depends on W3-PR2; independent fixture owner | exclusive proof fixture/harness scope | complete red checkpoint: 8 successor groups / 42 cases (48 groups / 104 cases total) freeze source-command/axiom/unsafe rejection, unique dual type and axiom observations, exact proof Evidence semantics/provenance, and executing-runner identity; prior 40 groups remain green and the bounded run is red only on PF3 |
 | W3-P3 proof boundary successor | depends on W3-PF3; internal Codex implementation owner | exclusive checker/proof manifest/source scope as required | implementation checkpoint green: all 48 groups / 104 cases, direct checker with and without exact Evidence, direct Lean, compilation, and repository gate pass; theorem remains byte-for-byte unchanged |
-| W3-PR3 proof convergence review | challenges W3-P3 | read-only prior and novel theorem/Evidence/provenance audit | in progress |
-| W3-PG1 named-law evidence gate | depends on accepted W3-P3 successor, W3-PR3, and G1 | lead acceptance owner | pending |
+| W3-PR3 proof convergence review | challenges W3-P3; independent internal static reviewer plus attempted Fable replay | read-only prior and novel theorem/Evidence/provenance audit | blocked: valid `set_option ... in #eval/#print` wrappers bypass the line-anchored source-command scan, and exact Evidence omits the ADR-required checker/runner-correctness assumption; other PR2 mechanisms trace closed |
+| W3-PF4 final proof grammar controls | depends on W3-PR3; independent fixture owner | exclusive proof fixture/harness scope | complete red checkpoint: wrapped eval/print plus corrected Evidence assumptions bring the oracle to 49 groups / 106 cases; 86 cases remain green and the expected assumption-precedence cascade leaves 20 P3 reds across 4 groups |
+| W3-P4 final proof boundary successor | depends on W3-PF4 | exclusive checker/proof manifest/source scope as required | in progress |
+| W3-PR4 final proof convergence review | challenges W3-P4 | read-only prior blocker replay and bounded generality audit | pending |
+| W3-PG1 named-law evidence gate | depends on accepted W3-P4 successor, W3-PR4, and G1 | lead acceptance owner | pending |
 | W3-G1 execution-substrate convergence | depends on W3-LG1, W3-AG1, W3-PG1, and G0 | lead acceptance owner | pending |
 
 W3-S2 used Claude Code 2.1.212 through `agent-dispatch --read-only`, pagu-box
@@ -714,6 +717,20 @@ not a grep or summary proxy.
   `c3c90ecfd256f4aa76c45b7c3bbd6bd8bf773090dde130ac91b9283ef1c3c943`;
   the final checker digest is
   `fc452d7d8b6f87377339f780b9dac8e1b40b243792dfb6c459173a22afcf0694`.
+- W3-PR3 finds one remaining Lean grammar hole: the P3 pattern rejects direct `#eval`
+  and `#print` but not valid `set_option ... in` wrapped forms, so the promised pre-
+  execution boundary is incomplete. It also finds that exact Evidence records kernel
+  correctness but not the separately required assumption that the identified checker/
+  runner correctly enforces its recorded checks. Static tracing accepts the remaining
+  PR2 dispositions. A broad Fable retry exhausted its turn cap without a verdict and a
+  focused replay produced no output before interruption; neither is counted as review
+  evidence, while Fable's prior real-Lean PR2 counterexample remains the governing case.
+- W3-PF4 adds two valid wrapped-command cases and corrects the Evidence template. The
+  oracle is now 49 groups / 106 cases. On P3, 86 cases stay green; the two wrapper false
+  accepts plus the deliberately changed positive Evidence baseline and its downstream
+  diagnostic-precedence cascade produce 20 expected reds across 4 groups. The wrapped
+  eval control emits the benign false no-axiom line under direct Lean, confirming it is
+  a real grammar case rather than a synthetic matcher fixture.
 
 ## Decision log
 

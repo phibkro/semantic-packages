@@ -27,7 +27,8 @@
   "assumptions": [
     "The hand-reviewed translation from the Stack law to the Lean observation model is faithful.",
     "Finite Lean lists faithfully model the Specification's finite top-first Stack observation space.",
-    "Lean 4.30.0 and its trusted kernel correctly check the generated proof audit."
+    "Lean 4.30.0 and its trusted kernel correctly check the generated proof audit.",
+    "The identified provenance checker and runner correctly enforce the recorded checks."
   ],
   "exclusions": [
     "This Evidence does not establish conformance of any Realization or adapter.",

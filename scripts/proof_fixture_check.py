@@ -402,6 +402,8 @@ def check_fixture_inputs(lean: Path | None) -> list[str]:
         "modifier-unsafe.lean": 0,
         "source-eval.lean": 0,
         "source-print.lean": 0,
+        "wrapped-source-eval.lean": 0,
+        "wrapped-source-print.lean": 0,
     }
     for name, status in expected_exit.items():
         completed = _run_lean(lean, FIXTURES / name)
@@ -412,11 +414,11 @@ def check_fixture_inputs(lean: Path | None) -> list[str]:
                 f"stderr={completed.stderr!r}"
             )
         if (
-            name == "source-eval.lean"
+            name in {"source-eval.lean", "wrapped-source-eval.lean"}
             and FALSE_SOURCE_AXIOM_MESSAGE not in completed.stdout
         ):
             failures.append(
-                "source-eval.lean emits the benign false no-axioms message: "
+                f"{name} emits the benign false no-axioms message: "
                 f"stdout={completed.stdout!r}, stderr={completed.stderr!r}"
             )
 
@@ -1154,6 +1156,10 @@ def check_product_contract(lean: Path) -> tuple[list[str], int]:
     groups += 1
     failures.extend(run_source_command_case("source-eval.lean"))
     failures.extend(run_source_command_case("source-print.lean"))
+
+    groups += 1
+    failures.extend(run_source_command_case("wrapped-source-eval.lean"))
+    failures.extend(run_source_command_case("wrapped-source-print.lean"))
 
     run_group(
         [
