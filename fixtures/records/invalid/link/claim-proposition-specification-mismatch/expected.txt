@@ -1,0 +1,1 @@
+LINK_CLAIM_PROPOSITION_SPECIFICATION_MISMATCH records/claim.json#/proposition/specification: requested (specification, stack-b, 0.1.0), governingSpecification is (specification, stack-a, 0.1.0)

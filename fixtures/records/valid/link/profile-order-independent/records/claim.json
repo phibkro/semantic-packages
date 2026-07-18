@@ -1,0 +1,20 @@
+{
+  "kind": "claim",
+  "id": "profile-order-claim",
+  "version": "0.1.0",
+  "subject": { "kind": "realization", "id": "profile-order-realization", "version": "0.1.0" },
+  "governingSpecification": { "kind": "specification", "id": "profile-order-stack", "version": "0.1.0" },
+  "proposition": {
+    "specification": { "kind": "specification", "id": "profile-order-stack", "version": "0.1.0" },
+    "declarationId": "law"
+  },
+  "concern": "law.conformance",
+  "scope": "valid set-order control",
+  "assumptions": [],
+  "exclusions": [],
+  "applicableProfiles": [
+    { "kind": "realizationProfile", "id": "profile-a", "version": "0.1.0" },
+    { "kind": "realizationProfile", "id": "profile-b", "version": "0.1.0" }
+  ],
+  "state": "active"
+}

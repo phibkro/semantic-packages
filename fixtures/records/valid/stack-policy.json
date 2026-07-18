@@ -1,0 +1,43 @@
+{
+  "kind": "consumerPolicy",
+  "id": "stack-default-policy",
+  "version": "0.1.0",
+  "specification": {
+    "kind": "specification",
+    "id": "stack",
+    "version": "0.1.0"
+  },
+  "profile": {
+    "kind": "realizationProfile",
+    "id": "stack-default",
+    "version": "0.1.0"
+  },
+  "concerns": [
+    {
+      "concern": "law.conformance",
+      "priority": "required",
+      "acceptedMechanisms": ["proof", "property-test"],
+      "minimumAssurance": "one accepted supporting item and no selected challenge"
+    },
+    {
+      "concern": "performance",
+      "priority": "optional",
+      "acceptedMechanisms": ["benchmark"]
+    }
+  ],
+  "prohibitions": [
+    {
+      "proposition": {
+        "specification": {
+          "kind": "specification",
+          "id": "stack",
+          "version": "0.1.0"
+        },
+        "declarationId": "stack-effects"
+      },
+      "description": "No io.* events inside the adapter-observed invocation trace.",
+      "eventPattern": "io.*",
+      "acceptedEvidenceScope": ["adapter-invocation-trace"]
+    }
+  ]
+}

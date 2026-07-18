@@ -1,0 +1,1 @@
+LINK_DECLARATION_KIND_MISMATCH records/policy.json#/prohibitions/0/proposition/declarationId: requested local ID not-an-effect as effect in (specification, stack, 0.1.0), found law

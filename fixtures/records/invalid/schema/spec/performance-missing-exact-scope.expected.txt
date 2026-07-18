@@ -1,0 +1,1 @@
+SCHEMA_PERFORMANCE_SCOPE #/performancePropositions/0

@@ -1,0 +1,9 @@
+{
+  "kind": "specification",
+  "id": "schema-unknown-field",
+  "version": "0.1.0",
+  "laws": [
+    { "id": "law", "statement": "true" }
+  ],
+  "assurance": "proved"
+}

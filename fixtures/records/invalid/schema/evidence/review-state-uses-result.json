@@ -1,0 +1,18 @@
+{
+  "kind": "evidence",
+  "id": "schema-review-state-uses-result",
+  "version": "0.1.0",
+  "claim": { "kind": "claim", "id": "claim", "version": "0.1.0" },
+  "specification": { "kind": "specification", "id": "stack", "version": "0.1.0" },
+  "scope": "specification",
+  "mechanism": "proof",
+  "result": "supports",
+  "reviewState": "supports",
+  "method": "schema counterexample",
+  "environment": {},
+  "freshness": { "producedAt": "2026-07-18T00:00:00Z" },
+  "assumptions": [],
+  "exclusions": [],
+  "applicability": { "profiles": [] },
+  "provenance": {}
+}

@@ -1,0 +1,86 @@
+{
+  "kind": "specification",
+  "id": "stack",
+  "version": "0.1.0",
+  "carriers": [
+    {
+      "id": "Stack",
+      "description": "An abstract finite last-in-first-out collection."
+    }
+  ],
+  "operations": [
+    {
+      "id": "empty",
+      "signature": "Stack[A]"
+    },
+    {
+      "id": "push",
+      "signature": "Stack[A] * A -> Stack[A]"
+    }
+  ],
+  "observations": [
+    {
+      "id": "pop",
+      "signature": "Stack[A] -> Option[A * Stack[A]]"
+    }
+  ],
+  "derivedObservations": [
+    {
+      "id": "elements",
+      "definition": "Repeatedly pop a reachable finite stack until None, yielding a top-first sequence."
+    }
+  ],
+  "equivalences": [
+    {
+      "id": "stack-equivalence",
+      "carrier": "Stack",
+      "definition": "Pointwise equality of top-first elements sequences under the declared element equivalence."
+    }
+  ],
+  "laws": [
+    {
+      "id": "pop-empty",
+      "statement": "pop(empty) == None"
+    },
+    {
+      "id": "pop-push",
+      "statement": "pop(push(s, x)) == Some((x, s)) under Stack observational equivalence"
+    }
+  ],
+  "effects": {
+    "id": "stack-effects",
+    "forbidden": ["io.*"],
+    "optional": ["debug.emit"],
+    "default": "unspecified"
+  },
+  "resources": [
+    {
+      "id": "persistence",
+      "rule": "Retained stack handles remain usable and observationally unchanged after operations on them or derived handles."
+    }
+  ],
+  "performancePropositions": [
+    {
+      "id": "push-amortized-constant",
+      "operationFamily": ["push"],
+      "workload": {
+        "profile": {
+          "kind": "realizationProfile",
+          "id": "stack-default",
+          "version": "0.1.0"
+        },
+        "localId": "push-sequence"
+      },
+      "costMeasure": {
+        "profile": {
+          "kind": "realizationProfile",
+          "id": "stack-default",
+          "version": "0.1.0"
+        },
+        "localId": "realization-steps"
+      },
+      "predicate": "There exist constants a,b >= 0 such that total realization-steps for n pushes is at most a*n+b for every n >= 0.",
+      "permittedEvidenceMethods": ["proof", "proof-audit"]
+    }
+  ]
+}

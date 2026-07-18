@@ -1,0 +1,1 @@
+LINK_DECLARATION_KIND_MISMATCH records/spec.json#/performancePropositions/0/operationFamily/0: requested local ID not-an-operation as operation in (specification, stack, 0.1.0), found law

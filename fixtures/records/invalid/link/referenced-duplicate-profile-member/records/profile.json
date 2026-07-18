@@ -1,0 +1,12 @@
+{
+  "kind": "realizationProfile",
+  "id": "duplicate-profile-members",
+  "version": "0.1.0",
+  "workloads": [
+    { "id": "push-sequence", "startingState": "empty", "sizeFunction": "n", "definition": "n pushes" },
+    { "id": "shared-member", "startingState": "empty", "sizeFunction": "n", "definition": "same ID also exists as a cost measure" }
+  ],
+  "costMeasures": [
+    { "id": "shared-member", "unit": "step", "aggregation": "sum", "instrumentation": "same ID also exists as a workload" }
+  ]
+}

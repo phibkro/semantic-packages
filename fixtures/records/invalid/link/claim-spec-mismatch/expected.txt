@@ -1,0 +1,1 @@
+LINK_CLAIM_SPECIFICATION_MISMATCH records/claim.json#/governingSpecification: requested (specification, stack-b, 0.1.0), subject governs (specification, stack-a, 0.1.0)

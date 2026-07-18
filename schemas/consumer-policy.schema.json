@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/package-spec-language/consumer-policy.schema.json",
+  "title": "ConsumerPolicy record",
+  "type": "object",
+  "required": ["kind", "id", "version", "specification", "profile", "concerns", "prohibitions"],
+  "properties": {
+    "kind": { "const": "consumerPolicy" },
+    "id": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+    "version": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+    "specification": {
+      "$ref": "common.schema.json#/$defs/specificationReference"
+    },
+    "profile": {
+      "$ref": "common.schema.json#/$defs/realizationProfileReference"
+    },
+    "concerns": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/concernPolicyEntry" }
+    },
+    "prohibitions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/prohibitionEntry" }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "concernPolicyEntry": {
+      "type": "object",
+      "required": ["concern", "priority"],
+      "properties": {
+        "concern": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+        "priority": { "$ref": "common.schema.json#/$defs/concernPriority" },
+        "acceptedMechanisms": {
+          "$ref": "common.schema.json#/$defs/nonEmptyStringArray"
+        },
+        "minimumAssurance": { "$ref": "common.schema.json#/$defs/nonEmptyString" }
+      },
+      "additionalProperties": false
+    },
+    "prohibitionEntry": {
+      "type": "object",
+      "required": ["proposition", "description", "acceptedEvidenceScope"],
+      "properties": {
+        "proposition": { "$ref": "common.schema.json#/$defs/declarationReference" },
+        "description": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+        "eventPattern": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+        "acceptedEvidenceScope": {
+          "$ref": "common.schema.json#/$defs/nonEmptyStringArray"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

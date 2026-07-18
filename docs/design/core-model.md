@@ -65,6 +65,12 @@ A realization is not accepted merely because names and types align. It must be a
 A realization also declares which adapter exposes its operations and observations to
 the conformance runner. Adapter correctness is an assumption or a separately
 evidenced claim; it is not silently included in implementation conformance.
+For the six-record tracer model, the adapter is a versioned descriptor nested in the
+immutable Realization record, not a seventh canonical record. Realization-executing
+Evidence repeats the adapter's `(id, version)` selector, and link validation requires
+an exact match with the descriptor in the referenced Realization. Multiple independently
+versioned adapters per Realization remain deferred until they demonstrate a need for a
+realization-local namespace or a canonical Adapter kind.
 
 ## Claims and evidence
 
@@ -106,16 +112,22 @@ review state
 Evidence always pins its claim and governing specification. Realization and adapter
 references are required when the claim subject is a realization or the evidence
 mechanism executes a realization; they are absent for specification-only proof
-evidence. When present, redundant specification, realization, adapter, and profile
-scope must agree exactly with the claim and realization records. A contradictory scope
-is invalid; a coherent record for a different consumer-requested profile is valid but
-inapplicable.
+evidence. When present, redundant specification, realization, and adapter scope must
+agree exactly with the claim and realization records. Evidence always states its
+applicable profile list; that list must equal the Claim's applicable-profile set by
+exact typed address, independent of array order. A contradictory scope is invalid; a
+coherent claim-and-evidence pair for a different consumer-requested profile is valid
+but inapplicable.
 
 Claim lifecycle, evidence review, and assurance are distinct. A claim may be active
 while unsupported. Accepted evidence may challenge a claim. An assertion is a weak
 evidence mechanism, not a truth status placed on the claim. Assurance is derived from
 the visible set of applicable evidence under a consumer policy; it is never copied
 from a badge or author declaration.
+
+For the tracer, Claim lifecycle uses the provisional vocabulary
+`draft | active | retired | withdrawn`. These values describe publication lifecycle,
+not evidentiary result, review state, truth, or assurance.
 
 Contradictory and failed evidence remains attached to the claim. Supersession affects
 which evidence a policy selects, not whether historical results remain inspectable.
@@ -144,6 +156,15 @@ the resolver reports the obligation as unmet or unknown unless the policy accept
 applicable evidence scoped to the declared observation boundary. See
 [ADR 0006](../decisions/0006-separate-priority-from-prohibition.md).
 
+When a prohibition repeats an effect `eventPattern`, link validation requires that
+pattern to be declared by the referenced effect contract. The policy may select a
+declared semantic event; it cannot create a second, drifting event vocabulary.
+
+The tracer's provisional schemas encode the declaration forms needed by the Stack
+slice. Inline Claim propositions and general behavior/protocol-transition declarations
+remain explicit exclusions until a tracer observation requires their representation;
+their absence is not a claim that those concepts are outside the architecture.
+
 Unknown and unsupported are first-class resolver outcomes. A required concern with
 no acceptable evidence fails resolution; an optional or ignored concern remains
 visible but need not block selection.
@@ -155,6 +176,10 @@ model: platform, runtime capabilities, scale, workload, latency/memory measures,
 concurrency, trust assumptions, and portability constraints. Claims and evidence
 reference the profile under which they apply. Realizations declare supported
 profiles or constraints; consumer policies state the requested envelope.
+
+Workload and cost-measure IDs share one flat profile-local namespace within an exact
+RealizationProfile version. Reusing an ID within or across those categories is invalid;
+otherwise an exact profile-member reference could select more than one meaning.
 
 A profile does not itself prove that a realization works in that environment. It
 provides the shared vocabulary needed to make the claim and evidence comparable.
