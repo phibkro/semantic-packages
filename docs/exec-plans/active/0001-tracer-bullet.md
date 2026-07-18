@@ -231,7 +231,7 @@ semantic-packages worktree and the versioned review brief.
 | W4-H1C0 diverse campaign implementation attempt | depends on W4-HF1; requested Claude Sonnet 5 | writable strict child in an isolated worktree with exclusive runner scope | no evidence: Claude Code 2.1.210, exact Sonnet/high attempt produced no output or edits in three minutes and was interrupted; the internal fallback owns W4-H1 |
 | W4-H1 shared-campaign implementation | depends on W4-HF1; internal fallback implementation owner | exclusive runner plan/report implementation | rejected checkpoint: authored 24-test and full repository gates pass, but W4-HR1 demonstrates a retained-ancestor false support and declaration/provenance attribution defects |
 | W4-HR1 campaign convergence review | challenges W4-H1; independent internal reviewer | read-only authored and novel depth/history/outcome audit | BLOCK: actual depth 8 and mixed length 32 execute, but a valid-protocol ancestor-mutating candidate passes persistence; empty-pop failure contaminates all four declarations; cause state leaks across cases; persistence expectations become child-derived; generated/input provenance is not independently bound |
-| W4-HF2 campaign successor controls | depends on W4-HR1; independent fixture owner | exclusive shared campaign/report successor fixtures and tests | pending: freeze retained-ancestor push/pop checks, causal/inconclusive declaration attribution, case-local causes, plan-owned expectations, generated metadata consistency, exact input content binding, and meaningful mixed-depth coverage |
+| W4-HF2 campaign successor controls | depends on W4-HR1; independent fixture owner | exclusive shared campaign/report successor fixtures and tests | complete red checkpoint: prior 18+6 tests stay green while seven new methods/14 instances freeze valid-protocol retained-ancestor detection, causal and case-local outcomes, plan-owned expectations, generated/input provenance binding, mixed length-32 depth-8 coverage, and explicit source/ancestor persistence observations |
 | W4-H2 campaign successor | depends on W4-HF2 | exclusive runner plan/report implementation | pending |
 | W4-HR2 campaign successor review | challenges W4-H2 | read-only prior-blocker replay and novel bounded audit | pending |
 | W4-CF1 cross-language candidate falsifiers | depends on W4-HR2 and W4-P0T1; independent fixture owner | exclusive build/candidate tests plus broken Rust/TypeScript fixture packages | pending |
@@ -799,6 +799,13 @@ not a grep or summary proxy.
   effects, campaign-global cause leakage, child-derived persistence expectations, and
   generated/input provenance mutations that validation accepts. W4-HF2/H2 retain this
   failed checkpoint and must close each mechanism before W4-CF1 opens.
+- W4-HF2 adds a protocol-correct fixture that changes only a retained ancestor and a
+  case-local combined semantic control. The predecessor 18 runner tests and six HF1
+  methods remain green. Seven successor methods fail in 14 expected instances: the
+  ancestor candidate still supports; empty-pop failure contaminates other declarations
+  and replaces plan expectations; order causes leak across cases; metadata/digest
+  mutations validate; the generated mixed history reaches only depth one; and retained
+  ancestor observations are absent. This is the exact red boundary for W4-H2.
 
 ## Decision log
 

@@ -6,6 +6,7 @@ do not run a child, reproduce the Stack oracle, or inspect any realization.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import sys
 import unittest
@@ -28,6 +29,12 @@ FAKE_ADAPTER = ROOT / "fixtures" / "adapters" / "v1" / "fake_stack_adapter.py"
 
 
 class StackConformanceCampaignContractTests(unittest.TestCase):
+    def run_mode(self, mode: str):
+        return run_stack_conformance(
+            (sys.executable, str(FAKE_ADAPTER), mode),
+            plan=default_stack_conformance_plan(),
+        )
+
     def test_default_plan_pins_profile_sized_inputs_and_controls(self) -> None:
         plan = default_stack_conformance_plan()
 
@@ -202,6 +209,186 @@ class StackConformanceCampaignContractTests(unittest.TestCase):
             set(DECLARATIONS),
             {outcome.declaration_id for outcome in actual.declaration_outcomes},
         )
+
+    def test_retained_ancestor_change_challenges_only_persistence(self) -> None:
+        report = self.run_mode("retained-ancestor-change")
+        outcomes = {item.declaration_id: item for item in report.declaration_outcomes}
+
+        self.assertEqual("challenges", report.result, report)
+        self.assertEqual(("RETAINED_HANDLE_CHANGED",), report.causes, report)
+        self.assertEqual(
+            {"persistence"},
+            {
+                declaration
+                for declaration, outcome in outcomes.items()
+                if outcome.result == "challenges"
+            },
+            report,
+        )
+        self.assertEqual("challenges", outcomes["persistence"].result, report)
+        self.assertIn("RETAINED_HANDLE_CHANGED", outcomes["persistence"].causes)
+        for declaration in ("pop-empty", "pop-push", "stack-effects"):
+            self.assertEqual("supports", outcomes[declaration].result, report)
+
+    def test_wrong_empty_is_declaration_local(self) -> None:
+        plan = default_stack_conformance_plan()
+        report = run_stack_conformance(
+            (sys.executable, str(FAKE_ADAPTER), "wrong-empty"),
+            plan=plan,
+        )
+        outcomes = {item.declaration_id: item for item in report.declaration_outcomes}
+
+        self.assertEqual("challenges", outcomes["pop-empty"].result, report)
+        self.assertIn("POP_EMPTY", outcomes["pop-empty"].causes, report)
+        self.assertEqual("inconclusive", outcomes["pop-push"].result, report)
+        self.assertEqual("inconclusive", outcomes["persistence"].result, report)
+        self.assertEqual("supports", outcomes["stack-effects"].result, report)
+        for declaration in ("pop-push", "persistence", "stack-effects"):
+            self.assertNotIn("OBSERVATION_LIMIT", outcomes[declaration].causes, report)
+
+    def test_wrong_empty_does_not_replace_plan_owned_persistence_expectations(self) -> None:
+        plan = default_stack_conformance_plan()
+        report = run_stack_conformance(
+            (sys.executable, str(FAKE_ADAPTER), "wrong-empty"),
+            plan=plan,
+        )
+        expected_by_case = {
+            case.case_id: sorted(
+                observation.top_first
+                for observation in case.observations
+                if observation.declaration_id == "persistence"
+            )
+            for case in plan.cases
+            if any(
+                observation.declaration_id == "persistence"
+                for observation in case.observations
+            )
+        }
+        reported_by_case = {
+            case_id: sorted(
+                observation.expected_top_first
+                for observation in report.observations
+                if observation.declaration_id == "persistence"
+                and observation.case_id == case_id
+            )
+            for case_id in expected_by_case
+        }
+        self.assertEqual(expected_by_case, reported_by_case)
+
+    def test_semantic_causes_remain_case_local(self) -> None:
+        with self.subTest(mode="bottom-first"):
+            bottom_first = self.run_mode("bottom-first")
+            bottom_causes = {
+                cause
+                for observation in bottom_first.observations
+                if observation.declaration_id == "pop-push"
+                for cause in observation.causes
+            }
+            self.assertIn("OBSERVATION_ORDER", bottom_causes, bottom_first)
+
+        with self.subTest(mode="wrong-value"):
+            wrong_value = self.run_mode("wrong-value")
+            wrong_value_causes = {
+                cause
+                for observation in wrong_value.observations
+                if observation.declaration_id == "pop-push"
+                for cause in observation.causes
+            }
+            self.assertIn("POP_PUSH_VALUE", wrong_value_causes, wrong_value)
+
+        with self.subTest(mode="case-local-causes"):
+            combined = self.run_mode("case-local-causes")
+            by_case = {
+                observation.case_id: observation
+                for observation in combined.observations
+                if observation.declaration_id == "pop-push"
+                and observation.result == "challenges"
+            }
+            first = by_case["curated-pop-push-v1"]
+            later = by_case["curated-depth-eight-repeated-v1"]
+            self.assertIn("POP_PUSH_VALUE", first.causes, combined)
+            self.assertNotIn("OBSERVATION_ORDER", first.causes, combined)
+            self.assertIn("OBSERVATION_ORDER", later.causes, combined)
+            self.assertNotIn("POP_PUSH_VALUE", later.causes, combined)
+
+    def test_validation_binds_generation_metadata_and_canonical_inputs(self) -> None:
+        plan = default_stack_conformance_plan()
+        inputs = (
+            (ROOT / "fixtures" / "records" / "valid" / "stack-spec.json", plan.specification),
+            (
+                ROOT / "fixtures" / "records" / "valid" / "stack-profile.json",
+                plan.profile,
+            ),
+        )
+        for path, record_input in inputs:
+            with self.subTest(path=path.name):
+                actual = hashlib.sha256(path.read_bytes()).hexdigest()
+                self.assertEqual(actual, record_input.sha256)
+
+        first_case = plan.cases[0]
+        mutations = {
+            "case ID type": replace(
+                plan, cases=(replace(first_case, case_id=7), *plan.cases[1:])
+            ),
+            "seed/cases": replace(plan, seed=plan.seed + 1),
+            "algorithm/cases": replace(plan, algorithm="other-algorithm"),
+            "algorithm version/cases": replace(plan, algorithm_version="2"),
+            "specification digest": replace(
+                plan,
+                specification=replace(plan.specification, sha256="0" * 64),
+            ),
+            "profile digest": replace(
+                plan,
+                profile=replace(plan.profile, sha256="0" * 64),
+            ),
+        }
+        for mechanism, changed in mutations.items():
+            with self.subTest(mechanism=mechanism):
+                with self.assertRaises(ValueError):
+                    validate_stack_conformance_plan(changed)
+
+    def test_generated_length_32_history_reaches_profile_depth(self) -> None:
+        generated = [
+            case
+            for case in default_stack_conformance_plan().cases
+            if case.origin == "generated"
+            and len(case.steps) == 32
+            and {step.op for step in case.steps}.issuperset({"push", "pop"})
+        ]
+        self.assertTrue(generated)
+        self.assertTrue(
+            any(
+                len(observation.top_first) == 8
+                for case in generated
+                for observation in case.observations
+            )
+        )
+
+    def test_persistence_cases_plan_sources_and_retained_ancestors(self) -> None:
+        plan = default_stack_conformance_plan()
+        cases = {case.case_id: case for case in plan.cases}
+
+        def expected(case_id: str) -> set[tuple[str, tuple[int, ...]]]:
+            return {
+                (observation.binding, observation.top_first)
+                for observation in cases[case_id].observations
+                if observation.declaration_id == "persistence"
+            }
+
+        controls = {
+            "curated-retained-source-push-v1": {
+                ("root", ()),
+                ("source", (1,)),
+            },
+            "curated-retained-source-pop-v1": {
+                ("root", ()),
+                ("one", (1,)),
+                ("source", (2, 1)),
+            },
+        }
+        for case_id, planned in controls.items():
+            with self.subTest(case_id=case_id):
+                self.assertEqual(planned, expected(case_id))
 
 
 if __name__ == "__main__":

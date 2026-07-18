@@ -47,6 +47,10 @@ class FakeStackAdapter:
         self.next_handle = 0
         self.states: dict[str, list[int]] = {}
         self.interned: dict[tuple[int, ...], str] = {}
+        self.parents: dict[str, str] = {}
+        self.push_derived: set[str] = set()
+        self.changed_sources: set[str] = set()
+        self.nonempty_pop_count = 0
 
     def _new_handle(self, values: list[int]) -> str:
         key = tuple(values)
@@ -59,6 +63,17 @@ class FakeStackAdapter:
         if self.mode == "interned":
             self.interned[key] = handle
         return handle
+
+    def _change_retained_ancestor(self, source: str) -> None:
+        """Change an ancestor without changing the source or current result."""
+        if self.mode != "retained-ancestor-change":
+            return
+        if source not in self.push_derived or source in self.changed_sources:
+            return
+        ancestor = self.parents.get(source)
+        if ancestor is not None:
+            self.states[ancestor].append(-2)
+            self.changed_sources.add(source)
 
     def _events(self) -> list[str]:
         if self.mode == "optional-event":
@@ -138,6 +153,9 @@ class FakeStackAdapter:
                 stack = source
             else:
                 stack = self._new_handle([value, *self.states[source]])
+            self.parents[stack] = source
+            self.push_derived.add(stack)
+            self._change_retained_ancestor(source)
             result = {"stack": stack}
         else:
             source = args["stack"]
@@ -150,19 +168,31 @@ class FakeStackAdapter:
                 else:
                     result = {"tag": "none"}
             else:
-                if self.mode in {"bottom-first", "shallow-liar"} and len(values) >= 2:
+                later_order_change = (
+                    self.mode == "case-local-causes" and self.nonempty_pop_count > 0
+                )
+                if (
+                    self.mode in {"bottom-first", "shallow-liar"}
+                    or later_order_change
+                ) and len(values) >= 2:
                     value = values[-1]
                     remainder_values = values[:-1]
                 else:
                     value = values[0]
                     remainder_values = values[1:]
-                if self.mode == "wrong-value":
+                if self.mode == "wrong-value" or (
+                    self.mode == "case-local-causes" and self.nonempty_pop_count == 0
+                ):
                     value += 1
+                if self.mode == "case-local-causes":
+                    self.nonempty_pop_count += 1
                 if self.mode == "destructive-pop":
                     self.states[source][:] = remainder_values
                 if self.mode == "wrong-remainder" and len(values) >= 2:
                     remainder_values = []
                 remainder = self._new_handle(remainder_values)
+                self.parents[remainder] = source
+                self._change_retained_ancestor(source)
                 result = {"tag": "some", "value": value, "remainder": remainder}
 
         response: dict[str, Any] = {
