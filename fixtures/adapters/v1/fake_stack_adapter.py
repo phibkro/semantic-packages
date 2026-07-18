@@ -28,6 +28,7 @@ IMMEDIATE_EXTRA_STDOUT = {
     "extra-stdout-unterminated": '{"extra":true}',
 }
 POST_EOF_ACTIONS = {
+    "challenge-then-nonzero": "nonzero",
     "eof-marker": "marker",
     "eof-nonzero": "nonzero",
     "eof-timeout": "ignore-term-and-wait",
@@ -51,6 +52,7 @@ class FakeStackAdapter:
         self.push_derived: set[str] = set()
         self.changed_sources: set[str] = set()
         self.nonempty_pop_count = 0
+        self.generated_terminal_state_pops = 0
 
     def _new_handle(self, values: list[int]) -> str:
         key = tuple(values)
@@ -180,7 +182,7 @@ class FakeStackAdapter:
                 else:
                     value = values[0]
                     remainder_values = values[1:]
-                if self.mode == "wrong-value" or (
+                if self.mode in {"wrong-value", "challenge-then-nonzero"} or (
                     self.mode == "case-local-causes" and self.nonempty_pop_count == 0
                 ):
                     value += 1
@@ -190,6 +192,14 @@ class FakeStackAdapter:
                     self.states[source][:] = remainder_values
                 if self.mode == "wrong-remainder" and len(values) >= 2:
                     remainder_values = []
+                if (
+                    self.mode == "wrong-generated-terminal-remainder"
+                    and source in self.push_derived
+                    and tuple(values) == (0, 0, 0, 0, 2, -1, 2, -1)
+                ):
+                    self.generated_terminal_state_pops += 1
+                    if self.generated_terminal_state_pops == 2:
+                        remainder_values = [-2, *remainder_values]
                 remainder = self._new_handle(remainder_values)
                 self.parents[remainder] = source
                 self._change_retained_ancestor(source)

@@ -9,6 +9,7 @@ from __future__ import annotations
 import hashlib
 import json
 import sys
+import tempfile
 import unittest
 from dataclasses import replace
 from pathlib import Path
@@ -16,6 +17,7 @@ from typing import Any
 
 from semantic_packages.stack_runner import (
     CaseObservation,
+    ConformanceReport,
     default_stack_conformance_plan,
     run_stack_conformance,
     summarize_stack_conformance,
@@ -389,6 +391,109 @@ class StackConformanceCampaignContractTests(unittest.TestCase):
         for case_id, planned in controls.items():
             with self.subTest(case_id=case_id):
                 self.assertEqual(planned, expected(case_id))
+
+    def test_generated_terminal_wrong_remainder_challenges_pop_push(self) -> None:
+        report = self.run_mode("wrong-generated-terminal-remainder")
+        generated = tuple(
+            observation
+            for observation in report.observations
+            if observation.case_id == "generated-mixed-20260718-v1"
+            and observation.declaration_id == "pop-push"
+        )
+        self.assertTrue(generated, report)
+        self.assertEqual("challenges", report.result, report)
+        self.assertTrue(
+            any("POP_PUSH_REMAINDER" in observation.causes for observation in generated),
+            report,
+        )
+        pop_push = {
+            outcome.declaration_id: outcome for outcome in report.declaration_outcomes
+        }["pop-push"]
+        self.assertEqual("challenges", pop_push.result, report)
+        self.assertIn("POP_PUSH_REMAINDER", pop_push.causes, report)
+
+    def test_wrong_remainder_returns_a_causal_report_instead_of_raising(self) -> None:
+        report = self.run_mode("wrong-remainder")
+        self.assertIsInstance(report, ConformanceReport)
+        self.assertEqual("challenges", report.result, report)
+        pop_push = {
+            outcome.declaration_id: outcome for outcome in report.declaration_outcomes
+        }["pop-push"]
+        self.assertEqual("challenges", pop_push.result, report)
+        self.assertIn("POP_PUSH_REMAINDER", pop_push.causes, report)
+
+    def test_default_execution_report_retains_exact_plan_identity(self) -> None:
+        plan = default_stack_conformance_plan()
+        report = run_stack_conformance(
+            (sys.executable, str(FAKE_ADAPTER), "reference"),
+            plan=plan,
+        )
+        self.assertEqual(plan.sha256, report.plan_sha256)
+
+    def test_evidence_execution_rejects_nondefault_plans_before_child_start(self) -> None:
+        plan = default_stack_conformance_plan()
+        mutations = {
+            "element domain": replace(
+                plan, element_domain=(*plan.element_domain, 3)
+            ),
+            "timeout": replace(plan, timeout_seconds=0.25),
+            "event contract": replace(
+                plan,
+                event_contract=replace(
+                    plan.event_contract,
+                    optional=(*plan.event_contract.optional, "custom.audit"),
+                ),
+            ),
+            "curated reorder": replace(
+                plan, cases=(plan.cases[1], plan.cases[0], *plan.cases[2:])
+            ),
+            "curated deletion": replace(plan, cases=plan.cases[1:]),
+        }
+        for mechanism, changed in mutations.items():
+            with self.subTest(mechanism=mechanism, gate="structural"):
+                validate_stack_conformance_plan(changed)
+
+            with tempfile.TemporaryDirectory() as directory:
+                marker = Path(directory) / "child-started.txt"
+                rejected = False
+                try:
+                    run_stack_conformance(
+                        (
+                            sys.executable,
+                            str(FAKE_ADAPTER),
+                            "eof-marker",
+                            str(marker),
+                        ),
+                        plan=changed,
+                    )
+                except ValueError:
+                    rejected = True
+                with self.subTest(mechanism=mechanism, gate="exact execution"):
+                    self.assertEqual((True, False), (rejected, marker.exists()))
+
+    def test_late_execution_failure_retains_semantic_challenge_and_plan(self) -> None:
+        plan = default_stack_conformance_plan()
+        report = run_stack_conformance(
+            (sys.executable, str(FAKE_ADAPTER), "challenge-then-nonzero"),
+            plan=plan,
+        )
+        self.assertEqual("error", report.result, report)
+        self.assertIn("PROCESS_EXIT", report.causes, report)
+        self.assertIn("POP_PUSH_VALUE", report.causes, report)
+        challenged = tuple(
+            observation
+            for observation in report.observations
+            if observation.declaration_id == "pop-push"
+            and observation.result == "challenges"
+            and "POP_PUSH_VALUE" in observation.causes
+        )
+        self.assertTrue(challenged, report)
+        pop_push = {
+            outcome.declaration_id: outcome for outcome in report.declaration_outcomes
+        }["pop-push"]
+        self.assertEqual("challenges", pop_push.result, report)
+        self.assertIn("POP_PUSH_VALUE", pop_push.causes, report)
+        self.assertEqual(plan.sha256, report.plan_sha256)
 
 
 if __name__ == "__main__":

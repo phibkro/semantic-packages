@@ -234,7 +234,7 @@ semantic-packages worktree and the versioned review brief.
 | W4-HF2 campaign successor controls | depends on W4-HR1; independent fixture owner | exclusive shared campaign/report successor fixtures and tests | complete red checkpoint: prior 18+6 tests stay green while seven new methods/14 instances freeze valid-protocol retained-ancestor detection, causal and case-local outcomes, plan-owned expectations, generated/input provenance binding, mixed length-32 depth-8 coverage, and explicit source/ancestor persistence observations |
 | W4-H2 campaign successor | depends on W4-HF2; internal implementation owner | exclusive runner plan/report implementation | rejected checkpoint: all 31 adapter tests and the full repository gate pass with prior HR1 mechanisms closed, but W4-HR2 finds an unchecked terminal remainder, an absent-binding crash, and no exact plan identity in reports |
 | W4-HR2 campaign successor review | challenges W4-H2; fresh independent internal reviewer | read-only prior-blocker replay and novel bounded audit | BLOCK: a protocol-valid final generated pop returns a wrong live remainder yet all declarations support; existing wrong-remainder reaches an uncaught missing-binding KeyError; internally consistent alternate plans execute without canonical identity retained in the report |
-| W4-HF3 final campaign controls | depends on W4-HR2; independent fixture owner | exclusive terminal-remainder, total-result, and canonical-plan identity tests/fixtures | pending |
+| W4-HF3 final campaign controls | depends on W4-HR2; independent fixture owner | exclusive terminal-remainder, total-result, and canonical-plan identity tests/fixtures | complete red checkpoint: prior 31 tests remain green while five new methods freeze the terminal generated-pop remainder, causal report totality, exact pre-launch plan identity, report plan digest, and late-error observation retention; all fail only on H3's absent behavior |
 | W4-H3 final campaign successor | depends on W4-HF3 | exclusive runner plan/report implementation | pending |
 | W4-HR3 final campaign review | challenges W4-H3 | read-only all-blocker replay and novel totality/identity audit | pending |
 | W4-CF1 cross-language candidate falsifiers | depends on W4-HR3 and W4-P0T1; independent fixture owner | exclusive build/candidate tests plus broken Rust/TypeScript fixture packages | pending |
@@ -819,6 +819,14 @@ not a grep or summary proxy.
   W4-HF3/H3 must close those three mechanisms. An unobserved derived push used only to
   provoke persistence is retained as a bounded coverage concern, not mislabeled as a
   `pop-push` challenge without a declared observation.
+- W4-HF3 retains the prior 31 green tests and adds five red methods. A canonical-v1-
+  specific fixture returns a wrong remainder only on the terminal generated pop while
+  remaining protocol-correct; another preserves an early semantic challenge before a
+  nonzero EOF. The controls require immediate remainder diagnosis, a returned report
+  instead of absent-binding `KeyError`, exact default-plan rejection before child start,
+  retained `plan_sha256`, and preservation of prior observations on later execution
+  failure. The terminal trigger deliberately belongs to the canonical plan and must be
+  revisited with any plan version change.
 
 ## Decision log
 
