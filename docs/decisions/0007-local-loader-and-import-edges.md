@@ -22,6 +22,14 @@ discovers lowercase `.json` regular files under explicit directories, rejects ex
 non-JSON and symbolic-link inputs, and preserves normalized source paths only as
 provenance. Canonical record identity remains `(kind, id, version)`.
 
+The input source tree is assumed quiescent for the duration of one load. This loader is
+not a secure filesystem traversal boundary: concurrent replacement, renaming, or
+permission mutation can invalidate the captured classification and is outside the
+tracer. Within a quiescent tree, neither a final symbolic link nor a symbolic-link
+directory component is followed. A future loader for untrusted or concurrently mutable
+trees needs a separately designed descriptor-based containment boundary rather than a
+platform-specific patch hidden inside this provisional front end.
+
 Input and schema failures form a phase barrier: the checker reports those failures
 without manufacturing downstream dangling-reference diagnostics from a partial graph.
 An empty discovered source set is an input failure. Diagnostic code, normalized source
@@ -61,10 +69,14 @@ if a matching file exists elsewhere.
 - Import cycles cannot cause loader recursion because imports never acquire files.
 - Registry acquisition, authoring elaboration, namespace composition, refinement, and
   compatibility remain separate future concerns.
+- Concurrent filesystem mutation and adversarial containment are explicit exclusions;
+  input diagnostics describe a quiescent finite source tree, not a security audit.
 
 ## Revisit conditions
 
 Revisit before imports gain namespace, declaration visibility, refinement,
 initialization, or transitive acquisition semantics, or before symlinks and portable
-filesystem identity become supported inputs. Add new falsifying fixtures and migrate
+filesystem identity become supported inputs. Also revisit before loading an untrusted
+or concurrently mutable tree, where descriptor-relative no-follow traversal and its
+platform contract must be designed explicitly. Add new falsifying fixtures and migrate
 affected records rather than silently changing the meaning of this provisional loader.

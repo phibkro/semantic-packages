@@ -43,6 +43,19 @@ python3 -m pip install -r requirements-dev.txt
 python3 scripts/check_repo.py
 ```
 
+Validate one local canonical-record source set directly:
+
+```sh
+python3 scripts/record_check.py path/to/record.json path/to/registry-directory
+```
+
+Directories are searched recursively for lowercase `.json` regular files. Repeated
+lexical aliases and file/directory overlap are idempotent; symbolic links and explicit
+non-JSON files are rejected. Imports are exact edges within the supplied source set and
+never acquire files from elsewhere. The source tree must remain quiescent during one
+load; this tracer loader is not a secure traversal boundary for concurrently mutated or
+adversarial filesystems.
+
 Then open the repository in Codex, an IDE extension, or another coding agent. The agent should begin with `AGENTS.md`, then follow the active ExecPlan.
 
 ## Status

@@ -1,6 +1,9 @@
 """Offline schema and link validation for canonical semantic-package records.
 
-This module is the durable record/link gate for Wave 2. It:
+This module is the durable record/link gate for Wave 2, extended in Wave 3 with a
+deterministic local source-set loader (see ADR 0007) that accepts explicit files and
+directories, normalizes lexical path aliases, and recursively discovers lowercase
+`.json` records. It:
 
 - loads the seven local JSON Schema files and validates each against the
   Draft 2020-12 metaschema, building a fully offline `referencing` registry
@@ -26,6 +29,9 @@ sorted by `(relative source path, JSON pointer, code)`.
 from __future__ import annotations
 
 import json
+import os
+import posixpath
+import stat
 import sys
 from dataclasses import dataclass
 from pathlib import Path
@@ -73,9 +79,10 @@ class Diagnostic:
     message: str | None = None
 
     def format(self) -> str:
+        head = f"{self.code} {self.path}{self.pointer}"
         if self.message is None:
-            return f"{self.code} {self.pointer}"
-        return f"{self.code} {self.path}{self.pointer}: {self.message}"
+            return head
+        return f"{head}: {self.message}"
 
     def sort_key(self) -> tuple[str, str, str]:
         return (self.path, self.pointer, self.code)
@@ -1303,40 +1310,241 @@ def run_fixture_checks() -> tuple[list[str], str]:
 
 
 # ---------------------------------------------------------------------------
-# Direct graph-validation CLI
+# Direct graph-validation CLI: deterministic local source-set loader (ADR 0007)
 # ---------------------------------------------------------------------------
+#
+# The loader normalizes every explicit CLI/API argument lexically against one
+# base directory captured at entry, then classifies each normalized path as a
+# rejected non-JSON file, a rejected symlink, a recursively discovered
+# directory, or a candidate record file. Filesystem paths are provenance for
+# diagnostics only; canonical record identity remains `(kind, id, version)`.
 
 
-def _load_input(path: Path, relative: str) -> tuple[Diagnostic | None, Any]:
-    """Load one direct CLI input path, turning I/O and parse failures into stable
-    diagnostics instead of letting an exception surface as a traceback."""
-    if not path.exists():
-        return Diagnostic("INPUT_NOT_FOUND", relative, "#", f"no such file: {path}"), None
-    try:
-        text = path.read_text(encoding="utf-8")
-    except (OSError, UnicodeError) as error:
-        return Diagnostic("INPUT_READ_ERROR", relative, "#", str(error)), None
-    try:
-        return None, json.loads(text)
-    except json.JSONDecodeError as error:
-        return Diagnostic("INPUT_INVALID_JSON", relative, "#", str(error)), None
+def _normalize_path(base: str, raw: str) -> str:
+    """Lexically normalize ``raw`` against ``base`` without touching the
+    filesystem, so `./`/`..` aliases collapse without ever resolving a
+    symlink.
+
+    POSIX reserves an implementation-defined meaning for a path that begins
+    with *exactly* two slashes (``posixpath.normpath`` already collapses
+    three or more down to one, but deliberately preserves exactly two). On
+    this Linux tracer that reserved namespace is never distinct from the
+    single-leading-slash root, so any leading slash run is also collapsed
+    to one here, keeping ``//tmp/x`` and ``/tmp/x`` lexically identical
+    without ever calling realpath or comparing inode identity.
+    """
+    candidate = raw if posixpath.isabs(raw) else posixpath.join(base, raw)
+    normalized = posixpath.normpath(candidate)
+    if normalized.startswith("/"):
+        normalized = "/" + normalized.lstrip("/")
+    return normalized
 
 
-def validate_graph_paths(paths: list[Path]) -> list[Diagnostic]:
-    schemas = SchemaRegistry()
-    diagnostics: list[Diagnostic] = [Diagnostic("SCHEMA_METASCHEMA_ERROR", "#", "#", e) for e in schemas.metaschema_errors]
-    records: dict[str, dict] = {}
-    for path in paths:
-        relative = str(path)
-        input_error, instance = _load_input(path, relative)
-        if input_error:
-            diagnostics.append(input_error)
+def _display_label(base: str, normalized: str) -> str:
+    """Render ``normalized`` as a relative POSIX label when it is inside
+    ``base``, otherwise as a normalized absolute POSIX label.
+
+    When ``base`` is the filesystem root, every absolute path is trivially
+    inside it, so the label is the path with its single leading slash
+    stripped rather than a copy of the absolute path itself.
+    """
+    if base == "/":
+        if normalized == "/":
+            return "."
+        return normalized.lstrip("/")
+    prefix = base + "/"
+    if normalized.startswith(prefix):
+        return normalized[len(prefix):]
+    if normalized == base:
+        return "."
+    return normalized
+
+
+def _symlink_ancestor(base: str, normalized: str) -> str | None:
+    """Return the normalized path of the first symbolic link among the
+    directory components strictly between the request's anchor and the
+    final component of ``normalized``, without ever resolving any of them.
+
+    The anchor is ``base`` when ``normalized`` is inside it, otherwise the
+    filesystem root, mirroring `_display_label`'s inside/outside split. Each
+    candidate ancestor is checked in isolation with `os.path.islink`
+    (itself an `lstat`, never a resolve), so a broken intermediate link is
+    detected the same way a working one is.
+    """
+    parent = posixpath.dirname(normalized)
+    prefix = base + "/"
+    if parent == base or parent.startswith(prefix):
+        anchor = base
+        remainder = parent[len(base):]
+    else:
+        anchor = ""
+        remainder = parent
+    current = anchor
+    for part in remainder.split("/"):
+        if not part:
             continue
-        diagnostic = validate_record(schemas, relative, instance)
+        current = f"{current}/{part}" if current else f"/{part}"
+        if os.path.islink(current):
+            return current
+    return None
+
+
+def _discover_directory(base: str, dir_abs: str) -> tuple[list[str], list[Diagnostic]]:
+    """Recursively discover lowercase ``.json`` regular files under ``dir_abs``.
+
+    Directory symlinks are never traversed. A discovered lowercase ``.json``
+    symlink is rejected as ``INPUT_SYMLINK`` rather than silently skipped; any
+    other non-``.json`` entry, and any non-``.json``-named symlink, is ignored.
+    A ``DirEntry`` classification call (``is_symlink``/``is_dir``/``is_file``)
+    can itself raise ``OSError`` (e.g. a ``PermissionError`` from the
+    underlying ``lstat``), so each entry's classification is bounded in its
+    own ``try`` and turned into one ``INPUT_READ_ERROR`` for that entry
+    rather than propagating a traceback or silently dropping the entry.
+    """
+    files: list[str] = []
+    diagnostics: list[Diagnostic] = []
+
+    def walk(current: str) -> None:
+        try:
+            with os.scandir(current) as it:
+                entries = sorted(it, key=lambda entry: entry.name)
+        except OSError as error:
+            diagnostics.append(
+                Diagnostic("INPUT_READ_ERROR", _display_label(base, current), "#", str(error))
+            )
+            return
+        for entry in entries:
+            child = posixpath.join(current, entry.name)
+            try:
+                is_symlink = entry.is_symlink()
+                is_dir = not is_symlink and entry.is_dir(follow_symlinks=False)
+                is_file = not is_symlink and not is_dir and entry.is_file(follow_symlinks=False)
+            except OSError as error:
+                diagnostics.append(
+                    Diagnostic("INPUT_READ_ERROR", _display_label(base, child), "#", str(error))
+                )
+                continue
+            if is_symlink:
+                if entry.name.endswith(".json"):
+                    diagnostics.append(Diagnostic("INPUT_SYMLINK", _display_label(base, child), "#"))
+                continue
+            if is_dir:
+                walk(child)
+            elif is_file and entry.name.endswith(".json"):
+                files.append(child)
+
+    walk(dir_abs)
+    return files, diagnostics
+
+
+def _resolve_sources(base: str, raw_args: list[str]) -> tuple[list[Diagnostic], dict[str, str], list[str]]:
+    """Classify each source argument against the captured base directory.
+
+    Returns deduplicated input-phase diagnostics, a mapping of deduplicated
+    normalized absolute candidate-file paths to their display labels, and
+    the display labels of every directory argument encountered (used only
+    for ``INPUT_EMPTY_SOURCE_SET``, which selects the lexicographically
+    smallest one so the diagnostic is independent of argv order).
+
+    Raw arguments are lexically normalized and deduplicated before any
+    ``lstat`` or classification, so repeated/``./``/``..`` aliases of one
+    source are classified exactly once. Diagnostics discovered while
+    recursively walking distinct, overlapping directory arguments are
+    likewise deduplicated by their exact (code, label, pointer) signature.
+    """
+    diagnostics: dict[tuple[str, str, str], Diagnostic] = {}
+
+    def add_diagnostic(diagnostic: Diagnostic) -> None:
+        diagnostics.setdefault((diagnostic.code, diagnostic.path, diagnostic.pointer), diagnostic)
+
+    candidates: dict[str, str] = {}
+    directory_labels: list[str] = []
+
+    seen_normalized: set[str] = set()
+    ordered_sources: list[tuple[str, str]] = []
+    for raw in raw_args:
+        normalized = _normalize_path(base, raw)
+        if normalized in seen_normalized:
+            continue
+        seen_normalized.add(normalized)
+        ordered_sources.append((normalized, _display_label(base, normalized)))
+
+    for normalized, label in ordered_sources:
+        if _symlink_ancestor(base, normalized) is not None:
+            add_diagnostic(Diagnostic("INPUT_SYMLINK", label, "#"))
+            continue
+
+        try:
+            info = os.lstat(normalized)
+        except FileNotFoundError:
+            add_diagnostic(Diagnostic("INPUT_NOT_FOUND", label, "#", f"no such file: {normalized}"))
+            continue
+        except OSError as error:
+            add_diagnostic(Diagnostic("INPUT_READ_ERROR", label, "#", str(error)))
+            continue
+
+        if stat.S_ISLNK(info.st_mode):
+            add_diagnostic(Diagnostic("INPUT_SYMLINK", label, "#"))
+            continue
+        if stat.S_ISDIR(info.st_mode):
+            directory_labels.append(label)
+            found, dir_diagnostics = _discover_directory(base, normalized)
+            for dir_diagnostic in dir_diagnostics:
+                add_diagnostic(dir_diagnostic)
+            for file_abs in found:
+                candidates[file_abs] = _display_label(base, file_abs)
+            continue
+        if stat.S_ISREG(info.st_mode):
+            if not normalized.endswith(".json"):
+                add_diagnostic(Diagnostic("INPUT_NON_JSON", label, "#"))
+                continue
+            candidates[normalized] = label
+            continue
+        add_diagnostic(
+            Diagnostic("INPUT_UNSUPPORTED_TYPE", label, "#", f"not a regular file or directory: {normalized}")
+        )
+
+    return list(diagnostics.values()), candidates, directory_labels
+
+
+def _load_candidates(schemas: SchemaRegistry, candidates: dict[str, str]) -> tuple[list[Diagnostic], dict[str, dict]]:
+    diagnostics: list[Diagnostic] = []
+    records: dict[str, dict] = {}
+    for normalized in sorted(candidates):
+        label = candidates[normalized]
+        try:
+            text = Path(normalized).read_text(encoding="utf-8")
+        except (OSError, UnicodeError) as error:
+            diagnostics.append(Diagnostic("INPUT_READ_ERROR", label, "#", str(error)))
+            continue
+        try:
+            instance = json.loads(text)
+        except json.JSONDecodeError as error:
+            diagnostics.append(Diagnostic("INPUT_INVALID_JSON", label, "#", str(error)))
+            continue
+        diagnostic = validate_record(schemas, label, instance)
         if diagnostic:
             diagnostics.append(diagnostic)
             continue
-        records[relative] = instance
+        records[label] = instance
+    return diagnostics, records
+
+
+def validate_graph_paths(raw_args: list[str]) -> list[Diagnostic]:
+    schemas = SchemaRegistry()
+    diagnostics: list[Diagnostic] = [Diagnostic("SCHEMA_METASCHEMA_ERROR", "#", "#", e) for e in schemas.metaschema_errors]
+
+    base = os.getcwd()
+    input_diagnostics, candidates, directory_labels = _resolve_sources(base, raw_args)
+    diagnostics.extend(input_diagnostics)
+
+    if raw_args and not candidates and not input_diagnostics:
+        assert directory_labels, "empty source set without a directory argument"
+        diagnostics.append(Diagnostic("INPUT_EMPTY_SOURCE_SET", min(directory_labels), "#"))
+
+    load_diagnostics, records = _load_candidates(schemas, candidates)
+    diagnostics.extend(load_diagnostics)
+
     if not diagnostics:
         diagnostics.extend(check_graph(records))
     diagnostics.sort(key=Diagnostic.sort_key)
@@ -1345,10 +1553,9 @@ def validate_graph_paths(paths: list[Path]) -> list[Diagnostic]:
 
 def main(argv: list[str]) -> int:
     if not argv:
-        print("usage: record_check.py <record.json> [more.json ...]", file=sys.stderr)
+        print("usage: record_check.py <record.json-or-directory> [more ...]", file=sys.stderr)
         return 2
-    paths = [Path(arg) for arg in argv]
-    diagnostics = validate_graph_paths(paths)
+    diagnostics = validate_graph_paths(argv)
     if diagnostics:
         for diagnostic in diagnostics:
             print(diagnostic.format())

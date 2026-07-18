@@ -4,8 +4,9 @@
 Checks required project-memory files, local Markdown links, JSON syntax, the seven
 canonical record schemas (including offline metaschema validation), and every record
 fixture (valid, schema-invalid, link-invalid, link-valid) against their exact
-diagnostic oracles. This is intentionally small so the tracer bullet has an executable
-governance gate without locking in a larger toolchain.
+diagnostic oracles. It also exercises the deterministic local loader's discovery,
+normalization, phase, and import-edge fixtures. This is intentionally small so the
+tracer bullet has an executable governance gate without locking in a larger toolchain.
 """
 
 from __future__ import annotations
@@ -18,6 +19,7 @@ from urllib.parse import unquote
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import record_check  # noqa: E402
+import loader_fixture_check  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 REQUIRED = [
@@ -28,6 +30,7 @@ REQUIRED = [
     "docs/research/synthesis.md",
     "docs/design/core-model.md",
     "docs/design/spec-language.md",
+    "docs/design/adapter-protocol.md",
     "docs/design/evidence-model.md",
     "docs/design/compatibility.md",
     "docs/design/lifecycle.md",
@@ -80,12 +83,15 @@ def main() -> int:
     errors = check_required() + check_markdown_links() + check_json_syntax()
     record_errors, record_summary = record_check.run_fixture_checks()
     errors += record_errors
+    loader_errors, loader_summary = loader_fixture_check.run_loader_fixture_checks()
+    errors += loader_errors
     if errors:
         print("Repository checks failed:")
         for error in errors:
             print(f"- {error}")
         return 1
     print(record_summary)
+    print(loader_summary)
     print("Repository checks passed.")
     return 0
 

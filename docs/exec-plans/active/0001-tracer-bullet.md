@@ -183,18 +183,29 @@ semantic-packages worktree and the versioned review brief.
 | W3-F1 red-first design | challenges/supports W3-L0/W3-A0; independent internal GPT fixture specialist | read-only loader and Stack reference-model oracle design | complete: loader fixture layout plus minimal pure-model controls; proposed cycle rejection retained as dissent and adapter-dependent controls correctly blocked on protocol freeze |
 | W3-L0 loader/import contract | depends on W2-G1; informed by W3-S1, W3-S2, and W3-F1; lead Codex | exclusive design, ADR, plan, and backlog integration | accepted provisionally: lexical source normalization, recursive lowercase JSON discovery, symlink rejection, phase barriers, and exact visible import edges; self/cyclic/diamond/repeated imports are valid until stronger semantics exist |
 | W3-LF1 loader falsifiers | depends on W3-L0; independent internal GPT fixture owner | exclusive `fixtures/loader/` and `scripts/loader_fixture_check.py` | complete red checkpoint: 19 data/oracle files and 14 subprocess observations across 9 contract groups; current checker fails on directory discovery, aliases/overlap, extension and symlink policy, phase barriers, and directory-loaded import graphs while G1 remains green |
-| W3-L1 loader implementation | depends on W3-LF1; Claude Sonnet 5 plus lead integration | isolated worktree; exclusive loader/checker implementation paths | pending |
-| W3-LR1 loader review | challenges W3-L1; independent reviewer | read-only actual-code and novel counterexamples | pending |
-| W3-LG1 loader convergence | depends on W3-L1, W3-LR1, and G1 | lead acceptance owner | pending |
+| W3-L1 loader implementation | depends on W3-LF1; Claude Sonnet 5 plus lead integration | isolated worktree; child exclusively edited `scripts/record_check.py`, lead owns gate/README/plan integration | implementation checkpoint green under lead execution: 9 loader contract groups, accepted 8/20/38/2 record gate, and compilation pass; child execution was unavailable |
+| W3-LR1 loader review | challenges W3-L1; independent internal GPT reviewer | read-only actual-code and private-temp novel counterexamples | blocked convergence despite green authored gates: directory scan errors traceback, failing aliases and overlapping discovery duplicate diagnostics, empty-set labels depend on argv order, intermediate symlinks are followed, and base `/` labels remain absolute |
+| W3-LF2 loader successor falsifiers | depends on W3-LR1; same independent fixture owner | exclusive `fixtures/loader/` and loader harness scope | complete: 16 contract groups cover prior controls plus scan errors, failing-alias/overlap idempotence, intermediate symlinks, argv-independent empty labels, root-base labels, and unsupported special files |
+| W3-L2 loader successor | depends on W3-LF2; Claude Sonnet 5 plus lead integration | same exclusive loader/checker implementation paths | implementation checkpoint green: loader 16, accepted 8/20/38/2 record gate, compilation, two link-valid direct probes, and negative CLI; not converged because W3-LR2 found novel gaps |
+| W3-LR2 loader successor review | challenges W3-L2; independent internal GPT reviewer | read-only actual-code and prior/novel regression | blocked: exact `//` aliases duplicate one Linux source, per-entry classification errors traceback, and a regular-to-symlink concurrent substitution is followed |
+| W3-LF3 loader boundary successor | depends on W3-LR2 and lead exclusion disposition; independent fixture owner | exclusive loader harness scope | complete red checkpoint: prior 16 groups pass; POSIX double-slash idempotence and injected per-entry classification-error containment fail exactly as intended; concurrent mutation remains an explicit quiescent-tree exclusion in ADR 0007 |
+| W3-L3 loader boundary implementation | depends on W3-LF3; Claude Sonnet 5 plus lead verification | exclusive `scripts/record_check.py`; lead owns docs/gates | complete: all 18 loader groups, 8/20/38/2 record gate, compilation, direct CLI, and diff hygiene pass |
+| W3-LR3 loader boundary review | challenges W3-L3; independent internal GPT reviewer | read-only prior and novel regression | passed: all LR1/LR2 blockers and six novel quiescent-tree probes pass; no special-casing, nondeterminism, traceback, or record regression found |
+| W3-LG1 loader convergence | depends on W3-L3, W3-LR3, and G1 | lead acceptance owner | accepted: ADR/docs/checker/harness agree on deterministic local source-set semantics and explicit quiescent-tree/security exclusions |
 | W3-A0 adapter consultation | supports/challenges W3-A0L1; Claude Sonnet 5 | read-only protocol and reference-model boundary | complete static packet: separated the in-process semantic model from the canonical child-process adapter, proposed NDJSON framing, handles, events, and controls |
 | W3-A0R1 adapter skeptic | challenges W3-A0/W3-A0L1; independent internal GPT reviewer | read-only observable-semantics and trust-boundary audit | blocked the initial packet: normative handle freshness leaked representation, lifecycle/error behavior was incomplete, shared oracle code would be tautological, and performance instrumentation needed an explicit exclusion |
 | W3-A0L1 adapter contract successor | depends on DC1-G1, W2-G1, and the blocking W3-A0R1 review; informed by W3-A0; lead Codex | exclusive adapter design, ADR, plan, and guidance integration | accepted provisionally: independent harness oracle and Realization, child-process NDJSON, EOF lifecycle, opaque stable-denotation handles with fresh/interned tokens both valid, ordered reported events, and separate challenge/error classifications |
-| W3-AF1 model/adapter falsifiers | depends on W3-A0L1; fixture owner to be assigned | exclusive execution-substrate fixtures/tests | pending |
+| W3-AF1 model/adapter falsifiers | depends on W3-A0L1; independent internal GPT fixture owner | exclusive `tests/adapter/` and `fixtures/adapters/` | complete red checkpoint: future runner API plus semantic, persistence, event, transport, execution-error, and liar matrix; actual `python -m semantic_packages.stack_adapter` is required, and current failure is the missing product package |
 | W3-A1 reference realization and adapter | depends on W3-AF1; implementation owner to be assigned | isolated worktree and exclusive execution-substrate paths | pending |
 | W3-AR1 adapter review | challenges W3-A1; independent reviewer | read-only observable-semantics audit | pending |
 | W3-AG1 reference-adapter convergence | depends on W3-A1, W3-AR1, and G1 | lead acceptance owner | pending |
-| W3-P0 bounded proof probe | depends on W3-LG1; concern owner to be assigned | isolated proof-integration paths; no universal foundation authority | pending |
-| W3-PG1 named-law evidence gate | depends on accepted proof successor and G1 | lead acceptance owner | pending |
+| W3-P0S1 bounded proof preflight | informs W3-P0L1; independent internal GPT concern owner | read-only law, local-tool, falsifier, and evidence-boundary analysis | complete: recommends experimental Lean-core universal `pop-empty` probe; found `sorry` exit-zero and admitted-axiom traps; keeps translation/tool trust and non-global authority explicit |
+| W3-P0R1 diverse proof skeptic | challenges W3-P0S1; Claude Fable 5 | read-only semantic-model, trust-boundary, and evidence-scope audit | in progress |
+| W3-P0L1 bounded proof boundary | depends on W3-P0S1/P0R1 and W3-LG1; lead integration | exclusive proof design/plan acceptance; no universal foundation authority | pending |
+| W3-PF1 proof falsifiers | depends on W3-P0L1 | exclusive proof fixture/checker oracle | pending |
+| W3-P1 named-law proof implementation | depends on W3-PF1 | isolated proof artifact boundary | pending |
+| W3-PR1 proof review | challenges W3-P1 | independent theorem, linkage, provenance, and evidence audit | pending |
+| W3-PG1 named-law evidence gate | depends on accepted W3-P1 successor, W3-PR1, and G1 | lead acceptance owner | pending |
 | W3-G1 execution-substrate convergence | depends on W3-LG1, W3-AG1, W3-PG1, and G0 | lead acceptance owner | pending |
 
 W3-S2 used Claude Code 2.1.212 through `agent-dispatch --read-only`, pagu-box
@@ -215,6 +226,24 @@ and disclosed only the approved public semantic-packages paths and brief. W3-A0R
 independently blocked its first packet; W3-A0L1 incorporates the representation,
 oracle-independence, lifecycle, error, and performance-scope corrections rather than
 treating model provenance as acceptance.
+
+W3-L1 used Claude Code 2.1.212 through `agent-dispatch`, pagu-box `strict`, writable
+PWD mode in the isolated Wave 3 worktree, exact `claude-sonnet-5`, explicit high
+effort, and exclusive `scripts/record_check.py` ownership. Structured output reported
+auxiliary `claude-haiku-4-5-20251001` usage. Git, Python, Nix, and out-of-worktree
+probes were denied inside the child, so it returned execution-blocked rather than
+claiming runtime success. The lead ran the unchanged red-first harness green, reran
+the accepted record/repository gate and compilation, and owns the separate README,
+repository-gate, and plan integration. Disclosure was limited to the approved public
+Wave 3 worktree and brief; no web research or delegation occurred.
+
+W3-L3 used Claude Code through `agent-dispatch`, pagu-box `strict`, writable PWD mode
+in the isolated Wave 3 worktree, exact `claude-sonnet-5`, explicit high effort, no
+fallback, and exclusive `scripts/record_check.py` ownership. The child used a Nix
+Python environment with jsonschema 4.26.0 to execute the unchanged 18-group and full
+repository gates; worktree Git metadata was denied, so the lead separately ran
+`git diff --check`. Disclosure was limited to the approved public worktree and brief;
+no web research, installs, unrelated data, or delegation occurred.
 
 ## Specification changes required before implementation
 
@@ -307,17 +336,20 @@ enables format assertion explicitly. W2-G1 also ran:
 
 ```sh
 python3 -m py_compile scripts/check_repo.py scripts/record_check.py
+python3 scripts/loader_fixture_check.py
 python3 scripts/record_check.py fixtures/records/valid/*.json
 python3 scripts/record_check.py fixtures/records/invalid/schema/spec/kind-array.json
 ```
 
 Expected repository observation: `Record fixture checks passed: 8 valid, 20
 schema-invalid, 38 link-invalid, 2 link-valid.` followed by `Repository checks passed.`
-with exit status 0. The direct positive graph reports `Graph is valid: 0 diagnostics.`
-with exit status 0; the negative graph reports `SCHEMA_KIND_TYPE #/kind` with the
-intended exit status 1. Each later milestone must add its executable command and
-expected observation here before its progress item may be marked complete. Gate the
-command's exit status, not a grep or summary proxy.
+with exit status 0. Wave 3 additionally reports `Loader fixture checks passed: 18
+contract groups.` The direct positive graph reports `Graph is valid: 0 diagnostics.`
+with exit status 0; the negative graph reports `SCHEMA_KIND_TYPE
+fixtures/records/invalid/schema/spec/kind-array.json#/kind` with the intended exit
+status 1. Each later milestone must add its executable command and expected observation
+here before its progress item may be marked complete. Gate the command's exit status,
+not a grep or summary proxy.
 
 ## Progress
 
@@ -334,7 +366,7 @@ command's exit status, not a grep or summary proxy.
 - [x] Design-closure ambiguity and counterexample review
 - [x] Six core JSON schemas
 - [x] Positive and negative schema fixtures
-- [ ] Spec loader
+- [x] Spec loader
 - [ ] Reference model
 - [ ] Proof integration
 - [ ] Rust realization
@@ -485,6 +517,38 @@ command's exit status, not a grep or summary proxy.
   `realization-steps` unsupported. An undetectable perfect shadow adapter is expected
   to pass black-box behavior while retaining adapter-faithfulness and effect-
   completeness assumptions.
+- W3-L1 makes lexical source aliases and file/directory overlap idempotent, recursively
+  discovers lowercase JSON without following symlinks, preserves normalized source
+  labels as provenance, and retains the input/schema phase barrier. Making source
+  labels visible on schema diagnostics intentionally changes the earlier direct CLI
+  spelling from pointer-only output; the durable loader oracle now freezes
+  code/source/pointer/order together. W3-LR1 remains the independent generality gate.
+- W3-LR1 then falsified that checkpoint with unhandled directory scan errors, repeated
+  diagnostics for failing aliases and overlapping discovery, argv-dependent empty-set
+  labels, traversal through intermediate symlink components, and incorrect root-base
+  labels. Existing phase, direct-file, import-edge, address, and outside-base probes
+  passed. W3-LF2 converts every blocker into a permanent oracle before W3-L2; the
+  initial green checkpoint is not rewritten as convergence.
+- W3-L2 made all 16 successor groups green, but W3-LR2 still blocked convergence.
+  Exactly two leading slashes retain a special spelling under `posixpath.normpath`, and
+  per-entry `DirEntry` classification errors still escape as tracebacks. A third probe
+  replaced a classified regular file with a symlink before reading. ADR 0007 now states
+  the smallest coherent boundary explicitly: this deterministic loader consumes a
+  quiescent source tree and is not a secure traversal API for concurrent adversarial
+  mutation. W3-LF3 freezes the two in-boundary defects; the race remains a documented
+  exclusion and a future descriptor-based loader revisit condition rather than a
+  silently partial security mechanism.
+- W3-L3 closes both in-boundary defects. W3-LR3 reran the 18-group and full record
+  gates, every prior blocker, and six novel probes covering independent `is_dir` and
+  `is_file` errors, nested phase barriers, one-to-four leading slashes, reversed overlap
+  ordering, and `PathLike` inputs. No in-boundary violation remained, so W3-LG1 closes
+  with concurrent mutation and adversarial containment still explicit exclusions.
+- W3-AF1 freezes the child boundary without implementing it. Fake adapters exercise
+  reference-like, fresh/interned, destructive, wrong-result, nonterminating, event,
+  malformed transport, process-failure, catchable-liar, and perfect-shadow behavior.
+  A separate control requires the actual `semantic_packages.stack_adapter` command so
+  a runner implemented only against test children cannot close W3-A1. The test suite
+  compiles but currently fails at the intentionally absent product package.
 
 ## Decision log
 
@@ -531,11 +595,10 @@ Wave 1 design closure passed DC1-G1 after one rejected integration and a reviewe
 successor. Wave 2 passed W2-G1 after four rejected checker/oracle checkpoints and
 reviewed successors. The repository now carries seven strict schema files defining six
 canonical record kinds, positive and falsifying schema/reference fixtures, and a
-deterministic durable record gate. Wave 3 may begin the bounded loader and
-reference-model slice, including path normalization and explicit self/cyclic-import
-behavior. W3-L0 has frozen that provisional loader/import contract; falsifier and
-implementation nodes are active. No realization, proof-assistant integration,
-conformance suite, or browser has started.
+deterministic durable record gate. W3-LG1 now closes the provisional loader/import
+slice after three implementation/review successors and 18 durable contract groups.
+The reference adapter and bounded proof probe are active. No independent Rust or
+TypeScript realization, proof Evidence gate, or browser has started.
 
 ## Stop and escalation conditions
 

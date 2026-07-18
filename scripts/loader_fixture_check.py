@@ -56,7 +56,14 @@ def _diagnostic_signatures(stdout: str) -> tuple[list[str], list[str]]:
     return signatures, errors
 
 
-def _invoke(cwd: Path, arguments: list[str]) -> tuple[Observation, list[str]]:
+def _invoke(
+    cwd: Path,
+    arguments: list[str],
+    environment: dict[str, str] | None = None,
+) -> tuple[Observation, list[str]]:
+    process_environment = os.environ.copy()
+    if environment:
+        process_environment.update(environment)
     completed = subprocess.run(
         [sys.executable, str(CHECKER), *arguments],
         cwd=cwd,
@@ -64,6 +71,7 @@ def _invoke(cwd: Path, arguments: list[str]) -> tuple[Observation, list[str]]:
         capture_output=True,
         text=True,
         encoding="utf-8",
+        env=process_environment,
     )
     if completed.stdout.strip() == "Graph is valid: 0 diagnostics.":
         signatures: list[str] = []
@@ -87,8 +95,9 @@ def _expect(
     arguments: list[str],
     exit_status: int,
     signatures: list[str],
+    environment: dict[str, str] | None = None,
 ) -> list[str]:
-    observation, errors = _invoke(cwd, arguments)
+    observation, errors = _invoke(cwd, arguments, environment)
     failures = [f"{name}: {error}" for error in errors]
     if observation.exit_status != exit_status:
         failures.append(
@@ -372,6 +381,113 @@ def check_root_base_source_label() -> list[str]:
         )
 
 
+def check_double_leading_slash_alias() -> list[str]:
+    with tempfile.TemporaryDirectory(prefix="semantic-loader-double-slash-", dir="/tmp") as raw:
+        source = Path(raw)
+        record = source / "record.json"
+        _copy(FIXTURES / "templates" / "minimal-spec.json", record)
+        ordinary = record.as_posix()
+        double_slash = "//" + ordinary.lstrip("/")
+        try:
+            same_namespace = os.path.samefile(ordinary, double_slash)
+        except OSError as error:
+            return [f"double-leading-slash alias predicate failed: {error}"]
+        if not same_namespace:
+            # POSIX permits exactly two leading slashes to select a distinct
+            # implementation-defined namespace. Such a platform has no alias
+            # to deduplicate, so this Linux-tracer control is inapplicable.
+            return []
+        return _valid(
+            "ordinary and exactly-double-leading-slash spellings are idempotent",
+            source,
+            [ordinary, double_slash],
+        )
+
+
+def check_directory_entry_classification_error() -> list[str]:
+    with tempfile.TemporaryDirectory(prefix="semantic-loader-direntry-") as raw:
+        source = Path(raw)
+        registry = source / "registry"
+        _copy(FIXTURES / "templates" / "minimal-spec.json", registry / "blocked.json")
+        seam = source / "seam"
+        seam.mkdir()
+        (seam / "sitecustomize.py").write_text(
+            """import os
+
+_real_scandir = os.scandir
+_target_directory = os.environ["SEMANTIC_LOADER_FAIL_DIRENTRY"]
+
+
+class _FailingEntry:
+    def __init__(self, entry):
+        self._entry = entry
+        self.name = entry.name
+        self.path = entry.path
+
+    def _raise(self):
+        if self.name == "blocked.json":
+            raise PermissionError("injected directory-entry classification failure")
+
+    def is_symlink(self):
+        self._raise()
+        return self._entry.is_symlink()
+
+    def is_dir(self, *, follow_symlinks=True):
+        self._raise()
+        return self._entry.is_dir(follow_symlinks=follow_symlinks)
+
+    def is_file(self, *, follow_symlinks=True):
+        self._raise()
+        return self._entry.is_file(follow_symlinks=follow_symlinks)
+
+    def stat(self, *, follow_symlinks=True):
+        self._raise()
+        return self._entry.stat(follow_symlinks=follow_symlinks)
+
+    def __getattr__(self, name):
+        return getattr(self._entry, name)
+
+
+class _ScandirContext:
+    def __init__(self, inner):
+        self._inner = inner
+
+    def __enter__(self):
+        entries = self._inner.__enter__()
+        return iter(_FailingEntry(entry) for entry in entries)
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        return self._inner.__exit__(exc_type, exc_value, traceback)
+
+
+def _scandir(path):
+    inner = _real_scandir(path)
+    if os.path.normpath(os.fspath(path)) == _target_directory:
+        return _ScandirContext(inner)
+    return inner
+
+
+os.scandir = _scandir
+""",
+            encoding="utf-8",
+        )
+        inherited_pythonpath = os.environ.get("PYTHONPATH")
+        pythonpath = str(seam)
+        if inherited_pythonpath:
+            pythonpath += os.pathsep + inherited_pythonpath
+        return _expect(
+            "a directory-entry classification error becomes one stable input diagnostic",
+            source,
+            ["registry"],
+            1,
+            ["INPUT_READ_ERROR registry/blocked.json#"],
+            {
+                "PYTHONPATH": pythonpath,
+                "SEMANTIC_LOADER_FAIL_DIRENTRY": str(registry),
+            },
+        )
+
+
 def check_explicit_special_file() -> list[str]:
     with tempfile.TemporaryDirectory(prefix="semantic-loader-special-") as raw:
         source = Path(raw)
@@ -505,6 +621,8 @@ def run_loader_fixture_checks() -> tuple[list[str], str]:
         check_discovered_symlink_overlap_deduplication,
         check_multiple_empty_directory_order,
         check_root_base_source_label,
+        check_double_leading_slash_alias,
+        check_directory_entry_classification_error,
         check_explicit_special_file,
         check_stable_source_order,
         check_distinct_file_duplicate_address,
@@ -514,7 +632,7 @@ def run_loader_fixture_checks() -> tuple[list[str], str]:
     failures: list[str] = []
     for check in checks:
         failures.extend(check())
-    return failures, "Loader fixture checks passed: 16 contract groups."
+    return failures, "Loader fixture checks passed: 18 contract groups."
 
 
 def main() -> int:
