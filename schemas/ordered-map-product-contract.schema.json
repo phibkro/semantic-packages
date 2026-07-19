@@ -1,0 +1,171 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/semantic-packages/ordered-map-product-contract.schema.json",
+  "title": "OrderedMap final product authority candidate contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["formatVersion", "id", "version", "authorityClass", "finalProductAuthority", "manifest", "sources", "specification", "profile", "conformancePlan", "resolver", "deploymentBoundary"],
+  "properties": {
+    "formatVersion": {"const": 1},
+    "id": {"const": "ordered-map-product-contract"},
+    "version": {"const": "0.1.0"},
+    "authorityClass": {"const": "final-product"},
+    "finalProductAuthority": {"const": true},
+    "manifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "rawSha256"],
+      "properties": {
+        "path": {"const": "registry/ordered-map/manifest.json"},
+        "rawSha256": {"const": "0dae972b40c850f691df0856577cf8a9d66449a4655dcbb0c328b20c6993455d"}
+      }
+    },
+    "sources": {
+      "type": "array",
+      "prefixItems": [
+        {"$ref": "#/$defs/theorySource"},
+        {"$ref": "#/$defs/rustSource"},
+        {"$ref": "#/$defs/typescriptSource"},
+        {"$ref": "#/$defs/consumerSource"}
+      ],
+      "items": false,
+      "minItems": 4,
+      "maxItems": 4
+    },
+    "specification": {"$ref": "#/$defs/specificationBinding"},
+    "profile": {"$ref": "#/$defs/profileBinding"},
+    "conformancePlan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "rawSha256", "canonicalSha256", "observationScope"],
+      "properties": {
+        "path": {"const": "contracts/ordered-map/conformance-plan.json"},
+        "rawSha256": {"const": "bfffbe98114c78c04865bccadc143a02cd46beff71c0f04c0b7f5b522d15c1d3"},
+        "canonicalSha256": {"const": "2cf7b481946ce1c0130e70b0d0ffcc1ec5a58bb10e7963b3f5058253bb63447a"},
+        "observationScope": {"const": "adapter-invocation-trace"}
+      }
+    },
+    "resolver": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["concernCategories", "assurance", "acceptedCampaignMechanism", "effectScope"],
+      "properties": {
+        "concernCategories": {
+          "type": "array",
+          "prefixItems": [
+            {"$ref": "#/$defs/lawConcern"},
+            {"$ref": "#/$defs/resourceConcern"},
+            {"$ref": "#/$defs/effectConcern"},
+            {"$ref": "#/$defs/performanceConcern"}
+          ],
+          "items": false,
+          "minItems": 4,
+          "maxItems": 4
+        },
+        "assurance": {"const": "per-declaration-one-accepted-applicable-support-no-selected-challenge"},
+        "acceptedCampaignMechanism": {"const": "bounded-conformance-campaign"},
+        "effectScope": {"const": "adapter-invocation-trace"}
+      }
+    },
+    "deploymentBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["interfaceMechanism", "direction", "mechanism", "direct"],
+      "properties": {
+        "interfaceMechanism": {"const": "NDJSON messages over stdin and stdout"},
+        "direction": {"const": "consumer-to-realization"},
+        "mechanism": {"const": "child-process-ndjson"},
+        "direct": {"const": false}
+      }
+    }
+  },
+  "$defs": {
+    "theorySource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["selector", "roles"],
+      "properties": {
+        "selector": {"const": "ordered-map-theory"},
+        "roles": {"const": ["theory-authored", "dependency"]}
+      }
+    },
+    "rustSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["selector", "roles"],
+      "properties": {
+        "selector": {"const": "ordered-map-rust"},
+        "roles": {"const": ["package-authored"]}
+      }
+    },
+    "typescriptSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["selector", "roles"],
+      "properties": {
+        "selector": {"const": "ordered-map-typescript"},
+        "roles": {"const": ["package-authored"]}
+      }
+    },
+    "consumerSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["selector", "roles"],
+      "properties": {
+        "selector": {"const": "ordered-map-consumer"},
+        "roles": {"const": ["package-consumer-authored"]}
+      }
+    },
+    "specificationBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["address", "rawSha256"],
+      "properties": {
+        "address": {"$ref": "#/$defs/specificationAddress"},
+        "rawSha256": {"const": "6049d371603cbdac0e722685f1fd25c7369872f7d963ae2e4f4bae90cce7fd7f"}
+      }
+    },
+    "specificationAddress": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "id", "version"],
+      "properties": {
+        "kind": {"const": "specification"},
+        "id": {"const": "ordered-map"},
+        "version": {"const": "0.1.0"}
+      }
+    },
+    "profileBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["address", "rawSha256"],
+      "properties": {
+        "address": {"$ref": "#/$defs/profileAddress"},
+        "rawSha256": {"const": "6d1297892c355a569e244c2b94448a5f5edaf9b1bf2ae54f940d7c4494fe225f"}
+      }
+    },
+    "profileAddress": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "id", "version"],
+      "properties": {
+        "kind": {"const": "realizationProfile"},
+        "id": {"const": "ordered-map-ascii-fold"},
+        "version": {"const": "0.1.0"}
+      }
+    },
+    "lawConcern": {"$ref": "#/$defs/concernBase", "properties": {"concern": {"const": "law.conformance"}, "declarationField": {"const": "laws"}}},
+    "resourceConcern": {"$ref": "#/$defs/concernBase", "properties": {"concern": {"const": "resource.persistence"}, "declarationField": {"const": "resources"}}},
+    "effectConcern": {"$ref": "#/$defs/concernBase", "properties": {"concern": {"const": "effect.conformance"}, "declarationField": {"const": "effects"}}},
+    "performanceConcern": {"$ref": "#/$defs/concernBase", "properties": {"concern": {"const": "performance"}, "declarationField": {"const": "performancePropositions"}}},
+    "concernBase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["concern", "declarationField"],
+      "properties": {
+        "concern": {"type": "string"},
+        "declarationField": {"type": "string"}
+      }
+    }
+  }
+}

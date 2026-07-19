@@ -203,7 +203,12 @@ O0 priority + categorical-memory reconciliation
   -> O6f-P2 public-surface/schema-closure correction
   -> O-R6f-P2 final red-control review
   -> O6f final-authority candidate + actor replay
+  -> O6f-F1 implementation-triggered lifecycle control correction
   -> O-R6f final-authority implementation review
+  -> O6f-R1 executable-review capability correction
+  -> O-R6f2 successor final-authority implementation review
+  -> O6f-R2 local executable-evidence routing correction
+  -> O-R6f3 combined final-authority implementation review
   -> O6-G final trust-convergence acceptance
   -> O7 resolution + directional boundary + inspection
   -> O8 exact successor/recovery maintenance
@@ -334,9 +339,14 @@ O0 priority + categorical-memory reconciliation
 | O-R6f-P1 corrected red-control review | same independent read-only reviewer; depends on O6f-P1 | BLOCK: independent policy/manifest/contract digests, exact topology, one-snapshot controls, and host-launch traps pass, but callable public acceptance/resolution aliases escaped the data-only field census and one rejected property spelling did not prove the ProductContract schema closed every object branch |
 | O6f-P2 public-surface/schema-closure correction | continuity owner; exclusive O6f actor tests and this plan; depends on O-R6f-P1 BLOCK | freeze every public result/authority attribute including callables, require at least ten ProductContract object-schema branches, and require `additionalProperties: false` on every such branch without changing proposed artifact bytes or topology |
 | O-R6f-P2 final red-control review | same independent read-only reviewer; depends on O6f-P2 | PASS: policy `6d0d...291c`, ordered 4-source/33-member manifest `0dae...3455d`, ProductContract `4bfbc8...eb17`, and exact 1-pass/1-failure/10-skip topology independently reproduce; all-public-name and every-object-schema closure controls close both retained BLOCKs; O6f implementation only is released while O6-G/O7 remain closed |
-| O6f final-authority candidate and actor replay | continuity owner; exclusive candidate final manifest, immutable OrderedMap ProductContract, wrapper integration, affected actor replay, tests/docs, and this plan; depends on O-R6f-P2 PASS | materialize proposed exact final bytes only after every member/digest exists; pin O3 plan, Specification/profile, resolver/effect/boundary rules; replay publication, package registration, graph, and package views under surfaced candidate authority without self-acceptance |
-| O-R6f final-authority implementation review | independent read-only reviewer; depends on O6f | independently reproduce every digest/member/selector/role and actor replay; challenge overrides, partial membership, stale reports/Evidence, fabricated construction, phase leaks, and Stack regression before any final-authority claim |
-| O6-G final trust-convergence acceptance | lead read-only convergence gate; depends on O-R6f PASS | accept only the exact independently reviewed manifest/ProductContract/wrapper bytes and evidence ledger as final OrderedMap product authority; record exclusions and release O7 without mutating the reviewed candidate |
+| O6f final-authority candidate and actor replay | continuity owner; exclusive candidate final manifest, immutable OrderedMap ProductContract, wrapper integration, affected actor replay, tests/docs, and this plan; depends on O-R6f-P2 PASS | complete pending O-R6f: exact canonical policy, ordered 4-source/33-member manifest, closed ProductContract, one-snapshot actor wrapper, and graph-derived registration seam pass all 12 focused controls without execution, resolution, or acceptance |
+| O6f-F1 implementation-triggered lifecycle control correction | continuity owner; exclusive affected O6f/O5 tests and this plan; depends on O6f green attempt | complete: remove the red-phase-only policy-absence assertion while retaining the 32-record predecessor census, thaw the inspector's recursively immutable contract view before exact-document mutation/comparison, and replace O5's permanent future-contract absence claim with explicit provisional/candidate separation; no frozen artifact byte changed |
+| O-R6f final-authority implementation review | independent read-only Fable 5 reviewer; depends on O6f-F1 | BLOCK retained on capability, not a product defect: exhaustive static inspection found zero falsifiers and reproduced all structures/tokens/counts, but the read-only tool grant omitted Bash, so the reviewer could not recompute three digests, run the focused suite, or read external worktree metadata to bound the diff; route provenance was also reported ambiguously rather than treated as authority |
+| O6f-R1 executable-review capability correction | lead review framing only; no repository implementation write; depends on O-R6f BLOCK | preserve the complete Fable static report, then dispatch a different-model strict read-only successor with Bash limited to digest/test/git inspection, bytecode writes disabled, exact evidence commands, and fail-closed treatment of unavailable git metadata |
+| O-R6f2 successor final-authority implementation review | independent read-only Sonnet 5 reviewer; depends on O6f-R1 | BLOCK retained on capability: exact Sonnet 5 resolved, read the governing/artifact surfaces, confirmed the focused suite and files are present, and corroborated the plan receipt, but `--permission-mode plan` prevented its granted Bash tool from executing; its strict sandbox also omitted external worktree metadata, so it returned a plan rather than digest/test/diff evidence |
+| O6f-R2 local executable-evidence routing correction | lead review framing only; no implementation write; depends on O-R6f2 BLOCK | stop cross-provider retries, retain Fable's exhaustive static evidence plus both capability failures, and route only the three mechanical gaps to a separate read-only internal reviewer with real worktree metadata and the accepted Python environment |
+| O-R6f3 combined final-authority implementation review | independent read-only internal reviewer; depends on O6f-R2 | PASS: policy `6d0d...291c`, manifest `0dae...3455d`, and canonical contract `4bfbc8...eb17` independently reproduce; all 12 focused tests pass with bytecode writes disabled; the exact nine-path diff after `4d3b530` is clean and contains no Stack implementation artifact; combined with Fable's zero-defect static challenge, every O-R6f capability gap closes and O6-G is released |
+| O6-G final trust-convergence acceptance | lead read-only convergence gate; depends on O-R6f3 PASS | accept only the exact independently reviewed manifest/ProductContract/wrapper bytes and evidence ledger as final OrderedMap product authority; record exclusions and release O7 without mutating the reviewed candidate |
 | O7 consumer decision/inspection | continuity owner; exclusive bounded OrderedMap resolution and presentation; depends on O6-G | semantic status under exact policy/profile, every Evidence axis, separate directional boundary, and graph-derived theory/package views |
 | O8 maintenance | continuity owner; exclusive OrderedMap successor snapshot/tests; depends on O7 | exact successor failure or change, no implicit Evidence migration, predecessor recoverability without automatic selection |
 | O-R4 end-to-end review | independent read-only reviewer; depends on O8 | all four actor outcomes, negative controls, known exclusions, Stack regression, and generality claim boundary |
@@ -490,8 +500,13 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
 - [x] O-R6f-P1 corrected red-control review — BLOCK retained
 - [x] O6f-P2 public-surface/schema-closure correction
 - [x] O-R6f-P2 final red-control review passed; O6f released
-- [ ] O6f final-authority candidate and actor replay
-- [ ] O-R6f final-authority implementation review
+- [x] O6f final-authority candidate and actor replay complete; review pending
+- [x] O6f-F1 implementation-triggered lifecycle control correction
+- [x] O-R6f final-authority implementation review — capability BLOCK retained
+- [x] O6f-R1 executable-review capability correction
+- [x] O-R6f2 successor final-authority implementation review — capability BLOCK retained
+- [x] O6f-R2 local executable-evidence routing correction
+- [x] O-R6f3 combined final-authority implementation review passed; O6-G released
 - [ ] O6-G final trust-convergence acceptance
 - [ ] O7 consumer decision/inspection
 - [ ] O8 maintenance
@@ -1200,6 +1215,44 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
   O-R6f-P2 independently reproduces all three digests and the exact topology, passes
   the corrected boundary, and releases O6f implementation only. O6-G acceptance and
   O7 resolution remain closed.
+- O6f materializes the test-owned bytes without drift: policy `6d0d...291c`, ordered
+  manifest `0dae...3455d`, and canonical ProductContract `4bfbc8...eb17`. The
+  zero-argument wrapper authenticates the contract and manifest, captures the complete
+  graph once, and projects the two-record publication, 17-record Rust and TypeScript
+  registrations, and 18 unclaimed theory declarations without execution, resolution,
+  or acceptance. The first green run exposed two lifecycle-only test assumptions:
+  policy absence belonged to red staging rather than the predecessor census, and the
+  O5 research control treated future ProductContract absence as permanent rather than
+  requiring provisional/candidate separation. O6f-F1 corrects both and thaws only a
+  test copy of the inspector's immutable contract view for exact comparison/mutation.
+  The locked Nix repository gate then passes 24/20/38/3 record fixtures, 18 loader
+  groups, 50 adapter tests, 59 cross-language candidate tests, 178 actor journeys, 16
+  research probes, 20 governance tests, fresh Wave 4/report/Evidence checks, and 49
+  proof groups. Those bytes and receipts were submitted to O-R6f without releasing
+  O6-G or O7.
+- O-R6f's exact Fable 5 static review finds no artifact defect and independently checks
+  the complete policy/manifest/contract structure, actor dataflow, failure barriers,
+  membership hygiene, counts, immutability, provisional/Stack separation, and O6f-F1
+  intent. It correctly returns BLOCK because its Read/Grep/Glob-only grant cannot
+  recompute the three hashes, execute the 12 focused tests, or traverse the external
+  worktree metadata needed to bound the diff; it also reports route provenance
+  ambiguously, which is retained rather than promoted. O6f-R1 changes no product byte:
+  it routes a different-model strict read-only successor with Bash limited to those
+  missing digest/test/git observations and explicit no-bytecode/no-repository-write
+  constraints. Those observations were submitted to O-R6f2 without releasing O6-G or
+  O7.
+- O-R6f2 resolves exact Sonnet 5 and confirms the governing files, target artifacts,
+  focused suite, and plan receipt are present, but `--permission-mode plan` refuses to
+  execute its granted Bash tool. Its strict sandbox also cannot traverse the worktree's
+  external git directory, so it honestly returns a plan rather than evidence. This is a
+  second capability BLOCK, not a product concern. O6f-R2 stops provider retries and
+  retains both failures: Fable supplies the exhaustive independent static challenge,
+  while a separate read-only internal O-R6f3 reviewer owns only digest recomputation,
+  focused execution, and real-git diff bounding. O-R6f3 independently reproduces all
+  three frozen digests, passes 12/12 focused controls, bounds the exact clean nine-path
+  diff after `4d3b530`, and confirms no Stack implementation artifact changed. Combined
+  with Fable's zero-defect static challenge, it passes and releases O6-G only; O7
+  remains closed.
 - O-R6d-P4 passes the complete predecessor. Independent replay confirms the exact
   12-test topology—one accepted-input pass, one intentional absent-boundary failure,
   and ten skips—plus a clean diff. A cold copied checker cannot read original or copied

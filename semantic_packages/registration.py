@@ -246,6 +246,85 @@ def inspect_package_registration(
     return RegistrationObservation(package, inventory, tuple(diagnostics))
 
 
+def _project_package_registration(
+    observation: graph.GraphObservation,
+    *,
+    authority: graph.ManifestAuthority,
+    theory_source: str,
+    package: str,
+    product: str,
+) -> RegistrationObservation:
+    """Internally project registration from an actor-owned captured graph.
+
+    Actor wrappers must authenticate and capture the complete graph before using this
+    non-accepting seam. It deliberately performs no source read, execution, policy
+    resolution, or product-authority decision.
+    """
+
+    if not authority.ok:
+        return RegistrationObservation(package, (), authority.diagnostics)
+
+    sources = {item.source_id: item for item in authority.sources}
+    declared_theory = sources.get(theory_source)
+    if declared_theory is None:
+        return _selector_observation(
+            package,
+            "REGISTRATION_UNKNOWN_THEORY_SOURCE",
+            f"no {product} theory source selector for {theory_source!r}",
+        )
+    if not declared_theory.roles.issubset(_THEORY_ROLES):
+        return _selector_observation(
+            package,
+            "REGISTRATION_THEORY_SOURCE_ROLE_MISMATCH",
+            f"{product} theory source {theory_source!r} does not permit only "
+            "theory-authored/dependency roles",
+        )
+
+    declared_package = sources.get(package)
+    if declared_package is None:
+        return _selector_observation(
+            package,
+            "REGISTRATION_UNKNOWN_PACKAGE_SOURCE",
+            f"no {product} package source selector for {package!r}",
+        )
+    if not declared_package.roles.issubset(_PACKAGE_ROLES):
+        return _selector_observation(
+            package,
+            "REGISTRATION_PACKAGE_SOURCE_ROLE_MISMATCH",
+            f"{product} package source {package!r} does not permit only "
+            "package-authored roles",
+        )
+    if not observation.ok:
+        return RegistrationObservation(package, (), observation.diagnostics)
+
+    records = tuple(
+        sorted(
+            (
+                RegistrationRecord(
+                    record.address,
+                    (
+                        "theory/"
+                        if record.source == theory_source
+                        else "package/"
+                    )
+                    + record.path.split("/", 1)[-1],
+                    record.sha256,
+                    record.role
+                    or (
+                        "theory-authored"
+                        if record.source == theory_source
+                        else "package-authored"
+                    ),
+                )
+                for record in observation.records
+                if record.source in {theory_source, package}
+            ),
+            key=lambda item: (item.address, item.path, item.sha256, item.role),
+        )
+    )
+    return RegistrationObservation(package, records, ())
+
+
 def inspect_stack_package(
     theory_root: Path, package_root: Path, package: str
 ) -> RegistrationObservation:

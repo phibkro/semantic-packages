@@ -9,6 +9,7 @@ import shutil
 import subprocess
 import tempfile
 import unittest
+from collections.abc import Mapping
 from contextlib import ExitStack
 from pathlib import Path
 from unittest import mock
@@ -273,6 +274,14 @@ def _load(path: Path) -> dict:
     return document
 
 
+def _plain(value: object):
+    if isinstance(value, Mapping):
+        return {key: _plain(item) for key, item in value.items()}
+    if isinstance(value, tuple):
+        return [_plain(item) for item in value]
+    return value
+
+
 def _address(document: dict) -> tuple[str, str, str]:
     return document["kind"], document["id"], document["version"]
 
@@ -320,7 +329,6 @@ class OrderedMapProductCandidatePreconditionTest(unittest.TestCase):
         ) + tuple(TYPESCRIPT_ROOT.rglob("*.json"))
         self.assertEqual(32, len(predecessor_files))
         self.assertEqual(33, len(EXPECTED_MEMBER_ROWS))
-        self.assertFalse(POLICY.exists())
 
     def test_final_authority_candidate_boundary_exists(self) -> None:
         self.assertTrue(
@@ -410,7 +418,7 @@ class OrderedMapProductCandidateContractTest(unittest.TestCase):
             product._CONTRACT_CANONICAL_SHA256,
         )
         document = observation.document
-        self.assertEqual(EXPECTED_CONTRACT, document)
+        self.assertEqual(EXPECTED_CONTRACT, _plain(document))
         self.assertEqual(
             EXPECTED_CONTRACT_CANONICAL_SHA256,
             observation.canonical_sha256,
@@ -435,7 +443,8 @@ class OrderedMapProductCandidateContractTest(unittest.TestCase):
         )
 
         schema = _load(CONTRACT_SCHEMA)
-        changed = json.loads(json.dumps(document))
+        changed = _plain(document)
+        assert isinstance(changed, dict)
         changed["accepted"] = True
         self.assertTrue(
             list(jsonschema.Draft202012Validator(schema).iter_errors(changed))

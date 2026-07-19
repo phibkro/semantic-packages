@@ -147,13 +147,22 @@ class OrderedMapTheoryAuthorityArtifactTest(unittest.TestCase):
             contract_bindings,
         )
 
-    def test_provisional_authority_does_not_create_final_product_contract(self) -> None:
+    def test_provisional_authority_remains_separate_from_later_product_candidate(
+        self,
+    ) -> None:
         contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
+        product_contract = json.loads(
+            (
+                ROOT / "contracts" / "ordered-map" / "product-contract.json"
+            ).read_text(encoding="utf-8")
+        )
 
         self.assertFalse(contract["finalProductAuthority"])
-        self.assertFalse(
-            (ROOT / "contracts" / "ordered-map" / "product-contract.json").exists()
-        )
+        self.assertTrue(product_contract["finalProductAuthority"])
+        self.assertEqual("provisional-theory-source", contract["authorityClass"])
+        self.assertEqual("final-product", product_contract["authorityClass"])
+        self.assertNotEqual(contract["id"], product_contract["id"])
+        self.assertNotEqual(contract["manifest"], product_contract["manifest"])
         self.assertNotIn("packages", contract)
         self.assertNotIn("evidence", contract)
         self.assertNotIn("resolver", contract)
