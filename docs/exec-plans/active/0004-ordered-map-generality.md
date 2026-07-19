@@ -143,6 +143,12 @@ O0 priority + categorical-memory reconciliation
   -> O-R6a3 final successor red-control review
   -> O6b runner/campaign implementation + hardening
   -> O-R6b runner/campaign implementation review
+  -> O6b-S1 contradictory-observation retention correction
+  -> O-R6b2 successor runner/campaign review
+  -> O6b-F1 teardown scheduling-margin correction
+  -> O-R6b3 final runner/campaign review
+  -> O6b-F2 stderr-drain cleanup-margin correction
+  -> O-R6b4 final successor runner/campaign review
   -> O6c independent Rust + TypeScript candidate packets
   -> O-R6c representation-independence/package review
   -> O6d reproduction + targeted breaker reports
@@ -221,9 +227,15 @@ O0 priority + categorical-memory reconciliation
 | O-R6a2 successor red-control review | same independent read-only reviewer; depends on O6a-S1 | BLOCK retained: major gaps close, but the literal tracker omitted case ID/steps access, later operation/error response branches remained incomplete, the plan barrier patched one process API rather than observing non-start, case immutability/authority vocabulary were partial, and lockstep timing still required an implementation dataflow obligation |
 | O6a-S2 exact branch/start/immutability correction | continuity owner; exclusive O6a hostile fixture/tests and this plan; depends on O-R6a2 BLOCK | complete: track case IDs/steps, exercise every later operation/error branch, prove plan failure through an absent child start marker independent of process API, close case collection/field immutability and authority-axis vocabulary, and carry one-write/one-response lockstep plus copied-oracle audits explicitly to O-R6b |
 | O-R6a3 final successor red-control review | same independent read-only reviewer; depends on O6a-S2 | PASS: exact topology, plan/case/request binding, strict branch matrix, non-start and dual cleanup, event precedence/ledger, opaque handles, raw stderr, recursive immutability, and no-persistence/no-authority controls release O6b only |
-| O6b runner/campaign implementation and hardening | continuity owner; exclusive OrderedMap-local runner/campaign modules, fake adapter controls, affected tests/docs, and this plan; depends on O-R6a3 PASS | implement the smallest plan-driven child-process harness; red-green-refactor through exact diagnostics, immutable reports, no candidate imports, bounded teardown, and no registry/Evidence writes; source review must prove captured-plan dataflow with no copied oracle and exactly one request write followed by its response read before the next write |
-| O-R6b runner/campaign implementation review | independent read-only reviewer; depends on O6b | focused protocol/campaign replay, adversarial lifecycle/effect/oracle probes, Stack regression, full repository gate, and explicit no-authority/no-Evidence audit |
-| O6c independent Rust and TypeScript candidate packets | continuity owner; exclusive OrderedMap candidate sources/adapters/READMEs, candidate build controls, and this plan; depends on O-R6b PASS | Rust sequence-of-pairs and TypeScript table-plus-order representations independently implement the protocol; neither imports the other, runner oracle, or shared OrderedMap transition logic; reproducible documented build/run commands and source review pass |
+| O6b runner/campaign implementation and hardening | continuity owner; exclusive OrderedMap-local runner/campaign modules, fake adapter controls, affected tests/docs, and this plan; depends on O-R6a3 PASS | complete predecessor: one authenticated immutable plan snapshot drives all seven cases, 30 lockstep requests, expected observations, declaration counts, event classification, and both time bounds; strict protocol/lifecycle errors remain distinct from declaration-local semantic challenges; reports are fresh immutable non-authority facts, candidates are never imported, children are reaped, and registry/Evidence bytes remain untouched |
+| O-R6b runner/campaign implementation review | independent read-only reviewer; depends on O6b | BLOCK retained: plan dataflow, lockstep transport, protocol/lifecycle controls, Stack regression, full gate, and non-authority/no-Evidence boundaries pass, but a novel combined semantic-mismatch-plus-late-process-exit probe showed execution aggregation rewrote an earlier challenge as support and erased its cause |
+| O6b-S1 contradictory-observation retention correction | continuity owner; exclusive OrderedMap hostile fixture, runner aggregation, runner tests, and this plan; depends on O-R6b BLOCK | complete: add a reorder-existing campaign that exits nonzero only after all semantic observations, reproduce the erased `put-existing-position` challenge red, then make retained challenge/cause precedence independent of the overall execution-error axis; focused 14/14 passes |
+| O-R6b2 successor runner/campaign review | same independent read-only reviewer; depends on O6b-S1 | PASS: focused 14/14, adapter 50/50, clean serial full gate, compile/diff checks, and static dataflow/lockstep/non-authority audits confirm prior semantic counterevidence survives a late process failure while the overall report remains `error`; O6c only is released |
+| O6b-F1 teardown scheduling-margin correction | continuity owner; exclusive OrderedMap runner cleanup, affected tests, and this plan; depends on a post-O-R6b2 final-gate timeout failure | complete predecessor: retain both plan-owned 0.2s response/clean-exit deadlines, shorten post-deadline terminate-to-kill signal grace, and use a short pre-write startup observation plus queued-frame fallback; isolated timeout controls improve, but later suite-context evidence remains above the unchanged bound |
+| O-R6b3 final runner/campaign review | same independent read-only reviewer; depends on O6b-F1 | BLOCK retained: an ordinary sequential two-method run records response-timeout teardown at 0.613069s against `<0.60s`; immediate retry and five isolated probes per path pass/reap, confirming semantics but not reliable suite-context margin |
+| O6b-F2 stderr-drain cleanup-margin correction | continuity owner; exclusive OrderedMap runner post-deadline cleanup and this plan; depends on O-R6b3 BLOCK | complete pending O-R6b4: bound the post-reap stderr-drain join by the same 0.05s cleanup grace instead of spending another plan-timeout-sized 0.2s; raw stderr behavior remains unchanged and 40/40 response/EOF timeout probes pass with every PID reaped, worst 0.5250s |
+| O-R6b4 final successor runner/campaign review | same independent read-only reviewer; depends on O6b-F2 | PASS: five sequential repetitions of both timeout-owning methods, focused 14/14, adapter 50/50, raw-stderr fresh replay 10/10, full repository gate, compile/diff checks, and static deadline/cleanup audit pass; O-R6b3 stays retained and O6c only is released |
+| O6c independent Rust and TypeScript candidate packets | continuity owner; exclusive OrderedMap candidate sources/adapters/READMEs, candidate build controls, and this plan; depends on O-R6b4 PASS | Rust sequence-of-pairs and TypeScript table-plus-order representations independently implement the protocol; neither imports the other, runner oracle, or shared OrderedMap transition logic; reproducible documented build/run commands and source review pass |
 | O-R6c representation-independence/package review | independent read-only reviewer; depends on O6c | inspect source/dataflow and builds, challenge shared-oracle leakage and representation convergence, confirm adapter-only protocol sharing, and retain environment/toolchain exclusions |
 | O6d reproduction and targeted breaker reports | continuity owner; exclusive reproduction script/check, retained candidate reports, reorder-breaker sources/report, affected docs/tests, and this plan; depends on O-R6c PASS | fresh deterministic reports bind exact plan/source/binary/runner/toolchain inputs and contain declaration-level candidate `supports` outcomes only, with no Evidence, review, or acceptance conclusion; breaker passes lookup/new-class cases and challenges only observations affected by existing-class reorder; failed breaker report remains outside accepted membership and cannot become Evidence |
 | O-R6d reproducibility/breaker review | independent read-only reviewer; depends on O6d | independently rebuild/replay digests and outcomes, challenge stale/forged report acceptance and breaker overbreadth, and verify report facts remain distinct from Claims/Evidence/review authority |
@@ -325,8 +337,14 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
 - [x] O-R6a2 successor red-control review — BLOCK retained
 - [x] O6a-S2 exact branch/start/immutability correction
 - [x] O-R6a3 final successor red-control review passed; O6b released
-- [ ] O6b runner/campaign implementation and hardening
-- [ ] O-R6b runner/campaign implementation review
+- [x] O6b runner/campaign implementation and hardening — complete predecessor
+- [x] O-R6b runner/campaign implementation review — BLOCK retained
+- [x] O6b-S1 contradictory-observation retention correction
+- [x] O-R6b2 successor runner/campaign review passed; later timing failure retained
+- [x] O6b-F1 teardown scheduling-margin correction
+- [x] O-R6b3 final runner/campaign review — BLOCK retained
+- [x] O6b-F2 stderr-drain cleanup-margin correction
+- [x] O-R6b4 final successor runner/campaign review passed; O6c released
 - [ ] O6c independent Rust and TypeScript candidate packets
 - [ ] O-R6c representation-independence/package review
 - [ ] O6d reproduction and targeted breaker reports
@@ -628,6 +646,70 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
   and a clean diff. O6b alone is released; its review must statically prove captured
   plan dataflow, one-write/one-response lockstep, and continued non-promotion of fake
   reports into authority or Evidence.
+- O6b first turns all 13 accepted runner controls green. The authenticated
+  `ArtifactObservation.document` is detached once and supplies every case ID, step,
+  request argument, expected observation, declaration attribution, event rule, domain,
+  and timeout; the runner contains protocol mechanics but no second OrderedMap
+  transition oracle. Each invocation checks for unsolicited output, writes one request,
+  reads and validates exactly its response, then advances. Semantic mismatches challenge
+  only plan-attached declarations, while JSON/framing/adapter/process failures are
+  execution errors. The first aggregation attempt also suppressed earlier semantic
+  challenge conclusions whenever such an error occurred; O-R6b later falsifies that
+  composition rule. Focused replay passes 13/13, adjacent Stack plus OrderedMap runner
+  replay passes 31/31, and the full gate passes with 49 adapter tests and all other
+  ledgers unchanged.
+- O-R6b confirms the original source/dataflow, lockstep, lifecycle, non-authority, and
+  no-Evidence obligations but retains a BLOCK from a novel combined probe: after the
+  existing-position reorder was observed as a semantic counterexample, a late nonzero
+  process exit made the overall report correctly `error` but incorrectly relabelled the
+  prior declaration as `supports` and erased `OBSERVATION_MISMATCH`. O6b-S1 freezes that
+  composition red, then gives retained semantic challenges precedence within their own
+  declaration outcomes while leaving the orthogonal report result `error`. Focused
+  replay now passes 14/14; O-R6b2 must confirm the narrow correction and all original
+  obligations before O6c can begin.
+- O-R6b2 passes that successor. Independent focused replay is 14/14 and adapter
+  discovery is 50/50; the clean serial full gate retains 166 actor journeys, 16
+  research probes, 20 governance tests, two reports/eight Evidence records, and 49
+  proof groups. Static inspection confirms one detached authenticated plan snapshot is
+  the sole semantic input, no candidate or copied OrderedMap transition oracle is
+  imported, and each invocation performs its pre-output check, one write, one
+  read/validation, and post-response extra-output check before advancing. Reports
+  remain immutable ephemeral facts with no registry/Evidence write or authority axis.
+  Adapter faithfulness, event completeness, external effects, realization steps, and
+  perfect-shadow detection remain explicit exclusions; downstream promotion must
+  require a clean report even though partial support and challenge observations survive
+  an overall execution error. Aggressively concurrent duplicate gates produced one
+  non-blocking wall-clock timeout miss under load; immediate unchanged adapter replay
+  and the then-current serial full gate passed.
+- A later required serial full gate turns that timing signal into contradictory evidence:
+  response-timeout teardown takes 0.634s against the unchanged `<0.60s` control. The
+  implementation had composed the plan's 0.2s response deadline, 0.2s clean-exit
+  deadline, and another full 0.2s terminate grace, leaving no scheduling margin.
+  O6b-F1 preserves both semantic deadlines and shortens only the already-post-deadline
+  terminate-to-kill grace to 0.05s. Forty repeated response-timeout/EOF-timeout probes
+  pass with all PIDs reaped and a 0.5687s worst observation before the final reduction
+  from 0.10s to 0.05s grace.
+- O-R6b3 retains the BLOCK: one ordinary sequential two-method run still records
+  0.613069s for response-timeout teardown. An immediate retry and five isolated probes
+  per path pass with every PID reaped, which confirms semantic behavior but cannot erase
+  the failed strict bound. Inspection finds another additive post-deadline wait: stderr
+  joining could spend the full 0.2s exit timeout even after termination/reaping. O6b-F2
+  bounds that join by the same 0.05s cleanup signal grace; raw stderr remains retained,
+  and 40/40 response/EOF timeout probes pass with all PIDs absent and worst 0.5250s.
+  O-R6b4 owns the final suite-context confirmation; O6c remains held.
+- O-R6b4 passes the corrected boundary while retaining O-R6b3's failed evidence. Five
+  sequential repetitions of both existing timeout-owning methods pass their strict
+  `<0.60s`, `error/TIMEOUT`, and PID-absence assertions; focused replay is 14/14,
+  independent adapter discovery is 50/50 with all 36 Stack tests retained, and ten raw
+  stderr campaigns preserve exact bytes while returning ten fresh equal reports. Static
+  inspection confirms the plan-owned 0.2s response and clean-exit deadlines are
+  unchanged; only post-deadline signal grace and post-reap stderr joining use the 0.05s
+  cap. The reviewer full gate passes every ledger. The continuity full gate first hits
+  the already-known isolated Lean harness timeout and then passes unchanged with 24
+  valid/20 schema-invalid/38 link-invalid/3 link-valid record fixtures, 18 loader
+  groups, 50 adapters, 18 cross-language candidates, 166 journeys, 16 research probes,
+  20 governance tests, two reports/eight Evidence records, and 49 proof groups. No
+  proof oracle or deadline was changed. O6c alone is released.
 - O4's full repository gate passes with 24 valid/20 schema-invalid/38 link-invalid/3
   link-valid record fixtures, 18 loader groups, 36 adapter tests, 18 cross-language
   candidates, 156 actor journeys, 10 research probes, 20 governance tests, two fresh
@@ -657,10 +739,12 @@ authority substrate without changing Stack actor behavior. O5 now accepts a pinn
 provisional OrderedMap theory-source actor: one authenticated manifest snapshot yields
 the exact two-record publication and graph plus all 18 declarations as visible,
 unclaimed meaning. Every retained BLOCK and successor PASS remains in the history.
-There is still no OrderedMap runner, package packet, report, Evidence candidate, final
-manifest/ProductContract, registration acceptance, resolver decision, or maintenance
-successor. O6 is the live edge for independently represented package packets, one
-targeted breaker, fresh reports, and scoped Evidence candidates. O6f may later
+There is now an independently accepted plan-driven OrderedMap conformance runner, but
+no package packet, retained candidate report, Evidence candidate,
+final manifest/ProductContract, registration acceptance, resolver decision, or
+maintenance successor. O6 is the live edge; O6c is released to build independently
+represented package packets, followed by one targeted breaker, fresh reports,
+and scoped Evidence candidates. O6f may later
 materialize exact final-authority candidates and actor replay; O6-G alone may accept
 those reviewed bytes as final product authority.
 

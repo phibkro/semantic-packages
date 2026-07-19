@@ -537,6 +537,32 @@ class OrderedMapRunnerContractTest(unittest.TestCase):
             self.assertEqual("error", report.result)
             self.assertIn("TIMEOUT", report.causes)
 
+    def test_late_process_error_retains_prior_semantic_counterexample(self) -> None:
+        report = self.assert_result(
+            "reorder-existing-nonzero", "error", "PROCESS_EXIT"
+        )
+        challenged = {
+            item.declaration_id: item.causes
+            for item in report.declarations
+            if item.result == "challenges"
+        }
+        self.assertEqual(
+            {"put-existing-position": ("OBSERVATION_MISMATCH",)},
+            challenged,
+        )
+        self.assertEqual(
+            {
+                ("nonlast-overwrite-order", "put-existing-position"):
+                    ("OBSERVATION_MISMATCH",)
+            },
+            {
+                (case.case_id, outcome.declaration_id): outcome.causes
+                for case in report.cases
+                for outcome in case.declarations
+                if outcome.result == "challenges"
+            },
+        )
+
     def test_stdin_close_and_post_eof_lifecycle_are_bounded(self) -> None:
         with tempfile.TemporaryDirectory(prefix="o6a-eof-") as raw:
             marker = Path(raw) / "closed.txt"

@@ -145,7 +145,7 @@ def respond(session: Session, request: dict[str, Any], seq: int) -> dict[str, An
         updated = list(source)
         if position is None:
             updated.append((token, args["value"]))
-        elif MODE == "reorder-existing":
+        elif MODE in {"reorder-existing", "reorder-existing-nonzero"}:
             updated.pop(position)
             updated.append((token, args["value"]))
         else:
@@ -291,7 +291,7 @@ def main() -> int:
     elif MODE == "eof-extra-stdout":
         sys.stdout.write("{}\n")
         sys.stdout.flush()
-    if MODE in {"nonzero-exit", "eof-nonzero"}:
+    if MODE in {"nonzero-exit", "eof-nonzero", "reorder-existing-nonzero"}:
         return 7
     return 0
 
