@@ -144,6 +144,18 @@ Authority converges in stages without pretending future bytes already exist:
 The product wrapper and repository gate pin the final ProductContract digest before
 any Evidence is accepted into the complete product source set. Previously reviewed
 reports/Evidence candidates remain outside final membership until that convergence.
+The O5 provisional authority is
+`ordered-map-theory-source-contract/0.1.0`, canonical SHA-256
+`1ec7d9f0ec74af8afff2823b89e7039a910fbde28fd86b9dd60f499948b25a6b`.
+It is explicitly `provisional-theory-source` with `finalProductAuthority: false` and
+pins `registry/ordered-map/theory-manifest.json` at raw SHA-256
+`06157079396b8712e31eaf459949c0503eb8d68ac7b6c97ac0b1308cc7f523c7`, selector
+`ordered-map-theory`, roles `theory-authored` and `dependency`, and the exact O3a
+Specification/profile addresses and raw digests. The theory-source result must surface
+the contract ID/version/canonical digest and manifest raw digest. These values establish
+only the pre-execution two-record source boundary; they cannot authorize packages,
+Evidence, resolution, inspection, or final product membership.
+
 Actor-facing publication, registration, resolution, and inspection entrypoints do not
 accept contract overrides. Lower-level shared primitives require the complete contract
 and fail closed on ID, version, digest, selector, manifest, plan, Specification,

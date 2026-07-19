@@ -114,7 +114,16 @@ O0 priority + categorical-memory reconciliation
   -> O-R4b2 final red-control review
   -> O4b manifest authority + Stack-compatible extraction
   -> O-R4b implementation review
-  -> O5 theory-source publication + graph + theory projection
+  -> O5a exact theory-source manifest/contract artifacts
+  -> O-R5a authority-artifact review
+  -> O5a-S1 exact branch/cross-link correction
+  -> O-R5a2 successor authority-artifact review
+  -> O5a-S2 successor dependency correction
+  -> O-R5a3 final authority-artifact review
+  -> O5b red publication/graph/projection controls
+  -> O-R5b red-control review
+  -> O5c theory-source publication + graph + theory projection
+  -> O-R5c implementation review
   -> O6 package packets + Realizations + breaker + Evidence candidates
   -> O6-G final manifest/ProductContract convergence + publication/registration replay
   -> O7 resolution + directional boundary + inspection
@@ -158,7 +167,16 @@ O0 priority + categorical-memory reconciliation
 | O-R4b2 final red-control review | same independent read-only reviewer; depends on O4b-S1 | PASS: the sole O-R4b1 residual is closed; five controls fail only at the absent authority API and release implementation without expanding O4b scope |
 | O4b manifest authority and Stack extraction | continuity owner; exclusive manifest-authority shape, generic publication/registration/graph mechanics, and Stack compatibility wrappers; depends on O-R4b2 PASS | complete: frozen manifest-only supplied authority, detached graph replay, exact-selector publication/registration mechanics, and pinned Stack wrappers; 72 focused/adjacent and the full 156-journey repository gate pass; no final OrderedMap ProductContract or resolver generalization |
 | O-R4b implementation review | independent read-only reviewer; depends on O4b | PASS: independently confirms manifest-only capture, nested immutability, detached replay, pre-I/O phase closure, exact Stack compatibility, no execution, and no authentication/acceptance claim; public construction and hostile-writable-ancestor TOCTOU remain explicit future triggers |
-| O5 theory-source publication/graph/projection | continuity owner; exclusive OrderedMap theory-source manifest/authority and domain journey fixtures; depends on O4 and consumes O3a records byte-for-byte | exact valid theory-source publication and graph, authored meaning, visible unknowns, phase/membership attacks, and no execution; final product replay remains open |
+| O5a exact theory-source authority artifacts | continuity owner; exclusive OrderedMap theory-source manifest, authority contract/schema, design, focused artifact tests, and this plan; depends on O4 and consumes O3a records byte-for-byte | complete: exact two-member manifest raw SHA `06157079…23c7` plus provisional contract canonical SHA `1ec7d9f0…5a6b` pinning selector/roles and Specification/profile addresses/raw digests; six focused tests and final successor review pass; no actor implementation or final ProductContract |
+| O-R5a authority-artifact review | independent read-only reviewer; depends on O5a | BLOCK retained: every digest reproduced and authority expansion failed, but Specification/profile shared one generic binding schema, so swapping them stayed schema-valid and contract-to-manifest binding was not directly asserted |
+| O5a-S1 exact branch/cross-link correction | continuity owner; exclusive authority schema/test and this plan; depends on O-R5a BLOCK | give Specification/profile exact branch schemas, reject swapped/arbitrary addresses, and prove selector/role/address/digest correspondence to captured manifest authority |
+| O-R5a2 successor authority-artifact review | same independent read-only reviewer; depends on O5a-S1 | BLOCK retained: artifact/security blockers close, but O5b's table dependency still named the permanently blocked O-R5a rather than its successor gate |
+| O5a-S2 successor dependency correction | continuity owner; exclusive this plan; depends on O-R5a2 BLOCK | complete: O5b's declared readiness dependency aligns with the DAG's O-R5a3 successor without changing artifact bytes |
+| O-R5a3 final authority-artifact review | same independent read-only reviewer; depends on O5a-S2 | PASS: lifecycle readiness is consistent, no stale impossible dependency remains, and every O-R5a2 artifact/security positive and digest remains unchanged |
+| O5b red publication/graph/projection controls | continuity owner; exclusive new O5 journey controls and this plan; depends on O-R5a3 PASS | freeze zero-argument provisional actor wrapper, surfaced authority identity/digests, exact two-record publication/graph, 18 unclaimed declarations, input/graph/membership/no-execution attacks, and explicit non-final status |
+| O-R5b red-control review | independent read-only reviewer; depends on O5b | falsify override, phase, source ownership, projection assurance, authority replay, and attack coverage before implementation |
+| O5c theory-source publication/graph/projection | continuity owner; exclusive OrderedMap theory-source wrapper and affected shared mechanics only if a red falsifier requires them; depends on O-R5b PASS | exact valid theory-source publication and graph, authored meaning, visible unknowns, phase/membership attacks, and no execution; final product replay remains open |
+| O-R5c implementation review | independent read-only reviewer; depends on O5c | exact O5 controls plus Stack regression and full repository gate; closes O5 only without final ProductContract or package/Evidence pull-forward |
 | O6 package packets/Realizations/breaker/Evidence candidates | continuity owner; exclusive OrderedMap implementations/adapters/campaign/package records/reports/Evidence candidates and final manifest inputs; depends on O5 | two independently represented package packets, one targeted breaker, fresh reproducible reports, exact Claim/Evidence bindings, assumptions and exclusions; no final registration claim before O6-G |
 | O6-G final trust convergence | continuity owner; exclusive final manifest, immutable OrderedMap ProductContract, wrapper integration, and affected actor replay; depends on O6 | final contract pins complete manifest, O3 plan, Specification/profile, resolver/effect/boundary rules; publication, package registration, graph, and package views replay under surfaced exact authority |
 | O7 consumer decision/inspection | continuity owner; exclusive bounded OrderedMap resolution and presentation; depends on O6-G | semantic status under exact policy/profile, every Evidence axis, separate directional boundary, and graph-derived theory/package views |
@@ -226,7 +244,16 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
 - [x] O-R4b2 final red-control review passed; O4b implementation released
 - [x] O4b manifest authority and Stack-compatible extraction complete
 - [x] O-R4b implementation review passed
-- [ ] O5 theory-source publication/graph/projection
+- [x] O5a exact theory-source manifest/contract artifacts complete
+- [x] O-R5a authority-artifact review — BLOCK retained
+- [x] O5a-S1 exact branch/cross-link correction
+- [x] O-R5a2 successor authority-artifact review — BLOCK retained
+- [x] O5a-S2 successor dependency correction
+- [x] O-R5a3 final authority-artifact review passed; O5b released
+- [ ] O5b red publication/graph/projection controls
+- [ ] O-R5b red-control review
+- [ ] O5c theory-source publication/graph/projection
+- [ ] O-R5c implementation review
 - [ ] O6 package packets/Realizations/breaker/Evidence candidates
 - [ ] O6-G final manifest/ProductContract convergence and publication/registration replay
 - [ ] O7 consumer decision/inspection
@@ -399,6 +426,23 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
   explicitly a non-authenticating integration seam; crossing an untrusted serialization
   boundary or carrying acceptance reopens sealed/validated construction. The existing
   hostile-writable-ancestor TOCTOU trigger likewise remains unchanged.
+- O5a materializes the separately identified provisional authority demanded by the
+  staged design: one two-member manifest over the unchanged O3a Specification/profile,
+  and `ordered-map-theory-source-contract/0.1.0` with
+  `finalProductAuthority: false`. The contract pins raw manifest/member digests while
+  its own canonical digest is `1ec7d9f0…5a6b`; none of these artifacts authorize package
+  records, Evidence, resolution, inspection, or final product membership.
+- O-R5a reproduces every raw/canonical digest and rejects final-authority, path,
+  selector, role, and authority-expansion attacks, but blocks the schema because a
+  generic binding branch allowed Specification/profile swaps and the tests did not
+  directly link contract bindings to manifest members. O5a-S1 makes the branches exact
+  and adds selector/role/address/digest correspondence.
+- O-R5a2 closes the artifact and security blockers but finds O5b's table dependency
+  still named the permanently blocked O-R5a while the DAG correctly named the successor.
+  O5a-S2 corrects only that readiness edge; authority artifact bytes stay unchanged.
+- O-R5a3 passes the corrected lifecycle and reaffirms the unchanged independent digest,
+  exact-branch, cross-link, closed-schema, and non-final-authority observations. O5b may
+  now freeze the actor boundary against these reviewed bytes.
 - O4's full repository gate passes with 24 valid/20 schema-invalid/38 link-invalid/3
   link-valid record fixtures, 18 loader groups, 36 adapter tests, 18 cross-language
   candidates, 156 actor journeys, 10 research probes, 20 governance tests, two fresh
