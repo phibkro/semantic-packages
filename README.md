@@ -107,6 +107,27 @@ The same 18 controls can be run alone with that command. Their reviewed outcomes
 recorded as declaration-scoped Evidence; the green report itself is only a provenance
 artifact, and the repository gate reproduces and binds it before accepting the records.
 
+Inspect the exact predecessor and failed-successor Stack snapshots without executing
+artifacts or selecting an implicit latest version:
+
+```sh
+python3 -m semantic_packages.inspection \
+  --predecessor-manifest registry/stack/manifest.json \
+  --successor-manifest registry/stack/successor-manifest.json \
+  --profile realizationProfile/stack-default/0.1.0 \
+  --predecessor-specification specification/stack/0.1.0 \
+  --successor-specification specification/stack/0.2.0 \
+  --predecessor-policy consumerPolicy/stack-bounded-policy/0.1.0 \
+  --successor-policy consumerPolicy/stack-bounded-policy/0.2.0
+```
+
+The output keeps authored meaning, Claim and Evidence qualifications, semantic
+acceptability, directional deployment boundaries, and exact-version recovery separate.
+It is a read-only renderer over the two named local graph snapshots; it does not run
+proofs or Realizations, acquire records, reproduce Evidence, or choose a recovery
+candidate. The retained uninvolved-human protocol is documented in
+[`docs/operations/cold-human-inspection.md`](docs/operations/cold-human-inspection.md).
+
 Then open the repository in Codex, an IDE extension, or another coding agent. The agent should begin with `AGENTS.md`, then follow the active ExecPlan.
 
 ## Status

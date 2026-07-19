@@ -71,10 +71,15 @@ M0 stale-memory baseline
   -> M-R independent truth/link review
   -> M-G memory gate
   -> H0 current-surface command inventory
-  -> H1 cold-human protocol and falsifier
+  -> H1 cold-human protocol and preflight falsifier
+       -> H1-R1 independent protocol/control review
+       -> H1-S1 control-fidelity successor -> H1-R2 review
+       -> H1-S2 semantic/derivation-control successor -> H1-R3 review
+       -> PASS: H2 uninvolved-human observation
+       -> BLOCK: H-S1 minimal inspection surface -> H-R independent review -> H1 replay
   -> H2 uninvolved-human observation
        -> PASS: H-G journey acceptance
-       -> BLOCK: H-S smallest observed-deficit successor -> H2 replay
+       -> BLOCK: H-S2 smallest observed-deficit successor -> H2 replay
 ```
 
 | Node | Owner, dependencies, and write boundary | Required evidence and downstream gate |
@@ -87,10 +92,18 @@ M0 stale-memory baseline
 | M-S2 ownership-history successor | continuity owner; depends on M-R2; exclusive this plan | complete candidate: M1 keeps its original descriptive scope; the failed gate exposes an omitted structural dependency and M-S1 owns the checker correction |
 | M-R3 final memory truth review | same independent read-only reviewer; depends on M-S2 | PASS: M1 retains its original scope, M-R1/S1 and M-R2/S2 history is truthful, both functional blockers stay closed, archive bytes/links/status/exclusions/Evidence/compatibility/route boundaries remain intact, and no self-ratification residue remains |
 | M-G memory gate | lead acceptance; depends on M-R3 and repository gate | accepted: only active 0003 remains, completed 0001/0002 are byte-identical moves, stale live references are absent, M-R1/R2 failures and successors remain visible, M-R3 passes, diff hygiene passes, and the locked gate passes 24/20/38/3 records, 18 loader groups, 36 adapter tests, 18 candidates, 127 actor journeys, 20 governance tests, two reports/eight Evidence records, and 49 proof groups; releases H0 |
-| H0 current-surface inventory | continuity owner; read-only; depends on M-G | exact current commands/APIs and their outputs mapped to the five participant questions; no proposed UI yet |
-| H1 protocol freeze | continuity owner with independent review; exclusive journey protocol/tests/docs | participant eligibility, starting context, questions, assistance limits, success rubric, privacy, falsifier, and retained raw-observation form |
+| H0 current-surface inventory | continuity owner; read-only; depends on M-G | complete: resolver, theory projection, and maintenance expose all five answers as Python dataclasses, but README has no inspection command and an uninvolved human would have to read source/tests to compose them |
+| H1 protocol and preflight freeze | continuity owner; exclusive journey protocol/tests/docs; depends on H0 | participant eligibility, starting context, questions, assistance limits, success rubric, privacy, retained raw-observation form, and a red command-level control proving the documented journey is unavailable |
+| H1-R1 protocol/control review | independent read-only reviewer; depends on initial H1 candidate | BLOCK: protocol boundaries pass, but controls can omit material answers, ignore graphs/selectors, scatter README tokens, silently default most inputs, and execute artifacts |
+| H1-S1 control-fidelity successor | continuity owner; exclusive H1 tests and this plan; depends on H1-R1 | freeze substantive meaning and every Evidence axis, candidate-specific boundaries and exact recovery, graph/selector attacks, one copyable command, every required argument, and no I/O/execution after graph capture |
+| H1-R2 protocol/control successor review | same independent read-only reviewer; depends on H1-S1 | BLOCK: command/input and per-candidate/recovery controls close, but some declarations may still be labels, Realization Evidence may be empty/unqualified, and the renderer may ignore captured graphs or scan after capture |
+| H1-S2 semantic/derivation-control successor | continuity owner; exclusive H1 tests and this plan; depends on H1-R2 | freeze substantive content for every rubric declaration, exact selected/applicable Realization Evidence metadata, substituted captured-graph rejection, and filesystem-discovery prohibition |
+| H1-R3 final protocol/control review | same independent read-only reviewer; depends on H1-S2 | PASS: substantive meaning, qualified selected Realization Evidence, every Evidence axis, exact command/inputs/recovery, graph substitution, no-I/O rendering, and retained review history all pass; releases H-S1 |
+| H-S1 minimal inspection surface | continuity owner; exclusive bounded inspection module, README entrypoint, tests, and this plan; depends on H1 BLOCK | complete: one exact-input, graph-derived, human-readable Stack command; no acquisition, execution, implicit latest/default selector, general CLI framework, or new semantic inference |
+| H-R inspection-surface review | independent read-only reviewer; depends on H-S1 | PASS: five-answer completeness, Evidence axes and qualifications, semantic/deployment separation, exact-version recovery, execution isolation, exact-input failure, and bounded scope pass; density, jargon, long JSON lines, and question navigation remain H2 observations |
+| H1-P1 automated preflight replay | continuity owner; depends on H-R | complete: all ten frozen controls pass and the locked repository gate passes 137 actor journeys; releases H2 but cannot substitute for it |
 | H2 cold-human observation | operator-coordinated uninvolved human; depends on H1 | exact revision, environment, commands, answers, hesitation/failure points, assistance, duration, and exclusions; no repository write authority |
-| H-S observed-deficit successor | continuity owner; depends on H2 BLOCK | smallest change tied to an observed actor deficit, with red-first scenario and independent review; returns to H2 |
+| H-S2 observed-deficit successor | continuity owner; depends on H2 BLOCK | smallest change tied to an observed actor deficit, with red-first scenario and independent review; returns to H2 |
 | H-G journey gate | lead acceptance; depends on H2 PASS and locked local/hosted gates | all five questions answered accurately without hidden implementation knowledge; releases the OrderedMap plan |
 
 ## Quality gates and evidence required
@@ -131,8 +144,16 @@ M0 stale-memory baseline
 - [x] M-S2 ownership-history successor
 - [x] M-R3 final memory truth review passed
 - [x] M-G memory gate
-- [ ] H0 current-surface command inventory
-- [ ] H1 cold-human protocol freeze
+- [x] H0 current-surface command inventory
+- [x] H1 cold-human protocol freeze; preflight BLOCK confirms absent surface
+- [x] H1-R1 independent protocol/control review rejected with four blockers
+- [x] H1-S1 control-fidelity successor
+- [x] H1-R2 protocol/control successor review rejected with three residual blockers
+- [x] H1-S2 semantic/derivation-control successor
+- [x] H1-R3 final protocol/control review passed
+- [x] H-S1 minimal inspection surface
+- [x] H-R inspection-surface review passed
+- [x] H1-P1 automated preflight replay
 - [ ] H2 uninvolved-human observation
 - [ ] H-G cold-human journey gate
 
@@ -156,6 +177,34 @@ M0 stale-memory baseline
   unobserved cold-human inspection first; this plan accepts that ordering because it can
   reveal actor deficits before new semantic scope is added. OrderedMap record
   expressibility may be paper-probed during H0, but no implementation depends on it.
+- H0 found that `inspect_stack_graph`, `resolve_stack`, `project_theory`, and
+  `inspect_stack_successor` contain the required observations, but only as Python
+  dataclass APIs exercised through tests. README documents repository, proof, record,
+  adapter, and candidate checks but no consumer inspection entrypoint. The present
+  surface therefore fails before consuming a participant: success would require
+  undocumented source/test archaeology. H1 freezes that failure at the command
+  boundary; H-S1 may only compose existing observations into a bounded renderer.
+- H1-R1 found the protocol sound but rejected its first executable oracle: isolated
+  substrings did not require substantive meaning, every Evidence axis, per-candidate
+  boundaries, exact recovery addresses, or successor failure reasons; hard-coded output
+  could ignore graph/selector inputs; README tokens need not form one command; omissions
+  other than the final policy could default silently; and artifact execution was not
+  forbidden dynamically. H1-S1 owns those control corrections before product code.
+- H1-R2 confirmed the exact README command, every required input, per-candidate
+  boundary, exact successor failure, and recovery controls, then retained three
+  residual blockers: several declarations could remain content-free labels;
+  Realization-supporting Evidence could be empty and lacked mechanism/result/review and
+  selection/applicability; and canonical-only pure rendering plus an incomplete I/O
+  guard did not prove dependence on captured graphs or forbid filesystem discovery.
+  H1-S2 owns only these remaining control gaps.
+- H1-R3 passed the corrected controls. H-S1 then composed the existing graph,
+  projection, resolution, and maintenance observations into
+  `python3 -m semantic_packages.inspection`, with every manifest and selector required.
+  H-R passed the implementation without a code/protocol blocker. It retained output
+  density, unfamiliar vocabulary, long canonical JSON, and navigation from three
+  sections to five questions as risks for H2 to observe instead of preemptive redesign.
+  H1-P1 passes all ten controls and the locked gate passes 137 actor journeys; neither
+  automated result is human-journey Evidence.
 
 ## Decision log
 
@@ -164,6 +213,7 @@ M0 stale-memory baseline
 | archive completed plans or keep them active as context | `.agent/PLANS.md` requires completed plans to move; two active completed plans caused current-state contradictions | move both byte-identically to `completed/` and link them as history; reopen if an accepted predecessor is substantively reopened rather than merely referenced |
 | next route: cold-human inspection, OrderedMap, refinement, `.pspec`, adapter Evidence, or hosted registry | current architecture is complete for Stack but its human inspectability is explicitly unobserved; second-domain work before observing current output may compound usability deficits | run cold-human inspection first, then OrderedMap; refinement and `.pspec` wait for two semantic domains, adapter Evidence waits for a non-circular mechanism, hosted infrastructure waits for an actor need |
 | replace or retain Stack when adding OrderedMap | replacement would remove the only accepted regression substrate and turn generality into a rewrite | retain Stack and add OrderedMap as a structurally different peer; reopen only if maintaining both creates measured unsustainable duplication |
+| run a human immediately or preflight the documented surface first | H0 proves no documented command exists, so a participant could only rediscover an already-observed absence or receive disallowed source-level assistance | freeze the human protocol and a command-level falsifier, then add the smallest graph-derived surface before spending the uninvolved-human observation; reopen if the preflight can already answer all five questions from a documented entrypoint |
 
 ## Result and remaining work
 
@@ -175,7 +225,11 @@ the Progress state. M-S1 closes both in the candidate. M-R2 then retained one
 history-attribution blocker after M1 was retroactively assigned checker ownership;
 M-S2 restores the original boundary and attributes the omitted dependency to its true
 successor. M-R3 and the final locked gate pass, so M-G accepts the reconciled memory
-and releases H0 current-surface inventory.
+and releases H0 current-surface inventory. H0 then proved the absence of a documented
+inspection surface. H1 froze the participant protocol through two rejected control
+reviews and a final pass. H-S1 adds the smallest exact-input, graph-derived Stack
+renderer; H-R and H1-P1 pass, including the locked repository gate. H2 remains
+unobserved and requires an eligible uninvolved human at an exact public revision.
 
 After H-G, the intended route is OrderedMap generality, then deployment-profile choice,
 explicit refinement/evolution, cross-domain `.pspec` elaboration, and non-circular
