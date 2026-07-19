@@ -210,6 +210,15 @@ J0 vocabulary/lifecycle/map gate
 | JG-R2 fresh-clone successor review | same independent internal reviewer; depends on JG-S1 and republished exact `c24f355` | PASS: exact published checkout and origin, clean tree, two linear Conventional Commits, prospective range, diff hygiene, 127 journeys, 20 governance checks, two fresh reports/eight Evidence records, and 49 proof groups reproduce; JG-R1 remains retained, status contradictions close, hosted/automatic exclusions hold, and the cold-human recommendation remains explicitly unobserved |
 | JG journey release | lead acceptance; depends on JG-R2 plus J5 and PR-GG; read-only fresh-checkout acceptance with no repository write scope and ephemeral outputs only under an allocated temporary directory | accepted: the operator cloned public exact head `a78e83b` into a new temporary directory and reproduced 24/20/38/3 record fixtures, 18 loader groups, 36 adapter tests, 18 candidate tests, 127 actor journeys, 20 governance tests, two reports/eight Evidence records, and 49 proof groups; required checks re-passed after the evidence-only PR-body edit, and protected PR 4 squash-merged as `9194849` |
 | PR-M1 checkout runtime maintenance | lead CI maintainer; depends on merged JG and the hosted Node 20 deprecation observation; exclusive `.github/workflows/quality-gates.yml` plus this plan | accepted at exact implementation commit `7e89951`: both v4.2.2 pins become official v7.0.0 commit `9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0`; upstream declares `node24`, existing fetch-depth/no-credential boundaries remain unchanged, local gates pass, and hosted metadata/repository jobs pass in 1m29s/2m53s with no Node 20 annotation; this documentation-only successor preserves that workflow and requires the normal exact-head replay |
+| MP-H1C0 operator-led Herdr consultation canary | lead process owner; depends on explicit operator authorization after two dispatcher slot failures | complete observation: a stale advisor pane failed because it could not see the target worktree; a fresh pane in the exact target checkout ran Claude Code 2.1.210 with Fable 5, high effort, and plan mode against authorized public strategic documents. It returned a usable independent route map and left the checkout clean after one retained API retry. Checkout mutation remains a hard falsifier. |
+| MP-H1R1 independent workflow falsification | Fable 5 process reviewer in fresh Herdr pane `w4:p8`; depends on MP-H1C0 and initial workflow/ADR draft | BLOCK: boundary separation, dispatcher-only writes, stale-pane and mutation falsifiers, retry evidence, and non-ratifying advisor semantics hold; however, the workflow overstated a blanket 2026-07-19 verification date and MP-H1 self-ratified without recording independent review. Per-consultation authorization was also ambiguous. |
+| MP-H1S1 governance-precision successor | lead process owner; depends on MP-H1R1; exclusive workflow guidance, ADR 0015, and this plan | complete draft: capability dates are route-scoped, the unresolved dispatcher slot observation is explicit, authorization expires after each consultation, ADR 0015 remains Proposed, and MP-H1 acceptance now depends on a recorded successor review. |
+| MP-H1R2 workflow successor review | same independent Fable 5 process reviewer; depends on MP-H1S1 | BLOCK: review dependency/history, per-consultation authorization, ADR status, and dispatcher-slot evidence close, but the Herdr matrix row inherited the 2026-07-18 default instead of dating its 2026-07-19 observation explicitly |
+| MP-H1S2 Herdr-date successor | lead process owner; depends on MP-H1R2; exclusive multi-provider workflow and plan/ADR status | complete draft: the Herdr row now explicitly dates the observed operator-led consultation 2026-07-19, without changing any boundary claim |
+| MP-H1R3 workflow date successor review | same independent Fable 5 process reviewer; depends on MP-H1S2 | PASS: the explicitly dated 2026-07-19 Herdr observation closes R2; the reviewer reaffirms the retained R1/R2 chain, dispatcher-slot defect, and non-ratifying review boundary |
+| MP-H1S3 resumable-tab successor | lead process owner; depends on operator feedback after MP-H1R3; exclusive Herdr workflow wording, ADR 0015, and this plan | complete draft: checkout freshness no longer implies a new advisor or split pane; one named/session-ID advisor is resumed at the exact target PWD in a dedicated background tab, and split panes require explicit operator direction |
+| MP-H1R4 final workflow successor review | same independent Fable 5 process reviewer continued in existing session/tab; depends on MP-H1S3 | PASS: exact target-PWD and clean-checkout controls, per-consultation authorization expiry, dispatcher-only writes/isolation, and non-assurance wording survive; dedicated tabs, operator-gated splits, and one named/session-ID advisor agree across all five governing documents. Same-session continuation preserved review context without standing authority. |
+| MP-H1 operator-led Herdr consultation gate | lead acceptance; depends on MP-H1R4 plus the locked repository gate | accepted: R1/R2 failures remain retained, R3/R4 pass, ADR 0015 is Accepted, and the route is an operator-trusted support/challenge session rather than a sandboxed child. One named advisor resumes in a dedicated tab at the exact PWD; all writes and actual children remain dispatcher-governed. The locked gate passes 24/20/38/3 record fixtures, 18 loader groups, 36 adapter tests, 18 candidates, 127 actor journeys, 20 governance tests, two reports/eight Evidence records, and 49 proof groups. |
 
 Parallel work is read-only or owns non-overlapping paths. From J3-F2 onward, the user
 authorized a bounded process canary for this small repository: one continuity owner
@@ -223,8 +232,9 @@ gates or protected intent. Revert to bounded multi-owner delegation if context
 saturation, shared-surface mistakes, missed concerns, or advisor dependence becomes
 observable. The advisor contributes `supports`/`challenges` evidence and cannot ratify
 the lead's work. Every actual delegated brief still supplies the full contract required
-by `AGENTS.md`; cross-provider launches use `agent-dispatch`, and model identity grants
-neither authority nor assurance.
+by `AGENTS.md`; cross-provider children and all writable launches use
+`agent-dispatch`, while an explicitly authorized operator-led Herdr advisor follows ADR
+0015. Model identity grants neither authority nor assurance.
 
 Every J1–J5 handoff packet retains governing revisions, exact commands and inputs,
 expected and observed positive/negative results, changed paths, tool provenance,
@@ -307,8 +317,29 @@ may be the smallest local test/CLI projection and must not become a universal tr
 - [x] PR/release governance convergence
 - [x] JG journey-complete release
 - [x] PR-M1 checkout Node 24 maintenance convergence
+- [x] MP-H1C0 operator-led Herdr consultation canary
+- [x] MP-H1R1 independent workflow review rejected with two blockers
+- [x] MP-H1S1 governance-precision successor
+- [x] MP-H1R2 independent workflow successor review rejected with one date residue
+- [x] MP-H1S2 Herdr-date successor
+- [x] MP-H1R3 workflow date successor review passed
+- [x] MP-H1S3 resumable-tab successor
+- [x] MP-H1R4 final workflow successor review passed
+- [x] MP-H1 operator-led Herdr consultation gate
 
 ## Discoveries and changed assumptions
+
+- Two north-star consultation attempts through `agent-dispatch --read-only` failed
+  before launch because both hard-coded worker slots reported occupied, with no
+  corresponding dispatcher process observable. Explicit operator authorization led to
+  MP-H1: an operator-led Herdr pane is usable for interactive read-only advice, but its
+  provider runs on the trusted host and may inherit Herdr control capability. It is not
+  a child, strict sandbox, or OS-enforced read-only route. The first reused pane also
+  proved that live advisor panes are checkout-scoped: future consultations resume one
+  named advisor session in a dedicated tab at the exact target PWD and verify clean
+  state before and after, without accumulating split panes or new sessions. ADR 0015
+  retains `agent-dispatch` for every child, write, unattended task, and review requiring
+  enforced isolation.
 
 - The package-author path is the strongest current journey; package and theory
   consumption are absent product edges rather than documentation gaps.

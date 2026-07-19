@@ -59,16 +59,30 @@ evidence. Model/provider diversity may reduce correlated blind spots, but model 
 never grants authority or assurance. See `docs/design/lifecycle.md` for the full protocol.
 
 Cross-provider children must be launched through `agent-dispatch`; agents never invoke
-`claude` or delegated `codex` directly. Read-only consultation uses
-`agent-dispatch --read-only`, while delegated writes require an isolated worktree and
-exclusive scope. The current dispatcher permits two delegated workers and depth two
-(lead -> worker -> reviewer), then fails loudly; every child enters pagu-box `strict`,
-and inherited authority may only narrow. Record requested and runtime-resolved model
-provenance, explicit
-effort, sandbox/write mode, and the externally disclosed data scope in the handoff.
-Herdr may provide lead-side panes, status, interaction, and worktree organization, but
-it does not replace `agent-dispatch` or become a child capability. Never expose its
-control socket or `HERDR_*` control environment inside a delegated sandbox.
+`claude` or delegated `codex` directly from an ordinary agent shell. Read-only child
+consultation uses `agent-dispatch --read-only`, while delegated writes require an
+isolated worktree and exclusive scope. The current dispatcher permits two delegated
+workers and depth two (lead -> worker -> reviewer), then fails loudly; every child
+enters pagu-box `strict`, and inherited authority may only narrow.
+
+After explicit operator authorization for that consultation, a lead already running
+inside Herdr may instead open an operator-led provider pane for read-only consultation.
+Authorization expires with the consultation and is not standing authority for another
+task. This is a trusted
+interactive advisor session, not a delegated child: prompt-level read-only instructions
+are not an OS boundary, the provider may inherit Herdr control capability, and its
+output supplies only `supports` or `challenges` evidence. Prefer one named, resumable
+advisor session in its own Herdr tab; resume it in a pane whose PWD is the exact
+intended checkout instead of accumulating split panes or new sessions. Select and
+verify the model, effort, and plan mode, disclose only authorized paths, and verify the
+checkout is clean before and after. Never use
+this route for writes, unattended execution, security-critical isolation, or when the
+operator has not authorized the broader boundary; use `agent-dispatch` instead.
+
+Record requested and runtime-resolved model provenance, explicit effort, route,
+sandbox/write mode, and the externally disclosed data scope in the handoff. Never
+expose the Herdr control socket or `HERDR_*` control environment inside a delegated
+sandbox.
 Follow the capability and verification-status matrix, routing, command patterns,
 provenance packet, and failure handling in
 `docs/operations/multi-provider-workflow.md`; re-probe versioned capabilities rather

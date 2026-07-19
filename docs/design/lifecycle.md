@@ -102,18 +102,30 @@ Substitution or fallback creates recorded reassignment provenance rather than a 
 downgrade.
 
 Cross-provider children run only through `agent-dispatch`, which preserves bounded
-delegation depth and narrows children into the configured sandbox. Use read-only mode
-for consultation and skepticism. Writable execution requires an isolated worktree or
-otherwise verified exclusive directory, because a semantic path boundary in a brief is
-not an operating-system write boundary. Read-only prevents mutation, not disclosure;
-record and authorize the repository scope visible to any external provider.
+delegation depth and narrows children into the configured sandbox. Use dispatcher
+read-only mode when consultation requires that enforcement. Writable execution always
+uses the dispatcher plus an isolated worktree or otherwise verified exclusive
+directory, because a semantic path boundary in a brief is not an operating-system
+write boundary. Read-only prevents mutation, not disclosure; record and authorize the
+repository scope visible to any external provider.
 
 An observable terminal control plane such as Herdr may create panes, report status,
 carry interaction, and organize worktrees around dispatched processes. It is not the
 execution or security boundary: its ability to launch arbitrary host processes means
 the control socket and control environment remain lead-side and never enter a child
-sandbox. The child remains observable through its managed PTY; all provider launches
-still pass through the dispatcher.
+sandbox.
+
+With explicit operator authorization for that consultation, a lead already inside
+Herdr may run a provider directly in a correctly scoped pane for a read-only interactive
+consultation. Prefer a named, resumable advisor session in its own tab; resume it in the
+exact target checkout instead of accumulating sessions or split panes. The authorization
+expires with that consultation.
+That pane is an operator-trusted advisor session, not a child, and its read-only rule is
+procedural rather than OS-enforced. It may inherit the Herdr control plane, so it must
+not write, delegate, run unattended, or be cited as sandboxed assurance. Verify model,
+effort, plan mode, checkout, authorized disclosure, and clean state before and after.
+Any writable work or consultation requiring enforced isolation returns to
+`agent-dispatch`. The advisor can support or challenge a node but cannot ratify it.
 
 ### Delegation contract
 
