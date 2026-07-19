@@ -2,10 +2,10 @@
 
 ## Status and acceptance boundary
 
-This document is the O2 design candidate for ExecPlan 0004. It turns the accepted
-paper probe into exact actor observations. It is not yet canonical registry content,
-an adapter protocol, Evidence, or authorization to implement. O-R2's BLOCK is retained;
-O-R2b and O-G2 must pass before red journey controls freeze this contract.
+This document is the O-G2-accepted design contract for ExecPlan 0004. It turns the
+accepted paper probe into exact actor observations. O-R2 and O-R2b's BLOCKs remain in
+the plan history; O-R2c passed their successor. O-G2 authorizes only the ordered nodes
+starting with exact O3a contract artifacts, not Evidence or out-of-order implementation.
 
 The slice establishes generality only across Stack and one structurally different
 finite OrderedMap. It does not establish a universal collection abstraction, quotient
@@ -41,7 +41,8 @@ It also declares the exact performance vocabulary needed by the unsupported
   workload; future performance instrumentation would report a nonnegative count for
   every `put` invocation;
 - proposition: for `operationFamily: ["put"]`, there exist constants `a,b >= 0` such
-  that total `realization-steps` is at most `a*n+b` for every `n >= 0`;
+  that for every `n >= 0` and every permitted length-`n` key/value sequence, total
+  `realization-steps` is at most `a*n+b`;
 - permitted Evidence methods: exactly `proof` and `proof-audit`.
 
 The current adapter protocol does not report `realization-steps`, so neither a clean
@@ -127,9 +128,22 @@ pins:
 - the recognized deployment interface string and its directional boundary
   classification.
 
-The manifest and plan digests are filled only when their immutable O3/O5 artifacts
-exist; their canonical fields and ownership are frozen here. The product wrapper and
-repository gate pin the final ProductContract digest before any Evidence is accepted.
+Authority converges in stages without pretending future bytes already exist:
+
+1. O3a owns the exact Specification, profile, and one canonical conformance-plan JSON
+   artifact, then O-R3a reviews their bytes and digests. O3b controls consume that
+   artifact directly and do not encode a second plan oracle.
+2. O5 owns a separately identified theory-source manifest/authority for pre-execution
+   publication and projection. Its results surface that provisional exact authority
+   and do not claim final product convergence.
+3. Only after O6 creates package records, reports, and Evidence can O6-G create the
+   complete product manifest and final `ordered-map-product-contract/0.1.0`. O6-G then
+   replays publication, registration, graph, and package views under the final
+   contract before O7 resolution.
+
+The product wrapper and repository gate pin the final ProductContract digest before
+any Evidence is accepted into the complete product source set. Previously reviewed
+reports/Evidence candidates remain outside final membership until that convergence.
 Actor-facing publication, registration, resolution, and inspection entrypoints do not
 accept contract overrides. Lower-level shared primitives require the complete contract
 and fail closed on ID, version, digest, selector, manifest, plan, Specification,
@@ -146,13 +160,15 @@ values into trusted immutable product integration; it does not make them caller 
 
 ### Theory author: manifest-governed publication
 
-Given the contract-pinned canonical manifest and selected theory source, publication inventories
+At O5, given the theory-source-contract-pinned manifest and selected theory source,
+publication inventories
 only the two approved theory records, validates schema/link/content digests and roles,
 and returns immutable exact addresses and provenance without following symlinks or
 executing content. Missing, unexpected, moved, aliased, mutated, malformed, or
 wrong-version records fail in the same input, graph, then membership phases as Stack.
-The existing Stack entrypoint remains a compatibility wrapper over the same
-manifest-driven observation and preserves its diagnostics.
+O6-G must replay the same outcome under the complete ProductContract manifest before
+it is final. The existing Stack entrypoint remains a compatibility wrapper over the
+same manifest-driven observation and preserves its diagnostics.
 
 ### Package authors: independent registration and reproduction
 
@@ -235,10 +251,12 @@ exact successful response shapes are:
 `empty` and `put` return an opaque `map` handle. `lookup` returns exactly the tagged
 `none` or `some` result above. `entries` returns the bounded class/value sequence.
 An adapter error to a valid request has exact shape
-`{"seq":n,"status":"error","error":{"code":s,"message":s},"events":[]}` with
+`{"seq":n,"status":"error","error":{"code":s,"message":s},"events":e}` with
 nonempty strings; it is always an execution error, not a semantic counterexample.
 Every response echoes `seq`, has exactly one of `result` or `error`,
-and carries that invocation's ordered nonempty event-class strings. Stdout contains
+and carries that invocation's event list `e`, whose elements are ordered nonempty
+event-class strings. Error responses may report nonempty events; those events remain
+visible, but the invocation's overall Evidence contribution stays `error`. Stdout contains
 only one response line per request; stderr is retained as diagnostic provenance but
 has no semantic meaning. Handles retain stable observational denotation for the
 session; handle identity, spelling, freshness, and stored key spelling have no meaning.
@@ -260,13 +278,16 @@ execution errors, not semantic counterexamples. An `io.*` event is a counterexam
 only inside the adapter-reported invocation boundary; completeness and adapter
 faithfulness remain explicit assumptions/exclusions.
 
-One immutable canonical plan has algorithm `ordered-map-conformance-campaign`, version
-`1`, response/exit timeout `0.20` seconds, exact key and value domains above, maximum
-history three, maximum live classes three, and observation limit three.
-Its canonical sorted/minified JSON includes exact Specification/profile addresses and
-digests, the event contract, every case/step/expected observation below, and their
-declaration attribution; SHA-256 is its identity. O3 freezes the derived digest before
-implementation, and O6 Evidence must match it exactly. Its cases are exactly:
+O3a authors one immutable JSON plan artifact with algorithm
+`ordered-map-conformance-campaign`, version `1`, response/exit timeout `0.20` seconds,
+exact key and value domains above, maximum history three, maximum live classes three,
+and observation limit three. It uses one schema-governed representation for logical
+handle bindings, requests, expected results, per-invocation effect attribution, and
+per-observation declaration attribution; JSON numbers use the canonical integer
+spellings already required by the profile. Canonical sorted/minified JSON is hashed for
+identity. O-R3a must reject any ambiguous encoding or second oracle before O3b exists.
+O3b loads this artifact rather than reconstructing its cases; O6 Evidence must match
+its reviewed digest exactly. The artifact instantiates exactly this case table:
 
 | Case | Exact issued steps and expected observation | Declaration attribution |
 |---|---|---|
@@ -275,8 +296,8 @@ implementation, and O6 Evidence must match it exactly. Its cases are exactly:
 | `other-class-preservation` | `empty -> h0`; `put(h0,"A",1) -> h1`; `put(h1,"B",2) -> h2`; `lookup(h2,"a") -> some(1)` | `lookup-put-other` |
 | `nonlast-overwrite-order` | exact `m0`/`m1` witness above, then `entries(m1) -> [(a,-1),(b,2)]` | `put-existing-position` |
 | `new-class-append-three` | `empty -> h0`; successive puts `("A",1)`, `("B",2)`, `("C",-2)`; final entries `[(a,1),(b,2),(c,-2)]` | `put-new-appends` |
-| `retained-new-class-source` | retain `h1` after `put(h1,"B",2) -> h2`; re-observe `h1` as `[(a,1)]` and `h2` as `[(a,1),(b,2)]` | `persistence` |
-| `retained-existing-class-source` | retain `h2=[(a,1),(b,2)]` after `put(h2,"a",-1) -> h3`; re-observe `h2` unchanged and `h3=[(a,-1),(b,2)]` | `persistence` |
+| `retained-new-class-source` | retain `h1=[(a,1)]`; issue `put(h1,"B",2) -> h2`; re-observe only retained `h1` as `[(a,1)]` | retained-source observation: `persistence`; derived `h2` is not a persistence oracle |
+| `retained-existing-class-source` | retain `h2=[(a,1),(b,2)]`; issue `put(h2,"a",-1) -> h3`; re-observe only retained `h2` unchanged | retained-source observation: `persistence`; derived `h3` is not a persistence oracle |
 
 Every invocation in every case is also attributed to `ordered-map-effects`; a clean
 candidate supports only the observation that no forbidden event was reported inside
@@ -340,7 +361,7 @@ Evidence, infer refinement, or define removal and reinsertion semantics.
 
 ## Review falsifiers and exclusions
 
-O-R2b must block the corrected design if any of these observations can occur:
+Any successor review must reopen O-G2 if any of these observations can occur:
 
 - a returned concrete key spelling becomes normative instead of the class token;
 - `A` then `B` then overwrite through `a` can reorder without challenge;
@@ -354,6 +375,9 @@ O-R2b must block the corrected design if any of these observations can occur:
   ownership, symlink traversal, or execution;
 - the optional performance proposition disappears or is reported supported;
 - test-only breaker records enter accepted manifest membership;
+- an O3b control reconstructs or mutates the reviewed O3a plan instead of consuming it;
+- a theory-source authority is reported as final ProductContract convergence, or the
+  final contract is created before every referenced manifest member and digest exists;
 - an actor overrides the ProductContract, manifest trust root, accepted plan digest,
   concern mapping, effect scope, or boundary mapping;
 - a theory projection presents realization-scoped conformance as Specification

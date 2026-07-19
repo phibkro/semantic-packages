@@ -89,12 +89,17 @@ O0 priority + categorical-memory reconciliation
   -> O-R2 independent contract/security review
   -> O-S2 exact authority, protocol, projection, and successor correction
   -> O-R2b independent successor review
+  -> O-S3 artifact-ordering and per-observation attribution correction
+  -> O-R2c independent successor review
   -> O-G2 design gate
-  -> O3 red journey controls
-  -> O-R3 red-control review
+  -> O3a exact Specification/profile/conformance-plan artifacts
+  -> O-R3a contract-artifact review
+  -> O3b red journey controls consuming those artifacts
+  -> O-R3b red-control review
   -> O4 smallest shared-substrate extraction
-  -> O5 theory publication + records + graph + theory projection
-  -> O6 package registration + Realizations + breaker + Evidence
+  -> O5 theory-source publication + graph + theory projection
+  -> O6 package packets + Realizations + breaker + Evidence candidates
+  -> O6-G final manifest/ProductContract convergence + publication/registration replay
   -> O7 resolution + directional boundary + inspection
   -> O8 exact successor/recovery maintenance
   -> O-R4 independent end-to-end review
@@ -113,14 +118,19 @@ O0 priority + categorical-memory reconciliation
 | O2 actor journey and records | continuity owner; exclusive plan/design docs and proposed fixtures; depends on O-G1 | candidate complete: exact ASCII-fold class serialization; four actor terminal outcomes; exact record identities/ownership; policy/profile and Evidence axes; separate non-direct boundary; isolated reorder breaker; shared-extraction limit; unsupported exact successor |
 | O-R2 contract/security review | independent read-only reviewer; depends on O2 | BLOCK retained: performance vocabulary and campaign/session identity were incomplete; manifest/resolver authority was overridable; the theory view crossed into package Evidence; and the stated successor result had no exact-version candidates capable of producing it |
 | O-S2 review correction | continuity owner; exclusive plan and OrderedMap design; depends on O-R2 BLOCK | freeze the performance proposition/profile members, canonical campaign/session lifecycle and attribution, non-overridable product authority identity, specification-only theory view, and honest no-candidate successor |
-| O-R2b successor review | same independent read-only reviewer; depends on O-S2 | verify each O-R2 blocker against the corrected contract and retain all residual concerns |
-| O-G2 design gate | lead acceptance; depends on O-R2b PASS | frozen minimal vertical slice and exclusive implementation boundaries |
-| O3 red journey controls | continuity owner; exclusive new OrderedMap journey tests; depends on O-G2 | intentional failures at the first absent shared/product surfaces; controls cannot pass on hard-coded output or Stack aliases |
-| O-R3 red-control review | independent read-only reviewer; depends on O3 | oracle completeness, negative-control power, execution/I/O boundaries, and regression isolation |
-| O4 shared-substrate extraction | continuity owner; exclusive domain-neutral modules and Stack compatibility wrappers; depends on O-R3 PASS | smallest manifest-/contract-driven extraction; every Stack test stays green; no universal resolver fiction |
-| O5 theory publication/records/graph/projection | continuity owner; exclusive OrderedMap canonical records/manifests and domain journey fixtures; depends on O4 | exact valid publication and graph, authored meaning, visible unknowns, phase/membership attacks, and no execution |
-| O6 package registration/Realizations/breaker/Evidence | continuity owner; exclusive OrderedMap implementations/adapters/campaign/Evidence; depends on O5 | two independently represented registered packages, one targeted breaker, fresh reproducible reports, exact Claim/Evidence bindings, assumptions and exclusions |
-| O7 consumer decision/inspection | continuity owner; exclusive bounded OrderedMap resolution and presentation; depends on O6 | semantic status under exact policy/profile, every Evidence axis, separate directional boundary, and graph-derived theory/package views |
+| O-R2b successor review | same independent read-only reviewer; depends on O-S2 | BLOCK retained: performance, protocol, trust ownership, projection, and successor meaning close, but plan/record/final-manifest digests were ordered impossibly and one derived-map observation contaminated persistence attribution |
+| O-S3 ordering/attribution correction | continuity owner; exclusive plan and OrderedMap design; depends on O-R2b BLOCK | split reviewed exact input/plan artifacts from final ProductContract convergence, make red controls consume one artifact oracle, and attribute only retained-source observations to persistence |
+| O-R2c successor review | same independent read-only reviewer; depends on O-S3 | PASS: exact-artifact/final-authority ordering is derivable without future bytes; plan consumers cannot create a second oracle; per-observation persistence attribution isolates the reorder breaker; prior performance/protocol/trust/projection/successor corrections remain closed |
+| O-G2 design gate | lead acceptance; depends on O-R2c PASS | PASS: freezes the two-domain-only actor slice and releases only O3a's final-path Specification/profile plus canonical plan artifact/schema, followed by independent artifact review before red controls |
+| O3a exact contract artifacts | continuity owner; exclusive final-path OrderedMap Specification/profile records and one canonical conformance-plan JSON artifact/schema; depends on O-G2 | byte-level inputs, encodings, cases, steps, observations, attribution, canonicalization, and digests; no runner implementation or accepted Evidence |
+| O-R3a contract-artifact review | independent read-only reviewer; depends on O3a | representation independence, oracle ownership, digest derivability, finite falsification, and no second truth |
+| O3b red journey controls | continuity owner; exclusive new OrderedMap journey tests; depends on O-R3a PASS | tests consume the reviewed artifacts and intentionally fail at first absent shared/product surfaces; no duplicated plan oracle, hard-coded output, or Stack alias |
+| O-R3b red-control review | independent read-only reviewer; depends on O3b | oracle completeness, negative-control power, execution/I/O boundaries, and regression isolation |
+| O4 shared-substrate extraction | continuity owner; exclusive domain-neutral modules, authority-contract shape, and Stack compatibility wrappers; depends on O-R3b PASS | smallest contract-driven extraction; every Stack test stays green; no universal resolver fiction; no premature OrderedMap final ProductContract |
+| O5 theory-source publication/graph/projection | continuity owner; exclusive OrderedMap theory-source manifest/authority and domain journey fixtures; depends on O4 and consumes O3a records byte-for-byte | exact valid theory-source publication and graph, authored meaning, visible unknowns, phase/membership attacks, and no execution; final product replay remains open |
+| O6 package packets/Realizations/breaker/Evidence candidates | continuity owner; exclusive OrderedMap implementations/adapters/campaign/package records/reports/Evidence candidates and final manifest inputs; depends on O5 | two independently represented package packets, one targeted breaker, fresh reproducible reports, exact Claim/Evidence bindings, assumptions and exclusions; no final registration claim before O6-G |
+| O6-G final trust convergence | continuity owner; exclusive final manifest, immutable OrderedMap ProductContract, wrapper integration, and affected actor replay; depends on O6 | final contract pins complete manifest, O3 plan, Specification/profile, resolver/effect/boundary rules; publication, package registration, graph, and package views replay under surfaced exact authority |
+| O7 consumer decision/inspection | continuity owner; exclusive bounded OrderedMap resolution and presentation; depends on O6-G | semantic status under exact policy/profile, every Evidence axis, separate directional boundary, and graph-derived theory/package views |
 | O8 maintenance | continuity owner; exclusive OrderedMap successor snapshot/tests; depends on O7 | exact successor failure or change, no implicit Evidence migration, predecessor recoverability without automatic selection |
 | O-R4 end-to-end review | independent read-only reviewer; depends on O8 | all four actor outcomes, negative controls, known exclusions, Stack regression, and generality claim boundary |
 | O-G final gate | lead acceptance; depends on O-R4 PASS and locked local/hosted gates | full repository reproduction, retained failures, active-plan result, conventional PR metadata/history, and exact claim of two-domain—not universal—generality |
@@ -161,13 +171,18 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
 - [x] O2 actor-complete journey and exact-record design candidate
 - [x] O-R2 independent contract/security review — BLOCK retained
 - [x] O-S2 exact authority, protocol, projection, and successor correction
-- [ ] O-R2b independent successor review
-- [ ] O-G2 design gate
-- [ ] O3 red journey controls
-- [ ] O-R3 red-control review
+- [x] O-R2b independent successor review — BLOCK retained
+- [x] O-S3 artifact-ordering and per-observation attribution correction
+- [x] O-R2c independent successor review passed
+- [x] O-G2 design gate accepted; O3a released
+- [ ] O3a exact Specification/profile/conformance-plan artifacts
+- [ ] O-R3a contract-artifact review
+- [ ] O3b red journey controls
+- [ ] O-R3b red-control review
 - [ ] O4 shared-substrate extraction
-- [ ] O5 theory publication/records/graph/projection
-- [ ] O6 package registration/Realizations/breaker/Evidence
+- [ ] O5 theory-source publication/graph/projection
+- [ ] O6 package packets/Realizations/breaker/Evidence candidates
+- [ ] O6-G final manifest/ProductContract convergence and publication/registration replay
 - [ ] O7 consumer decision/inspection
 - [ ] O8 maintenance
 - [ ] O-R4 end-to-end review
@@ -241,6 +256,17 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
   one law when all exact-version candidates were absent. O-S2 freezes the missing
   identities and changes the successor terminal outcome to honest zero-candidate
   resolution plus exact predecessor recovery.
+- O-R2b closes those semantic/trust-shape corrections but finds their lifecycle order
+  impossible: an O3 plan cannot pin O5-owned record digests, and a final ProductContract
+  cannot pin O6 records before they exist. It also finds a derived-map order check
+  incorrectly attributed to persistence. O-S3 gives O3a ownership of exact
+  Specification/profile/plan bytes, makes O3b consume that single reviewed oracle, and
+  defers complete manifest/ProductContract convergence to O6-G; persistence cases
+  observe only retained sources while derived order stays with its own law.
+- O-R2c passes O-S3 without reopening earlier concerns. O-G2 accepts the design as the
+  smallest current end-to-end slice: O3a may now author exact final-path semantic inputs
+  and one plan artifact/schema, but O3b cannot exist until O-R3a independently verifies
+  those bytes, encodings, digest, attribution, and single-oracle property.
 
 ## Decision log
 
@@ -259,10 +285,10 @@ categorical discussion as bounded research memory, and identifies which accepted
 surfaces are promising shared substrate versus domain-local semantics. No OrderedMap
 canonical record or implementation is accepted yet. O-R1's BLOCK remains part of the
 history and O-R1b's successor PASS closes it without erasure. O2 turns the paper
-contract into exact actor terminal outcomes; O-R2's BLOCK remains the next design
-revision history. O-S2 is now the corrected candidate. O-R2b must verify the exact
-performance, campaign, trust-root, projection, and successor changes before O-G2 may
-freeze red controls.
+contract into exact actor terminal outcomes; O-R2 and O-R2b remain as design revision
+history, and O-R2c passes their final successor. O-G2 is accepted. O3a is the live edge:
+author the exact final-path Specification/profile plus one canonical conformance-plan
+artifact/schema, with no runner, package, report, Evidence, or final ProductContract.
 
 ## Stop and escalation conditions
 
