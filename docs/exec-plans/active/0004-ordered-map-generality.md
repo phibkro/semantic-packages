@@ -137,6 +137,10 @@ O0 priority + categorical-memory reconciliation
   -> O-R6-P2 successor lifecycle review
   -> O6a runner/campaign research + red controls
   -> O-R6a runner/campaign red-control review
+  -> O6a-S1 oracle/protocol/cleanup correction
+  -> O-R6a2 successor red-control review
+  -> O6a-S2 exact branch/start/immutability correction
+  -> O-R6a3 final successor red-control review
   -> O6b runner/campaign implementation + hardening
   -> O-R6b runner/campaign implementation review
   -> O6c independent Rust + TypeScript candidate packets
@@ -211,9 +215,13 @@ O0 priority + categorical-memory reconciliation
 | O-R6-P lifecycle plan review | independent read-only reviewer; depends on O6-P | BLOCK retained: continuity-owned O6-G both wrote future final manifest/ProductContract/wrapper bytes and released O7 without an independent review after those consequential artifacts existed |
 | O6-P-S1 final-authority review correction | continuity owner; exclusive O6 lifecycle/design reconciliation and this plan; depends on O-R6-P BLOCK | split final authority into O6f candidate bytes/replay, O-R6f independent exact-artifact review, and read-only O6-G acceptance; clarify report-only outcomes, breaker-control wording, maintenance handoff/reopen ownership, and historical candidate-vs-final references |
 | O-R6-P2 successor lifecycle review | same independent read-only reviewer; depends on O6-P-S1 | PASS: artifact order, Claim/Evidence/authority/decision axes, exclusive ownership, candidate independence, maintenance handoff, and reopen triggers are executable with no circular or future-digest dependency |
-| O6a runner/campaign research and red controls | continuity owner; exclusive OrderedMap runner/campaign design reconciliation, new adapter controls, runner/campaign tests, and this plan; depends on O-R6-P2 PASS | consume the one reviewed O3 plan without reconstructing an oracle; freeze strict lockstep protocol, exact seven cases/declaration attribution, effect classification, lifecycle/transport errors, retained-source checks, one expected targeted-reorder red-control classification signature, assumptions/exclusions, and an intentional missing-runner predecessor |
-| O-R6a runner/campaign red-control review | independent read-only reviewer; depends on O6a | challenge oracle duplication, protocol ambiguity, semantic-vs-execution classification, effect-scope leakage, plan override, teardown bounds, breaker selectivity, and truthful red topology before implementation |
-| O6b runner/campaign implementation and hardening | continuity owner; exclusive OrderedMap-local runner/campaign modules, fake adapter controls, affected tests/docs, and this plan; depends on O-R6a PASS | implement the smallest plan-driven child-process harness; red-green-refactor through exact diagnostics, immutable reports, no candidate imports, bounded teardown, and no registry/Evidence writes |
+| O6a runner/campaign research and red controls | continuity owner; exclusive OrderedMap runner/campaign design reconciliation, new adapter controls, runner/campaign tests, and this plan; depends on O-R6-P2 PASS | complete: one reviewed-plan/fake-adapter precondition passes, one absent-runner failure is intentional, and eleven successors freeze a command-only pinned-plan API, single authenticated plan snapshot, pre-execution authority closure, exact seven-declaration attribution, local semantic challenges, effect classification, transport/lifecycle errors, bounded teardown, trust limits, and immutable fresh replay |
+| O-R6a runner/campaign red-control review | independent read-only reviewer; depends on O6a | BLOCK retained: authenticated-plan capture was not bound to execution, four declaration counts and all case traces were under-frozen, strict nested response/event/error shapes and pre-request output were incomplete, response-timeout cleanup was unproved, event wildcard/ledger semantics were partial, opaque-handle/stderr/nested immutability controls were weak, and fake-report authority wording contradicted ephemeral test use |
+| O6a-S1 oracle/protocol/cleanup correction | continuity owner; exclusive O6a hostile fixture/tests and this plan; depends on O-R6a BLOCK | complete: access-track every captured plan step and compare its complete 30-request/seven-case ledger while forbidding direct plan/schema reads; pin all declaration counts; add strict nested result/error/event/sequence/handle, pre-request output, adapter-error precedence, wildcard, arbitrary-handle, raw-stderr, recursive-immutability, no-persistence/no-authority, and dual-timeout PID-reaping controls |
+| O-R6a2 successor red-control review | same independent read-only reviewer; depends on O6a-S1 | BLOCK retained: major gaps close, but the literal tracker omitted case ID/steps access, later operation/error response branches remained incomplete, the plan barrier patched one process API rather than observing non-start, case immutability/authority vocabulary were partial, and lockstep timing still required an implementation dataflow obligation |
+| O6a-S2 exact branch/start/immutability correction | continuity owner; exclusive O6a hostile fixture/tests and this plan; depends on O-R6a2 BLOCK | complete: track case IDs/steps, exercise every later operation/error branch, prove plan failure through an absent child start marker independent of process API, close case collection/field immutability and authority-axis vocabulary, and carry one-write/one-response lockstep plus copied-oracle audits explicitly to O-R6b |
+| O-R6a3 final successor red-control review | same independent read-only reviewer; depends on O6a-S2 | PASS: exact topology, plan/case/request binding, strict branch matrix, non-start and dual cleanup, event precedence/ledger, opaque handles, raw stderr, recursive immutability, and no-persistence/no-authority controls release O6b only |
+| O6b runner/campaign implementation and hardening | continuity owner; exclusive OrderedMap-local runner/campaign modules, fake adapter controls, affected tests/docs, and this plan; depends on O-R6a3 PASS | implement the smallest plan-driven child-process harness; red-green-refactor through exact diagnostics, immutable reports, no candidate imports, bounded teardown, and no registry/Evidence writes; source review must prove captured-plan dataflow with no copied oracle and exactly one request write followed by its response read before the next write |
 | O-R6b runner/campaign implementation review | independent read-only reviewer; depends on O6b | focused protocol/campaign replay, adversarial lifecycle/effect/oracle probes, Stack regression, full repository gate, and explicit no-authority/no-Evidence audit |
 | O6c independent Rust and TypeScript candidate packets | continuity owner; exclusive OrderedMap candidate sources/adapters/READMEs, candidate build controls, and this plan; depends on O-R6b PASS | Rust sequence-of-pairs and TypeScript table-plus-order representations independently implement the protocol; neither imports the other, runner oracle, or shared OrderedMap transition logic; reproducible documented build/run commands and source review pass |
 | O-R6c representation-independence/package review | independent read-only reviewer; depends on O6c | inspect source/dataflow and builds, challenge shared-oracle leakage and representation convergence, confirm adapter-only protocol sharing, and retain environment/toolchain exclusions |
@@ -311,8 +319,12 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
 - [x] O-R6-P lifecycle plan review — BLOCK retained
 - [x] O6-P-S1 final-authority review correction
 - [x] O-R6-P2 successor lifecycle review passed; O6a released
-- [ ] O6a runner/campaign research and red controls
-- [ ] O-R6a runner/campaign red-control review
+- [x] O6a runner/campaign research and red controls complete
+- [x] O-R6a runner/campaign red-control review — BLOCK retained
+- [x] O6a-S1 oracle/protocol/cleanup correction
+- [x] O-R6a2 successor red-control review — BLOCK retained
+- [x] O6a-S2 exact branch/start/immutability correction
+- [x] O-R6a3 final successor red-control review passed; O6b released
 - [ ] O6b runner/campaign implementation and hardening
 - [ ] O-R6b runner/campaign implementation review
 - [ ] O6c independent Rust and TypeScript candidate packets
@@ -580,6 +592,42 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
   runner result -> report fact -> Claim -> Evidence result/review -> candidate
   registration replay -> reviewed ProductContract candidate -> final authority ->
   semantic decision -> maintenance; only O6a red controls are released.
+- O6a's first run exposed a copied plan-digest middle that disagreed with the accepted
+  O3 artifact. The test was corrected to consume the existing
+  `2cf7b481946c…947a` identity without changing plan bytes. Its reviewed-plan and
+  hostile-adapter precondition now passes; the 13-test topology has one intentional
+  absent `ordered_map_runner` failure and eleven skipped successor controls. The fake
+  adapter is protocol-only test infrastructure: ephemeral hostile-control reports are
+  allowed, but retained candidate reports, manifests, Claims, Evidence, reviews, and
+  acceptance inputs are forbidden.
+- O-R6a retains the truthful red topology but blocks implementation because plan
+  authentication was not yet bound to the executed request ledger, exact campaign and
+  strict protocol coverage were incomplete, response-timeout cleanup and event
+  precedence were under-frozen, and handle/stderr/nested immutability/no-authority
+  controls were weak. O6a-S1 owns one coherent correction; O-R6a2 must retain a static
+  copied-oracle audit as an O-R6b obligation because black-box testing cannot establish
+  source/dataflow absence conclusively.
+- O6a-S1 preserves the 13-test topology—one reviewed precondition passes, one absent
+  runner fails, and eleven successors skip—while expanding subcases rather than
+  manufacturing extra gates. The captured document is access-tracked down to every
+  step field and must yield the exact 30-request journal and seven case summaries;
+  ordinary direct plan/schema readers are rejected. Both response and EOF timeout
+  controls retain a PID and require bounded kill/reap. Ephemeral hostile-control
+  reports are recursively frozen, retain exact raw stderr/events, expose no authority
+  vocabulary, and leave OrderedMap registry/Evidence bytes unchanged.
+- O-R6a2 confirms those major closures but retains a narrow successor BLOCK: case IDs
+  and step collections themselves were not access-required; some later operation/error
+  shapes could escape behind an earlier strict `empty`; plan failure patched `Popen`
+  rather than observing child non-start; case fields and several authority-axis names
+  remained mutable/unexamined; and lockstep timing is fundamentally a source/dataflow
+  audit. O6a-S2 adds exact subcases and an adapter start marker without changing the
+  13-test topology. O-R6b now explicitly owns both no-copied-oracle and one-write/
+  one-response-before-next-write audits.
+- O-R6a3 passes the final red boundary. Independent replay confirms one green
+  precondition, one intentional absent-runner failure, eleven skips, exact compilation,
+  and a clean diff. O6b alone is released; its review must statically prove captured
+  plan dataflow, one-write/one-response lockstep, and continued non-promotion of fake
+  reports into authority or Evidence.
 - O4's full repository gate passes with 24 valid/20 schema-invalid/38 link-invalid/3
   link-valid record fixtures, 18 loader groups, 36 adapter tests, 18 cross-language
   candidates, 156 actor journeys, 10 research probes, 20 governance tests, two fresh
