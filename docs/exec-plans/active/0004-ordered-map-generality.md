@@ -319,9 +319,9 @@ O0 priority + categorical-memory reconciliation
 | O6e-S1 durable-state truth correction | continuity owner; exclusive this plan; depends on O-R6e BLOCK | complete: replace the stale absence statement with the exact present candidate state while retaining the absent final manifest/ProductContract, registration acceptance, resolver decision, and maintenance successor; no implementation, record, or accepted control changed |
 | O-R6e2 successor package/evidence-candidate review | same independent read-only reviewer; depends on O6e-S1 | PASS: predecessor BLOCK and DAG ordering remain visible; Result truth now agrees with the exact present 2/14/14 candidate set and absent authority artifacts; no implementation, record, test, provenance, or accepted-control conclusion changed or weakened; macro convergence released |
 | O-R6 macro lifecycle acceptance | lead convergence gate; depends on O-R6e2 PASS | BLOCK retained: O6e implementation and successor review pass, but the first full gate missed an unchanged Stack proof-fixture 3.0-second deadline and its unchanged rerun returned correct OrderedMap `TIMEOUT`/cleanup semantics while exceeding the test's 0.60-second total at 0.6566 seconds; no clean full-gate receipt exists for this convergence edge |
-| O6-F1 quiescent scheduling characterization | continuity owner; read-only replay plus this plan; depends on O-R6 BLOCK | change no runner, plan, test, report, or record byte; after competing workstation builds quiesce, pass five consecutive sequential repetitions of both timeout-owning OrderedMap runner methods under the unchanged bounds, then pass one unchanged full repository gate; reopen test framing or phase-level timing evidence if any focused repetition misses |
-| O-R6-F scheduling-characterization review | same independent read-only reviewer; depends on O6-F1 | verify the load observation, exact 5x2 sequential topology, unchanged bound bytes, clean full gate, retained failed receipts, and no silent retry/relaxation; distinguish execution semantics from scheduler-independent wall-clock claims |
-| O-R6-2 successor macro lifecycle acceptance | lead convergence gate; depends on O-R6-F PASS | research/design/red-green/refactor/document/reproduction plus maintenance handoff/reopen inputs agree: immutable predecessor bytes, exact reproduction/toolchain ownership, and reopen triggers are named for O8; two independent candidates, one selective breaker, fresh reports, and candidate records pass the full gate; O6 closes without registration acceptance and releases O6f candidate-authority work |
+| O6-F1 quiescent scheduling characterization | continuity owner; read-only replay plus this plan; depends on O-R6 BLOCK | complete pending O-R6-F: no runner, plan, test, report, or record byte changed; five consecutive sequential repetitions of both timeout-owning OrderedMap runner methods passed unchanged, then GitHub Actions run 29705557179 accepted prospective metadata in 1m31s and the exact `491ac00` repository contract in 3m48s on a separate hosted runner; local failed receipts remain retained |
+| O-R6-F scheduling-characterization review | same independent read-only reviewer; depends on O6-F1 | PASS: exact head and unchanged bound bytes, the five sequential two-method repetitions, strict classification/cleanup/0.60-second assertions, every contradictory local receipt, and hosted run 29705557179's complete repository gate agree; scheduler sensitivity remains an explicit reopen trigger rather than a real-time guarantee; O-R6-2 released |
+| O-R6-2 successor macro lifecycle acceptance | lead convergence gate; depends on O-R6-F PASS | PASS: research/design/red-green/refactor/document/reproduction plus maintenance handoff/reopen inputs agree; immutable predecessor bytes, exact reproduction/toolchain ownership, and O8 reopen triggers remain named; two independent candidates, one selective breaker, fresh reports, and the 2/14/14 candidate records pass the complete hosted gate; O6 closes without registration acceptance and releases O6f candidate-authority work only |
 | O6f final-authority candidate and actor replay | continuity owner; exclusive candidate final manifest, immutable OrderedMap ProductContract, wrapper integration, affected actor replay, tests/docs, and this plan; depends on O-R6-2 macro PASS | materialize proposed exact final bytes only after every member/digest exists; pin O3 plan, Specification/profile, resolver/effect/boundary rules; replay publication, package registration, graph, and package views under surfaced candidate authority without self-acceptance |
 | O-R6f final-authority implementation review | independent read-only reviewer; depends on O6f | independently reproduce every digest/member/selector/role and actor replay; challenge overrides, partial membership, stale reports/Evidence, fabricated construction, phase leaks, and Stack regression before any final-authority claim |
 | O6-G final trust-convergence acceptance | lead read-only convergence gate; depends on O-R6f PASS | accept only the exact independently reviewed manifest/ProductContract/wrapper bytes and evidence ledger as final OrderedMap product authority; record exclusions and release O7 without mutating the reviewed candidate |
@@ -469,9 +469,9 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
 - [x] O6e-S1 durable-state truth correction
 - [x] O-R6e2 successor package/evidence-candidate review passed; macro convergence released
 - [x] O-R6 macro lifecycle acceptance — BLOCK retained
-- [ ] O6-F1 quiescent scheduling characterization
-- [ ] O-R6-F scheduling-characterization review
-- [ ] O-R6-2 successor macro lifecycle acceptance
+- [x] O6-F1 quiescent scheduling characterization complete; O-R6-F pending
+- [x] O-R6-F scheduling-characterization review passed; successor convergence released
+- [x] O-R6-2 successor macro lifecycle acceptance passed; O6f released
 - [ ] O6f final-authority candidate and actor replay
 - [ ] O-R6f final-authority implementation review
 - [ ] O6-G final trust-convergence acceptance
@@ -1135,6 +1135,24 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
   characterization and the failed full-gate receipt, wait for the competing build
   stream to finish, and require one unchanged full-gate PASS without rerunning or
   weakening the already-passed focused shape.
+- The hosted bench supplies the missing clean full receipt without changing bound
+  bytes. After the PR body was reorganized under the repository's eight exact,
+  locally validated lifecycle headings, GitHub Actions run 29705557179 passed
+  prospective metadata in 1m31s and the repository contract in 3m48s against exact
+  head `491ac00`. Together with the already-passed unchanged 5x2 focused shape, O6-F1
+  is complete pending O-R6-F independent review; every local failed receipt remains
+  visible and no deadline, oracle, implementation, test, report, or record changed.
+- O-R6-F passes the complete characterization. Independent review confirms exact head
+  `491ac00`, unchanged bound bytes, the five sequential two-method repetitions, strict
+  classifications, cleanup, and 0.60-second assertions, every contradictory local
+  receipt, and hosted success across 50 adapters, 59 candidates, 49 proof groups,
+  three OrderedMap reports, and the 2/14/14 candidate set. Scheduler sensitivity stays
+  an explicit reopen trigger rather than becoming a universal real-time guarantee.
+- O-R6-2 passes successor macro convergence. The complete feature lifecycle through
+  scoped Claim/Evidence candidates agrees with immutable predecessor ownership,
+  reproduction/toolchain provenance, maintenance handoff, and O8 reopen inputs. O6
+  closes without registration, resolver, semantic-acceptance, or final-authority
+  promotion. O6f candidate-authority work only is released.
 - O-R6d-P4 passes the complete predecessor. Independent replay confirms the exact
   12-test topology—one accepted-input pass, one intentional absent-boundary failure,
   and ten skips—plus a clean diff. A cold copied checker cannot read original or copied
@@ -1182,11 +1200,12 @@ is still no final manifest/ProductContract, registration acceptance, resolver de
 or maintenance successor. Retained O-R6d through O-R6d5 provenance and reproduction
 BLOCKs now lead to O-R6d6 PASS. O6d is accepted, O-R6e-P2 passes, O-R6e retains one
 durable-state contradiction corrected by O6e-S1, and O-R6e2 passes. O-R6 macro retains
-two load-sensitive full-gate observations without changing any bound artifact; O6-F1
-quiescent scheduling characterization is the live edge. Final authority,
-registration acceptance, and consumer resolution remain held behind their later
-review and convergence gates.
-O6f may later
+load-sensitive full-gate observations without changing any bound artifact. O6-F1 now
+combines the unchanged 5x2 focused pass with one clean hosted exact-head repository
+pass, O-R6-F passes independent characterization review, and O-R6-2 accepts macro
+lifecycle convergence. O6f final-authority candidate and actor-replay work is the live
+edge. Final authority, registration acceptance, and consumer resolution remain held
+behind their later review and convergence gates. O6f may now
 materialize exact final-authority candidates and actor replay; O6-G alone may accept
 those reviewed bytes as final product authority.
 
