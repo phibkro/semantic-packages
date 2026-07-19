@@ -28,6 +28,7 @@ from urllib.parse import unquote
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import record_check  # noqa: E402
 import loader_fixture_check  # noqa: E402
+import ordered_map_evidence_check  # noqa: E402
 import ordered_map_report_check  # noqa: E402
 import proof_fixture_check  # noqa: E402
 import wave4_evidence_check  # noqa: E402
@@ -68,6 +69,7 @@ REQUIRED = [
     "scripts/proof_check.py",
     "scripts/check_change_metadata.py",
     "scripts/wave4_evidence_check.py",
+    "scripts/ordered_map_evidence_check.py",
     "scripts/ordered_map_report_check.py",
     ".github/pull_request_template.md",
     "proofs/stack-pop-empty/StackPopEmpty.lean",
@@ -201,6 +203,10 @@ def main() -> int:
         ordered_map_report_check.run_ordered_map_report_checks()
     )
     errors += ordered_map_errors
+    ordered_map_evidence_errors, ordered_map_evidence_summary = (
+        ordered_map_evidence_check.run_ordered_map_evidence_candidate_checks()
+    )
+    errors += ordered_map_evidence_errors
     proof_errors, proof_summary = run_proof_checks()
     errors += proof_errors
     if errors:
@@ -217,6 +223,7 @@ def main() -> int:
     print(governance_summary)
     print(wave4_summary)
     print(ordered_map_summary)
+    print(ordered_map_evidence_summary)
     print(proof_summary)
     print("Repository checks passed.")
     return 0

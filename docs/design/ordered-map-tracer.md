@@ -359,6 +359,34 @@ packets. Repository-relative compiler inputs make the Rust binary identities ind
 of checkout location. The checker is part of the repository gate; it never promotes a
 report or writes registry content.
 
+O6e adds package-local candidate records under
+`registry/ordered-map/packages/{rust,typescript}/records/`. Each package contributes
+exactly one Realization, seven active realization-scoped Claims, and seven accepted-
+review Evidence candidates—one pair for each supported law, persistence, and the
+adapter-reported effect boundary. The Evidence review lineage names O-R6d6's completed
+report review; it does not cite its own O-R6e record review. Claim lifecycle, Evidence
+result, and Evidence review remain separate fields.
+
+Every Evidence candidate binds its exact report bytes and declaration-local outcome,
+plan, Specification, profile, runner, executable harness, candidate sources, command
+and toolchain section digests, full outcome digest, optional binary identity, bounded
+parameters, environment, assumptions, exclusions, and production time. The two
+package sets pass ordinary schema/link validation as one graph with the Specification
+and profile. There is deliberately no Claim or Evidence for
+`put-amortized-constant`, and the retained reports remain provenance inputs rather
+than canonical records or authority.
+
+The exact non-writing candidate-record check is:
+
+```sh
+nix develop --command python3 scripts/ordered_map_evidence_check.py
+```
+
+It checks the exact 2/14/14 inventory and report correspondence, then applies the
+generic record/link checker. These remain pre-authority candidates: O6e creates no
+manifest, ProductContract, registration result, semantic decision, or final product
+membership. O6f and O6-G retain those later responsibilities.
+
 ## Shared-surface extraction boundary
 
 O4 may extract only mechanics required by both accepted domains:
