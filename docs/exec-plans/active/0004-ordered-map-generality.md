@@ -209,6 +209,8 @@ O0 priority + categorical-memory reconciliation
   -> O-R6f2 successor final-authority implementation review
   -> O6f-R2 local executable-evidence routing correction
   -> O-R6f3 combined final-authority implementation review
+  -> O6-G-F0 acceptance-gate scheduling observation
+  -> O6-G-F1 quiescent reproduction characterization
   -> O6-G final trust-convergence acceptance
   -> O7 resolution + directional boundary + inspection
   -> O8 exact successor/recovery maintenance
@@ -346,7 +348,9 @@ O0 priority + categorical-memory reconciliation
 | O-R6f2 successor final-authority implementation review | independent read-only Sonnet 5 reviewer; depends on O6f-R1 | BLOCK retained on capability: exact Sonnet 5 resolved, read the governing/artifact surfaces, confirmed the focused suite and files are present, and corroborated the plan receipt, but `--permission-mode plan` prevented its granted Bash tool from executing; its strict sandbox also omitted external worktree metadata, so it returned a plan rather than digest/test/diff evidence |
 | O6f-R2 local executable-evidence routing correction | lead review framing only; no implementation write; depends on O-R6f2 BLOCK | stop cross-provider retries, retain Fable's exhaustive static evidence plus both capability failures, and route only the three mechanical gaps to a separate read-only internal reviewer with real worktree metadata and the accepted Python environment |
 | O-R6f3 combined final-authority implementation review | independent read-only internal reviewer; depends on O6f-R2 | PASS: policy `6d0d...291c`, manifest `0dae...3455d`, and canonical contract `4bfbc8...eb17` independently reproduce; all 12 focused tests pass with bytecode writes disabled; the exact nine-path diff after `4d3b530` is clean and contains no Stack implementation artifact; combined with Fable's zero-defect static challenge, every O-R6f capability gap closes and O6-G is released |
-| O6-G final trust-convergence acceptance | lead read-only convergence gate; depends on O-R6f3 PASS | accept only the exact independently reviewed manifest/ProductContract/wrapper bytes and evidence ledger as final OrderedMap product authority; record exclusions and release O7 without mutating the reviewed candidate |
+| O6-G-F0 acceptance-gate scheduling observation | lead complete-gate run; depends on O-R6f3 PASS | BLOCK retained for characterization: with exact product commit `5fc9d2b` unchanged and only this plan dirty, the 50-test adapter lane recorded `destructive-new` and `invalid-entry-value` as timeout/extra-output errors and one timeout cleanup at 0.6835s rather than `<0.60s`; all other observed adapter cases passed, matching the previously retained suite-load scheduling class rather than a new O6f path |
+| O6-G-F1 quiescent reproduction characterization | lead focused plus complete rerun; depends on O6-G-F0 BLOCK | PASS: five sequential repetitions of both affected unchanged methods pass 10/10 in 30.964s, then the complete locked gate passes 24/20/38/3 record fixtures, 18 loader groups, 50 adapter tests, 59 cross-language tests, 178 actor journeys, 16 research probes, 20 governance tests, all fresh report/Evidence lanes, and 49 proof groups; no product/test byte changed and the failed receipt remains retained |
+| O6-G final trust-convergence acceptance | lead read-only convergence gate; depends on O6-G-F1 PASS | PASS: accept exact commit `5fc9d2bc78f3c58d2d5967de9b554630a8ab4a62` and its independently reviewed policy `6d0d...291c`, manifest `0dae...3455d`, ProductContract `4bfbc8...eb17`, wrapper `1ea1f5...bbc8`, registration seam `dbe700...82a4`, and closed schema `1e14d6...ab36` as final OrderedMap product authority; retained scheduling evidence changes no reviewed byte or requirement, result objects gain no acceptance conclusion, exclusions remain explicit, and O7 only is released |
 | O7 consumer decision/inspection | continuity owner; exclusive bounded OrderedMap resolution and presentation; depends on O6-G | semantic status under exact policy/profile, every Evidence axis, separate directional boundary, and graph-derived theory/package views |
 | O8 maintenance | continuity owner; exclusive OrderedMap successor snapshot/tests; depends on O7 | exact successor failure or change, no implicit Evidence migration, predecessor recoverability without automatic selection |
 | O-R4 end-to-end review | independent read-only reviewer; depends on O8 | all four actor outcomes, negative controls, known exclusions, Stack regression, and generality claim boundary |
@@ -507,7 +511,9 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
 - [x] O-R6f2 successor final-authority implementation review — capability BLOCK retained
 - [x] O6f-R2 local executable-evidence routing correction
 - [x] O-R6f3 combined final-authority implementation review passed; O6-G released
-- [ ] O6-G final trust-convergence acceptance
+- [x] O6-G-F0 acceptance-gate scheduling observation — BLOCK retained
+- [x] O6-G-F1 quiescent reproduction characterization passed
+- [x] O6-G final trust-convergence acceptance passed; O7 released
 - [ ] O7 consumer decision/inspection
 - [ ] O8 maintenance
 - [ ] O-R4 end-to-end review
@@ -1253,6 +1259,26 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
   diff after `4d3b530`, and confirms no Stack implementation artifact changed. Combined
   with Fable's zero-defect static challenge, it passes and releases O6-G only; O7
   remains closed.
+- O6-G-F0 retains one acceptance-gate scheduling contradiction without rewriting it as
+  product evidence. On exact unchanged product commit `5fc9d2b` with only this plan
+  dirty, the adapter lane classified the `destructive-new` and `invalid-entry-value`
+  hostile children as timeout/extra-output errors and observed one timeout cleanup at
+  0.6835s, over the strict `<0.60s` bound. O6-G-F1 then runs both complete affected
+  methods five times sequentially: 10/10 pass in 30.964s. An immediate complete locked
+  gate also passes every lane—24/20/38/3 records, 18 loaders, 50 adapters, 59
+  cross-language candidates, 178 actor journeys, 16 research probes, 20 governance
+  tests, fresh report/Evidence checks, and 49 proof groups. No implementation, test,
+  artifact, or requirement byte changed; the failed receipt remains an O8 reopen input.
+- O6-G accepts the exact reviewed commit
+  `5fc9d2bc78f3c58d2d5967de9b554630a8ab4a62` without changing any product byte. The
+  accepted ledger binds policy `6d0d...291c`, ordered manifest `0dae...3455d`, canonical
+  ProductContract `4bfbc8...eb17`, wrapper `1ea1f5...bbc8`, graph-derived registration
+  seam `dbe700...82a4`, and closed schema `1e14d6...ab36`; the two affected controls are
+  `3114f9...a8b` and `f94495...1448`. A clean-worktree 18-test candidate/provisional
+  replay passes after commit. Acceptance remains this external convergence decision:
+  actor results still expose no accepted/resolution/semantic-status field, reports and
+  the breaker remain outside membership, performance remains unclaimed, and O8 reopen
+  triggers remain unchanged. O7 consumer decision/inspection only is released.
 - O-R6d-P4 passes the complete predecessor. Independent replay confirms the exact
   12-test topology—one accepted-input pass, one intentional absent-boundary failure,
   and ten skips—plus a clean diff. A cold copied checker cannot read original or copied
@@ -1296,18 +1322,21 @@ There is now an independently accepted plan-driven OrderedMap conformance runner
 independently reviewed package packets, two fresh retained candidate report facts, and
 one selectively challenging reorder-breaker fixture/report outside accepted membership.
 OrderedMap Claim and Evidence candidates now exist as the exact O6e 2/14/14 set. There
-is still no final manifest/ProductContract, registration acceptance, resolver decision,
+is now one O6-G-accepted final 4-source/33-member manifest, ProductContract, and
+single-snapshot publication/registration/graph/theory replay at exact commit
+`5fc9d2bc78f3c58d2d5967de9b554630a8ab4a62`; actor results do not self-report that
+external acceptance. There is still no consumer resolver decision, inspection output,
 or maintenance successor. Retained O-R6d through O-R6d5 provenance and reproduction
 BLOCKs now lead to O-R6d6 PASS. O6d is accepted, O-R6e-P2 passes, O-R6e retains one
 durable-state contradiction corrected by O6e-S1, and O-R6e2 passes. O-R6 macro retains
 load-sensitive full-gate observations without changing any bound artifact. O6-F1 now
 combines the unchanged 5x2 focused pass with one clean hosted exact-head repository
 pass, O-R6-F passes independent characterization review, and O-R6-2 accepts macro
-lifecycle convergence. O6f final-authority candidate and actor-replay work is the live
-edge. Final authority, registration acceptance, and consumer resolution remain held
-behind their later review and convergence gates. O6f may now
-materialize exact final-authority candidates and actor replay; O6-G alone may accept
-those reviewed bytes as final product authority.
+lifecycle convergence. O-R6f3 combines Fable's exhaustive static challenge with
+independently reproduced digests, focused execution, and real-git diff bounding; O6-G
+accepts the unchanged reviewed ledger. O7 consumer decision/inspection is now the live
+edge. O8 maintenance and the final end-to-end gates remain behind their declared
+dependencies.
 
 ## Stop and escalation conditions
 
