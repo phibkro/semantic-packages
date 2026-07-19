@@ -8,7 +8,8 @@ diagnostic oracles. It also exercises the deterministic local loader's discovery
 normalization, phase, and import-edge fixtures, the tracer-scoped Stack adapter suite,
 the independent Rust/TypeScript candidates and their bound Evidence reports, the
 accepted actor-journey and repository-governance contracts, and ADR 0009's bounded
-Lean proof boundary.
+Lean proof boundary. Retained executable research probes freeze the observed boundary
+between domain-shaped substrate and Stack-specific product authority.
 """
 
 from __future__ import annotations
@@ -37,7 +38,9 @@ REQUIRED = [
     "ARCHITECTURE.md",
     "docs/vision/constitution.md",
     "docs/research/synthesis.md",
+    "docs/research/ordered-map-probe.md",
     "docs/design/core-model.md",
+    "docs/design/ordered-map-tracer.md",
     "docs/design/system-map.md",
     "docs/design/user-journeys.md",
     "docs/design/spec-language.md",
@@ -49,6 +52,7 @@ REQUIRED = [
     "docs/operations/multi-provider-workflow.md",
     ".agent/PLANS.md",
     "docs/exec-plans/active/0003-cold-human-inspection.md",
+    "docs/exec-plans/active/0004-ordered-map-generality.md",
     "docs/exec-plans/completed/0001-tracer-bullet.md",
     "docs/exec-plans/completed/0002-actor-journeys.md",
     "semantic_packages/__init__.py",
@@ -168,6 +172,10 @@ def main() -> int:
         "journeys", "Actor journey"
     )
     errors += journey_errors
+    research_errors, research_summary = run_contract_checks(
+        "research", "Research probe"
+    )
+    errors += research_errors
     governance_errors, governance_summary = run_contract_checks(
         "governance", "Change governance"
     )
@@ -189,6 +197,7 @@ def main() -> int:
     print(adapter_summary)
     print(candidate_summary)
     print(journey_summary)
+    print(research_summary)
     print(governance_summary)
     print(wave4_summary)
     print(proof_summary)

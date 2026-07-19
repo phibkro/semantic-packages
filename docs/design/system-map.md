@@ -18,7 +18,8 @@ the active ExecPlan.
 | work DAG, delegation, gates, and change profiles | [lifecycle](lifecycle.md) |
 | Waves 1–4 node history, failures, evidence, and counts | [completed ExecPlan 0001](../exec-plans/completed/0001-tracer-bullet.md) |
 | accepted actor-journey and governance successor history | [completed ExecPlan 0002](../exec-plans/completed/0002-actor-journeys.md) |
-| current human-inspection journey and next route | [active ExecPlan 0003](../exec-plans/active/0003-cold-human-inspection.md) |
+| deferred uninvolved-human inspection journey | [active ExecPlan 0003](../exec-plans/active/0003-cold-human-inspection.md) |
+| current OrderedMap second-domain route | [active ExecPlan 0004](../exec-plans/active/0004-ordered-map-generality.md) |
 
 ## End-to-end product shape
 
@@ -57,8 +58,10 @@ Solid graph edges exist as executable bounded Stack tracer increments today. The
 finite theory publication, independent package registration, one honest curated graph,
 proof checking, child-process conformance, reviewed Rust/TypeScript Evidence, both
 consumer projections, exact successor recovery, protected hosted release, and
-fresh-clone reproduction. An uninvolved-human inspection journey remains unobserved;
-it does not change the accepted local product semantics.
+fresh-clone reproduction. The graph-derived human inspection surface is executable,
+but its uninvolved-human observation remains deferred and unobserved. OrderedMap
+second-domain research is now the live implementation route; neither state changes the
+accepted local Stack semantics.
 
 For the tracer, **registry** means one curated finite local source set of immutable
 exact-version records. It does not yet mean hosted acquisition, authentication,

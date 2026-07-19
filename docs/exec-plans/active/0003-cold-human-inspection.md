@@ -45,7 +45,9 @@ browser.
 - Keep semantic acceptability separate from directional realization compatibility.
 - Keep local finite registry semantics distinct from hosted acquisition and security.
 - Do not build a general CLI framework, web UI, `.pspec` elaborator, or second semantic
-  package before the baseline journey identifies an actor-visible deficit.
+  package before the baseline journey identifies an actor-visible deficit. This was the
+  original sequencing constraint; D1 records the operator's later explicit decision to
+  defer H2 and start OrderedMap without relabeling the human journey as passed.
 - Preserve Stack as the regression substrate; a future OrderedMap tracer joins it and
   never replaces it silently.
 
@@ -77,6 +79,8 @@ M0 stale-memory baseline
        -> H1-S2 semantic/derivation-control successor -> H1-R3 review
        -> PASS: H2 uninvolved-human observation
        -> BLOCK: H-S1 minimal inspection surface -> H-R independent review -> H1 replay
+       -> D1 operator deferral -> backlog H2
+                            \-> OrderedMap ExecPlan 0004
   -> H2 uninvolved-human observation
        -> PASS: H-G journey acceptance
        -> BLOCK: H-S2 smallest observed-deficit successor -> H2 replay
@@ -102,15 +106,17 @@ M0 stale-memory baseline
 | H-S1 minimal inspection surface | continuity owner; exclusive bounded inspection module, README entrypoint, tests, and this plan; depends on H1 BLOCK | complete: one exact-input, graph-derived, human-readable Stack command; no acquisition, execution, implicit latest/default selector, general CLI framework, or new semantic inference |
 | H-R inspection-surface review | independent read-only reviewer; depends on H-S1 | PASS: five-answer completeness, Evidence axes and qualifications, semantic/deployment separation, exact-version recovery, execution isolation, exact-input failure, and bounded scope pass; density, jargon, long JSON lines, and question navigation remain H2 observations |
 | H1-P1 automated preflight replay | continuity owner; depends on H-R | complete: all ten frozen controls pass and the locked repository gate passes 137 actor journeys; releases H2 but cannot substitute for it |
+| D1 operator deferral | user-owned priority decision; depends on H1-P1 | complete: H2 is recorded in the backlog with its protocol and remains unobserved; OrderedMap ExecPlan 0004 may start without claiming H-G |
 | H2 cold-human observation | operator-coordinated uninvolved human; depends on H1 | exact revision, environment, commands, answers, hesitation/failure points, assistance, duration, and exclusions; no repository write authority |
 | H-S2 observed-deficit successor | continuity owner; depends on H2 BLOCK | smallest change tied to an observed actor deficit, with red-first scenario and independent review; returns to H2 |
-| H-G journey gate | lead acceptance; depends on H2 PASS and locked local/hosted gates | all five questions answered accurately without hidden implementation knowledge; releases the OrderedMap plan |
+| H-G journey gate | lead acceptance; depends on H2 PASS and locked local/hosted gates | all five questions answered accurately without hidden implementation knowledge; closes this journey and routes any observed implications into active ExecPlan 0004 |
 
 ## Quality gates and evidence required
 
 ### Memory reconciliation
 
-- `docs/exec-plans/active/` contains only this live plan.
+- at M-G, `docs/exec-plans/active/` contained only this live plan; D1 later permits the
+  explicitly linked OrderedMap plan to coexist while H2 remains deferred.
 - completed plans remain available under `docs/exec-plans/completed/` with their
   rejected reviews and exact evidence history intact.
 - README, system map, user journeys, backlog, and plan links agree that J1–J5, JG,
@@ -154,6 +160,7 @@ M0 stale-memory baseline
 - [x] H-S1 minimal inspection surface
 - [x] H-R inspection-surface review passed
 - [x] H1-P1 automated preflight replay
+- [x] D1 operator deferral; H2 retained in backlog and OrderedMap research released
 - [ ] H2 uninvolved-human observation
 - [ ] H-G cold-human journey gate
 
@@ -205,6 +212,10 @@ M0 stale-memory baseline
   sections to five questions as risks for H2 to observe instead of preemptive redesign.
   H1-P1 passes all ten controls and the locked gate passes 137 actor journeys; neither
   automated result is human-journey Evidence.
+- D1 records the user's explicit priority change: retain H2 as future operator-owned
+  backlog work and continue with OrderedMap now. This changes route ordering, not H2's
+  acceptance condition; H-G remains open and no automated or second-domain evidence
+  substitutes for the uninvolved-human result.
 
 ## Decision log
 
@@ -214,6 +225,7 @@ M0 stale-memory baseline
 | next route: cold-human inspection, OrderedMap, refinement, `.pspec`, adapter Evidence, or hosted registry | current architecture is complete for Stack but its human inspectability is explicitly unobserved; second-domain work before observing current output may compound usability deficits | run cold-human inspection first, then OrderedMap; refinement and `.pspec` wait for two semantic domains, adapter Evidence waits for a non-circular mechanism, hosted infrastructure waits for an actor need |
 | replace or retain Stack when adding OrderedMap | replacement would remove the only accepted regression substrate and turn generality into a rewrite | retain Stack and add OrderedMap as a structurally different peer; reopen only if maintaining both creates measured unsustainable duplication |
 | run a human immediately or preflight the documented surface first | H0 proves no documented command exists, so a participant could only rediscover an already-observed absence or receive disallowed source-level assistance | freeze the human protocol and a command-level falsifier, then add the smallest graph-derived surface before spending the uninvolved-human observation; reopen if the preflight can already answer all five questions from a documented entrypoint |
+| block OrderedMap on H2 or defer the operator-owned observation | the surface and automated falsifiers pass, but an eligible participant is an external coordination dependency; the user explicitly requested that the human test become backlog work and development continue | keep ExecPlan 0003 active with H2/H-G open, record the exact protocol in the backlog, and release ExecPlan 0004 without implying human acceptance; reopen ordering when an eligible participant is available |
 
 ## Result and remaining work
 
@@ -229,12 +241,15 @@ and releases H0 current-surface inventory. H0 then proved the absence of a docum
 inspection surface. H1 froze the participant protocol through two rejected control
 reviews and a final pass. H-S1 adds the smallest exact-input, graph-derived Stack
 renderer; H-R and H1-P1 pass, including the locked repository gate. H2 remains
-unobserved and requires an eligible uninvolved human at an exact public revision.
+unobserved and requires an eligible uninvolved human at an exact public revision. D1
+defers that external observation to the backlog and releases OrderedMap research in
+ExecPlan 0004 without closing H-G.
 
-After H-G, the intended route is OrderedMap generality, then deployment-profile choice,
-explicit refinement/evolution, cross-domain `.pspec` elaboration, and non-circular
-adapter-faithfulness Evidence. Hosted acquisition, signatures, indexing, and richer UI
-remain later actor-driven routes rather than infrastructure goals.
+OrderedMap generality is already active under D1. After H-G and the OrderedMap gate,
+the intended route remains deployment-profile choice, explicit refinement/evolution,
+cross-domain `.pspec` elaboration, and non-circular adapter-faithfulness Evidence.
+Hosted acquisition, signatures, indexing, and richer UI remain later actor-driven
+routes rather than infrastructure goals.
 
 ## Stop and escalation conditions
 

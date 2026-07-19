@@ -8,6 +8,17 @@ The tracer bullet uses JSON as its temporary canonical interchange format. The
 surface form below is an authoring sketch only; it has no conformance status until a
 parser elaborates it into canonical records.
 
+Categorical logic and propositions-as-types may guide an individual semantic aspect or
+proof checker, but they do not make one type theory the canonical Specification
+language. A dependent type such as “inputs mapped to outputs carrying a correctness
+witness” can specify a useful relation while Claims and externally governed Evidence
+remain separate records. The forbidden move is to universalize that encoding or treat
+mere inhabitation as consumer-accepted assurance: doing so would privilege one proof
+mechanism over testing, benchmarking, audit, and assertion. Higher-order logic is one
+hosted logic, not a universal foundation. Cross-logic composition remains an explicit
+translation/satisfaction problem rather than an implicit encoding into whichever proof
+assistant is selected.
+
 ## Proposed core forms
 
 ```text

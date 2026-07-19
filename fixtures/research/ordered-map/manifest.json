@@ -1,0 +1,22 @@
+{
+  "formatVersion": 1,
+  "sources": [
+    {
+      "id": "ordered-map-theory",
+      "root": "records",
+      "roles": ["theory-authored"]
+    }
+  ],
+  "members": [
+    {
+      "source": "ordered-map-theory",
+      "address": {
+        "kind": "specification",
+        "id": "ordered-map",
+        "version": "0.1.0"
+      },
+      "sha256": "2b571ccbd3563f0a401eaf1e22eac090cff51bd257954b79a3e101271c2f8ceb",
+      "role": "theory-authored"
+    }
+  ]
+}
