@@ -136,10 +136,11 @@ Authority converges in stages without pretending future bytes already exist:
 2. O5 owns a separately identified theory-source manifest/authority for pre-execution
    publication and projection. Its results surface that provisional exact authority
    and do not claim final product convergence.
-3. Only after O6 creates package records, reports, and Evidence can O6-G create the
-   complete product manifest and final `ordered-map-product-contract/0.1.0`. O6-G then
-   replays publication, registration, graph, and package views under the final
-   contract before O7 resolution.
+3. Only after O6 creates package records, reports, and Evidence can O6f author the
+   complete product-manifest and `ordered-map-product-contract/0.1.0` candidates and
+   replay publication, registration, graph, and package views. O-R6f independently
+   reviews those exact bytes and results. The read-only O6-G gate alone accepts them as
+   final product authority before O7 resolution.
 
 The product wrapper and repository gate pin the final ProductContract digest before
 any Evidence is accepted into the complete product source set. Previously reviewed
@@ -178,7 +179,8 @@ only the two approved theory records, validates schema/link/content digests and 
 and returns immutable exact addresses and provenance without following symlinks or
 executing content. Missing, unexpected, moved, aliased, mutated, malformed, or
 wrong-version records fail in the same input, graph, then membership phases as Stack.
-O6-G must replay the same outcome under the complete ProductContract manifest before
+O6f must replay the same outcome under the complete ProductContract candidate;
+O-R6f must independently reproduce it, and O6-G must accept those exact bytes before
 it is final. The existing Stack entrypoint remains a compatibility wrapper over the
 same manifest-driven observation and preserves its diagnostics.
 

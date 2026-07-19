@@ -131,8 +131,24 @@ O0 priority + categorical-memory reconciliation
   -> O5c-F1 no-follow diagnostic oracle correction
   -> O5c theory-source publication + graph + theory projection
   -> O-R5c implementation review
-  -> O6 package packets + Realizations + breaker + Evidence candidates
-  -> O6-G final manifest/ProductContract convergence + publication/registration replay
+  -> O6-P macro lifecycle decomposition
+  -> O-R6-P lifecycle plan review
+  -> O6-P-S1 final-authority review correction
+  -> O-R6-P2 successor lifecycle review
+  -> O6a runner/campaign research + red controls
+  -> O-R6a runner/campaign red-control review
+  -> O6b runner/campaign implementation + hardening
+  -> O-R6b runner/campaign implementation review
+  -> O6c independent Rust + TypeScript candidate packets
+  -> O-R6c representation-independence/package review
+  -> O6d reproduction + targeted breaker reports
+  -> O-R6d reproducibility/breaker review
+  -> O6e Claim + Evidence candidate records
+  -> O-R6e package/evidence-candidate review
+  -> O-R6 macro lifecycle acceptance
+  -> O6f final-authority candidate + actor replay
+  -> O-R6f final-authority implementation review
+  -> O6-G final trust-convergence acceptance
   -> O7 resolution + directional boundary + inspection
   -> O8 exact successor/recovery maintenance
   -> O-R4 independent end-to-end review
@@ -191,8 +207,24 @@ O0 priority + categorical-memory reconciliation
 | O5c-F1 no-follow diagnostic oracle correction | continuity owner; exclusive O5 journey control and this plan; depends on O-R5b3 PASS | align the ancestor-symlink diagnostic path with the established canonical-artifact contract: the requested schema/manifest leaf, not the encountered ancestor |
 | O5c theory-source publication/graph/projection | continuity owner; exclusive OrderedMap theory-source wrapper and affected shared mechanics only if a red falsifier requires them; depends on O5c-F1 | complete: authenticate the pinned provisional contract and raw manifest once, construct authority from captured bytes, observe one finite source, derive exact publication/graph/theory views, and fail closed without final product authority or execution |
 | O-R5c implementation review | independent read-only reviewer; depends on O5c | PASS: focused 10/10 and adjacent 93/93 replay, exact Stack compatibility, phase/authority/execution audit, and private non-authenticating projection disposition accept O5 without pulling final ProductContract, packages, or Evidence forward |
-| O6 package packets/Realizations/breaker/Evidence candidates | continuity owner; exclusive OrderedMap implementations/adapters/campaign/package records/reports/Evidence candidates and final manifest inputs; depends on O5 | two independently represented package packets, one targeted breaker, fresh reproducible reports, exact Claim/Evidence bindings, assumptions and exclusions; no final registration claim before O6-G |
-| O6-G final trust convergence | continuity owner; exclusive final manifest, immutable OrderedMap ProductContract, wrapper integration, and affected actor replay; depends on O6 | final contract pins complete manifest, O3 plan, Specification/profile, resolver/effect/boundary rules; publication, package registration, graph, and package views replay under surfaced exact authority |
+| O6-P macro lifecycle decomposition | continuity owner; exclusive OrderedMap O6 lifecycle/design reconciliation and this plan; depends on O-R5c PASS | complete: separate runner results, independent implementations, report facts, Claim/Evidence candidates, candidate authority/replay, independent authority review, final trust acceptance, semantic decision, and maintenance into executable successor nodes |
+| O-R6-P lifecycle plan review | independent read-only reviewer; depends on O6-P | BLOCK retained: continuity-owned O6-G both wrote future final manifest/ProductContract/wrapper bytes and released O7 without an independent review after those consequential artifacts existed |
+| O6-P-S1 final-authority review correction | continuity owner; exclusive O6 lifecycle/design reconciliation and this plan; depends on O-R6-P BLOCK | split final authority into O6f candidate bytes/replay, O-R6f independent exact-artifact review, and read-only O6-G acceptance; clarify report-only outcomes, breaker-control wording, maintenance handoff/reopen ownership, and historical candidate-vs-final references |
+| O-R6-P2 successor lifecycle review | same independent read-only reviewer; depends on O6-P-S1 | PASS: artifact order, Claim/Evidence/authority/decision axes, exclusive ownership, candidate independence, maintenance handoff, and reopen triggers are executable with no circular or future-digest dependency |
+| O6a runner/campaign research and red controls | continuity owner; exclusive OrderedMap runner/campaign design reconciliation, new adapter controls, runner/campaign tests, and this plan; depends on O-R6-P2 PASS | consume the one reviewed O3 plan without reconstructing an oracle; freeze strict lockstep protocol, exact seven cases/declaration attribution, effect classification, lifecycle/transport errors, retained-source checks, one expected targeted-reorder red-control classification signature, assumptions/exclusions, and an intentional missing-runner predecessor |
+| O-R6a runner/campaign red-control review | independent read-only reviewer; depends on O6a | challenge oracle duplication, protocol ambiguity, semantic-vs-execution classification, effect-scope leakage, plan override, teardown bounds, breaker selectivity, and truthful red topology before implementation |
+| O6b runner/campaign implementation and hardening | continuity owner; exclusive OrderedMap-local runner/campaign modules, fake adapter controls, affected tests/docs, and this plan; depends on O-R6a PASS | implement the smallest plan-driven child-process harness; red-green-refactor through exact diagnostics, immutable reports, no candidate imports, bounded teardown, and no registry/Evidence writes |
+| O-R6b runner/campaign implementation review | independent read-only reviewer; depends on O6b | focused protocol/campaign replay, adversarial lifecycle/effect/oracle probes, Stack regression, full repository gate, and explicit no-authority/no-Evidence audit |
+| O6c independent Rust and TypeScript candidate packets | continuity owner; exclusive OrderedMap candidate sources/adapters/READMEs, candidate build controls, and this plan; depends on O-R6b PASS | Rust sequence-of-pairs and TypeScript table-plus-order representations independently implement the protocol; neither imports the other, runner oracle, or shared OrderedMap transition logic; reproducible documented build/run commands and source review pass |
+| O-R6c representation-independence/package review | independent read-only reviewer; depends on O6c | inspect source/dataflow and builds, challenge shared-oracle leakage and representation convergence, confirm adapter-only protocol sharing, and retain environment/toolchain exclusions |
+| O6d reproduction and targeted breaker reports | continuity owner; exclusive reproduction script/check, retained candidate reports, reorder-breaker sources/report, affected docs/tests, and this plan; depends on O-R6c PASS | fresh deterministic reports bind exact plan/source/binary/runner/toolchain inputs and contain declaration-level candidate `supports` outcomes only, with no Evidence, review, or acceptance conclusion; breaker passes lookup/new-class cases and challenges only observations affected by existing-class reorder; failed breaker report remains outside accepted membership and cannot become Evidence |
+| O-R6d reproducibility/breaker review | independent read-only reviewer; depends on O6d | independently rebuild/replay digests and outcomes, challenge stale/forged report acceptance and breaker overbreadth, and verify report facts remain distinct from Claims/Evidence/review authority |
+| O6e Claim and Evidence candidate records | continuity owner; exclusive two package record sets, schemas only if falsified, candidate-source manifests/final-manifest inputs, evidence verification checks, docs, and this plan; depends on O-R6d PASS | per candidate: one Realization plus seven realization-scoped active Claims and seven accepted-review Evidence candidates bind exact Specification/profile/adapter/plan/report/source facts, assumptions, exclusions, applicability, and mechanism; graph/link validation passes without final registration or semantic acceptance |
+| O-R6e package/evidence-candidate review | independent read-only reviewer; depends on O6e | challenge cross-candidate/version/scope/provenance binding, Claim/Evidence axis collapse, report self-promotion, missing declaration coverage, unsupported performance promotion, and premature manifest/ProductContract authority |
+| O-R6 macro lifecycle acceptance | lead convergence gate; depends on O-R6e PASS | research/design/red-green/refactor/document/reproduction plus maintenance handoff/reopen inputs agree: immutable predecessor bytes, exact reproduction/toolchain ownership, and reopen triggers are named for O8; two independent candidates, one selective breaker, fresh reports, and candidate records pass the full gate; O6 closes without registration acceptance and releases O6f candidate-authority work |
+| O6f final-authority candidate and actor replay | continuity owner; exclusive candidate final manifest, immutable OrderedMap ProductContract, wrapper integration, affected actor replay, tests/docs, and this plan; depends on O-R6 macro PASS | materialize proposed exact final bytes only after every member/digest exists; pin O3 plan, Specification/profile, resolver/effect/boundary rules; replay publication, package registration, graph, and package views under surfaced candidate authority without self-acceptance |
+| O-R6f final-authority implementation review | independent read-only reviewer; depends on O6f | independently reproduce every digest/member/selector/role and actor replay; challenge overrides, partial membership, stale reports/Evidence, fabricated construction, phase leaks, and Stack regression before any final-authority claim |
+| O6-G final trust-convergence acceptance | lead read-only convergence gate; depends on O-R6f PASS | accept only the exact independently reviewed manifest/ProductContract/wrapper bytes and evidence ledger as final OrderedMap product authority; record exclusions and release O7 without mutating the reviewed candidate |
 | O7 consumer decision/inspection | continuity owner; exclusive bounded OrderedMap resolution and presentation; depends on O6-G | semantic status under exact policy/profile, every Evidence axis, separate directional boundary, and graph-derived theory/package views |
 | O8 maintenance | continuity owner; exclusive OrderedMap successor snapshot/tests; depends on O7 | exact successor failure or change, no implicit Evidence migration, predecessor recoverability without automatic selection |
 | O-R4 end-to-end review | independent read-only reviewer; depends on O8 | all four actor outcomes, negative controls, known exclusions, Stack regression, and generality claim boundary |
@@ -275,8 +307,24 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
 - [x] O5c-F1 no-follow diagnostic oracle correction
 - [x] O5c theory-source publication/graph/projection complete
 - [x] O-R5c implementation review passed; O5 accepted and O6 released
-- [ ] O6 package packets/Realizations/breaker/Evidence candidates
-- [ ] O6-G final manifest/ProductContract convergence and publication/registration replay
+- [x] O6-P macro lifecycle decomposition
+- [x] O-R6-P lifecycle plan review — BLOCK retained
+- [x] O6-P-S1 final-authority review correction
+- [x] O-R6-P2 successor lifecycle review passed; O6a released
+- [ ] O6a runner/campaign research and red controls
+- [ ] O-R6a runner/campaign red-control review
+- [ ] O6b runner/campaign implementation and hardening
+- [ ] O-R6b runner/campaign implementation review
+- [ ] O6c independent Rust and TypeScript candidate packets
+- [ ] O-R6c representation-independence/package review
+- [ ] O6d reproduction and targeted breaker reports
+- [ ] O-R6d reproducibility/breaker review
+- [ ] O6e Claim and Evidence candidate records
+- [ ] O-R6e package/evidence-candidate review
+- [ ] O-R6 macro lifecycle acceptance
+- [ ] O6f final-authority candidate and actor replay
+- [ ] O-R6f final-authority implementation review
+- [ ] O6-G final trust-convergence acceptance
 - [ ] O7 consumer decision/inspection
 - [ ] O8 maintenance
 - [ ] O-R4 end-to-end review
@@ -355,8 +403,9 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
   cannot pin O6 records before they exist. It also finds a derived-map order check
   incorrectly attributed to persistence. O-S3 gives O3a ownership of exact
   Specification/profile/plan bytes, makes O3b consume that single reviewed oracle, and
-  defers complete manifest/ProductContract convergence to O6-G; persistence cases
-  observe only retained sources while derived order stays with its own law.
+  defers candidate manifest/ProductContract bytes and actor replay to O6f and their
+  final trust-convergence acceptance to O6-G; persistence cases observe only retained
+  sources while derived order stays with its own law.
 - O-R2c passes O-S3 without reopening earlier concerns. O-G2 accepts the design as the
   smallest current end-to-end slice: O3a may now author exact final-path semantic inputs
   and one plan artifact/schema, but O3b cannot exist until O-R3a independently verifies
@@ -421,15 +470,15 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
   this local exact-digest boundary.
 - O4b's smallest trust boundary is an immutable observation of one supplied manifest,
   not authentication of the final product. Shared mechanics may consume that authority;
-  accepted actor wrappers retain pinned parameters and O5/O6-G still own provisional
-  theory-source identity and final ProductContract convergence respectively. A paper
-  OrderedMap publication is only a mechanics falsifier and cannot become accepted
-  canonical membership.
+  accepted actor wrappers retain pinned parameters; O5 owns provisional theory-source
+  identity, O6f owns candidate ProductContract bytes/replay, and O6-G alone owns final
+  trust-convergence acceptance. A paper OrderedMap publication is only a mechanics
+  falsifier and cannot become accepted canonical membership.
 - O-R4b0 blocks the first four-control predecessor: canonical equality does not prove a
   detached snapshot; selectors and source roles could be ignored; graph invalid-authority
   closure and actual wrapper override rejection were missing; and paper-fixture success
   did not itself retain the Stack actor rejection. O4b-S0 adds those falsifiers without
-  requesting O5 or O6-G artifacts.
+  requesting O5, O6f candidate-authority, or O6-G acceptance artifacts.
 - O-R4b1 closes every O-R4b0 class except the symmetric unknown package-source branch:
   wrong-role package selection was frozen, but an absent selector could still observe
   roots or return an underdetermined result. O4b-S1 adds that one exact pre-I/O case.
@@ -515,6 +564,22 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
   finite-source capture, and no downstream or final-authority leakage. O5 is accepted
   and O6 may begin package packets, independently represented Realizations, breaker,
   reports, and Evidence candidates without creating final registration authority.
+- The released O6 node was too broad for one accountable transition: runner semantics,
+  candidate independence, executable reproduction, and record authority fail in
+  different ways and need different evidence. O6 is therefore a macro lifecycle over
+  O6a red runner/campaign contract, O6b implementation/hardening, O6c two independent
+  candidate packets, O6d reproduction/selective breaker reports, O6e Claim/Evidence
+  candidates, and an O-R6 convergence gate. Each material transition has an independent
+  successor review. Final authority then has its own O6f candidate implementation and
+  O-R6f independent review; O6-G is a read-only acceptance gate and remains the only
+  point where trust convergence becomes final.
+- O-R6-P first blocks the macro frame because continuity-owned final-authority writes
+  and final acceptance shared O6-G, leaving no independent review after future bytes
+  existed. The successor graph passes after separating O6f candidate bytes/replay,
+  O-R6f independent review, and read-only O6-G acceptance. The accepted ordering is
+  runner result -> report fact -> Claim -> Evidence result/review -> candidate
+  registration replay -> reviewed ProductContract candidate -> final authority ->
+  semantic decision -> maintenance; only O6a red controls are released.
 - O4's full repository gate passes with 24 valid/20 schema-invalid/38 link-invalid/3
   link-valid record fixtures, 18 loader groups, 36 adapter tests, 18 cross-language
   candidates, 156 actor journeys, 10 research probes, 20 governance tests, two fresh
@@ -547,8 +612,9 @@ unclaimed meaning. Every retained BLOCK and successor PASS remains in the histor
 There is still no OrderedMap runner, package packet, report, Evidence candidate, final
 manifest/ProductContract, registration acceptance, resolver decision, or maintenance
 successor. O6 is the live edge for independently represented package packets, one
-targeted breaker, fresh reports, and scoped Evidence candidates; O6-G alone may later
-converge them into final product authority.
+targeted breaker, fresh reports, and scoped Evidence candidates. O6f may later
+materialize exact final-authority candidates and actor replay; O6-G alone may accept
+those reviewed bytes as final product authority.
 
 ## Stop and escalation conditions
 
