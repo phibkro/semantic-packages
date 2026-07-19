@@ -149,6 +149,16 @@ O0 priority + categorical-memory reconciliation
   -> O-R6b3 final runner/campaign review
   -> O6b-F2 stderr-drain cleanup-margin correction
   -> O-R6b4 final successor runner/campaign review
+  -> O6c-P independent-candidate research + red controls
+  -> O-R6c-P candidate red-control review
+  -> O6c-P-S1 provenance/boundary/framing correction
+  -> O-R6c-P2 successor candidate red-control review
+  -> O6c-P-S2 exact descendant/import closure
+  -> O-R6c-P3 final candidate red-control review
+  -> O6c-P-S3 anchored representation-field closure
+  -> O-R6c-P4 final successor candidate red-control review
+  -> O6c-P-S4 unit-linker/documented-command closure
+  -> O-R6c-P5 acceptance candidate red-control review
   -> O6c independent Rust + TypeScript candidate packets
   -> O-R6c representation-independence/package review
   -> O6d reproduction + targeted breaker reports
@@ -235,7 +245,17 @@ O0 priority + categorical-memory reconciliation
 | O-R6b3 final runner/campaign review | same independent read-only reviewer; depends on O6b-F1 | BLOCK retained: an ordinary sequential two-method run records response-timeout teardown at 0.613069s against `<0.60s`; immediate retry and five isolated probes per path pass/reap, confirming semantics but not reliable suite-context margin |
 | O6b-F2 stderr-drain cleanup-margin correction | continuity owner; exclusive OrderedMap runner post-deadline cleanup and this plan; depends on O-R6b3 BLOCK | complete pending O-R6b4: bound the post-reap stderr-drain join by the same 0.05s cleanup grace instead of spending another plan-timeout-sized 0.2s; raw stderr behavior remains unchanged and 40/40 response/EOF timeout probes pass with every PID reaped, worst 0.5250s |
 | O-R6b4 final successor runner/campaign review | same independent read-only reviewer; depends on O6b-F2 | PASS: five sequential repetitions of both timeout-owning methods, focused 14/14, adapter 50/50, raw-stderr fresh replay 10/10, full repository gate, compile/diff checks, and static deadline/cleanup audit pass; O-R6b3 stays retained and O6c only is released |
-| O6c independent Rust and TypeScript candidate packets | continuity owner; exclusive OrderedMap candidate sources/adapters/READMEs, candidate build controls, and this plan; depends on O-R6b4 PASS | Rust sequence-of-pairs and TypeScript table-plus-order representations independently implement the protocol; neither imports the other, runner oracle, or shared OrderedMap transition logic; reproducible documented build/run commands and source review pass |
+| O6c-P independent-candidate research and red controls | continuity owner; exclusive OrderedMap candidate build/package tests and this plan; depends on O-R6b4 PASS | complete: one accepted-runner/locked-toolchain precondition passes, one absent-two-packets failure is intentional, and ten successors freeze exact small source/README boundaries, distinct private representations, no cross-candidate/runner/campaign-oracle imports, direct-rustc and offline-Deno builds, byte-reproducibility, unit checks, valid reordered/split/combined framing, exact campaign support, persistence, clean EOF, and no retained build artifacts |
+| O-R6c-P candidate red-control review | independent read-only reviewer; depends on O6c-P | BLOCK retained: arbitrary executables could satisfy the alleged toolchain lock and GCC was not selected; symlink/external include and README-oracle paths escaped the packet scan; representation strings could live only in comments; reordered framing omitted exact envelopes and trailing-output closure |
+| O6c-P-S1 provenance/boundary/framing correction | continuity owner; exclusive OrderedMap candidate build/package tests and this plan; depends on O-R6c-P BLOCK | pin observed rustc commit/release/host/LLVM, Deno/V8/TypeScript, and GCC versions while passing the exact linker; require regular non-symlink packet files, forbid Rust include/path and nonlocal TypeScript imports, scan README plus sources for copied campaign IDs, inspect uncommented private fields, and require exact seq/status/result/events with no post-close output |
+| O-R6c-P2 successor candidate red-control review | same independent read-only reviewer; depends on O6c-P-S1 | BLOCK retained: broad provenance/framing/oracle fixes close, but the exact-file enumerator hid `__pycache__` descendants and symlink directories, while side-effect and whitespace-dynamic TypeScript imports evaded the import scan |
+| O6c-P-S2 exact descendant/import closure | continuity owner; exclusive OrderedMap candidate build/package tests and this plan; depends on O-R6c-P2 BLOCK | enumerate every descendant entry with no name exemption, reject every file/directory symlink and unexpected directory/nonfile, permit only exact files plus necessary real parents, invoke that boundary inside the source audit, require exactly one local TypeScript import, and reject side-effect, re-export, and whitespace-dynamic import surfaces |
+| O-R6c-P3 final candidate red-control review | same independent read-only reviewer; depends on O6c-P-S2 | BLOCK retained: descendant/symlink/import closures pass, but comment-free representation markers could still live in ordinary string constants while the actual Rust/TypeScript fields used converged or different representations |
+| O6c-P-S3 anchored representation-field closure | continuity owner; exclusive OrderedMap candidate build/package tests and this plan; depends on O-R6c-P3 BLOCK | remove comments and ordinary string literals, then anchor the Rust pair sequence to the actual `OrderedMap` struct field and both TypeScript table/order fields to the opening `OrderedMap` class boundary; retain these as packet-local review facts rather than Specification semantics |
+| O-R6c-P4 final successor candidate red-control review | same independent read-only reviewer; depends on O6c-P-S3 | BLOCK retained: all earlier bypasses and anchored representation fields close, but Rust unit compilation omitted the explicit locked GCC linker and README controls did not require the claimed reproducible build/typecheck/unit/run commands |
+| O6c-P-S4 unit-linker/documented-command closure | continuity owner; exclusive OrderedMap candidate build/package tests and this plan; depends on O-R6c-P4 BLOCK | route Rust unit compilation through the same locked rustc/GCC tuple and freeze packet-specific direct-rustc optimized build/unit outputs and execution, offline-Deno check/run commands, temporary output placement, and observed rustc/GCC/Deno/TypeScript provenance in each README |
+| O-R6c-P5 acceptance candidate red-control review | same independent read-only reviewer; depends on O6c-P-S4 | PASS: exact 1/1/10 red topology, every retained tool/path/import/oracle/representation/framing bypass, locked production/unit linker provenance, executable documented commands, compile/diff, non-promotion, and lifecycle truth pass; O6c implementation only is released |
+| O6c independent Rust and TypeScript candidate packets | continuity owner; exclusive OrderedMap candidate sources/adapters/READMEs, candidate build controls, and this plan; depends on O-R6c-P5 PASS | Rust sequence-of-pairs and TypeScript table-plus-order representations independently implement the protocol; neither imports the other, runner oracle, or shared OrderedMap transition logic; reproducible documented build/run commands and source review pass |
 | O-R6c representation-independence/package review | independent read-only reviewer; depends on O6c | inspect source/dataflow and builds, challenge shared-oracle leakage and representation convergence, confirm adapter-only protocol sharing, and retain environment/toolchain exclusions |
 | O6d reproduction and targeted breaker reports | continuity owner; exclusive reproduction script/check, retained candidate reports, reorder-breaker sources/report, affected docs/tests, and this plan; depends on O-R6c PASS | fresh deterministic reports bind exact plan/source/binary/runner/toolchain inputs and contain declaration-level candidate `supports` outcomes only, with no Evidence, review, or acceptance conclusion; breaker passes lookup/new-class cases and challenges only observations affected by existing-class reorder; failed breaker report remains outside accepted membership and cannot become Evidence |
 | O-R6d reproducibility/breaker review | independent read-only reviewer; depends on O6d | independently rebuild/replay digests and outcomes, challenge stale/forged report acceptance and breaker overbreadth, and verify report facts remain distinct from Claims/Evidence/review authority |
@@ -345,6 +365,16 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
 - [x] O-R6b3 final runner/campaign review — BLOCK retained
 - [x] O6b-F2 stderr-drain cleanup-margin correction
 - [x] O-R6b4 final successor runner/campaign review passed; O6c released
+- [x] O6c-P independent-candidate research and red controls
+- [x] O-R6c-P candidate red-control review — BLOCK retained
+- [x] O6c-P-S1 provenance/boundary/framing correction
+- [x] O-R6c-P2 successor candidate red-control review — BLOCK retained
+- [x] O6c-P-S2 exact descendant/import closure
+- [x] O-R6c-P3 final candidate red-control review — BLOCK retained
+- [x] O6c-P-S3 anchored representation-field closure
+- [x] O-R6c-P4 final successor candidate red-control review — BLOCK retained
+- [x] O6c-P-S4 unit-linker/documented-command closure
+- [x] O-R6c-P5 acceptance candidate red-control review passed; O6c released
 - [ ] O6c independent Rust and TypeScript candidate packets
 - [ ] O-R6c representation-independence/package review
 - [ ] O6d reproduction and targeted breaker reports
@@ -710,6 +740,60 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
   groups, 50 adapters, 18 cross-language candidates, 166 journeys, 16 research probes,
   20 governance tests, two reports/eight Evidence records, and 49 proof groups. No
   proof oracle or deadline was changed. O6c alone is released.
+- O6c-P freezes the independently represented package boundary before either packet
+  exists. The 12-test topology has one accepted-runner/locked-rustc-and-Deno precondition
+  passing, one intentional missing-two-packets failure, and ten skipped successors.
+  Rust is bounded to a package-private immutable sequence of class/value pairs and
+  TypeScript to a separately immutable class table plus order sequence; those checks
+  identify these two packet choices and do not amend Specification meaning. Both must
+  build offline into temporary paths, leave no repository artifact, support the exact
+  authenticated campaign and persistence observations, accept valid reordered,
+  whitespace, combined, and split request framing, exit cleanly on EOF, document trust
+  exclusions, and contain no candidate cross-import, runner/contract import, or copied
+  case/declaration oracle. O-R6c-P must challenge the sufficiency and
+  representation-neutrality of this red boundary before implementation.
+- O-R6c-P retains the truthful 12-test topology but blocks implementation. The first
+  precondition accepted Bash as both rustc and Deno and did not select locked GCC;
+  symlinked files, external Rust includes/paths, TypeScript imports, or README-embedded
+  case data could escape the packet boundary; comments could spoof representation
+  fields; and reordered framing did not require exact envelopes or trailing-output
+  closure. O6c-P-S1 pins observed toolchain versions and the explicit linker, closes
+  every allowed file/import/include boundary, scans packet prose and source for campaign
+  IDs, checks representation fields only after comment removal, and freezes exact
+  valid-frame envelopes plus clean EOF. The red topology remains one pass, one absent-
+  packets failure, and ten skips; O-R6c-P2 must replay the bypasses before O6c.
+- O-R6c-P2 closes those broad classes but retains a narrow boundary BLOCK: the helper's
+  generic `__pycache__` exemption hid executable Rust descendants; extra directory
+  symlinks could resolve modules outside the packet; and TypeScript side-effect or
+  whitespace-dynamic imports evaded `from`-only matching. O6c-P-S2 enumerates every
+  descendant without exemptions, rejects every symlink/unexpected directory/nonfile,
+  and permits only exact packet files with their real parents. The source audit invokes
+  that boundary directly and accepts exactly one local TypeScript import while rejecting
+  side-effect, re-export, and dynamic forms. Topology remains 1/1/10; O-R6c-P3 owns the
+  final bypass replay.
+- O-R6c-P3 confirms the path/import closures but retains one representation-fact BLOCK:
+  uncommented marker strings could live in ordinary constants while the actual fields
+  used another or converged representation. O6c-P-S3 removes comments and string
+  literals before anchoring the Rust pair sequence to the opening `OrderedMap` struct
+  and the TypeScript table plus order fields to the opening `OrderedMap` class. These
+  remain packet-local source-review facts, not a new semantic requirement. The 1/1/10
+  red topology, compilation, and diff remain exact; O-R6c-P4 owns final replay.
+- O-R6c-P4 replays every earlier attack successfully but retains two provenance gaps:
+  Rust unit compilation fell back to ambient linker resolution, and README controls
+  could pass without any build, unit, typecheck, or run command despite O6c promising
+  documented reproduction. O6c-P-S4 routes unit compilation through the exact locked
+  rustc/GCC tuple and requires packet-specific direct-rustc optimized-build/unit outputs
+  plus execution, temporary placement, offline-Deno check/run commands, and observed
+  toolchain version provenance. O-R6c-P5 owns final acceptance replay.
+- O-R6c-P5 passes the complete predecessor. Independent replay confirms the exact
+  12-test shape—one locked runner/toolchain precondition passes, one absent-packets
+  failure is intentional, and ten successors skip—plus every retained Bash-tool,
+  hidden-descendant, symlink-directory, README/include oracle, nonlocal/side-effect/
+  dynamic import, comment/string representation, framing, unit-linker, and documented-
+  command falsifier. Static scans reduce obvious sharing but cannot prove adapter
+  faithfulness or defeat a perfect shadow; O-R6c must inspect implemented source and
+  dataflow before O6d. O6c implementation only is released; reports, breaker, Evidence,
+  authority, registry, and resolver work remain held.
 - O4's full repository gate passes with 24 valid/20 schema-invalid/38 link-invalid/3
   link-valid record fixtures, 18 loader groups, 36 adapter tests, 18 cross-language
   candidates, 156 actor journeys, 10 research probes, 20 governance tests, two fresh
@@ -742,9 +826,10 @@ unclaimed meaning. Every retained BLOCK and successor PASS remains in the histor
 There is now an independently accepted plan-driven OrderedMap conformance runner, but
 no package packet, retained candidate report, Evidence candidate,
 final manifest/ProductContract, registration acceptance, resolver decision, or
-maintenance successor. O6 is the live edge; O6c is released to build independently
-represented package packets, followed by one targeted breaker, fresh reports,
-and scoped Evidence candidates. O6f may later
+maintenance successor. O6 is the live edge; O-R6c-P5 accepts the candidate controls and
+releases O6c to build the independently represented package packets. One targeted
+breaker, fresh reports, and scoped Evidence candidates follow only after packet review.
+O6f may later
 materialize exact final-authority candidates and actor replay; O6-G alone may accept
 those reviewed bytes as final product authority.
 
