@@ -90,10 +90,11 @@ def _without_comments(text: str) -> str:
     return re.sub(r"//[^\n]*", "", text)
 
 
-def _without_comments_or_strings(text: str) -> str:
+def _without_comments_or_strings(text: str, *, single_quoted: bool = True) -> str:
     text = _without_comments(text)
+    single = r"|'(?:\\.|[^'\\])*'" if single_quoted else ""
     return re.sub(
-        r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|`(?:\\.|[^`\\])*`',
+        r'"(?:\\.|[^"\\])*"|`(?:\\.|[^`\\])*`' + single,
         '""',
         text,
         flags=re.DOTALL,
@@ -198,6 +199,7 @@ def _exercise_valid_framing(command: tuple[str, ...]) -> None:
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
+        bufsize=0,
     )
     assert process.stdin is not None
     try:
@@ -274,6 +276,9 @@ def _exercise_valid_framing(command: tuple[str, ...]) -> None:
         if process.poll() is None:
             process.kill()
             process.wait()
+        for stream in (process.stdin, process.stdout, process.stderr):
+            if stream is not None and not stream.closed:
+                stream.close()
 
 
 PACKETS_EXIST = RUST.is_dir() and TYPESCRIPT.is_dir()
@@ -354,7 +359,8 @@ class OrderedMapCandidateContractTest(unittest.TestCase):
 
     def test_private_representations_are_deliberately_different(self) -> None:
         rust = _without_comments_or_strings(
-            (RUST / "src" / "ordered_map.rs").read_text(encoding="utf-8")
+            (RUST / "src" / "ordered_map.rs").read_text(encoding="utf-8"),
+            single_quoted=False,
         )
         typescript = _without_comments_or_strings(
             (TYPESCRIPT / "ordered_map.ts").read_text(encoding="utf-8")
