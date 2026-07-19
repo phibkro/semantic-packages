@@ -106,7 +106,14 @@ O0 priority + categorical-memory reconciliation
   -> O-R4a implementation review
   -> O4a-S1 filesystem/strict-JSON/depth correction
   -> O-R4a2 successor review
+  -> O4b-R0 manifest-authority red controls
+  -> O-R4b0 red-control review
+  -> O4b-S0 red authority-boundary correction
+  -> O-R4b1 successor red-control review
+  -> O4b-S1 package-selector symmetry correction
+  -> O-R4b2 final red-control review
   -> O4b manifest authority + Stack-compatible extraction
+  -> O-R4b implementation review
   -> O5 theory-source publication + graph + theory projection
   -> O6 package packets + Realizations + breaker + Evidence candidates
   -> O6-G final manifest/ProductContract convergence + publication/registration replay
@@ -143,7 +150,14 @@ O0 priority + categorical-memory reconciliation
 | O-S6 final authority assertions | continuity owner; exclusive O3b test and plan; depends on O-R3d BLOCK | require replay PASS, empty diagnostics, exact digest, exact document; require leak case failure with no document/digest |
 | O-R3e final red-control review | same independent read-only reviewer; depends on O-S6 | PASS: replay and leak-case authority assertions close the last residuals; 11-test topology remains one green precondition, one intentional missing-module failure, and nine skips |
 | O4a canonical artifact boundary | continuity owner; exclusive canonical JSON inspector, pinned OrderedMap plan wrapper, controls, and plan history; depends on O-R3e PASS | complete: exact digest/schema wrapper plus generic bounded/no-follow/strict/offline/immutable inspector; first implementation review BLOCK retained root/NUL exception escape, nonstandard numeric tokens, and recursive-depth exhaustion; successor PASS closes all three with 14 focused tests and a full 151-journey gate |
-| O4b manifest authority and Stack extraction | continuity owner; exclusive manifest-authority shape, generic publication/registration/graph mechanics, and Stack compatibility wrappers; depends on O4a PASS | smallest supplied-authority extraction demanded by two domains; preserve Stack bytes/diagnostics and phase barriers; no final OrderedMap ProductContract or domain resolver generalization |
+| O4b-R0 manifest-authority red controls | continuity owner; exclusive O4b journey controls and this plan; depends on O4a PASS | candidate: freeze immutable supplied authority, authority-driven graph replay, one retained paper-OrderedMap publication observation, Stack wrapper signatures/result equivalence, and invalid-authority phase closure before source I/O |
+| O-R4b0 red-control review | independent read-only reviewer; depends on O4b-R0 | BLOCK retained: unchanged-input equality allowed manifest reread/default substitution; selector role misuse and invalid-authority graph closure were absent; signatures did not prove override rejection; paper success did not executably retain actor rejection |
+| O4b-S0 red authority-boundary correction | continuity owner; exclusive O4b journey controls and this plan; depends on O-R4b0 BLOCK | require detached authority replay after manifest mutation under a reread sentinel, unknown/wrong-role source closure before I/O, invalid-authority graph closure, exact wrapper signatures plus override attacks, and mechanical-success/actor-rejection coexistence |
+| O-R4b1 successor red-control review | same independent read-only reviewer; depends on O4b-S0 | BLOCK retained: snapshot, invalid-authority, wrapper, paper-boundary, and wrong-role controls close, but unknown package-source selection remained unobserved |
+| O4b-S1 package-selector symmetry correction | continuity owner; exclusive O4b journey control and this plan; depends on O-R4b1 BLOCK | complete: exact unknown-package-source diagnostic and no-I/O assertion are symmetric with the accepted generic registration selector contract |
+| O-R4b2 final red-control review | same independent read-only reviewer; depends on O4b-S1 | PASS: the sole O-R4b1 residual is closed; five controls fail only at the absent authority API and release implementation without expanding O4b scope |
+| O4b manifest authority and Stack extraction | continuity owner; exclusive manifest-authority shape, generic publication/registration/graph mechanics, and Stack compatibility wrappers; depends on O-R4b2 PASS | smallest supplied-authority extraction demanded by two domains; preserve Stack bytes/diagnostics and phase barriers; no final OrderedMap ProductContract or domain resolver generalization |
+| O-R4b implementation review | independent read-only reviewer; depends on O4b | exact control replay plus adjacent Stack gates; closes O4 only if no authority override, product-trust claim, or domain-specific regression remains |
 | O5 theory-source publication/graph/projection | continuity owner; exclusive OrderedMap theory-source manifest/authority and domain journey fixtures; depends on O4 and consumes O3a records byte-for-byte | exact valid theory-source publication and graph, authored meaning, visible unknowns, phase/membership attacks, and no execution; final product replay remains open |
 | O6 package packets/Realizations/breaker/Evidence candidates | continuity owner; exclusive OrderedMap implementations/adapters/campaign/package records/reports/Evidence candidates and final manifest inputs; depends on O5 | two independently represented package packets, one targeted breaker, fresh reproducible reports, exact Claim/Evidence bindings, assumptions and exclusions; no final registration claim before O6-G |
 | O6-G final trust convergence | continuity owner; exclusive final manifest, immutable OrderedMap ProductContract, wrapper integration, and affected actor replay; depends on O6 | final contract pins complete manifest, O3 plan, Specification/profile, resolver/effect/boundary rules; publication, package registration, graph, and package views replay under surfaced exact authority |
@@ -204,7 +218,14 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
 - [x] O-R3e final red-control review passed; O4 released
 - [ ] O4 shared-substrate extraction
 - [x] O4a canonical artifact inspector and pinned plan wrapper passed
+- [x] O4b-R0 manifest-authority red controls; truthful four-error predecessor
+- [x] O-R4b0 red-control review — BLOCK retained
+- [x] O4b-S0 red authority-boundary correction
+- [x] O-R4b1 successor red-control review — BLOCK retained
+- [x] O4b-S1 package-selector symmetry correction
+- [x] O-R4b2 final red-control review passed; O4b implementation released
 - [ ] O4b manifest authority and Stack-compatible extraction
+- [ ] O-R4b implementation review
 - [ ] O5 theory-source publication/graph/projection
 - [ ] O6 package packets/Realizations/breaker/Evidence candidates
 - [ ] O6-G final manifest/ProductContract convergence and publication/registration replay
@@ -350,6 +371,25 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
   reproduces the focused result and closes the BLOCK. A hostile writable ancestor
   remains the explicit trigger for dirfd/openat traversal rather than a claim made by
   this local exact-digest boundary.
+- O4b's smallest trust boundary is an immutable observation of one supplied manifest,
+  not authentication of the final product. Shared mechanics may consume that authority;
+  accepted actor wrappers retain pinned parameters and O5/O6-G still own provisional
+  theory-source identity and final ProductContract convergence respectively. A paper
+  OrderedMap publication is only a mechanics falsifier and cannot become accepted
+  canonical membership.
+- O-R4b0 blocks the first four-control predecessor: canonical equality does not prove a
+  detached snapshot; selectors and source roles could be ignored; graph invalid-authority
+  closure and actual wrapper override rejection were missing; and paper-fixture success
+  did not itself retain the Stack actor rejection. O4b-S0 adds those falsifiers without
+  requesting O5 or O6-G artifacts.
+- O-R4b1 closes every O-R4b0 class except the symmetric unknown package-source branch:
+  wrong-role package selection was frozen, but an absent selector could still observe
+  roots or return an underdetermined result. O4b-S1 adds that one exact pre-I/O case.
+- O-R4b2 passes the complete five-control successor. Its intentional red observation is
+  five errors, each solely the absent `graph.inspect_manifest_authority`; no production
+  module changed before this gate. Successful authority capture remaining manifest-only
+  and the documented hostile-writable-ancestor TOCTOU boundary are retained for the
+  implementation review rather than misstated as authentication.
 - The first full O3a repository run retained one unchanged Stack proof-fixture timeout
   where a boundary diagnostic was expected. An immediate unchanged rerun passed all 49
   proof contract groups and the full gate, including 10 research tests. No timeout or
