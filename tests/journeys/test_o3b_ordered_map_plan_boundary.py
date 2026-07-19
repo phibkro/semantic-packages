@@ -285,6 +285,61 @@ class CanonicalPlanBoundaryContractTest(unittest.TestCase):
         self.assertNotIn(secret, rendered)
         self.assertIn(os.fspath(path), rendered)
 
+    def test_root_and_embedded_nul_sources_fail_as_observations(self) -> None:
+        nul = Path("embedded\0member.json")
+        cases = {
+            "artifact-root": self._inspect(Path("/")),
+            "artifact-nul": self._inspect(nul),
+            "schema-root": self._inspect(PLAN, schema=Path("/")),
+            "schema-nul": self._inspect(PLAN, schema=nul),
+        }
+        self.assertEqual(["INPUT_UNSUPPORTED_TYPE"], self._codes(cases["artifact-root"]))
+        self.assertEqual(["INPUT_READ_ERROR"], self._codes(cases["artifact-nul"]))
+        self.assertEqual(["INPUT_UNSUPPORTED_TYPE"], self._codes(cases["schema-root"]))
+        self.assertEqual(["INPUT_READ_ERROR"], self._codes(cases["schema-nul"]))
+        for observation in cases.values():
+            self.assertFalse(observation.ok)
+            self.assertIsNone(observation.document)
+            self.assertIsNone(observation.canonical_sha256)
+
+    def test_nonstandard_json_constants_are_rejected_before_schema_or_digest(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="o4a-nonfinite-") as raw:
+            root = Path(raw)
+            schema = root / "permissive.schema.json"
+            schema.write_text(
+                '{"$schema":"https://json-schema.org/draft/2020-12/schema"}\n',
+                encoding="utf-8",
+            )
+            observations = []
+            for index, content in enumerate(
+                ('{"value":NaN}', '{"value":[Infinity,-Infinity]}')
+            ):
+                path = root / f"nonfinite-{index}.json"
+                path.write_text(content + "\n", encoding="utf-8")
+                observations.append(self._inspect(path, schema=schema, expected="0" * 64))
+        for observation in observations:
+            self.assertEqual(["INPUT_INVALID_JSON"], self._codes(observation))
+            self.assertIsNone(observation.document)
+            self.assertIsNone(observation.canonical_sha256)
+
+    def test_nesting_is_bounded_before_schema_hash_and_freeze(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="o4a-depth-") as raw:
+            root = Path(raw)
+            schema = root / "permissive.schema.json"
+            schema.write_text(
+                '{"$schema":"https://json-schema.org/draft/2020-12/schema"}\n',
+                encoding="utf-8",
+            )
+            observations = []
+            for index, depth in enumerate((129, 2000)):
+                path = root / f"depth-{index}.json"
+                path.write_text("[" * depth + "0" + "]" * depth, encoding="utf-8")
+                observations.append(self._inspect(path, schema=schema, expected="0" * 64))
+        for observation in observations:
+            self.assertEqual(["ARTIFACT_NESTING_LIMIT"], self._codes(observation))
+            self.assertIsNone(observation.document)
+            self.assertIsNone(observation.canonical_sha256)
+
 
 if __name__ == "__main__":
     unittest.main()
