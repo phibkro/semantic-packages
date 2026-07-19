@@ -9,6 +9,7 @@ import os
 import re
 import shutil
 import subprocess
+import sys
 import tempfile
 import unittest
 import builtins
@@ -40,12 +41,12 @@ BREAKER = REPORTS["ordered-map-reorder-breaker"].parent
 REPORT_BOUNDARY_EXISTS = CHECKER.is_file() and all(path.is_file() for path in REPORTS.values())
 DECLARATION_COUNTS = {
     "lookup-empty": 1,
+    "ordered-map-effects": 30,
     "lookup-put-same": 2,
     "lookup-put-other": 1,
     "put-existing-position": 1,
     "put-new-appends": 1,
     "persistence": 2,
-    "ordered-map-effects": 30,
 }
 CASE_REQUESTS = {
     "lookup-empty": 2,
@@ -83,6 +84,28 @@ COMMON_INPUTS = {
         "path": "registry/ordered-map/theory/dependencies/ordered-map-profile.json",
         "sha256": "6d1297892c355a569e244c2b94448a5f5edaf9b1bf2ae54f940d7c4494fe225f",
     },
+    "harness": [
+        {
+            "path": "semantic_packages/__init__.py",
+            "sha256": "ae06adf5d023d88f6380400bd771f3f849934b945c19aff9eb5c5baae7dfd48f",
+        },
+        {
+            "path": "semantic_packages/ordered_map_contract.py",
+            "sha256": "60f6c0d01faa544516dddaa7b91e1277a87b7b3aa92d8d5491792164547c7766",
+        },
+        {
+            "path": "semantic_packages/canonical_artifact.py",
+            "sha256": "de90cf40f0070b360cf7c149cf6880b29a0d1c32b3f0767e610c68787d2c4144",
+        },
+        {
+            "path": "scripts/record_check.py",
+            "sha256": "721c590057f568495a20b58adf39c08d25dddeaa896c4f3f825e5a5719a46edd",
+        },
+        {
+            "path": "schemas/ordered-map-conformance-plan.schema.json",
+            "sha256": "d9e61cad21524a13312b86782967e5f14c46bed0c5a0b0888aaa3ea4174289d1",
+        },
+    ],
 }
 SOURCE_PATHS = {
     "ordered-map-rust": {
@@ -111,8 +134,16 @@ RUSTC_OUTPUT = [
     "release: 1.96.1",
     "LLVM version: 21.1.8",
 ]
+HARNESS_TOOLCHAIN = {
+    "python": {"command": "$PYTHON --version", "output": ["Python 3.14.6"]},
+    "pythonLibraries": {
+        "command": "$PYTHON -c <locked-harness-library-version-probe>",
+        "output": ["jsonschema 4.26.0", "referencing 0.37.0"],
+    },
+}
 TOOLCHAINS = {
     "ordered-map-rust": {
+        **HARNESS_TOOLCHAIN,
         "gcc": {
             "command": "$GCC --version",
             "output": [
@@ -120,11 +151,13 @@ TOOLCHAINS = {
                 "Copyright (C) 2025 Free Software Foundation, Inc.",
                 "This is free software; see the source for copying conditions.  There is NO",
                 "warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.",
+                "",
             ],
         },
         "rustc": {"command": "$RUSTC --version --verbose", "output": RUSTC_OUTPUT},
     },
     "ordered-map-typescript": {
+        **HARNESS_TOOLCHAIN,
         "deno": {
             "command": "$DENO --version",
             "output": [
@@ -135,6 +168,7 @@ TOOLCHAINS = {
         }
     },
     "ordered-map-reorder-breaker": {
+        **HARNESS_TOOLCHAIN,
         "gcc": {
             "command": "$GCC --version",
             "output": [
@@ -142,6 +176,7 @@ TOOLCHAINS = {
                 "Copyright (C) 2025 Free Software Foundation, Inc.",
                 "This is free software; see the source for copying conditions.  There is NO",
                 "warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.",
+                "",
             ],
         },
         "rustc": {"command": "$RUSTC --version --verbose", "output": RUSTC_OUTPUT},
@@ -449,7 +484,7 @@ class OrderedMapReportContractTest(unittest.TestCase):
                 self.assertEqual("ordered-map-runner-json-v1", payload["protocol"])
                 inputs = payload["inputs"]
                 self.assertEqual(
-                    {"plan", "profile", "runner", "sources", "specification"},
+                    {"harness", "plan", "profile", "runner", "sources", "specification"},
                     set(inputs),
                 )
                 self.assertEqual(COMMON_INPUTS["plan"], inputs["plan"])
@@ -464,6 +499,9 @@ class OrderedMapReportContractTest(unittest.TestCase):
                 for name in ("profile", "runner", "specification"):
                     self.assertEqual(COMMON_INPUTS[name], inputs[name])
                     _assert_raw_binding(self, inputs[name])
+                self.assertEqual(COMMON_INPUTS["harness"], inputs["harness"])
+                for binding in inputs["harness"]:
+                    _assert_raw_binding(self, binding)
                 sources = {item["path"]: item["sha256"] for item in inputs["sources"]}
                 expected_sources = [
                     {
@@ -638,12 +676,27 @@ class OrderedMapReportContractTest(unittest.TestCase):
 
     def test_recorded_build_check_and_tool_probes_reproduce_independently(self) -> None:
         tools = {
+            "PYTHON": sys.executable,
             "RUSTC": shutil.which(os.environ.get("RUSTC", "rustc")),
             "GCC": shutil.which(os.environ.get("GCC", "gcc")),
             "DENO": shutil.which(os.environ.get("DENO", "deno")),
         }
         self.assertTrue(all(tools.values()), tools)
         probes = {
+            "python": (
+                [tools["PYTHON"], "--version"],
+                HARNESS_TOOLCHAIN["python"]["output"],
+            ),
+            "pythonLibraries": (
+                [
+                    tools["PYTHON"],
+                    "-c",
+                    "import importlib.metadata as m;"
+                    "print('jsonschema '+m.version('jsonschema'));"
+                    "print('referencing '+m.version('referencing'))",
+                ],
+                HARNESS_TOOLCHAIN["pythonLibraries"]["output"],
+            ),
             "rustc": ([tools["RUSTC"], "--version", "--verbose"], RUSTC_OUTPUT),
             "gcc": ([tools["GCC"], "--version"], TOOLCHAINS["ordered-map-rust"]["gcc"]["output"]),
             "deno": ([tools["DENO"], "--version"], TOOLCHAINS["ordered-map-typescript"]["deno"]["output"]),
@@ -671,9 +724,12 @@ class OrderedMapReportContractTest(unittest.TestCase):
                 output = Path(raw) / candidate
                 argv = [
                     tools["RUSTC"], "--edition=2024", "-C", "opt-level=2", "-C",
-                    f"linker={tools['GCC']}", "-o", os.fspath(output), os.fspath(source),
+                    f"linker={tools['GCC']}", "-o", os.fspath(output),
+                    os.fspath(source.relative_to(ROOT)),
                 ]
-                subprocess.run(argv, check=True, capture_output=True, timeout=20)
+                subprocess.run(
+                    argv, cwd=ROOT, check=True, capture_output=True, timeout=20
+                )
                 self.assertEqual(
                     self.payloads[candidate]["binarySha256"],
                     hashlib.sha256(output.read_bytes()).hexdigest(),
@@ -684,9 +740,10 @@ class OrderedMapReportContractTest(unittest.TestCase):
             (
                 tools["DENO"], "check", "--no-config", "--no-lock", "--no-npm",
                 "--no-remote",
-                os.fspath(ROOT / "implementations/ordered-map/typescript/adapter.ts"),
-                os.fspath(ROOT / "implementations/ordered-map/typescript/ordered_map.ts"),
+                "implementations/ordered-map/typescript/adapter.ts",
+                "implementations/ordered-map/typescript/ordered_map.ts",
             ),
+            cwd=ROOT,
             check=True,
             capture_output=True,
             timeout=20,
@@ -842,6 +899,7 @@ class OrderedMapReportContractTest(unittest.TestCase):
                 COMMON_INPUTS["runner"]["path"],
                 COMMON_INPUTS["specification"]["path"],
                 COMMON_INPUTS["profile"]["path"],
+                *(item["path"] for item in COMMON_INPUTS["harness"]),
                 *SOURCE_PATHS["ordered-map-rust"],
                 *SOURCE_PATHS["ordered-map-typescript"],
                 *SOURCE_PATHS["ordered-map-reorder-breaker"],
@@ -870,7 +928,7 @@ class OrderedMapReportContractTest(unittest.TestCase):
             "binary": lambda value: value.update(binarySha256="0" * 64),
             "assumptions": lambda value: value["outcome"]["assumptions"].clear(),
             "exclusions": lambda value: value["outcome"]["exclusions"].clear(),
-            "top-result": lambda value: value["outcome"].update(result="challenges"),
+            "top-result": lambda value: value["outcome"].update(result="forged"),
             "top-causes": lambda value: value["outcome"].update(causes=["FORGED"]),
             "request-count": lambda value: value["outcome"].update(requestCount=29),
             "declaration": lambda value: value["outcome"]["declarations"][0].update(result="challenges"),
@@ -893,6 +951,185 @@ class OrderedMapReportContractTest(unittest.TestCase):
                         errors = self.checker.compare_committed_reports(copied, fresh)
                         self.assertTrue(any(report.as_posix() in error for error in errors), errors)
                 (copied / report).write_bytes(fresh[report])
+
+    def test_bound_runner_bytes_must_be_the_runner_that_executes(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="ordered-map-runner-substitution-") as raw:
+            copied = Path(raw) / "repository"
+            shutil.copytree(ROOT, copied, ignore=shutil.ignore_patterns(".git", ".direnv"))
+            runner = copied / COMMON_INPUTS["runner"]["path"]
+            runner.write_bytes(b"THIS IS NOT VALID PYTHON\n" + runner.read_bytes())
+            substituted_sha256 = hashlib.sha256(runner.read_bytes()).hexdigest()
+            for report in REPORTS.values():
+                path = copied / report.relative_to(ROOT)
+                document = json.loads(path.read_text(encoding="utf-8"))
+                document["inputs"]["runner"]["sha256"] = substituted_sha256
+                path.write_bytes(self.checker.canonical_json(document))
+            errors, _summary = self.checker.run_ordered_map_report_checks(copied)
+        self.assertTrue(
+            any("loaded runner bytes differ" in error for error in errors),
+            errors,
+        )
+
+    def test_runner_identity_survives_post_import_source_mutation(self) -> None:
+        program = r'''
+import json
+from pathlib import Path
+from scripts import ordered_map_report_check as checker
+
+root = Path.cwd()
+runner = root / checker.RUNNER
+runner.write_bytes(b"THIS IS NOT VALID PYTHON\n" + runner.read_bytes())
+try:
+    fresh = checker.reproduce_ordered_map_reports(root)
+except RuntimeError as error:
+    errors = [str(error)]
+else:
+    for path, payload in fresh.items():
+        target = root / path
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(payload)
+    errors, _summary = checker.run_ordered_map_report_checks(root)
+print(json.dumps(errors))
+'''
+        with tempfile.TemporaryDirectory(prefix="ordered-map-runner-toctou-") as raw:
+            copied = Path(raw) / "repository"
+            shutil.copytree(ROOT, copied, ignore=shutil.ignore_patterns(".git", ".direnv"))
+            process = subprocess.run(
+                (os.fspath(Path(sys.executable)), "-c", program),
+                cwd=copied,
+                check=True,
+                capture_output=True,
+                text=True,
+                timeout=30,
+            )
+        errors = json.loads(process.stdout)
+        self.assertTrue(
+            any("loaded runner bytes differ" in error for error in errors),
+            errors,
+        )
+
+    def test_bound_harness_dependency_bytes_must_match_loaded_closure(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="ordered-map-harness-substitution-") as raw:
+            copied = Path(raw) / "repository"
+            shutil.copytree(ROOT, copied, ignore=shutil.ignore_patterns(".git", ".direnv"))
+            relative = "semantic_packages/ordered_map_contract.py"
+            dependency = copied / relative
+            dependency.write_bytes(b"THIS IS NOT VALID PYTHON\n" + dependency.read_bytes())
+            substituted_sha256 = hashlib.sha256(dependency.read_bytes()).hexdigest()
+            harness = [dict(item) for item in COMMON_INPUTS["harness"]]
+            next(item for item in harness if item["path"] == relative)["sha256"] = (
+                substituted_sha256
+            )
+            for report in REPORTS.values():
+                path = copied / report.relative_to(ROOT)
+                document = json.loads(path.read_text(encoding="utf-8"))
+                document["inputs"]["harness"] = harness
+                path.write_bytes(self.checker.canonical_json(document))
+            errors, _summary = self.checker.run_ordered_map_report_checks(copied)
+        self.assertTrue(
+            any("loaded executable closure bytes differ" in error for error in errors),
+            errors,
+        )
+
+    def test_harness_identity_survives_post_import_dependency_mutation(self) -> None:
+        program = r'''
+import json
+from pathlib import Path
+from scripts import ordered_map_report_check as checker
+
+root = Path.cwd()
+dependency = root / "semantic_packages/ordered_map_contract.py"
+dependency.write_bytes(b"THIS IS NOT VALID PYTHON\n" + dependency.read_bytes())
+try:
+    fresh = checker.reproduce_ordered_map_reports(root)
+except RuntimeError as error:
+    errors = [str(error)]
+else:
+    for path, payload in fresh.items():
+        target = root / path
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(payload)
+    errors, _summary = checker.run_ordered_map_report_checks(root)
+print(json.dumps(errors))
+'''
+        with tempfile.TemporaryDirectory(prefix="ordered-map-harness-toctou-") as raw:
+            copied = Path(raw) / "repository"
+            shutil.copytree(ROOT, copied, ignore=shutil.ignore_patterns(".git", ".direnv"))
+            process = subprocess.run(
+                (os.fspath(Path(sys.executable)), "-c", program),
+                cwd=copied,
+                check=True,
+                capture_output=True,
+                text=True,
+                timeout=30,
+            )
+        errors = json.loads(process.stdout)
+        self.assertTrue(
+            any("loaded executable closure bytes differ" in error for error in errors),
+            errors,
+        )
+
+    def test_python_closure_rejects_same_size_timestamp_stale_bytecode(self) -> None:
+        program = r'''
+import json
+import os
+import sys
+from pathlib import Path
+
+root = Path.cwd()
+source = root / sys.argv[1]
+stat = source.stat()
+original = source.read_bytes()
+source.write_bytes(b"!" + original[1:])
+os.utime(source, ns=(stat.st_atime_ns, stat.st_mtime_ns))
+from scripts import ordered_map_report_check as checker
+try:
+    fresh = checker.reproduce_ordered_map_reports(root)
+except RuntimeError as error:
+    errors = [str(error)]
+else:
+    for path, payload in fresh.items():
+        target = root / path
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(payload)
+    errors, _summary = checker.run_ordered_map_report_checks(root)
+print(json.dumps(errors))
+'''
+        python_closure = (
+            "semantic_packages/__init__.py",
+            "semantic_packages/ordered_map_runner.py",
+            "semantic_packages/ordered_map_contract.py",
+            "semantic_packages/canonical_artifact.py",
+            "scripts/record_check.py",
+        )
+        for relative in python_closure:
+            with self.subTest(source=relative):
+                with tempfile.TemporaryDirectory(
+                    prefix="ordered-map-stale-bytecode-"
+                ) as raw:
+                    copied = Path(raw) / "repository"
+                    shutil.copytree(
+                        ROOT,
+                        copied,
+                        ignore=shutil.ignore_patterns(".git", ".direnv"),
+                    )
+                    process = subprocess.run(
+                        (sys.executable, "-c", program, relative),
+                        cwd=copied,
+                        check=True,
+                        capture_output=True,
+                        text=True,
+                        timeout=30,
+                    )
+                errors = json.loads(process.stdout)
+                self.assertTrue(
+                    any(
+                        "loaded executable closure bytes differ" in error
+                        or "loaded runner bytes differ" in error
+                        for error in errors
+                    ),
+                    errors,
+                )
 
     def test_breaker_report_is_outside_candidate_report_and_registry_membership(self) -> None:
         self.assertTrue(REPORTS["ordered-map-reorder-breaker"].is_relative_to(ROOT / "fixtures"))

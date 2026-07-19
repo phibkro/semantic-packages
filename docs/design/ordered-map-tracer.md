@@ -333,6 +333,32 @@ control binds a challenging declaration-level Evidence record to demonstrate tha
 transport-compatible candidate is semantically unacceptable without contaminating the
 accepted product source set.
 
+O6d retains the two candidate fact packets at
+`reports/ordered-map/{rust,typescript}-campaign-report.json`. The breaker and its
+challenging packet remain together under
+`fixtures/candidates/ordered-map/reorder_breaker/`. Each packet is canonical JSON and
+binds the exact raw/canonical plan identities, runner, Specification, profile, ordered
+source bytes, normalized build/check/campaign commands, full locked tool output, fresh
+binary identity where applicable, and the complete runner outcome. The executable
+harness closure is also explicit: package initialization, OrderedMap contract input,
+canonical-artifact inspection, diagnostic type provider, and plan schema are bound
+beside the runner and plan. Python 3.14.6 plus the jsonschema 4.26.0/referencing 0.37.0
+library boundary is retained as toolchain provenance. These are campaign
+facts only: the packet shape contains no Claim, Evidence, review, acceptance, manifest,
+registration, semantic decision, or authority field.
+
+From the repository root, the exact non-writing reproduction check is:
+
+```sh
+nix develop --command python3 scripts/ordered_map_report_check.py
+```
+
+It rebuilds into a temporary directory, typechecks the TypeScript packet offline,
+executes all three campaigns, and compares fresh canonical bytes with the retained
+packets. Repository-relative compiler inputs make the Rust binary identities independent
+of checkout location. The checker is part of the repository gate; it never promotes a
+report or writes registry content.
+
 ## Shared-surface extraction boundary
 
 O4 may extract only mechanics required by both accepted domains:

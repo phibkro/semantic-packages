@@ -171,7 +171,19 @@ O0 priority + categorical-memory reconciliation
   -> O6d-P-S3 cold-checker/full-outcome/recipe correction
   -> O-R6d-P4 acceptance report red-control review
   -> O6d reproduction + targeted breaker reports
+  -> O6d-F1 path-independent recipe/outcome-order correction
+  -> O6d-F2 breaker-distinct forgery correction
   -> O-R6d reproducibility/breaker review
+  -> O6d-S1 bound-runner execution correction
+  -> O-R6d2 successor reproducibility/breaker review
+  -> O6d-S2 immutable loaded-runner identity correction
+  -> O-R6d3 final reproducibility/breaker review
+  -> O6d-S3 executable-harness closure correction
+  -> O-R6d4 acceptance reproducibility/breaker review
+  -> O6d-S4 source-to-bytecode identity correction
+  -> O-R6d5 final acceptance reproducibility/breaker review
+  -> O6d-F3 consecutive-reproduction characterization
+  -> O-R6d6 final consecutive-reproduction acceptance
   -> O6e Claim + Evidence candidate records
   -> O-R6e package/evidence-candidate review
   -> O-R6 macro lifecycle acceptance
@@ -275,9 +287,21 @@ O0 priority + categorical-memory reconciliation
 | O-R6d-P3 final report red-control review | same independent read-only reviewer; depends on O6d-P-S2 | BLOCK retained: report deletion followed a warmed original-checkout checker; only returned causes were asserted; runner call order and local alias were overprescribed; exact TS/build/check/probe execution and independent breaker build were incomplete; grouped filesystem/environment/cfg-path/Unix-network aliases escaped |
 | O6d-P-S3 cold-checker/full-outcome/recipe correction | continuity owner; exclusive report/breaker tests and this plan; depends on O-R6d-P3 BLOCK | complete: load a new checker from a reportless copied checkout under original-and-copy report read traps before its first call; map fresh executions by command/result identity rather than order; perturb and assert every ConformanceReport field; independently rebuild both exact Rust recipes, typecheck exact Deno inputs, and replay full tool probes; close grouped imports, environment, cfg/path, and Unix-network identifiers while retaining perfect-shadow exclusion |
 | O-R6d-P4 acceptance report red-control review | same independent read-only reviewer; depends on O6d-P-S3 | PASS: exact 1/1/10 red topology, clean diff, cold reportless checker/read traps, canonical runner identity, order-independent full-field perturbation, exact selected tools/argv, independent builds/check/probes, runtime breaker digests, normalized escape closure, all-report mutation matrix, and lifecycle truth release O6d only |
-| O6d reproduction and targeted breaker reports | continuity owner; exclusive reproduction script/check, retained candidate reports, reorder-breaker sources/report, affected docs/tests, and this plan; depends on O-R6d-P4 PASS | fresh deterministic reports bind exact plan/source/binary/runner/toolchain inputs and contain declaration-level candidate `supports` outcomes only, with no Evidence, review, or acceptance conclusion; breaker passes lookup/new-class cases and challenges only observations affected by existing-class reorder; failed breaker report remains outside accepted membership and cannot become Evidence |
-| O-R6d reproducibility/breaker review | independent read-only reviewer; depends on O6d | independently rebuild/replay digests and outcomes, challenge stale/forged report acceptance and breaker overbreadth, and verify report facts remain distinct from Claims/Evidence/review authority |
-| O6e Claim and Evidence candidate records | continuity owner; exclusive two package record sets, schemas only if falsified, candidate-source manifests/final-manifest inputs, evidence verification checks, docs, and this plan; depends on O-R6d PASS | per candidate: one Realization plus seven realization-scoped active Claims and seven accepted-review Evidence candidates bind exact Specification/profile/adapter/plan/report/source facts, assumptions, exclusions, applicability, and mechanism; graph/link validation passes without final registration or semantic acceptance |
+| O6d reproduction and targeted breaker reports | continuity owner; exclusive reproduction script/check, retained candidate reports, reorder-breaker sources/report, affected docs/tests, and this plan; depends on O-R6d-P4 PASS | accepted by O-R6d6: fresh deterministic candidate packets support all seven exact declarations and bind exact raw/canonical plan, source, binary, runner, normalized command, executable harness, and full toolchain facts; the isolated breaker challenges only `put-existing-position`/`nonlast-overwrite-order`, remains under fixtures, and is absent from report/registry membership; no packet contains Evidence, review, acceptance, or authority axes |
+| O6d-F1 path-independent recipe/outcome-order correction | continuity owner; exclusive report controls/checker/packets/docs and this plan; depends on O6d first-green replay | complete: compile repository-relative Rust source paths so binary/report bytes remain equal across copied roots; align the independently executed recipe and accepted Rust digest; retain the runner's actual declaration order with effects first discovered after the first case; include the full trailing blank GCC version line without weakening provenance |
+| O6d-F2 breaker-distinct forgery correction | continuity owner; exclusive report mutation control and this plan; depends on first full-gate replay | complete: use an impossible `forged` report result for the all-packet top-result mutation so the mutation changes both supporting candidate packets and the already-`challenges` breaker packet; generic byte rejection semantics are unchanged |
+| O-R6d reproducibility/breaker review | independent read-only reviewer; depends on O6d-F2 | BLOCK retained: a copied root could replace its bound runner with invalid bytes, rewrite all report runner digests from the checker's fresh output, and pass because execution still used the checker module's already-imported runner from another checkout |
+| O6d-S1 bound-runner execution correction | continuity owner; exclusive runner-substitution control, report checker, docs, and this plan; depends on O-R6d BLOCK | complete pending O-R6d2: fail closed before tools/build/execution unless the requested root's exact runner bytes equal the loaded canonical runner callable's source bytes; capture that source path before the accepted test seam instruments the callable; retain cross-root identical-copy support; copied invalid runner bytes plus rewritten report bindings are rejected |
+| O-R6d2 successor reproducibility/breaker review | same independent read-only reviewer; depends on O6d-S1 | BLOCK retained: source-path capture closed cross-root substitution, but re-hashing that mutable path allowed post-import same-path mutation to bind invalid new bytes while executing the already-loaded old code object |
+| O6d-S2 immutable loaded-runner identity correction | continuity owner; exclusive post-import runner-mutation control, report checker, docs, and this plan; depends on O-R6d2 BLOCK | complete pending O-R6d3: capture the loaded canonical runner byte digest immutably at module import and compare every requested root to that value; a clean copied-checkout process that mutates the same runner path after import, regenerates packets if possible, and reruns checks now fails closed alongside pre-import substitution and full-outcome instrumentation |
+| O-R6d3 final reproducibility/breaker review | same independent read-only reviewer; depends on O6d-S2 | BLOCK retained: runner identity closes, but a copied root could replace `ordered_map_contract.py` with invalid bytes and pass because the already-imported runner executed its original contract/artifact dependency; reports did not bind the repository-owned executable closure |
+| O6d-S3 executable-harness closure correction | continuity owner; exclusive harness-closure controls/checker/report inputs/docs and this plan; depends on O-R6d3 BLOCK | complete pending O-R6d4: explicitly bind the ordered repository-owned closure—package init, contract input module, canonical artifact inspector, diagnostic module, and plan schema—beside runner and plan; capture immutable loaded module/schema/plan digests; fail before tools on any root drift; freeze pre/post-import dependency mutation; retain Python/jsonschema/referencing toolchain provenance and exact-copy replay |
+| O-R6d4 acceptance reproducibility/breaker review | same independent read-only reviewer; depends on O6d-S3 | BLOCK retained: a copied timestamp/size-valid stale `.pyc` let CPython execute original contract bytecode while the closure captured and reports bound same-length invalid source bytes; source digest alone did not prove executed Python identity |
+| O6d-S4 source-to-bytecode identity correction | continuity owner; exclusive stale-bytecode controls/checker/docs and this plan; depends on O-R6d4 BLOCK | complete pending O-R6d5: for each Python closure module, freshly compile exact bound source with the loaded cache code filename and require complete code-object equality with the local cache code before capturing source digest; fail closed on invalid/mismatched cache; freeze same-size/restored-mtime stale-cache controls for package init, runner, contract, artifact inspector, and diagnostic module |
+| O-R6d5 final acceptance reproducibility/breaker review | same independent read-only reviewer; depends on O6d-S4 | BLOCK retained: source/cache coverage and lifecycle staging agree, but one independent 29-test candidate/report run observed consecutive fresh packets differ when one supporting observation became inconclusive; the earlier full-gate PASS alone cannot release O6e |
+| O6d-F3 consecutive-reproduction characterization | continuity owner; read-only campaign/test replay plus this plan; depends on O-R6d5 BLOCK | complete pending O-R6d6: six direct reproductions remained byte-identical and the exact 29-test candidate/report suite passed unchanged; retain the review observation, change no deadline or assertion, and require the same reviewer to pass three consecutive exact fresh-byte tests before acceptance |
+| O-R6d6 final consecutive-reproduction acceptance | same independent read-only reviewer; depends on O6d-F3 | PASS: the exact fresh-byte/repository-relative test passed three consecutive independent runs in 5.373s, 5.614s, and 8.143s without implementation, test, plan, or deadline relaxation; O6e released |
+| O6e Claim and Evidence candidate records | continuity owner; exclusive two package record sets, schemas only if falsified, candidate-source manifests/final-manifest inputs, evidence verification checks, docs, and this plan; depends on O-R6d6 PASS | per candidate: one Realization plus seven realization-scoped active Claims and seven accepted-review Evidence candidates bind exact Specification/profile/adapter/plan/report/source facts, assumptions, exclusions, applicability, and mechanism; graph/link validation passes without final registration or semantic acceptance |
 | O-R6e package/evidence-candidate review | independent read-only reviewer; depends on O6e | challenge cross-candidate/version/scope/provenance binding, Claim/Evidence axis collapse, report self-promotion, missing declaration coverage, unsupported performance promotion, and premature manifest/ProductContract authority |
 | O-R6 macro lifecycle acceptance | lead convergence gate; depends on O-R6e PASS | research/design/red-green/refactor/document/reproduction plus maintenance handoff/reopen inputs agree: immutable predecessor bytes, exact reproduction/toolchain ownership, and reopen triggers are named for O8; two independent candidates, one selective breaker, fresh reports, and candidate records pass the full gate; O6 closes without registration acceptance and releases O6f candidate-authority work |
 | O6f final-authority candidate and actor replay | continuity owner; exclusive candidate final manifest, immutable OrderedMap ProductContract, wrapper integration, affected actor replay, tests/docs, and this plan; depends on O-R6 macro PASS | materialize proposed exact final bytes only after every member/digest exists; pin O3 plan, Specification/profile, resolver/effect/boundary rules; replay publication, package registration, graph, and package views under surfaced candidate authority without self-acceptance |
@@ -404,8 +428,20 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
 - [x] O-R6d-P3 final report red-control review — BLOCK retained
 - [x] O6d-P-S3 cold-checker/full-outcome/recipe correction
 - [x] O-R6d-P4 acceptance report red-control review passed; O6d released
-- [ ] O6d reproduction and targeted breaker reports
-- [ ] O-R6d reproducibility/breaker review
+- [x] O6d reproduction and targeted breaker reports complete; review pending
+- [x] O6d-F1 path-independent recipe/outcome-order correction
+- [x] O6d-F2 breaker-distinct forgery correction
+- [x] O-R6d reproducibility/breaker review — BLOCK retained
+- [x] O6d-S1 bound-runner execution correction
+- [x] O-R6d2 successor reproducibility/breaker review — BLOCK retained
+- [x] O6d-S2 immutable loaded-runner identity correction
+- [x] O-R6d3 final reproducibility/breaker review — BLOCK retained
+- [x] O6d-S3 executable-harness closure correction
+- [x] O-R6d4 acceptance reproducibility/breaker review — BLOCK retained
+- [x] O6d-S4 source-to-bytecode identity correction
+- [x] O-R6d5 final acceptance reproducibility/breaker review — BLOCK retained
+- [x] O6d-F3 consecutive-reproduction characterization
+- [x] O-R6d6 final consecutive-reproduction acceptance passed; O6e released
 - [ ] O6e Claim and Evidence candidate records
 - [ ] O-R6e package/evidence-candidate review
 - [ ] O-R6 macro lifecycle acceptance
@@ -892,6 +928,112 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
   the Deno check, replays full tool probes, and rejects those normalized Rust escape
   identifiers. The perfect-shadow limitation remains explicit. O-R6d-P4 owns final
   predecessor acceptance.
+- O6d implements the accepted fact boundary. Two canonical candidate packets under
+  `reports/ordered-map` independently rebuild and support all seven declarations across
+  30 requests; the Rust packet retains binary SHA `ae457dde79c8…a2a`, and TypeScript
+  remains source/typecheck bound with no invented binary. The isolated Rust-surface
+  fixture removes then appends an existing class, producing one exact
+  `OBSERVATION_MISMATCH` for `put-existing-position` in `nonlast-overwrite-order` while
+  every lookup, new-class append, persistence, and effects observation still supports.
+  Its source/report remain under fixtures and absent from accepted report/registry
+  membership. The checker rebuilds, typechecks, executes, and compares without writing.
+- O6d's first-green replay finds three predecessor-oracle details rather than product
+  semantic failures: absolute Rust source argv embeds checkout locations in binaries;
+  the expected global declaration order placed effects last instead of retaining the
+  runner's first-case discovery; and full GCC output includes a trailing blank line.
+  O6d-F1 uses the already-recorded repository-relative recipe, aligns the independent
+  build and reviewed stable Rust digest, retains actual runner order, and includes the
+  full probe output. Focused report tests and all 42 candidate tests pass. O-R6d still
+  owns independent reproduction, breaker selectivity/source review, and non-promotion
+  acceptance.
+- The first full gate exposes one mutation-oracle collision: assigning
+  `result: challenges` changes both accepted candidate packets but is identical to the
+  breaker's truthful top-level result, so that breaker subcase cannot expect a byte
+  difference. O6d-F2 assigns the deliberately impossible `forged` token instead. This
+  changes all three packets while retaining the same generic exact-byte rejection
+  obligation; no accepted report or product meaning changes.
+- The corrected full gate first retains the already-known isolated Lean timeout for
+  `StackPopEmpty.lean`; the report checker, all 42 candidate tests, and every other
+  ledger had passed before that unrelated boundary failed. An unchanged rerun passes:
+  24 valid/20 schema-invalid/38 link-invalid/3 link-valid record fixtures, 18 loader
+  groups, 50 adapters, 42 candidates, 166 journeys, 16 research probes, 20 governance
+  tests, two Stack reports/eight Evidence records, two fresh OrderedMap candidate
+  reports plus one selective breaker, and 49 proof groups. No proof deadline or oracle
+  changed. O-R6d still owns independent acceptance before O6e can begin.
+- O-R6d retains a provenance BLOCK from a novel copied-root attack. Replacing the
+  copied `semantic_packages/ordered_map_runner.py` with invalid Python and rewriting
+  every retained report to the checker's fresh bound digest still produced a clean
+  result: `_inputs` described the copied bytes while campaign execution used the
+  original checker's already-imported runner. O6d-S1 freezes that substitution and
+  requires requested runner bytes to equal the source bytes of the exact loaded
+  canonical runner callable before any tool probe, build, or campaign. Identical
+  cross-root copies remain supported; arbitrary root-local runner execution is not
+  introduced. O-R6d2 owns successor acceptance and O6e remains held.
+- O6d-S1 first turns the copied-invalid-runner attack red, then compares its requested
+  bytes with the source file of the exact imported canonical runner before any tool or
+  child execution. The accepted full-outcome spy temporarily replaces the callable
+  during one control, so the checker captures its canonical source path once at import
+  before that instrumentation; object-identity and full-field controls remain intact.
+  Focused substitution and cold-checker replay pass. O-R6d2 still owns independent
+  successor acceptance.
+- O-R6d2 retains a narrower TOCTOU BLOCK. Capturing the runner source path closed a
+  different-root substitution, but the checker re-read that mutable path at replay
+  time. In a clean copied process, mutating the runner file after import left the old
+  code object executing while fresh report inputs bound the new invalid bytes; rewritten
+  packets then passed. O6d-S2 freezes that same-path attack and captures the loaded byte
+  digest immutably at import. O-R6d3 owns final successor acceptance; O6e remains held.
+- O6d-S2 turns the post-import mutation probe red, then captures SHA-256 of the exact
+  canonical runner source bytes beside the imported callable. Pre-import different-root
+  substitution, post-import same-path mutation, and the patchable full-outcome execution
+  seam all pass together; validation no longer derives code identity from a mutable
+  path. O-R6d3 still owns independent final acceptance.
+- O-R6d3 retains an executable-closure BLOCK after the immutable runner correction and
+  a 44-candidate full gate pass. A copied root with invalid
+  `ordered_map_contract.py` still passed because the exact runner code object called
+  its already-imported original contract/artifact dependency while reports named no
+  harness closure. This is not the perfect-shadow/FFI exclusion. O6d-S3 binds and
+  immutably checks package init, contract module, canonical artifact inspector,
+  diagnostic module, plan schema, runner, and plan before tools; pre/post-import
+  dependency mutation controls freeze the attack. O-R6d4 owns acceptance and O6e is
+  held.
+- O6d-S3 turns both dependency-substitution controls red, then retains an ordered
+  harness binding for package init, OrderedMap contract input, canonical artifact
+  inspection, diagnostic module, and plan schema in all three packets. Immutable
+  import-time digests for that closure, runner, and plan are compared with every
+  requested root before tools run. The report toolchain now also records Python 3.14.6,
+  jsonschema 4.26.0, and referencing 0.37.0, with independent probes. Pre-import runner
+  or dependency substitution, post-import same-path mutation, and exact copied replay
+  all pass focused controls. O-R6d4 still owns acceptance.
+- O-R6d4 retains a source-to-code BLOCK. Copying local `__pycache__`, replacing a
+  Python closure source with invalid same-length bytes, and restoring its exact mtime
+  allowed a clean process to execute timestamp/size-valid old bytecode while immutable
+  closure digests and fresh packets bound the invalid source. This is not an external
+  runtime exclusion. O6d-S4 freezes the attack for all five Python closure modules and
+  compares freshly compiled exact source with the complete loaded cache code object before
+  source identity is accepted. O-R6d5 owns final acceptance; O6e remains held.
+- O6d-S4 turns the five-module timestamp/size-cache control green. The checker loads
+  the local cache code without executing it, recompiles the exact requested source
+  under the cache code's filename, and requires complete code-object equality before
+  accepting that source digest. Missing caches still require compilable source;
+  malformed, stale, or mismatched caches fail closed. All 17 focused report contract
+  tests pass; O-R6d5 still owns independent acceptance and O6e remains held.
+- O-R6d5 retains a consecutive-reproduction BLOCK despite the preceding full
+  repository PASS. In one independent combined candidate/report run, the second fresh
+  packet changed one declaration from one supporting observation to zero observations
+  and `inconclusive`. Six unchanged direct reproductions were subsequently byte-exact,
+  and the exact 29-test combined suite passed. O6d-F3 changes no deadline, assertion,
+  report, or implementation; O-R6d6 requires the same reviewer to pass three
+  consecutive exact fresh-byte tests before O6e can be released.
+- O-R6d6 passes three consecutive independent executions of the exact fresh-byte and
+  repository-relative test in 5.373s, 5.614s, and 8.143s. No implementation, test,
+  conformance-plan deadline, or retained report changed after the retained O-R6d5
+  observation. O6d is accepted and O6e Claim/Evidence candidate work is released.
+- The post-O-R6d6 full gate retained an unchanged Stack proof-fixture timeout while
+  unrelated workstation builds drove load beyond available cores. After those builds
+  completed, the immediate unchanged full gate passed all 49 proof groups and the
+  complete 24/20/38/3 record, 18 loader, 50 adapter, 47 candidate, 166 journey,
+  16 research, 20 governance, two-report/eight-Evidence, and three OrderedMap-report
+  ledgers. No proof deadline, oracle, implementation, or report was changed.
 - O-R6d-P4 passes the complete predecessor. Independent replay confirms the exact
   12-test topology—one accepted-input pass, one intentional absent-boundary failure,
   and ten skips—plus a clean diff. A cold copied checker cannot read original or copied
@@ -931,13 +1073,15 @@ authority substrate without changing Stack actor behavior. O5 now accepts a pinn
 provisional OrderedMap theory-source actor: one authenticated manifest snapshot yields
 the exact two-record publication and graph plus all 18 declarations as visible,
 unclaimed meaning. Every retained BLOCK and successor PASS remains in the history.
-There is now an independently accepted plan-driven OrderedMap conformance runner and
-two independently reviewed package packets, but no retained candidate report,
-Evidence candidate,
-final manifest/ProductContract, registration acceptance, resolver decision, or
-maintenance successor. O6 is the live edge; O-R6c releases O6d to reproduce fresh
-candidate reports and one targeted reorder breaker. Scoped Evidence candidates follow
-only after those report facts receive their independent review.
+There is now an independently accepted plan-driven OrderedMap conformance runner, two
+independently reviewed package packets, two fresh retained candidate report facts, and
+one selectively challenging reorder-breaker fixture/report outside accepted membership.
+There is still no OrderedMap Claim or Evidence candidate, final
+manifest/ProductContract, registration acceptance, resolver decision, or maintenance
+successor. Retained O-R6d through O-R6d5 provenance and reproduction BLOCKs now lead to
+O-R6d6 PASS. O6d is accepted, and O6e scoped Claim/Evidence candidate records are the
+live edge; final authority, registration acceptance, and consumer resolution remain
+held behind their later review and convergence gates.
 O6f may later
 materialize exact final-authority candidates and actor replay; O6-G alone may accept
 those reviewed bytes as final product authority.

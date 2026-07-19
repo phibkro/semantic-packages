@@ -28,6 +28,7 @@ from urllib.parse import unquote
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import record_check  # noqa: E402
 import loader_fixture_check  # noqa: E402
+import ordered_map_report_check  # noqa: E402
 import proof_fixture_check  # noqa: E402
 import wave4_evidence_check  # noqa: E402
 
@@ -67,6 +68,7 @@ REQUIRED = [
     "scripts/proof_check.py",
     "scripts/check_change_metadata.py",
     "scripts/wave4_evidence_check.py",
+    "scripts/ordered_map_report_check.py",
     ".github/pull_request_template.md",
     "proofs/stack-pop-empty/StackPopEmpty.lean",
     "proofs/stack-pop-empty/manifest.json",
@@ -78,6 +80,12 @@ REQUIRED = [
     "registry/ordered-map/theory/records/ordered-map-spec.json",
     "registry/ordered-map/theory/dependencies/ordered-map-profile.json",
     "contracts/ordered-map/conformance-plan.json",
+    "reports/ordered-map/rust-campaign-report.json",
+    "reports/ordered-map/typescript-campaign-report.json",
+    "fixtures/candidates/ordered-map/reorder_breaker/README.md",
+    "fixtures/candidates/ordered-map/reorder_breaker/src/main.rs",
+    "fixtures/candidates/ordered-map/reorder_breaker/src/ordered_map.rs",
+    "fixtures/candidates/ordered-map/reorder_breaker/reorder-breaker-report.json",
 ]
 LINK_RE = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
 JSON_EXCLUDED_DIRS = {".git", ".direnv", "node_modules"}
@@ -189,6 +197,10 @@ def main() -> int:
     except (OSError, RuntimeError, subprocess.SubprocessError) as error:
         wave4_errors, wave4_summary = [f"Wave 4 Evidence check failed: {error}"], ""
     errors += wave4_errors
+    ordered_map_errors, ordered_map_summary = (
+        ordered_map_report_check.run_ordered_map_report_checks()
+    )
+    errors += ordered_map_errors
     proof_errors, proof_summary = run_proof_checks()
     errors += proof_errors
     if errors:
@@ -204,6 +216,7 @@ def main() -> int:
     print(research_summary)
     print(governance_summary)
     print(wave4_summary)
+    print(ordered_map_summary)
     print(proof_summary)
     print("Repository checks passed.")
     return 0
