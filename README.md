@@ -13,9 +13,13 @@ The project explores a shared specification language that:
 
 ## Current phase
 
-**Design → tracer-bullet realization.**
+**First complete local tracer → human inspection and second-domain generality.**
 
-The first milestone is deliberately narrow: publish one nontrivial specification, connect it to evidence, register two realizations, and determine how those realizations may interoperate.
+The accepted Stack tracer publishes one nontrivial specification, binds proof and
+conformance Evidence, registers two independent Realizations, resolves them under an
+explicit policy/profile, projects theory meaning, and retains a failed exact successor
+with predecessor recovery. The current journey asks whether an uninvolved human can
+inspect those conclusions before OrderedMap tests generality beyond Stack.
 
 ## Repository map
 
@@ -33,8 +37,9 @@ The first milestone is deliberately narrow: publish one nontrivial specification
 - [`docs/design/lifecycle.md`](docs/design/lifecycle.md): project knowledge, feedback loops, and quality gates.
 - [`docs/operations/multi-provider-workflow.md`](docs/operations/multi-provider-workflow.md): agent route status, model-diverse delegation, security boundaries, and provenance.
 - [`docs/design/tracer-bullet.md`](docs/design/tracer-bullet.md): first vertical slice.
-- [`docs/exec-plans/active/0001-tracer-bullet.md`](docs/exec-plans/active/0001-tracer-bullet.md): active implementation plan.
-- [`docs/exec-plans/active/0002-actor-journeys.md`](docs/exec-plans/active/0002-actor-journeys.md): actor-complete registry, resolver, projection, and maintenance plan.
+- [`docs/exec-plans/active/0003-cold-human-inspection.md`](docs/exec-plans/active/0003-cold-human-inspection.md): current human-inspection journey and route to the next semantic tracer.
+- [`docs/exec-plans/completed/0001-tracer-bullet.md`](docs/exec-plans/completed/0001-tracer-bullet.md): completed design, record, proof, adapter, independent-Realization, and Evidence history.
+- [`docs/exec-plans/completed/0002-actor-journeys.md`](docs/exec-plans/completed/0002-actor-journeys.md): completed actor registry, resolver, projection, maintenance, release, and workflow-governance history.
 - [`tasks/backlog.md`](tasks/backlog.md): ordered research and engineering backlog.
 
 ## Local use
@@ -106,4 +111,6 @@ Then open the repository in Codex, an IDE extension, or another coding agent. Th
 
 ## Status
 
-This repository is a design substrate, not yet a stable standard or implementation.
+This repository is an executable research prototype with one complete local Stack
+tracer. It is not yet a stable standard, a general semantic-package ecosystem, or a
+hosted production registry.

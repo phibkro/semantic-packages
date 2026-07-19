@@ -16,8 +16,9 @@ the active ExecPlan.
 | semantic resolution versus directional interoperation | [compatibility](compatibility.md) |
 | executable Stack process boundary | [adapter protocol](adapter-protocol.md) |
 | work DAG, delegation, gates, and change profiles | [lifecycle](lifecycle.md) |
-| Waves 1–4 node status, failures, evidence, and counts | [ExecPlan 0001](../exec-plans/active/0001-tracer-bullet.md) |
-| actor-journey and governance successor status | [ExecPlan 0002](../exec-plans/active/0002-actor-journeys.md) |
+| Waves 1–4 node history, failures, evidence, and counts | [completed ExecPlan 0001](../exec-plans/completed/0001-tracer-bullet.md) |
+| accepted actor-journey and governance successor history | [completed ExecPlan 0002](../exec-plans/completed/0002-actor-journeys.md) |
+| current human-inspection journey and next route | [active ExecPlan 0003](../exec-plans/active/0003-cold-human-inspection.md) |
 
 ## End-to-end product shape
 
@@ -55,8 +56,9 @@ flowchart LR
 Solid graph edges exist as executable bounded Stack tracer increments today. They cover
 finite theory publication, independent package registration, one honest curated graph,
 proof checking, child-process conformance, reviewed Rust/TypeScript Evidence, both
-consumer projections, and exact successor recovery. Hosted release convergence and a
-cold human journey run remain open; they do not change the local product semantics.
+consumer projections, exact successor recovery, protected hosted release, and
+fresh-clone reproduction. An uninvolved-human inspection journey remains unobserved;
+it does not change the accepted local product semantics.
 
 For the tracer, **registry** means one curated finite local source set of immutable
 exact-version records. It does not yet mean hosted acquisition, authentication,
@@ -120,8 +122,10 @@ members own their nodes and challenge affected nodes with evidence. Model identi
 reviewer status grants neither authority nor assurance.
 
 Cross-provider children run through `agent-dispatch` with bounded sandbox, disclosure,
-write scope, effort, and model provenance. Herdr may expose lead-side panes and
-worktrees, but it is not a child capability or security boundary.
+write scope, effort, and model provenance. With per-consultation operator authority,
+Herdr may host a trusted read-only advisor in one named resumable session and dedicated
+tab. That route is procedural rather than OS-enforced, is not a child capability or
+sandbox assurance, and cannot perform writes or ratify a gate.
 
 ## Layers and present state
 
@@ -135,7 +139,7 @@ worktrees, but it is not a child capability or security boundary.
 | L5 semantic Evidence | one named-law proof with exact model/tool/input provenance | executable and deliberately bounded |
 | L6 realization execution | opaque-handle child adapter and event observation | executable |
 | L7 independent conformance | exact shared campaign against Rust/TypeScript and breakers | executable |
-| L8 Evidence binding | declaration-scoped Claims and exact-bound review/provenance fields | executable for the Stack campaign; assurance derivation absent |
+| L8 Evidence binding | declaration-scoped Claims and exact-bound review/provenance fields | executable for the Stack campaign; bounded policy disposition exists, while general assurance derivation is absent |
 | L9 product registry | curated honest source sets distinct from fixture history | executable as two explicitly selected immutable Stack snapshots: the five-source/24-record predecessor and append-only eight-source/31-record successor |
 | L10 resolution | policy/profile-relative semantic selection and interoperation explanation | executable for the exact Stack policy/profile/Specification query; pure over one accepted graph snapshot |
 | L11 projections | theory and package consumer views derived from the graph | both bounded consumer views executable and graph-only |
@@ -187,8 +191,9 @@ vocabulary and local boundary
   -> journey-complete release
 ```
 
-The release edge remains open: local journey completion does not substitute for hosted
-governance convergence or an independent fresh-checkout reproduction.
+The release edge is accepted: protected hosted governance and the operator's independent
+fresh-clone reproduction both passed. The next plan separately tests whether an
+uninvolved human can understand the graph-derived consumer output.
 
 ## Actor data flows
 
@@ -209,7 +214,7 @@ governance convergence or an independent fresh-checkout reproduction.
 | report -> Evidence | fresh reproduction and exact Claim/Realization/source/tool/report/review binding | tracer-specific acceptance checker; no general resolver or cryptographic reviewer identity |
 | registry metadata -> execution | build and child argument vectors are explicit gate inputs | no registry-driven build, discovery, or execution edge exists by design |
 | canonical graph -> projection | projections must derive from one explicitly selected snapshot | both consumer views and maintenance comparison are graph-only and non-executing; no hosted browser/UI boundary yet |
-| lead -> delegated agent | dispatcher depth/sandbox, isolated writes, disclosure and provenance packets | most DAG authority and concern disposition remains documentary rather than machine-enforced |
+| lead -> delegated child or advisor | dispatcher depth/sandbox for children; isolated writes; disclosure/provenance packets; per-consultation authority and named-tab continuity for Herdr advice | most DAG authority and concern disposition remains documentary; a Herdr advisor is trusted/procedural and never equivalent to a sandboxed child |
 
 The UI, Realizations, adapters, authored Claims, unreviewed reports, and agent assertions
 are not inherently trusted. Trust-sensitive components include schema/link checking,
@@ -272,8 +277,9 @@ steps.
 - exact-version staleness, withdrawal, and same-snapshot recovery are executable only
   for the bounded Stack successor; time freshness, lineage, automatic migration, and
   compatibility-relative supersession remain absent;
-- the local repository gate is not a release gate until hosted CI provisions every
-  pinned Python, Lean, Rust/linker, and Deno dependency.
+- the local repository gate alone is not a release gate; hosted CI now provisions every
+  pinned Python, Lean, Rust/linker, and Deno dependency and must remain green alongside
+  protected squash policy and fresh-checkout evidence.
 
 Any change to one of these boundaries reopens the affected downstream layers and the
 corresponding actor journey.
