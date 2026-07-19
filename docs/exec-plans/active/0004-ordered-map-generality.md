@@ -122,6 +122,12 @@ O0 priority + categorical-memory reconciliation
   -> O-R5a3 final authority-artifact review
   -> O5b red publication/graph/projection controls
   -> O-R5b red-control review
+  -> O5b-S1 trust/phase/snapshot correction
+  -> O-R5b1 successor red-control review
+  -> O5b-S2 classifier/snapshot/diagnostic correction
+  -> O-R5b2 final red-control review
+  -> O5b-S3 authenticated-byte identity correction
+  -> O-R5b3 final red-control review
   -> O5c theory-source publication + graph + theory projection
   -> O-R5c implementation review
   -> O6 package packets + Realizations + breaker + Evidence candidates
@@ -173,9 +179,15 @@ O0 priority + categorical-memory reconciliation
 | O-R5a2 successor authority-artifact review | same independent read-only reviewer; depends on O5a-S1 | BLOCK retained: artifact/security blockers close, but O5b's table dependency still named the permanently blocked O-R5a rather than its successor gate |
 | O5a-S2 successor dependency correction | continuity owner; exclusive this plan; depends on O-R5a2 BLOCK | complete: O5b's declared readiness dependency aligns with the DAG's O-R5a3 successor without changing artifact bytes |
 | O-R5a3 final authority-artifact review | same independent read-only reviewer; depends on O5a-S2 | PASS: lifecycle readiness is consistent, no stale impossible dependency remains, and every O-R5a2 artifact/security positive and digest remains unchanged |
-| O5b red publication/graph/projection controls | continuity owner; exclusive new O5 journey controls and this plan; depends on O-R5a3 PASS | freeze zero-argument provisional actor wrapper, surfaced authority identity/digests, exact two-record publication/graph, 18 unclaimed declarations, input/graph/membership/no-execution attacks, and explicit non-final status |
-| O-R5b red-control review | independent read-only reviewer; depends on O5b | falsify override, phase, source ownership, projection assurance, authority replay, and attack coverage before implementation |
-| O5c theory-source publication/graph/projection | continuity owner; exclusive OrderedMap theory-source wrapper and affected shared mechanics only if a red falsifier requires them; depends on O-R5b PASS | exact valid theory-source publication and graph, authored meaning, visible unknowns, phase/membership attacks, and no execution; final product replay remains open |
+| O5b red publication/graph/projection controls | continuity owner; exclusive new O5 journey controls and this plan; depends on O-R5a3 PASS | complete: one green authority precondition, one intentional absent-module failure, and eight successor controls freeze zero-argument provisional authority, one-snapshot two-record publication/graph, 18 unclaimed declarations, trust/input/membership/no-execution attacks, detached replay, and explicit non-final status |
+| O-R5b red-control review | independent read-only reviewer; depends on O5b | BLOCK retained: contract/record schema and link phases, manifest/schema no-follow, false-authority closure, exact diagnostic locations/member digests, and a valid one-parse detached snapshot were under-frozen |
+| O5b-S1 trust/phase/snapshot correction | continuity owner; exclusive O5b control and this plan; depends on O-R5b BLOCK | add exact schema/link/no-follow matrices, forbid authority on every trust-root failure, pin diagnostic sources/pointers/messages and member digests, and prove one reviewed manifest parse/one exact source capture survives later manifest mutation |
+| O-R5b1 successor red-control review | same independent read-only reviewer; depends on O5b-S1 | BLOCK retained: most gaps close, but the schema oracle contradicted the current checker, one parse did not bind authenticated bytes to parsed bytes, and digest/membership/link messages remained under-frozen |
+| O5b-S2 classifier/snapshot/diagnostic correction | continuity owner; exclusive O5b control and this plan; depends on O-R5b1 BLOCK | complete: use the existing localized missing-field classifier, instrument the exact manifest descriptor capture and mutate after its close, reject graph-loader reread, and pin observed/expected digest plus requested address/member messages |
+| O-R5b2 final red-control review | same independent read-only reviewer; depends on O5b-S2 | BLOCK retained: the schema pointer omitted the checker's leading `#`, and alternate builtin/pathlib reads could retain manifest bytes before the authenticated descriptor capture |
+| O5b-S3 authenticated-byte identity correction | continuity owner; exclusive O5b control and this plan; depends on O-R5b2 BLOCK | complete: preserve the checker's `#/laws/0/id` pointer and reject builtin/pathlib manifest reads so the sole descriptor capture is the only possible parsed byte source |
+| O-R5b3 final red-control review | same independent read-only reviewer; depends on O5b-S3 | PASS: schema oracle, authenticated-byte identity, exact one-source capture, non-execution, and successor edge all close without implementation pull-forward |
+| O5c theory-source publication/graph/projection | continuity owner; exclusive OrderedMap theory-source wrapper and affected shared mechanics only if a red falsifier requires them; depends on O-R5b3 PASS | exact valid theory-source publication and graph, authored meaning, visible unknowns, phase/membership attacks, and no execution; final product replay remains open |
 | O-R5c implementation review | independent read-only reviewer; depends on O5c | exact O5 controls plus Stack regression and full repository gate; closes O5 only without final ProductContract or package/Evidence pull-forward |
 | O6 package packets/Realizations/breaker/Evidence candidates | continuity owner; exclusive OrderedMap implementations/adapters/campaign/package records/reports/Evidence candidates and final manifest inputs; depends on O5 | two independently represented package packets, one targeted breaker, fresh reproducible reports, exact Claim/Evidence bindings, assumptions and exclusions; no final registration claim before O6-G |
 | O6-G final trust convergence | continuity owner; exclusive final manifest, immutable OrderedMap ProductContract, wrapper integration, and affected actor replay; depends on O6 | final contract pins complete manifest, O3 plan, Specification/profile, resolver/effect/boundary rules; publication, package registration, graph, and package views replay under surfaced exact authority |
@@ -250,8 +262,14 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
 - [x] O-R5a2 successor authority-artifact review — BLOCK retained
 - [x] O5a-S2 successor dependency correction
 - [x] O-R5a3 final authority-artifact review passed; O5b released
-- [ ] O5b red publication/graph/projection controls
-- [ ] O-R5b red-control review
+- [x] O5b red publication/graph/projection controls
+- [x] O-R5b red-control review — BLOCK retained
+- [x] O5b-S1 trust/phase/snapshot correction
+- [x] O-R5b1 successor red-control review — BLOCK retained
+- [x] O5b-S2 classifier/snapshot/diagnostic correction
+- [x] O-R5b2 final red-control review — BLOCK retained
+- [x] O5b-S3 authenticated-byte identity correction
+- [x] O-R5b3 final red-control review passed; O5c released
 - [ ] O5c theory-source publication/graph/projection
 - [ ] O-R5c implementation review
 - [ ] O6 package packets/Realizations/breaker/Evidence candidates
@@ -443,6 +461,32 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
 - O-R5a3 passes the corrected lifecycle and reaffirms the unchanged independent digest,
   exact-branch, cross-link, closed-schema, and non-final-authority observations. O5b may
   now freeze the actor boundary against these reviewed bytes.
+- O5b's red predecessor requires one authenticated manifest snapshot to feed publication,
+  graph, and projection; it forbids manifest reread and multiple finite-source captures.
+  The intended wrapper is zero-argument, surfaces provisional contract/manifest identity,
+  exposes exactly two theory records and all 18 declarations as unclaimed, and returns no
+  partial publication/projection on contract, manifest, input, link, or membership failure.
+- O-R5b blocks that predecessor because its stated phases and snapshot claim were not
+  fully executable. O5b-S1 adds exact contract/record schema and link attacks, pinned
+  manifest/schema no-follow matrices, zero authority leakage before trust convergence,
+  exact diagnostic provenance/member digests, and one reviewed manifest parse followed
+  by mutation and one exact finite-source capture.
+- O-R5b1 closes those broad gaps but shows the schema case would require changing an
+  accepted classifier, parse counting does not bind authenticated bytes to parsed bytes,
+  and messages could still misstate identities. O5b-S2 instead uses the existing
+  localized missing-field classifier, instruments one manifest descriptor read and
+  mutates the path after close, forbids the legacy loader reread, and freezes observed
+  and expected digests plus requested address/profile-member messages.
+- O-R5b2 retains a block because the corrected schema classifier still omitted the
+  checker's leading `#` pointer and the descriptor count did not reject builtin/pathlib
+  reads that could retain manifest bytes before authentication. O5b-S3 preserves the
+  exact `#/laws/0/id` oracle and guards every alternate manifest path read while keeping
+  the post-close mutation and legacy-loader sentinel.
+- O-R5b3 passes the corrected red boundary: the accepted checker oracle is exact,
+  alternate ordinary manifest readers are rejected, one authenticated descriptor feeds
+  the actor before one exact source capture, and no execution or final authority leaks.
+  Hostile writable-ancestor TOCTOU remains excluded; O-R5c must statically confirm that
+  O5c consumes only this authenticated capture and introduces no alternate reader.
 - O4's full repository gate passes with 24 valid/20 schema-invalid/38 link-invalid/3
   link-valid record fixtures, 18 loader groups, 36 adapter tests, 18 cross-language
   candidates, 156 actor journeys, 10 research probes, 20 governance tests, two fresh
