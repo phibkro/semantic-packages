@@ -83,6 +83,13 @@ does not transfer authorship.
 | `ordered-map-typescript`, `package-authored` | `realization/ordered-map-typescript`; seven declaration-scoped Claims; seven Evidence records | the TypeScript package author owns a separately represented implementation packet under the same exact campaign |
 | `ordered-map-consumer`, `package-consumer-authored` | `consumerPolicy/ordered-map-bounded-policy` | the consumer owns priorities, accepted mechanisms, assurance token, exact profile, and effect-scope requirement |
 
+The consumer-policy row describes the complete product source set, not an O6e input.
+O6f materializes that already-designed record before constructing the final manifest
+candidate, so O6-G can later accept one immutable 4-source/33-member graph. O7 consumes
+the policy to derive decisions and presentation; it does not author the policy or
+rewrite accepted membership. Before O6f, the policy and complete manifest are
+deliberately absent.
+
 Each package has one Claim and one Evidence record for each of:
 
 ```text

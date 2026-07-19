@@ -196,6 +196,12 @@ O0 priority + categorical-memory reconciliation
   -> O6-F1 quiescent scheduling characterization
   -> O-R6-F scheduling-characterization review
   -> O-R6-2 successor macro lifecycle acceptance
+  -> O6f-P final-authority candidate red controls
+  -> O-R6f-P final-authority red-control review
+  -> O6f-P1 independent-oracle red-control correction
+  -> O-R6f-P1 corrected red-control review
+  -> O6f-P2 public-surface/schema-closure correction
+  -> O-R6f-P2 final red-control review
   -> O6f final-authority candidate + actor replay
   -> O-R6f final-authority implementation review
   -> O6-G final trust-convergence acceptance
@@ -322,7 +328,13 @@ O0 priority + categorical-memory reconciliation
 | O6-F1 quiescent scheduling characterization | continuity owner; read-only replay plus this plan; depends on O-R6 BLOCK | complete pending O-R6-F: no runner, plan, test, report, or record byte changed; five consecutive sequential repetitions of both timeout-owning OrderedMap runner methods passed unchanged, then GitHub Actions run 29705557179 accepted prospective metadata in 1m31s and the exact `491ac00` repository contract in 3m48s on a separate hosted runner; local failed receipts remain retained |
 | O-R6-F scheduling-characterization review | same independent read-only reviewer; depends on O6-F1 | PASS: exact head and unchanged bound bytes, the five sequential two-method repetitions, strict classification/cleanup/0.60-second assertions, every contradictory local receipt, and hosted run 29705557179's complete repository gate agree; scheduler sensitivity remains an explicit reopen trigger rather than a real-time guarantee; O-R6-2 released |
 | O-R6-2 successor macro lifecycle acceptance | lead convergence gate; depends on O-R6-F PASS | PASS: research/design/red-green/refactor/document/reproduction plus maintenance handoff/reopen inputs agree; immutable predecessor bytes, exact reproduction/toolchain ownership, and O8 reopen triggers remain named; two independent candidates, one selective breaker, fresh reports, and the 2/14/14 candidate records pass the complete hosted gate; O6 closes without registration acceptance and releases O6f candidate-authority work only |
-| O6f final-authority candidate and actor replay | continuity owner; exclusive candidate final manifest, immutable OrderedMap ProductContract, wrapper integration, affected actor replay, tests/docs, and this plan; depends on O-R6-2 macro PASS | materialize proposed exact final bytes only after every member/digest exists; pin O3 plan, Specification/profile, resolver/effect/boundary rules; replay publication, package registration, graph, and package views under surfaced candidate authority without self-acceptance |
+| O6f-P final-authority candidate red controls | continuity owner; exclusive O6f actor tests and this plan; depends on O-R6-2 PASS | freeze the exact consumer policy plus 4-source/33-member candidate manifest, closed canonical ProductContract bindings, one authenticated graph snapshot, zero-argument publication/two-registration/graph/theory replay, common surfaced candidate authority, no execution/resolution/acceptance, fail-closed mutation/override behavior, and repository-gate/Stack/provisional-authority regression before artifact implementation |
+| O-R6f-P final-authority red-control review | independent read-only reviewer; depends on O6f-P | BLOCK: implementation owned its own ProductContract digest, the manifest oracle did not freeze ordering/raw bytes, result fields permitted acceptance aliases, and several host launch paths were not trapped; exact policy/member/token topology and the tightened single-capture controls passed |
+| O6f-P1 independent-oracle red-control correction | continuity owner; exclusive O6f actor tests and this plan; depends on O-R6f-P BLOCK | freeze an ordered full manifest plus test-owned raw digest, full ProductContract plus test-owned canonical digest, exact result/authority public data fields, and all established O5 host-launch paths; preserve the intentional 1-pass/1-fail/10-skip red topology |
+| O-R6f-P1 corrected red-control review | same independent read-only reviewer; depends on O6f-P1 | BLOCK: independent policy/manifest/contract digests, exact topology, one-snapshot controls, and host-launch traps pass, but callable public acceptance/resolution aliases escaped the data-only field census and one rejected property spelling did not prove the ProductContract schema closed every object branch |
+| O6f-P2 public-surface/schema-closure correction | continuity owner; exclusive O6f actor tests and this plan; depends on O-R6f-P1 BLOCK | freeze every public result/authority attribute including callables, require at least ten ProductContract object-schema branches, and require `additionalProperties: false` on every such branch without changing proposed artifact bytes or topology |
+| O-R6f-P2 final red-control review | same independent read-only reviewer; depends on O6f-P2 | PASS: policy `6d0d...291c`, ordered 4-source/33-member manifest `0dae...3455d`, ProductContract `4bfbc8...eb17`, and exact 1-pass/1-failure/10-skip topology independently reproduce; all-public-name and every-object-schema closure controls close both retained BLOCKs; O6f implementation only is released while O6-G/O7 remain closed |
+| O6f final-authority candidate and actor replay | continuity owner; exclusive candidate final manifest, immutable OrderedMap ProductContract, wrapper integration, affected actor replay, tests/docs, and this plan; depends on O-R6f-P2 PASS | materialize proposed exact final bytes only after every member/digest exists; pin O3 plan, Specification/profile, resolver/effect/boundary rules; replay publication, package registration, graph, and package views under surfaced candidate authority without self-acceptance |
 | O-R6f final-authority implementation review | independent read-only reviewer; depends on O6f | independently reproduce every digest/member/selector/role and actor replay; challenge overrides, partial membership, stale reports/Evidence, fabricated construction, phase leaks, and Stack regression before any final-authority claim |
 | O6-G final trust-convergence acceptance | lead read-only convergence gate; depends on O-R6f PASS | accept only the exact independently reviewed manifest/ProductContract/wrapper bytes and evidence ledger as final OrderedMap product authority; record exclusions and release O7 without mutating the reviewed candidate |
 | O7 consumer decision/inspection | continuity owner; exclusive bounded OrderedMap resolution and presentation; depends on O6-G | semantic status under exact policy/profile, every Evidence axis, separate directional boundary, and graph-derived theory/package views |
@@ -472,6 +484,12 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
 - [x] O6-F1 quiescent scheduling characterization complete; O-R6-F pending
 - [x] O-R6-F scheduling-characterization review passed; successor convergence released
 - [x] O-R6-2 successor macro lifecycle acceptance passed; O6f released
+- [x] O6f-P final-authority candidate red controls
+- [x] O-R6f-P final-authority red-control review — BLOCK retained
+- [x] O6f-P1 independent-oracle red-control correction
+- [x] O-R6f-P1 corrected red-control review — BLOCK retained
+- [x] O6f-P2 public-surface/schema-closure correction
+- [x] O-R6f-P2 final red-control review passed; O6f released
 - [ ] O6f final-authority candidate and actor replay
 - [ ] O-R6f final-authority implementation review
 - [ ] O6-G final trust-convergence acceptance
@@ -1153,6 +1171,35 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
   reproduction/toolchain provenance, maintenance handoff, and O8 reopen inputs. O6
   closes without registration, resolver, semantic-acceptance, or final-authority
   promotion. O6f candidate-authority work only is released.
+- O6f-P frames the next red boundary around proposed exact bytes rather than acceptance.
+  The complete manifest must contain exactly the two reviewed theory records, 15
+  records for each reviewed package, and the already-designed bounded consumer policy.
+  Retained reports and the breaker are inputs or controls, never members. Materializing
+  policy before final authority keeps O7's resolution input browsable and avoids a
+  post-acceptance manifest rewrite; O7 still owns decisions and presentation rather
+  than policy authorship. The ProductContract may describe intended
+  final-product authority so O6-G can later accept identical bytes, while the O6f actor
+  result remains a zero-argument candidate replay with no accepted, resolution, or
+  semantic-status conclusion. O-R6f-P owns independent review before implementation.
+- O-R6f-P blocks implementation. Although the 4-source/33-member ledger, exact policy,
+  token mapping, single graph/source capture, and red topology agree, the first controls
+  let the future wrapper supply its own contract digest and did not freeze manifest byte
+  order. Exact result fields also allowed conclusion aliases, while several established
+  host launch paths remained untrapped. O6f-P1 replaces those circular receipts with a
+  full ordered test-owned manifest and raw digest, a full test-owned ProductContract and
+  canonical digest, exact public data-field sets, and the O5 launch-path controls. The
+  focused suite now independently reproduces manifest `0dae972b...3455d`, contract
+  `4bfbc89e...eb17`, and the intended one-pass/one-failure/ten-skip topology; those
+  controls were submitted to O-R6f-P1 without releasing implementation.
+- O-R6f-P1 retains a narrower BLOCK after reproducing every frozen digest and the exact
+  red topology: a data-only public-field census ignored callable `accept`/`resolve`
+  aliases, and rejection of one `accepted` property name did not prove every schema
+  object closed. O6f-P2 now freezes all public result/authority names and requires at
+  least ten object-schema branches with `additionalProperties: false` on every branch.
+  Artifact documents, hashes, member ordering, and red topology remain unchanged;
+  O-R6f-P2 independently reproduces all three digests and the exact topology, passes
+  the corrected boundary, and releases O6f implementation only. O6-G acceptance and
+  O7 resolution remain closed.
 - O-R6d-P4 passes the complete predecessor. Independent replay confirms the exact
   12-test topology—one accepted-input pass, one intentional absent-boundary failure,
   and ten skips—plus a clean diff. A cold copied checker cannot read original or copied
