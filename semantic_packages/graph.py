@@ -1,4 +1,4 @@
-"""Manifest-governed inspection of the finite Stack product graph.
+"""Manifest-governed inspection of a finite semantic-package graph.
 
 The supplied manifest owns curated membership, source assignment, raw-byte
 digest, and explanatory role.  Canonical record bytes retain semantic identity
@@ -65,14 +65,18 @@ class GraphObservation:
 
 
 @dataclass(frozen=True)
-class _Source:
+class ManifestSource:
+    """One immutable source declaration from a supplied manifest."""
+
     source_id: str
     root: str
     roles: frozenset[str]
 
 
 @dataclass(frozen=True)
-class _Member:
+class ManifestMember:
+    """One immutable exact member declaration from a supplied manifest."""
+
     source: str
     address: Address
     sha256: str
@@ -80,11 +84,12 @@ class _Member:
 
 
 @dataclass(frozen=True)
-class _ManifestProjection:
-    """Manifest-only snapshot used by legacy Stack actor views."""
+class ManifestAuthority:
+    """Manifest-only snapshot; product acceptance is decided elsewhere."""
 
-    sources: tuple[_Source, ...]
-    members: tuple[_Member, ...]
+    manifest_path: Path
+    sources: tuple[ManifestSource, ...]
+    members: tuple[ManifestMember, ...]
     diagnostics: tuple[record_check.Diagnostic, ...]
 
     @property
@@ -195,12 +200,12 @@ def _safe_root(root: str) -> bool:
 def _parse_manifest(
     document: dict[str, Any], manifest_label: str
 ) -> tuple[
-    tuple[_Source, ...],
-    tuple[_Member, ...],
+    tuple[ManifestSource, ...],
+    tuple[ManifestMember, ...],
     list[record_check.Diagnostic],
 ]:
     diagnostics: list[record_check.Diagnostic] = []
-    sources: list[_Source] = []
+    sources: list[ManifestSource] = []
     source_ids: set[str] = set()
     source_roots: set[str] = set()
 
@@ -234,7 +239,9 @@ def _parse_manifest(
                     f"{pointer}/root",
                 )
             )
-        sources.append(_Source(source_id, root, frozenset(raw_source["roles"])))
+        sources.append(
+            ManifestSource(source_id, root, frozenset(raw_source["roles"]))
+        )
 
     for left_index, left in enumerate(sources):
         left_path = PurePosixPath(left.root)
@@ -252,7 +259,7 @@ def _parse_manifest(
                 )
 
     by_source = {source.source_id: source for source in sources}
-    members: list[_Member] = []
+    members: list[ManifestMember] = []
     member_addresses: set[Address] = set()
     for index, raw_member in enumerate(document["members"]):
         address_document = raw_member["address"]
@@ -285,7 +292,7 @@ def _parse_manifest(
                 )
             )
         members.append(
-            _Member(
+            ManifestMember(
                 raw_member["source"],
                 address,
                 raw_member["sha256"],
@@ -297,24 +304,32 @@ def _parse_manifest(
     return tuple(sources), tuple(members), diagnostics
 
 
+def inspect_manifest_authority(manifest_path: Path) -> ManifestAuthority:
+    """Capture supplied manifest declarations without observing source roots."""
+
+    supplied_path = Path(manifest_path)
+    captured_path = Path(_normalized_absolute(supplied_path))
+    manifest, diagnostics = _load_manifest(supplied_path)
+    if manifest is None:
+        return ManifestAuthority(captured_path, (), (), tuple(diagnostics))
+    sources, members, diagnostics = _parse_manifest(
+        manifest, os.fspath(supplied_path)
+    )
+    return ManifestAuthority(captured_path, sources, members, tuple(diagnostics))
+
+
 def _inspect_manifest_projection(
     manifest_path: Path = DEFAULT_STACK_MANIFEST,
-) -> _ManifestProjection:
-    """Snapshot manifest authority without observing any declared record root."""
+) -> ManifestAuthority:
+    """Compatibility alias for legacy Stack tests and actor views."""
 
-    manifest, diagnostics = _load_manifest(Path(manifest_path))
-    if manifest is None:
-        return _ManifestProjection((), (), tuple(diagnostics))
-    sources, members, diagnostics = _parse_manifest(
-        manifest, os.fspath(manifest_path)
-    )
-    return _ManifestProjection(sources, members, tuple(diagnostics))
+    return inspect_manifest_authority(manifest_path)
 
 
 def _inventory(
     source_records: tuple[_finite_source._SourceRecord, ...],
-    members: tuple[_Member, ...],
-    sources: tuple[_Source, ...],
+    members: tuple[ManifestMember, ...],
+    sources: tuple[ManifestSource, ...],
 ) -> tuple[GraphRecord, ...]:
     by_address = {member.address: member for member in members}
     source_roles = {source.source_id: source.roles for source in sources}
@@ -355,7 +370,7 @@ def _inventory(
 
 
 def _membership_diagnostics(
-    records: tuple[GraphRecord, ...], members: tuple[_Member, ...]
+    records: tuple[GraphRecord, ...], members: tuple[ManifestMember, ...]
 ) -> list[record_check.Diagnostic]:
     diagnostics: list[record_check.Diagnostic] = []
     expected = {(member.source, member.address): member for member in members}
@@ -393,30 +408,22 @@ def _membership_diagnostics(
     return diagnostics
 
 
-def inspect_stack_graph(manifest_path: Path) -> GraphObservation:
-    """Inspect one supplied Stack manifest without defaults or execution."""
+def inspect_manifest_graph(authority: ManifestAuthority) -> GraphObservation:
+    """Observe fresh source records under one captured supplied authority."""
 
-    manifest_path = Path(manifest_path)
-    manifest, diagnostics = _load_manifest(manifest_path)
-    if manifest is None:
-        return GraphObservation((), tuple(diagnostics))
-
-    sources, members, manifest_diagnostics = _parse_manifest(
-        manifest, os.fspath(manifest_path)
-    )
-    if manifest_diagnostics:
-        return GraphObservation((), tuple(manifest_diagnostics))
+    if not authority.ok:
+        return GraphObservation((), authority.diagnostics)
 
     source = _finite_source._observe_finite_source(
         tuple(
             _finite_source._SourceRoot(
                 declared.source_id,
-                manifest_path.parent / PurePosixPath(declared.root),
+                authority.manifest_path.parent / PurePosixPath(declared.root),
             )
-            for declared in sources
+            for declared in authority.sources
         )
     )
-    records = _inventory(source.records, members, sources)
+    records = _inventory(source.records, authority.members, authority.sources)
     diagnostics = list(source.diagnostics)
 
     # Preserve the record input/schema and link phases.  Membership conclusions
@@ -427,7 +434,13 @@ def inspect_stack_graph(manifest_path: Path) -> GraphObservation:
         )
         diagnostics.extend(graph_diagnostics)
         if not graph_diagnostics:
-            diagnostics.extend(_membership_diagnostics(records, members))
+            diagnostics.extend(_membership_diagnostics(records, authority.members))
 
     diagnostics.sort(key=record_check.Diagnostic.sort_key)
     return GraphObservation(records, tuple(diagnostics))
+
+
+def inspect_stack_graph(manifest_path: Path) -> GraphObservation:
+    """Inspect one supplied Stack manifest without defaults or execution."""
+
+    return inspect_manifest_graph(inspect_manifest_authority(manifest_path))
