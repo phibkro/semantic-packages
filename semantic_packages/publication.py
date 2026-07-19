@@ -231,6 +231,60 @@ def inspect_theory_publication(
     return PublicationObservation(inventory, tuple(diagnostics))
 
 
+def _project_theory_publication(
+    observation: graph.GraphObservation,
+    *,
+    authority: graph.ManifestAuthority,
+    source: str,
+    product: str,
+) -> PublicationObservation:
+    """Internally project publication from an actor-owned captured graph.
+
+    GraphObservation construction is deliberately not an authentication boundary. Actor
+    wrappers must obtain the observation through their pinned graph inspection before
+    using this non-accepting projection seam.
+    """
+
+    if not authority.ok:
+        return PublicationObservation((), authority.diagnostics)
+    declared_source = next(
+        (item for item in authority.sources if item.source_id == source), None
+    )
+    if declared_source is None:
+        return _selector_diagnostic(
+            "PUBLICATION_UNKNOWN_SOURCE",
+            f"no {product} theory publication source selector for {source!r}",
+        )
+    if not declared_source.roles.issubset(_THEORY_ROLES):
+        return _selector_diagnostic(
+            "PUBLICATION_SOURCE_ROLE_MISMATCH",
+            f"{product} theory publication source {source!r} does not permit only "
+            "theory-authored/dependency roles",
+        )
+    if not observation.ok:
+        return PublicationObservation((), observation.diagnostics)
+
+    prefix = f"{source}/"
+    records = tuple(
+        sorted(
+            (
+                PublicationRecord(
+                    record.address,
+                    record.path[len(prefix) :]
+                    if record.path.startswith(prefix)
+                    else record.path,
+                    record.sha256,
+                    _publication_role(record.role or "theory-authored"),
+                )
+                for record in observation.records
+                if record.source == source
+            ),
+            key=lambda item: (item.address, item.path),
+        )
+    )
+    return PublicationObservation(records, ())
+
+
 def inspect_stack_theory(root: Path) -> PublicationObservation:
     """Inspect the pinned Stack theory surface without actor overrides."""
 

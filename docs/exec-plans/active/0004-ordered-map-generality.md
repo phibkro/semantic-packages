@@ -128,6 +128,7 @@ O0 priority + categorical-memory reconciliation
   -> O-R5b2 final red-control review
   -> O5b-S3 authenticated-byte identity correction
   -> O-R5b3 final red-control review
+  -> O5c-F1 no-follow diagnostic oracle correction
   -> O5c theory-source publication + graph + theory projection
   -> O-R5c implementation review
   -> O6 package packets + Realizations + breaker + Evidence candidates
@@ -187,8 +188,9 @@ O0 priority + categorical-memory reconciliation
 | O-R5b2 final red-control review | same independent read-only reviewer; depends on O5b-S2 | BLOCK retained: the schema pointer omitted the checker's leading `#`, and alternate builtin/pathlib reads could retain manifest bytes before the authenticated descriptor capture |
 | O5b-S3 authenticated-byte identity correction | continuity owner; exclusive O5b control and this plan; depends on O-R5b2 BLOCK | complete: preserve the checker's `#/laws/0/id` pointer and reject builtin/pathlib manifest reads so the sole descriptor capture is the only possible parsed byte source |
 | O-R5b3 final red-control review | same independent read-only reviewer; depends on O5b-S3 | PASS: schema oracle, authenticated-byte identity, exact one-source capture, non-execution, and successor edge all close without implementation pull-forward |
-| O5c theory-source publication/graph/projection | continuity owner; exclusive OrderedMap theory-source wrapper and affected shared mechanics only if a red falsifier requires them; depends on O-R5b3 PASS | exact valid theory-source publication and graph, authored meaning, visible unknowns, phase/membership attacks, and no execution; final product replay remains open |
-| O-R5c implementation review | independent read-only reviewer; depends on O5c | exact O5 controls plus Stack regression and full repository gate; closes O5 only without final ProductContract or package/Evidence pull-forward |
+| O5c-F1 no-follow diagnostic oracle correction | continuity owner; exclusive O5 journey control and this plan; depends on O-R5b3 PASS | align the ancestor-symlink diagnostic path with the established canonical-artifact contract: the requested schema/manifest leaf, not the encountered ancestor |
+| O5c theory-source publication/graph/projection | continuity owner; exclusive OrderedMap theory-source wrapper and affected shared mechanics only if a red falsifier requires them; depends on O5c-F1 | complete: authenticate the pinned provisional contract and raw manifest once, construct authority from captured bytes, observe one finite source, derive exact publication/graph/theory views, and fail closed without final product authority or execution |
+| O-R5c implementation review | independent read-only reviewer; depends on O5c | PASS: focused 10/10 and adjacent 93/93 replay, exact Stack compatibility, phase/authority/execution audit, and private non-authenticating projection disposition accept O5 without pulling final ProductContract, packages, or Evidence forward |
 | O6 package packets/Realizations/breaker/Evidence candidates | continuity owner; exclusive OrderedMap implementations/adapters/campaign/package records/reports/Evidence candidates and final manifest inputs; depends on O5 | two independently represented package packets, one targeted breaker, fresh reproducible reports, exact Claim/Evidence bindings, assumptions and exclusions; no final registration claim before O6-G |
 | O6-G final trust convergence | continuity owner; exclusive final manifest, immutable OrderedMap ProductContract, wrapper integration, and affected actor replay; depends on O6 | final contract pins complete manifest, O3 plan, Specification/profile, resolver/effect/boundary rules; publication, package registration, graph, and package views replay under surfaced exact authority |
 | O7 consumer decision/inspection | continuity owner; exclusive bounded OrderedMap resolution and presentation; depends on O6-G | semantic status under exact policy/profile, every Evidence axis, separate directional boundary, and graph-derived theory/package views |
@@ -270,8 +272,9 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
 - [x] O-R5b2 final red-control review — BLOCK retained
 - [x] O5b-S3 authenticated-byte identity correction
 - [x] O-R5b3 final red-control review passed; O5c released
-- [ ] O5c theory-source publication/graph/projection
-- [ ] O-R5c implementation review
+- [x] O5c-F1 no-follow diagnostic oracle correction
+- [x] O5c theory-source publication/graph/projection complete
+- [x] O-R5c implementation review passed; O5 accepted and O6 released
 - [ ] O6 package packets/Realizations/breaker/Evidence candidates
 - [ ] O6-G final manifest/ProductContract convergence and publication/registration replay
 - [ ] O7 consumer decision/inspection
@@ -487,6 +490,31 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
   the actor before one exact source capture, and no execution or final authority leaks.
   Hostile writable-ancestor TOCTOU remains excluded; O-R5c must statically confirm that
   O5c consumes only this authenticated capture and introduces no alternate reader.
+- O5c's first green run turns nine successor controls green and exposes one red-oracle
+  inconsistency: canonical artifact diagnostics have always named the requested leaf
+  when a strict ancestor is symlinked, while O5b recorded the encountered ancestor.
+  O5c-F1 corrects only those two expected paths to the established O3b contract; the
+  no-follow failure code, phase barrier, and target-read prohibition remain unchanged.
+- O5c's corrected focused suite passes all ten theory-source journeys. The adjacent
+  canonical-artifact, manifest-authority, publication, honest-graph, theory-projection,
+  and authority-artifact set passes 93 tests. The full repository gate passes with 24
+  valid/20 schema-invalid/38 link-invalid/3 link-valid record fixtures, 18 loader
+  groups, 36 adapter tests, 18 cross-language candidates, 166 actor journeys, 16
+  research probes, 20 governance tests, two fresh reports/eight Evidence records, and
+  49 proof groups. O-R5c still owns acceptance and the exotic-reader static audit.
+- O-R5c's interim adversarial probe confirms the pinned actor path but demonstrates the
+  retained O4b construction seam: a caller can fabricate a diagnostic-free
+  `GraphObservation`, so graph-derived publication projection cannot authenticate or
+  carry acceptance. The helper is therefore private and explicitly requires an
+  actor-owned pinned graph; untrusted serialization or future acceptance semantics
+  still reopen sealed/validated construction. The same audit also corrects O5c's table
+  dependency to follow O5c-F1, matching the revisioned DAG.
+- O-R5c passes after those dispositions. Independent replay confirms focused O5 10/10,
+  adjacent shared seams 93/93, exact Stack actor/generic publication equality with four
+  records, unchanged public Stack signatures, one authenticated manifest capture, one
+  finite-source capture, and no downstream or final-authority leakage. O5 is accepted
+  and O6 may begin package packets, independently represented Realizations, breaker,
+  reports, and Evidence candidates without creating final registration authority.
 - O4's full repository gate passes with 24 valid/20 schema-invalid/38 link-invalid/3
   link-valid record fixtures, 18 loader groups, 36 adapter tests, 18 cross-language
   candidates, 156 actor journeys, 10 research probes, 20 governance tests, two fresh
@@ -508,24 +536,19 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
 
 ## Result and remaining work
 
-O0 through O-G1 establish the live edge. The project now explicitly
-separates the deferred human-inspection observation from second-domain work, retains the
-categorical discussion as bounded research memory, and identifies which accepted Stack
-surfaces are promising shared substrate versus domain-local semantics. No OrderedMap
-canonical record or implementation is accepted yet. O-R1's BLOCK remains part of the
-history and O-R1b's successor PASS closes it without erasure. O2 turns the paper
-contract into exact actor terminal outcomes; O-R2 and O-R2b remain as design revision
-history, and O-R2c passes their final successor. O-G2 is accepted. O3a's artifact
-candidate and O-R3a PASS close the artifact edge. O3b remains intentionally red at the
-absent canonical artifact loader; O-R3b, O-R3c, and O-R3d BLOCKs plus their successors
-are retained, and O-R3e passes the final successor. O4a then closes the smallest generic
-canonical artifact inspector and zero-argument OrderedMap wrapper through one retained
-implementation BLOCK and successor PASS. O4b now has an accepted red contract and a
-reviewed implementation for manifest authority and Stack-compatible extraction. The
-full repository gate passes and O4 is accepted. O5 is live for the separately
-identified OrderedMap theory-source authority, publication, graph, and projection. No
-runner, package, report, Evidence, O5 actor wrapper, or final OrderedMap ProductContract
-exists yet.
+O0 through O-G2 establish the reviewed paper contract and exact actor outcomes while
+retaining the deferred cold-human observation and categorical discussion as bounded
+memory. O3 accepts the canonical OrderedMap Specification, realization profile, and
+conformance-plan artifacts. O4 accepts the generic canonical-artifact and manifest
+authority substrate without changing Stack actor behavior. O5 now accepts a pinned,
+provisional OrderedMap theory-source actor: one authenticated manifest snapshot yields
+the exact two-record publication and graph plus all 18 declarations as visible,
+unclaimed meaning. Every retained BLOCK and successor PASS remains in the history.
+There is still no OrderedMap runner, package packet, report, Evidence candidate, final
+manifest/ProductContract, registration acceptance, resolver decision, or maintenance
+successor. O6 is the live edge for independently represented package packets, one
+targeted breaker, fresh reports, and scoped Evidence candidates; O6-G alone may later
+converge them into final product authority.
 
 ## Stop and escalation conditions
 

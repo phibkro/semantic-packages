@@ -13,7 +13,7 @@ import os
 import stat
 from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
-from typing import Any
+from typing import Any, Mapping
 
 import jsonschema
 
@@ -198,7 +198,7 @@ def _safe_root(root: str) -> bool:
 
 
 def _parse_manifest(
-    document: dict[str, Any], manifest_label: str
+    document: Mapping[str, Any], manifest_label: str
 ) -> tuple[
     tuple[ManifestSource, ...],
     tuple[ManifestMember, ...],
@@ -315,6 +315,17 @@ def inspect_manifest_authority(manifest_path: Path) -> ManifestAuthority:
     sources, members, diagnostics = _parse_manifest(
         manifest, os.fspath(supplied_path)
     )
+    return ManifestAuthority(captured_path, sources, members, tuple(diagnostics))
+
+
+def inspect_manifest_document(
+    manifest_path: Path, document: Mapping[str, Any]
+) -> ManifestAuthority:
+    """Interpret one already authenticated and schema-valid manifest snapshot."""
+
+    supplied_path = Path(manifest_path)
+    captured_path = Path(_normalized_absolute(supplied_path))
+    sources, members, diagnostics = _parse_manifest(document, os.fspath(supplied_path))
     return ManifestAuthority(captured_path, sources, members, tuple(diagnostics))
 
 

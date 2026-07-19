@@ -438,7 +438,12 @@ class OrderedMapTheorySourceContractTest(unittest.TestCase):
                 outside = Path(raw) / f"outside-{name}"
                 target.rename(outside)
                 target.symlink_to(outside, target_is_directory=directory)
-                locations[name] = os.fspath(target)
+                expected_path = target
+                if name == "contract-schema-ancestor":
+                    expected_path /= "ordered-map-theory-source-contract.schema.json"
+                elif name == "manifest-ancestor":
+                    expected_path /= "theory-manifest.json"
+                locations[name] = os.fspath(expected_path)
                 with mock.patch.object(
                     _finite_source,
                     "_observe_finite_source",

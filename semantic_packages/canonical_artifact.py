@@ -45,6 +45,7 @@ class ArtifactObservation:
     label: str
     document: Any | None
     canonical_sha256: str | None
+    raw_sha256: str | None
     diagnostics: tuple[record_check.Diagnostic, ...]
 
     @property
@@ -204,14 +205,28 @@ def _freeze(value: Any) -> Any:
 
 
 def _failure(label: str, diagnostic: record_check.Diagnostic) -> ArtifactObservation:
-    return ArtifactObservation(label, None, None, (diagnostic,))
+    return ArtifactObservation(label, None, None, None, (diagnostic,))
+
+
+def _validate_expected_digest(value: str | None, label: str) -> None:
+    if value is None:
+        return
+    if (
+        not isinstance(value, str)
+        or len(value) != 64
+        or any(character not in "0123456789abcdef" for character in value)
+    ):
+        raise ValueError(
+            f"expected {label} SHA-256 must be 64 lowercase hexadecimal characters"
+        )
 
 
 def inspect_json_artifact(
     path: Path,
     *,
     schema_path: Path,
-    expected_canonical_sha256: str,
+    expected_canonical_sha256: str | None = None,
+    expected_raw_sha256: str | None = None,
     label: str,
 ) -> ArtifactObservation:
     """Inspect one explicitly authorized artifact without defaults or execution."""
@@ -220,17 +235,16 @@ def inspect_json_artifact(
     schema_path = Path(schema_path)
     if not isinstance(label, str) or not label:
         raise ValueError("label must be a nonempty string")
-    if (
-        not isinstance(expected_canonical_sha256, str)
-        or len(expected_canonical_sha256) != 64
-        or any(character not in "0123456789abcdef" for character in expected_canonical_sha256)
-    ):
-        raise ValueError("expected canonical SHA-256 must be 64 lowercase hexadecimal characters")
+    _validate_expected_digest(expected_canonical_sha256, "canonical")
+    _validate_expected_digest(expected_raw_sha256, "raw")
+    if expected_canonical_sha256 is None and expected_raw_sha256 is None:
+        raise ValueError("one expected canonical or raw SHA-256 is required")
 
     artifact_text, diagnostic = _read_regular_file(path)
     if diagnostic is not None:
         return _failure(label, diagnostic)
     assert artifact_text is not None
+    observed_raw_sha256 = hashlib.sha256(artifact_text.encode("utf-8")).hexdigest()
 
     schema_text, diagnostic = _read_regular_file(schema_path)
     if diagnostic is not None:
@@ -274,7 +288,10 @@ def inspect_json_artifact(
         sort_keys=True,
     ).encode("utf-8")
     observed_sha256 = hashlib.sha256(canonical).hexdigest()
-    if observed_sha256 != expected_canonical_sha256:
+    if (
+        expected_canonical_sha256 is not None
+        and observed_sha256 != expected_canonical_sha256
+    ):
         return _failure(
             label,
             _diagnostic(
@@ -284,4 +301,20 @@ def inspect_json_artifact(
             ),
         )
 
-    return ArtifactObservation(label, _freeze(document), observed_sha256, ())
+    if expected_raw_sha256 is not None and observed_raw_sha256 != expected_raw_sha256:
+        return _failure(
+            label,
+            _diagnostic(
+                "ARTIFACT_RAW_DIGEST_MISMATCH",
+                path,
+                f"raw SHA-256 {observed_raw_sha256}, expected {expected_raw_sha256}",
+            ),
+        )
+
+    return ArtifactObservation(
+        label,
+        _freeze(document),
+        observed_sha256,
+        observed_raw_sha256,
+        (),
+    )
