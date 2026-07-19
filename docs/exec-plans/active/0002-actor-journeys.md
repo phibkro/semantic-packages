@@ -208,7 +208,8 @@ J0 vocabulary/lifecycle/map gate
 | JG-R1 independent fresh-clone review | independent internal reviewer; depends on PR-GG/J5 and exact published `3bb74fe`; read-only `/tmp/semantic-packages-pr4-fresh` | BLOCK despite exact checkout, clean tree, sole Conventional Commit, prospective range, full 127-journey/20-governance/2-report/8-Evidence/49-proof gate, and diff hygiene passing: stale system-map and user-journey status prose contradicted accepted executable J2–J5 state |
 | JG-S1 status-memory successor | journey continuity owner; depends on JG-R1; exclusive system map, user journeys, and this plan | implementation checkpoint: stale “next/designed/open” claims now state J1–J5 executable while keeping hosted release and cold-human acceptance open; rejected JG-R1 retained rather than relabeled |
 | JG-R2 fresh-clone successor review | same independent internal reviewer; depends on JG-S1 and republished exact `c24f355` | PASS: exact published checkout and origin, clean tree, two linear Conventional Commits, prospective range, diff hygiene, 127 journeys, 20 governance checks, two fresh reports/eight Evidence records, and 49 proof groups reproduce; JG-R1 remains retained, status contradictions close, hosted/automatic exclusions hold, and the cold-human recommendation remains explicitly unobserved |
-| JG journey release | lead acceptance; depends on JG-R2 plus J5 and PR-GG; read-only fresh-checkout acceptance with no repository write scope and ephemeral outputs only under an allocated temporary directory | all four terminal outcomes and bounded maintenance reproduce without hosted/automatic overclaim; cold human journey remains a pre-merge recommendation; pending |
+| JG journey release | lead acceptance; depends on JG-R2 plus J5 and PR-GG; read-only fresh-checkout acceptance with no repository write scope and ephemeral outputs only under an allocated temporary directory | accepted: the operator cloned public exact head `a78e83b` into a new temporary directory and reproduced 24/20/38/3 record fixtures, 18 loader groups, 36 adapter tests, 18 candidate tests, 127 actor journeys, 20 governance tests, two reports/eight Evidence records, and 49 proof groups; required checks re-passed after the evidence-only PR-body edit, and protected PR 4 squash-merged as `9194849` |
+| PR-M1 checkout runtime maintenance | lead CI maintainer; depends on merged JG and the hosted Node 20 deprecation observation; exclusive `.github/workflows/quality-gates.yml` plus this plan | accepted at exact implementation commit `7e89951`: both v4.2.2 pins become official v7.0.0 commit `9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0`; upstream declares `node24`, existing fetch-depth/no-credential boundaries remain unchanged, local gates pass, and hosted metadata/repository jobs pass in 1m29s/2m53s with no Node 20 annotation; this documentation-only successor preserves that workflow and requires the normal exact-head replay |
 
 Parallel work is read-only or owns non-overlapping paths. From J3-F2 onward, the user
 authorized a bounded process canary for this small repository: one continuity owner
@@ -304,7 +305,8 @@ may be the smallest local test/CLI projection and must not become a universal tr
 - [x] PR-GP0 release-governance preflight
 - [x] PR-GF1 governance falsifier checkpoint and review
 - [x] PR/release governance convergence
-- [ ] JG journey-complete release
+- [x] JG journey-complete release
+- [x] PR-M1 checkout Node 24 maintenance convergence
 
 ## Discoveries and changed assumptions
 
@@ -527,6 +529,22 @@ may be the smallest local test/CLI projection and must not become a universal tr
   passes metadata in 1m33s and the repository contract in 2m42s. A zero-second stale
   check display traced to a concurrency-cancelled run superseded by the PR-body edit;
   the CI inspection helper found no live failure and no code change was warranted.
+- The operator then cloned public exact PR head `a78e83b` into a new temporary
+  directory and reproduced the complete locked gate. The release description retained
+  that observation without moving the head; its final metadata and repository checks
+  passed in 1m31s and 3m02s. The protected squash-only merge produced default-branch
+  commit `9194849`, closing JG. A review-only Claude request was acknowledged but
+  returned no finding before merge, while CodeRabbit did not acknowledge its explicit
+  full-review command; both remain advisory integration observations, not missing
+  acceptance evidence.
+- That final hosted run warned that checkout v4.2.2's Node 20 runtime is deprecated.
+  PR-M1 selects the current official v7.0.0 commit `9c091bb…` after verifying its
+  `node24` action descriptor and release source. The change preserves full-SHA pinning,
+  read-only workflow permissions, explicit fetch depth, and disabled credential
+  persistence. Local diff hygiene, actionlint from locked nixpkgs `a418a0f…`, flake
+  check, and the full repository gate pass. At exact implementation commit `7e89951`,
+  hosted metadata and repository jobs pass in 1m29s and 2m53s without the prior Node
+  20 annotation, closing the decisive maintenance observation.
 - `CONTRIBUTING.md` encoded a serial all-stages lifecycle while the governing lifecycle
   uses proportional revisioned DAG nodes; J0 makes them consistent.
 
@@ -567,9 +585,12 @@ J5-G are accepted. PR-GO and PR-GG then converge squash-only protected hosted po
 and both required checks on draft PR 4. The first independent fresh-checkout reviewer
 reproduces every executable gate but BLOCKs on contradictory status prose; JG-S1
 reconciles that durable memory without changing product behavior. JG-R2 and both
-hosted successor checks then pass at `c24f355`. JG now waits only on the retained
-cold-human pre-merge recommendation, not further product-journey implementation or
-release-governance automation.
+hosted successor checks then pass at `c24f355`. The operator's cold public-clone run
+reproduces the complete gate at exact head `a78e83b`; final required checks pass after
+the evidence-only PR-body edit, and protected PR 4 squash-merges as `9194849`. JG is
+therefore accepted. PR-M1 then closes the observed checkout Node 20 deprecation at
+exact implementation commit `7e89951`: both hosted jobs pass through checkout v7
+without the warning, and no semantic-package behavior changes.
 
 ## Stop and escalation conditions
 
