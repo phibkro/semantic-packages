@@ -162,6 +162,14 @@ O0 priority + categorical-memory reconciliation
   -> O6c independent Rust + TypeScript candidate packets
   -> O6c-F1 implementation-triggered control corrections
   -> O-R6c representation-independence/package review
+  -> O6d-P reproduction/report red controls
+  -> O-R6d-P report red-control review
+  -> O6d-P-S1 exact provenance/outcome/isolation correction
+  -> O-R6d-P2 successor report red-control review
+  -> O6d-P-S2 fresh-execution/binary/closure correction
+  -> O-R6d-P3 final report red-control review
+  -> O6d-P-S3 cold-checker/full-outcome/recipe correction
+  -> O-R6d-P4 acceptance report red-control review
   -> O6d reproduction + targeted breaker reports
   -> O-R6d reproducibility/breaker review
   -> O6e Claim + Evidence candidate records
@@ -259,7 +267,15 @@ O0 priority + categorical-memory reconciliation
 | O6c independent Rust and TypeScript candidate packets | continuity owner; exclusive OrderedMap candidate sources/adapters/READMEs, candidate build controls, and this plan; depends on O-R6c-P5 PASS | complete pending O-R6c: Rust uses a persistent vector of class/value pairs with linear lookup; TypeScript uses a cloned read-only class table plus separate frozen order; both dependency-free adapters pass exact framing, offline reproducible build/typecheck/unit, clean EOF, persistence, and the authenticated campaign without cross-importing candidates, runner, contract, or campaign oracle |
 | O6c-F1 implementation-triggered control corrections | continuity owner; exclusive OrderedMap candidate test helper and README phrase case; depends on O6c first green attempt | complete: make framing reads unbuffered and close all pipes so combined responses are observable without warnings; keep Rust lifetimes outside single-string scrubbing; align exact lowercase trust/provenance phrases; candidate semantics and accepted requirements remain unchanged |
 | O-R6c representation-independence/package review | independent read-only reviewer; depends on O6c-F1 | PASS: focused 12/12, retained candidates 30/30, byte-identical independent Rust builds, locked-GCC unit, offline Deno, novel escaped-member C/B/c replacement history, exact envelopes/EOF, full gate, and static persistent-dataflow/no-shared-oracle audit pass; O6d only is released |
-| O6d reproduction and targeted breaker reports | continuity owner; exclusive reproduction script/check, retained candidate reports, reorder-breaker sources/report, affected docs/tests, and this plan; depends on O-R6c PASS | fresh deterministic reports bind exact plan/source/binary/runner/toolchain inputs and contain declaration-level candidate `supports` outcomes only, with no Evidence, review, or acceptance conclusion; breaker passes lookup/new-class cases and challenges only observations affected by existing-class reorder; failed breaker report remains outside accepted membership and cannot become Evidence |
+| O6d-P reproduction/report red controls | continuity owner; exclusive report/breaker tests, design reconciliation, and this plan; depends on O-R6c PASS | one accepted-plan/candidate precondition passes, one absent report-boundary failure is intentional, and successors freeze byte-exact fresh replay, repository-relative plan/runner/spec/profile/source/toolchain/command/binary bindings, complete declaration/case facts, authority-axis absence, stale/forged report rejection, and an isolated selective reorder breaker outside registry/report membership |
+| O-R6d-P report red-control review | independent read-only reviewer; depends on O6d-P | BLOCK retained: canonical and raw plan digests were conflated; sources could be empty and paths/commands/toolchains/binary invented; nested outcome ledgers and promotion vocabulary were under-frozen; only one source and outcome mutation were attacked; cross-root determinism, breaker closure, and future membership exclusion were incomplete |
+| O6d-P-S1 exact provenance/outcome/isolation correction | continuity owner; exclusive report/breaker tests and this plan; depends on O-R6d-P BLOCK | separate exact plan raw/canonical identities; pin accepted input paths/digests, exact source sets, normalized commands, full locked tool output, binary identity, recursively exact outcome rows, casefolded non-promotion vocabulary, cross-checkout equality/no-path leaks, every binding/report-axis mutation, breaker-local descendants/import/runtime reads, and all breaker authority identifiers |
+| O-R6d-P2 successor report red-control review | same independent read-only reviewer; depends on O6d-P-S1 | BLOCK retained: exact bindings and ledgers largely close, but theory input paths contradicted a broad registry substring ban; a checker could replay committed/hardcoded reports without execution; binaries were not freshly compared; breaker source scans had whitespace/alias escapes; only TypeScript report mutations were tested; lifecycle status remained stale |
+| O6d-P-S2 fresh-execution/binary/closure correction | continuity owner; exclusive report/breaker tests and this plan; depends on O-R6d-P2 BLOCK | complete: permit only the exact theory-input registry paths through closed schemas; remove retained reports and require unchanged reproduction; spy and perturb all three runner calls so report facts must consume fresh outcomes; independently digest executed binaries; compare exact ordered source rows; normalize breaker code and reject include/path/filesystem/process/environment/network escapes; mutate every report axis for all three reports; mark predecessor truthfully complete |
+| O-R6d-P3 final report red-control review | same independent read-only reviewer; depends on O6d-P-S2 | BLOCK retained: report deletion followed a warmed original-checkout checker; only returned causes were asserted; runner call order and local alias were overprescribed; exact TS/build/check/probe execution and independent breaker build were incomplete; grouped filesystem/environment/cfg-path/Unix-network aliases escaped |
+| O6d-P-S3 cold-checker/full-outcome/recipe correction | continuity owner; exclusive report/breaker tests and this plan; depends on O-R6d-P3 BLOCK | complete: load a new checker from a reportless copied checkout under original-and-copy report read traps before its first call; map fresh executions by command/result identity rather than order; perturb and assert every ConformanceReport field; independently rebuild both exact Rust recipes, typecheck exact Deno inputs, and replay full tool probes; close grouped imports, environment, cfg/path, and Unix-network identifiers while retaining perfect-shadow exclusion |
+| O-R6d-P4 acceptance report red-control review | same independent read-only reviewer; depends on O6d-P-S3 | PASS: exact 1/1/10 red topology, clean diff, cold reportless checker/read traps, canonical runner identity, order-independent full-field perturbation, exact selected tools/argv, independent builds/check/probes, runtime breaker digests, normalized escape closure, all-report mutation matrix, and lifecycle truth release O6d only |
+| O6d reproduction and targeted breaker reports | continuity owner; exclusive reproduction script/check, retained candidate reports, reorder-breaker sources/report, affected docs/tests, and this plan; depends on O-R6d-P4 PASS | fresh deterministic reports bind exact plan/source/binary/runner/toolchain inputs and contain declaration-level candidate `supports` outcomes only, with no Evidence, review, or acceptance conclusion; breaker passes lookup/new-class cases and challenges only observations affected by existing-class reorder; failed breaker report remains outside accepted membership and cannot become Evidence |
 | O-R6d reproducibility/breaker review | independent read-only reviewer; depends on O6d | independently rebuild/replay digests and outcomes, challenge stale/forged report acceptance and breaker overbreadth, and verify report facts remain distinct from Claims/Evidence/review authority |
 | O6e Claim and Evidence candidate records | continuity owner; exclusive two package record sets, schemas only if falsified, candidate-source manifests/final-manifest inputs, evidence verification checks, docs, and this plan; depends on O-R6d PASS | per candidate: one Realization plus seven realization-scoped active Claims and seven accepted-review Evidence candidates bind exact Specification/profile/adapter/plan/report/source facts, assumptions, exclusions, applicability, and mechanism; graph/link validation passes without final registration or semantic acceptance |
 | O-R6e package/evidence-candidate review | independent read-only reviewer; depends on O6e | challenge cross-candidate/version/scope/provenance binding, Claim/Evidence axis collapse, report self-promotion, missing declaration coverage, unsupported performance promotion, and premature manifest/ProductContract authority |
@@ -380,6 +396,14 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
 - [x] O6c independent Rust and TypeScript candidate packets complete; review pending
 - [x] O6c-F1 implementation-triggered control corrections
 - [x] O-R6c representation-independence/package review passed; O6d released
+- [x] O6d-P reproduction/report red controls
+- [x] O-R6d-P report red-control review — BLOCK retained
+- [x] O6d-P-S1 exact provenance/outcome/isolation correction
+- [x] O-R6d-P2 successor report red-control review — BLOCK retained
+- [x] O6d-P-S2 fresh-execution/binary/closure correction
+- [x] O-R6d-P3 final report red-control review — BLOCK retained
+- [x] O6d-P-S3 cold-checker/full-outcome/recipe correction
+- [x] O-R6d-P4 acceptance report red-control review passed; O6d released
 - [ ] O6d reproduction and targeted breaker reports
 - [ ] O-R6d reproducibility/breaker review
 - [ ] O6e Claim and Evidence candidate records
@@ -829,6 +853,55 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
   event completeness, external effects, performance, interoperation, and malicious
   same-realm TypeScript reflection remain excluded. No retained report, Evidence, or
   authority exists. O6d reproduction and targeted-breaker work only is released.
+- O6d-P decomposes the released node before any retained report exists. The red boundary
+  requires a report to be regenerated from exact repository-relative plan, runner,
+  Specification, profile, source, command, toolchain, and (where built) binary facts;
+  retain the runner's complete declaration/case/event result; and expose no Claim,
+  Evidence, review, acceptance, authority, manifest, or semantic-decision axis. Two
+  candidate reports live under `reports/ordered-map`; the negative control and its
+  report live together under `fixtures/candidates/ordered-map/reorder_breaker`, outside
+  candidate-report and registry membership. Fresh replay must reject both a harmless
+  source-byte drift and a forged semantic outcome. O-R6d-P must challenge this boundary
+  before the checker, reports, or breaker source may be implemented.
+- O-R6d-P retains the truthful red topology but blocks implementation. The first
+  control impossibly equated the plan's canonical `2cf7…` identity with its raw
+  `bfff…` file digest; empty source sets and invented paths, commands, tools, or binary
+  identity could pass; nested outcomes and authority vocabulary were incomplete; and
+  same-root replay plus two mutations did not establish cross-checkout determinism or
+  complete stale-input rejection. O6d-P-S1 separates raw/canonical identities and
+  freezes exact accepted inputs, complete runner ledgers, every bound-axis mutation,
+  full locked tool output, checkout/temp/store path absence, and breaker-local/future-
+  membership closure. O-R6d-P2 owns all retained bypasses before implementation.
+- O-R6d-P2 retains a second BLOCK. Although exact digests, ordered ledgers, full tool
+  strings, and cross-root bytes close, the non-promotion oracle also forbade the exact
+  theory inputs it required. More importantly, all reproduction APIs could read or
+  hardcode committed reports without executing candidates, the historical Rust digest
+  and arbitrary breaker digest did not bind fresh executables, whitespace/alias forms
+  escaped breaker scans, and only TypeScript report mutation excluded candidate-specific
+  cheating. O6d-P-S2 removes reports before replay, instruments and perturbs each fresh
+  runner call, independently hashes the executed binaries, normalizes the Rust fixture
+  boundary, mutates every report, and permits only the exact closed-schema theory input
+  paths. O-R6d-P3 owns final predecessor acceptance.
+- O-R6d-P3 retains a third BLOCK: deleting copied reports did not prevent the already-
+  loaded original checker from caching them; only the returned cause was asserted;
+  call order and one import alias were overprescribed; exact recipe execution remained
+  incomplete; and grouped standard-library imports plus environment, conditional path,
+  and Unix-network forms escaped the fixture scan. O6d-P-S3 loads a cold checker from
+  the reportless copy under read traps, associates calls by observed command/result,
+  replaces and checks every runner field, independently rebuilds both Rust packets and
+  the Deno check, replays full tool probes, and rejects those normalized Rust escape
+  identifiers. The perfect-shadow limitation remains explicit. O-R6d-P4 owns final
+  predecessor acceptance.
+- O-R6d-P4 passes the complete predecessor. Independent replay confirms the exact
+  12-test topology—one accepted-input pass, one intentional absent-boundary failure,
+  and ten skips—plus a clean diff. A cold copied checker cannot read original or copied
+  report files, must use the exact accepted runner, and must serialize perturbations to
+  every scalar, nested identity/order/cardinality, event, assumption, exclusion, and
+  stderr field without depending on call order. Independently rebuilt Rust/breaker
+  binaries, exact Deno typecheck/runner argv, full tool probes, runtime breaker source
+  digests, normalized escape scans, and all-three report mutations pass. Exact packet
+  shape is provenance, not OrderedMap meaning. Perfect-shadow/FFI evasion remains an
+  explicit O-R6d source-review limitation. O6d implementation only is released.
 - O4's full repository gate passes with 24 valid/20 schema-invalid/38 link-invalid/3
   link-valid record fixtures, 18 loader groups, 36 adapter tests, 18 cross-language
   candidates, 156 actor journeys, 10 research probes, 20 governance tests, two fresh
