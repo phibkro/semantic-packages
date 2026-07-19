@@ -8,19 +8,20 @@ operational snapshot, not architecture or constitutional intent. Repository
 `AGENTS.md`, the active ExecPlan, inherited sandbox policy, and the user's current data
 sharing authority take precedence.
 
-The capability observations below were verified on 2026-07-18. Re-probe versioned or
-environment-dependent facts before relying on them, and record changed observations in
-the active ExecPlan.
+Unless a row states otherwise, the capability observations below were verified on
+2026-07-18. Re-probe versioned or environment-dependent facts before relying on them,
+and record changed observations in the active ExecPlan.
 
 ## Capability and verification-status matrix
 
 | Route | Current use | Boundary and status |
 |---|---|---|
 | Lead Codex and product collaboration agents | integration, bounded implementation, independent GPT-family concern/review nodes | Available through the agent product's collaboration controls and inherited sandbox. This is not permission to invoke a raw `codex` process. |
+| `agent-dispatch` boundary | enforced cross-provider children, read-only isolation, and every writable provider task | The strict boundary remains governing, but two new read-only consultations on 2026-07-19 failed before provider launch because both hard-coded worker slots reported occupied while no corresponding dispatcher process was observable. This is an unresolved availability defect, not a reason to weaken child or write isolation. |
 | Claude Sonnet 5 | routine implementation, structured analysis, bounded execution | Route verified using `agent-dispatch claude`; request exact `claude-sonnet-5` and high effort. Claude Code 2.1.212 was observed in Wave 3, while Wave 4 preflight reported 2.1.210; two Wave 3 write attempts and the bounded Wave 4 W4-H1C0 attempt stalled without edits, so re-probe version/model resolution, bound retries, and retain an internal fallback. |
 | Claude Fable 5 | complex reasoning, skepticism, convergence review | Route/version and one decisive Wave 3 review verified through Claude Code 2.1.212 using `agent-dispatch claude`; request exact `claude-fable-5` and high effort. Several later Wave 3/4 consultations exhausted turns or produced no verdict, so do not make availability a silent hard dependency. |
 | Delegated external Codex | possible cross-provider child work | The `agent-dispatch codex` entrypoint is advertised; execution is unverified. Probe the model, version, and task behavior before making it a plan dependency. Never invoke delegated `codex` directly. |
-| Herdr | lead-side panes, pane output, status, interaction, and worktree organization | Optional observable control plane. It is neither the sandbox nor provider boundary. The Herdr control socket and `HERDR_*` control environment never enter delegated children. |
+| Herdr | lead-side panes, pane output, status, interaction, worktree organization, and explicitly authorized interactive consultation | Operator-led Fable 5 consultation was observed through Herdr on 2026-07-19 with Claude Code 2.1.210, high effort, plan mode, and an exact checkout PWD. This route is trusted and procedural, not sandboxed or OS-enforced read-only; it is not a delegated child. The Herdr control socket and `HERDR_*` environment never enter dispatcher children. |
 | OpenCode / Kimi | potential future diversity route | Not supported by the current dispatcher contract. Do not invoke directly; first add and review a bounded dispatcher/provider adapter. |
 | Local Gemma or another local model | potential low-cost, low-sensitivity probe | No route or task capability is verified. Do not substitute it for a required node without a fit-for-task probe and recorded reassignment. |
 
@@ -57,10 +58,13 @@ than hidden.
 2. Define the node ID and revision, observable outcome, hard predecessors, downstream
    gate, accountable owner, integration owner, scope, non-goals, falsifier, required
    evidence, disclosure scope, and stop conditions.
-3. Decide whether consultation is read-only or execution needs writes.
+3. Decide whether consultation is read-only or execution needs writes. If explicit
+   operator authority permits a Herdr advisor, also decide whether its broader trusted
+   host boundary is acceptable; otherwise use dispatcher-enforced read-only mode.
 4. For external writes, create an isolated worktree and grant one exclusive path set.
    Parallel writers otherwise need provably non-overlapping paths.
-5. Dispatch through `agent-dispatch`; never invoke raw `claude` or delegated `codex`.
+5. Dispatch every child and every writer through `agent-dispatch`. A lead already in
+   Herdr may use the separately governed operator-led consultation sequence below.
 6. Independently verify returned artifacts and resolved model provenance.
 7. Attach the packet through `supports`, `challenges`, or the declared hard dependency;
    dispose concerns and run the convergence gate.
@@ -124,6 +128,33 @@ configuration directory, or control environment. The lead-side pane may have
 variable, Herdr socket, or Herdr configuration path, stop the node and escalate it as
 a boundary regression. Do not widen access to test or recover control.
 
+### Operator-led Herdr consultation
+
+This is a narrow exception for interactive read-only advice, not an alternative child
+runtime. Each consultation requires new explicit operator authorization; authority
+expires when that consultation ends and does not carry to another task. Use the route
+only from a lead already inside Herdr (`HERDR_ENV=1`):
+
+1. Confirm the target checkout is clean and contains exactly the revision to review.
+2. Prefer one named, resumable advisor session per role in a dedicated Herdr tab. Exit
+   to retain its session ID or name, then resume it in a pane whose PWD is the exact
+   target checkout. Do not continue a live pane whose PWD or filesystem view belongs to
+   another worktree. Use split panes only when the operator explicitly requests them.
+3. Start or resume the provider through that Herdr tab, select the exact model, set high
+   effort and plan/read-only mode, then inspect the pane to verify the resolved settings.
+4. Give a bounded consultation brief that forbids edits, delegation, and external
+   actions; name the public paths authorized for disclosure and the falsifier sought.
+5. Observe status and retrieve the report through Herdr. Do not leave the session
+   unattended or treat a provider retry as completed evidence.
+6. Recheck the target checkout for changes. Any mutation fails the experiment and must
+   be retained and escalated; do not use the result as read-only evidence.
+
+The pane may inherit host credentials and Herdr control capability. Prompt-level plan
+mode is not pagu-box `strict`, a dispatcher depth limit, or a filesystem guarantee.
+Therefore use `agent-dispatch --read-only` instead for untrusted inputs, enforced
+isolation, security-sensitive review, or unattended work. Use the dispatcher plus an
+isolated worktree for every writable task.
+
 ## Data and secret boundary
 
 Read-only prevents mutation, not disclosure. Before an external launch, name exactly
@@ -152,6 +183,12 @@ Friendly aliases are not provenance. Inspect structured runtime output such as
 `modelUsage`; if the resolved primary model differs from the requested exact model,
 record the mismatch and do not cite the requested name as proof of execution.
 
+For an operator-led Herdr consultation, additionally retain workspace/tab/pane and
+provider session IDs or names, the pane PWD, verified interactive model/effort/mode,
+explicit operator authorization, the absence of an OS-enforced sandbox, and before/after
+checkout status. Never describe that packet as a dispatched child or strict read-only
+assurance.
+
 Use the following disposition footer so a successful-looking handoff does not erase
 failed or contradictory evidence:
 
@@ -170,11 +207,16 @@ Reviewer provenance and convergence-gate result:
 
 - **Alias drift:** an alias resolves to another model. Pin the exact selector, inspect
   runtime usage, update the tool if appropriate, and retain the failed observation.
-- **Raw provider launch:** never bypass `agent-dispatch` for convenience.
+- **Raw provider launch:** never invoke a provider from an ordinary agent shell or use
+  Herdr to evade dispatcher boundaries. The only direct route is the explicitly
+  authorized, read-only, operator-led Herdr consultation above.
 - **Writable consultation:** default skeptical or advisory nodes to read-only.
+- **Pane proliferation:** do not equate target-checkout freshness with a new provider
+  session or split pane. Resume the named advisor in a dedicated tab at the correct PWD.
 - **Shared dirty worktree:** do not give an external writer a broad dirty checkout;
   use an isolated worktree and exclusive scope.
-- **Socket confused deputy:** never forward the Herdr control plane into a strict child.
+- **Socket confused deputy:** never forward the Herdr control plane into a strict
+  child, and never mislabel a Herdr advisor that inherits it as sandboxed.
 - **Standing model authority:** do not accept work because it came from Fable, Sonnet,
   GPT, a local model, or a majority of agents.
 - **Anchored diversity:** do not show every reviewer the lead's preferred answer before
