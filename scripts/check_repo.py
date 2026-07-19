@@ -74,6 +74,10 @@ REQUIRED = [
     "registry/stack/successor-manifest.json",
     "docs/decisions/0014-revisioned-successor-source-set.md",
     "schemas/registry-manifest.schema.json",
+    "schemas/ordered-map-conformance-plan.schema.json",
+    "registry/ordered-map/theory/records/ordered-map-spec.json",
+    "registry/ordered-map/theory/dependencies/ordered-map-profile.json",
+    "contracts/ordered-map/conformance-plan.json",
 ]
 LINK_RE = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
 JSON_EXCLUDED_DIRS = {".git", ".direnv", "node_modules"}

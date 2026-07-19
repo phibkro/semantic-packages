@@ -122,9 +122,9 @@ O0 priority + categorical-memory reconciliation
 | O-S3 ordering/attribution correction | continuity owner; exclusive plan and OrderedMap design; depends on O-R2b BLOCK | split reviewed exact input/plan artifacts from final ProductContract convergence, make red controls consume one artifact oracle, and attribute only retained-source observations to persistence |
 | O-R2c successor review | same independent read-only reviewer; depends on O-S3 | PASS: exact-artifact/final-authority ordering is derivable without future bytes; plan consumers cannot create a second oracle; per-observation persistence attribution isolates the reorder breaker; prior performance/protocol/trust/projection/successor corrections remain closed |
 | O-G2 design gate | lead acceptance; depends on O-R2c PASS | PASS: freezes the two-domain-only actor slice and releases only O3a's final-path Specification/profile plus canonical plan artifact/schema, followed by independent artifact review before red controls |
-| O3a exact contract artifacts | continuity owner; exclusive final-path OrderedMap Specification/profile records and one canonical conformance-plan JSON artifact/schema; depends on O-G2 | byte-level inputs, encodings, cases, steps, observations, attribution, canonicalization, and digests; no runner implementation or accepted Evidence |
-| O-R3a contract-artifact review | independent read-only reviewer; depends on O3a | representation independence, oracle ownership, digest derivability, finite falsification, and no second truth |
-| O3b red journey controls | continuity owner; exclusive new OrderedMap journey tests; depends on O-R3a PASS | tests consume the reviewed artifacts and intentionally fail at first absent shared/product surfaces; no duplicated plan oracle, hard-coded output, or Stack alias |
+| O3a exact contract artifacts | continuity owner; exclusive final-path OrderedMap Specification/profile records and one canonical conformance-plan JSON artifact/schema; depends on O-G2 | candidate complete: link-valid 18-declaration Specification/profile, schema-valid seven-case plan, exact logical bindings/observations/attribution, canonical digest `2cf7b481…947a`, and seven focused artifact checks; no runner implementation or accepted Evidence |
+| O-R3a contract-artifact review | independent read-only reviewer; depends on O3a | PASS: independently reproduced all three digests, confirmed schema branch/object closure, representation independence, source-before-use logical binds, exact seven-case coverage/attribution, breaker isolation, bounded event/performance scope, and absence of downstream artifacts |
+| O3b red journey controls | continuity owner; exclusive new OrderedMap journey tests; depends on O-R3a PASS | tests consume the reviewed artifacts, reject duplicate JSON members and any schema-valid noncanonical digest, and intentionally fail at first absent shared/product surfaces; no duplicated plan oracle, hard-coded output, or Stack alias |
 | O-R3b red-control review | independent read-only reviewer; depends on O3b | oracle completeness, negative-control power, execution/I/O boundaries, and regression isolation |
 | O4 shared-substrate extraction | continuity owner; exclusive domain-neutral modules, authority-contract shape, and Stack compatibility wrappers; depends on O-R3b PASS | smallest contract-driven extraction; every Stack test stays green; no universal resolver fiction; no premature OrderedMap final ProductContract |
 | O5 theory-source publication/graph/projection | continuity owner; exclusive OrderedMap theory-source manifest/authority and domain journey fixtures; depends on O4 and consumes O3a records byte-for-byte | exact valid theory-source publication and graph, authored meaning, visible unknowns, phase/membership attacks, and no execution; final product replay remains open |
@@ -175,8 +175,8 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
 - [x] O-S3 artifact-ordering and per-observation attribution correction
 - [x] O-R2c independent successor review passed
 - [x] O-G2 design gate accepted; O3a released
-- [ ] O3a exact Specification/profile/conformance-plan artifacts
-- [ ] O-R3a contract-artifact review
+- [x] O3a exact Specification/profile/conformance-plan artifact candidate
+- [x] O-R3a contract-artifact review passed
 - [ ] O3b red journey controls
 - [ ] O-R3b red-control review
 - [ ] O4 shared-substrate extraction
@@ -267,6 +267,24 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
   smallest current end-to-end slice: O3a may now author exact final-path semantic inputs
   and one plan artifact/schema, but O3b cannot exist until O-R3a independently verifies
   those bytes, encodings, digest, attribution, and single-oracle property.
+- O3a materializes the final-path theory records before any publication manifest. Their
+  exact graph is link-valid with zero diagnostics; the Specification SHA-256 is
+  `6049d371…7fd7f` and profile SHA-256 is `6d129789…e225f`. One separate plan artifact
+  pins those byte digests, uses a schema-governed logical-handle/step/result form, and
+  has canonical sorted/minified SHA-256 `2cf7b481…947a`. Seven artifact tests freeze
+  schema validity, record binding, case identity, coverage, source-before-use handles,
+  persistence-source attribution, and the exact reorder oracle without implementing a
+  runner.
+- O-R3a independently reproduces the canonical plan digest with a separate JSON/SHA
+  toolchain and passes schema closure, record pins, observation/breaker attribution,
+  logical binding, representation independence, and artifact boundary. O3b inherits
+  two fail-closed loader requirements: reject duplicate JSON member names before
+  canonicalization, and reject any schema-valid artifact whose canonical digest differs
+  from the reviewed `2cf7b481…947a` identity.
+- The first full O3a repository run retained one unchanged Stack proof-fixture timeout
+  where a boundary diagnostic was expected. An immediate unchanged rerun passed all 49
+  proof contract groups and the full gate, including 10 research tests. No timeout or
+  proof oracle was relaxed.
 
 ## Decision log
 
@@ -286,9 +304,11 @@ surfaces are promising shared substrate versus domain-local semantics. No Ordere
 canonical record or implementation is accepted yet. O-R1's BLOCK remains part of the
 history and O-R1b's successor PASS closes it without erasure. O2 turns the paper
 contract into exact actor terminal outcomes; O-R2 and O-R2b remain as design revision
-history, and O-R2c passes their final successor. O-G2 is accepted. O3a is the live edge:
-author the exact final-path Specification/profile plus one canonical conformance-plan
-artifact/schema, with no runner, package, report, Evidence, or final ProductContract.
+history, and O-R2c passes their final successor. O-G2 is accepted. O3a's artifact
+candidate and O-R3a PASS close the artifact edge. O3b is now live: add red journey
+controls that load and authenticate these exact bytes, then fail only at the first
+absent shared/product surfaces. No runner, package, report, Evidence, or final
+ProductContract exists.
 
 ## Stop and escalation conditions
 

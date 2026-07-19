@@ -1,0 +1,114 @@
+{
+  "kind": "specification",
+  "id": "ordered-map",
+  "version": "0.1.0",
+  "carriers": [
+    {
+      "id": "Key",
+      "description": "An abstract key domain governed by key-equivalence."
+    },
+    {
+      "id": "Value",
+      "description": "An abstract value domain governed by value-equivalence."
+    },
+    {
+      "id": "OrderedMap",
+      "description": "An abstract finite mapping from key-equivalence classes to values with stable first-insertion class order."
+    }
+  ],
+  "operations": [
+    {
+      "id": "empty",
+      "signature": "OrderedMap[Key,Value]"
+    },
+    {
+      "id": "put",
+      "signature": "OrderedMap[Key,Value] * Key * Value -> OrderedMap[Key,Value]"
+    }
+  ],
+  "observations": [
+    {
+      "id": "lookup",
+      "signature": "OrderedMap[Key,Value] * Key -> Option[Value]"
+    },
+    {
+      "id": "entries",
+      "signature": "OrderedMap[Key,Value] -> Sequence[KeyClass * Value]"
+    }
+  ],
+  "equivalences": [
+    {
+      "id": "key-equivalence",
+      "carrier": "Key",
+      "definition": "A declared reflexive, symmetric, and transitive relation identifying live key classes; concrete representatives are unobserved."
+    },
+    {
+      "id": "value-equivalence",
+      "carrier": "Value",
+      "definition": "A declared reflexive, symmetric, and transitive relation used to compare lookup and entry values."
+    },
+    {
+      "id": "ordered-map-equivalence",
+      "carrier": "OrderedMap",
+      "definition": "Pointwise equality of entries class/value sequences under key-equivalence and value-equivalence."
+    }
+  ],
+  "laws": [
+    {
+      "id": "lookup-empty",
+      "statement": "lookup(empty, k) == None"
+    },
+    {
+      "id": "lookup-put-same",
+      "statement": "lookup(put(m, k, v), k) is value-equivalent to v"
+    },
+    {
+      "id": "lookup-put-other",
+      "statement": "if k1 is not key-equivalent to k2, lookup(put(m, k1, v), k2) == lookup(m, k2) under value-equivalence"
+    },
+    {
+      "id": "put-existing-position",
+      "statement": "put with a key equivalent to a live class preserves that class position and replaces its associated value; concrete key representative retention or replacement is unobserved"
+    },
+    {
+      "id": "put-new-appends",
+      "statement": "put with a key inequivalent to every live key class appends exactly one class/value entry"
+    }
+  ],
+  "effects": {
+    "id": "ordered-map-effects",
+    "forbidden": ["io.*"],
+    "optional": ["debug.emit"],
+    "default": "unspecified"
+  },
+  "resources": [
+    {
+      "id": "persistence",
+      "rule": "Retained map handles remain usable and observationally unchanged after put on them or derived handles."
+    }
+  ],
+  "performancePropositions": [
+    {
+      "id": "put-amortized-constant",
+      "operationFamily": ["put"],
+      "workload": {
+        "profile": {
+          "kind": "realizationProfile",
+          "id": "ordered-map-ascii-fold",
+          "version": "0.1.0"
+        },
+        "localId": "put-sequence"
+      },
+      "costMeasure": {
+        "profile": {
+          "kind": "realizationProfile",
+          "id": "ordered-map-ascii-fold",
+          "version": "0.1.0"
+        },
+        "localId": "realization-steps"
+      },
+      "predicate": "There exist constants a,b >= 0 such that for every n >= 0 and every permitted length-n key/value sequence, total realization-steps is at most a*n+b.",
+      "permittedEvidenceMethods": ["proof", "proof-audit"]
+    }
+  ]
+}
