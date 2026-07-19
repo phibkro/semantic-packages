@@ -184,6 +184,10 @@ O0 priority + categorical-memory reconciliation
   -> O-R6d5 final acceptance reproducibility/breaker review
   -> O6d-F3 consecutive-reproduction characterization
   -> O-R6d6 final consecutive-reproduction acceptance
+  -> O6e-P Claim/Evidence candidate red controls
+  -> O-R6e-P candidate-record red-control review
+  -> O6e-P-S1 environment/census/two-package correction
+  -> O-R6e-P2 successor candidate-record red-control review
   -> O6e Claim + Evidence candidate records
   -> O-R6e package/evidence-candidate review
   -> O-R6 macro lifecycle acceptance
@@ -301,7 +305,11 @@ O0 priority + categorical-memory reconciliation
 | O-R6d5 final acceptance reproducibility/breaker review | same independent read-only reviewer; depends on O6d-S4 | BLOCK retained: source/cache coverage and lifecycle staging agree, but one independent 29-test candidate/report run observed consecutive fresh packets differ when one supporting observation became inconclusive; the earlier full-gate PASS alone cannot release O6e |
 | O6d-F3 consecutive-reproduction characterization | continuity owner; read-only campaign/test replay plus this plan; depends on O-R6d5 BLOCK | complete pending O-R6d6: six direct reproductions remained byte-identical and the exact 29-test candidate/report suite passed unchanged; retain the review observation, change no deadline or assertion, and require the same reviewer to pass three consecutive exact fresh-byte tests before acceptance |
 | O-R6d6 final consecutive-reproduction acceptance | same independent read-only reviewer; depends on O6d-F3 | PASS: the exact fresh-byte/repository-relative test passed three consecutive independent runs in 5.373s, 5.614s, and 8.143s without implementation, test, plan, or deadline relaxation; O6e released |
-| O6e Claim and Evidence candidate records | continuity owner; exclusive two package record sets, schemas only if falsified, candidate-source manifests/final-manifest inputs, evidence verification checks, docs, and this plan; depends on O-R6d6 PASS | per candidate: one Realization plus seven realization-scoped active Claims and seven accepted-review Evidence candidates bind exact Specification/profile/adapter/plan/report/source facts, assumptions, exclusions, applicability, and mechanism; graph/link validation passes without final registration or semantic acceptance |
+| O6e-P Claim/Evidence candidate red controls | continuity owner; exclusive OrderedMap candidate-record tests and this plan; depends on O-R6d6 PASS | complete: one retained-report precondition passes, one missing 30-record/checker boundary fails intentionally, and ten successors freeze the exact 1+7+7 census per package, addresses/concerns/scope/lifecycle/review/result axes, O-R6d6 review lineage, graph/link validity, declaration-local report outcomes, full exact provenance closure, cross-candidate/version/profile/adapter variation, no performance promotion, and absence of manifest/ProductContract/registration/semantic-acceptance artifacts |
+| O-R6e-P candidate-record red-control review | independent read-only reviewer; depends on O6e-P | BLOCK retained: the TypeScript V8 fact copied an older Stack value, non-recursive inventory let nested records escape the 1+7+7 census and absence scans, and variation checks sampled Rust only |
+| O6e-P-S1 environment/census/two-package correction | continuity owner; exclusive O6e-P test and this plan; depends on O-R6e-P BLOCK | align V8 to the retained report, enumerate every nested package entry for exact inventory and every nested JSON document for unsupported/authority scans, and apply the complete Evidence/Claim/census variation matrix to both packages while separately retaining Claim, result, and review axes; keep the 1/1/10 topology |
+| O-R6e-P2 successor candidate-record red-control review | same independent read-only reviewer; depends on O6e-P-S1 | PASS: retained V8 provenance, recursive entry/document census, bidirectional package variation, separate lifecycle/result/review axes, exact 1/1/10 topology, and every original census/graph/lineage/provenance/non-promotion/non-authority obligation pass; O6e implementation released |
+| O6e Claim and Evidence candidate records | continuity owner; exclusive two package record sets, schemas only if falsified, candidate-source manifests/final-manifest inputs, evidence verification checks, docs, and this plan; depends on O-R6e-P2 PASS | per candidate: one Realization plus seven realization-scoped active Claims and seven accepted-review Evidence candidates bind exact Specification/profile/adapter/plan/report/source facts, assumptions, exclusions, applicability, and mechanism; graph/link validation passes without final registration or semantic acceptance |
 | O-R6e package/evidence-candidate review | independent read-only reviewer; depends on O6e | challenge cross-candidate/version/scope/provenance binding, Claim/Evidence axis collapse, report self-promotion, missing declaration coverage, unsupported performance promotion, and premature manifest/ProductContract authority |
 | O-R6 macro lifecycle acceptance | lead convergence gate; depends on O-R6e PASS | research/design/red-green/refactor/document/reproduction plus maintenance handoff/reopen inputs agree: immutable predecessor bytes, exact reproduction/toolchain ownership, and reopen triggers are named for O8; two independent candidates, one selective breaker, fresh reports, and candidate records pass the full gate; O6 closes without registration acceptance and releases O6f candidate-authority work |
 | O6f final-authority candidate and actor replay | continuity owner; exclusive candidate final manifest, immutable OrderedMap ProductContract, wrapper integration, affected actor replay, tests/docs, and this plan; depends on O-R6 macro PASS | materialize proposed exact final bytes only after every member/digest exists; pin O3 plan, Specification/profile, resolver/effect/boundary rules; replay publication, package registration, graph, and package views under surfaced candidate authority without self-acceptance |
@@ -442,6 +450,10 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
 - [x] O-R6d5 final acceptance reproducibility/breaker review — BLOCK retained
 - [x] O6d-F3 consecutive-reproduction characterization
 - [x] O-R6d6 final consecutive-reproduction acceptance passed; O6e released
+- [x] O6e-P Claim/Evidence candidate red controls; one pass, one intentional failure, ten skips
+- [x] O-R6e-P candidate-record red-control review — BLOCK retained
+- [x] O6e-P-S1 environment/census/two-package correction
+- [x] O-R6e-P2 successor candidate-record red-control review passed; O6e released
 - [ ] O6e Claim and Evidence candidate records
 - [ ] O-R6e package/evidence-candidate review
 - [ ] O-R6 macro lifecycle acceptance
@@ -1034,6 +1046,37 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
   complete 24/20/38/3 record, 18 loader, 50 adapter, 47 candidate, 166 journey,
   16 research, 20 governance, two-report/eight-Evidence, and three OrderedMap-report
   ledgers. No proof deadline, oracle, implementation, or report was changed.
+- A resumed Fable 5 product-advisor consultation supports reusing the existing
+  Realization/Claim/Evidence schemas and exact link checker, with one material O6e
+  constraint: `reviewState: accepted` must cite the already-completed O-R6d6 report
+  review lineage rather than future O-R6e, or the candidates would circularly
+  self-ratify. The advisor's Herdr tab remained sandboxed to an older checkout and
+  could not inspect current O6e bytes, so this is a framing-only `supports` edge, not
+  review evidence. O6e-P freezes that lineage plus exact census, provenance, mutations,
+  and non-authority before any candidate record is authored.
+- O6e-P materializes that framing as a 12-test predecessor: the two retained reports
+  pass as candidate facts, the absent checker plus 30 package records produce the one
+  intentional failure, and ten successors skip. The frozen successor boundary covers
+  exact Realization metadata, seven active declaration Claims and seven accepted-review
+  Evidence candidates per package, O-R6d6 rather than O-R6e review lineage, exact
+  environment/freshness/applicability/provenance, generic graph validity, field and
+  census variation sensitivity, report-as-input separation, unsupported performance,
+  absent product authority, and repository-gate integration. O-R6e-P owns review before
+  any candidate record or checker may be added.
+- O-R6e-P retains three red-pattern corrections. The TypeScript environment used the
+  older Stack V8 value rather than the retained OrderedMap report's
+  `14.9.207.2-rusty`; top-level-only inventory let a nested JSON record escape both the
+  exact census and absence scans; and provenance variations sampled only Rust.
+  O6e-P-S1 aligns the report fact, recursively counts every package entry/document,
+  and applies the complete Claim/Evidence/census matrix to both packages while proving
+  lifecycle, result, and review remain separate axes. The exact 1/1/10 red topology is
+  unchanged; O-R6e-P2 owns successor acceptance.
+- O-R6e-P2 passes the corrected predecessor. Independent review confirms the retained
+  TypeScript V8 fact, recursive package inventory and document scans, both-package
+  variation/census coverage, and independent Claim lifecycle, Evidence result, and
+  Evidence review axes. All original graph, O-R6d6 lineage, exact provenance,
+  unsupported-performance, report-input, and no-final-authority controls remain
+  present. O6e record/checker implementation only is released.
 - O-R6d-P4 passes the complete predecessor. Independent replay confirms the exact
   12-test topology—one accepted-input pass, one intentional absent-boundary failure,
   and ten skips—plus a clean diff. A cold copied checker cannot read original or copied
@@ -1079,9 +1122,10 @@ one selectively challenging reorder-breaker fixture/report outside accepted memb
 There is still no OrderedMap Claim or Evidence candidate, final
 manifest/ProductContract, registration acceptance, resolver decision, or maintenance
 successor. Retained O-R6d through O-R6d5 provenance and reproduction BLOCKs now lead to
-O-R6d6 PASS. O6d is accepted, and O6e scoped Claim/Evidence candidate records are the
-live edge; final authority, registration acceptance, and consumer resolution remain
-held behind their later review and convergence gates.
+O-R6d6 PASS. O6d is accepted, O-R6e-P2 passes, and O6e scoped Claim/Evidence
+candidate-record implementation is the live edge; final authority,
+registration acceptance, and consumer resolution remain held behind their later
+review and convergence gates.
 O6f may later
 materialize exact final-authority candidates and actor replay; O6-G alone may accept
 those reviewed bytes as final product authority.
