@@ -96,6 +96,12 @@ O0 priority + categorical-memory reconciliation
   -> O-R3a contract-artifact review
   -> O3b red journey controls consuming those artifacts
   -> O-R3b red-control review
+  -> O-S4 authority/phase/no-follow/immutability control correction
+  -> O-R3c successor red-control review
+  -> O-S5 recursive-immutability and diagnostic-location correction
+  -> O-R3d final successor red-control review
+  -> O-S6 replay-authority and leak-case correction
+  -> O-R3e final red-control review
   -> O4 smallest shared-substrate extraction
   -> O5 theory-source publication + graph + theory projection
   -> O6 package packets + Realizations + breaker + Evidence candidates
@@ -124,9 +130,15 @@ O0 priority + categorical-memory reconciliation
 | O-G2 design gate | lead acceptance; depends on O-R2c PASS | PASS: freezes the two-domain-only actor slice and releases only O3a's final-path Specification/profile plus canonical plan artifact/schema, followed by independent artifact review before red controls |
 | O3a exact contract artifacts | continuity owner; exclusive final-path OrderedMap Specification/profile records and one canonical conformance-plan JSON artifact/schema; depends on O-G2 | candidate complete: link-valid 18-declaration Specification/profile, schema-valid seven-case plan, exact logical bindings/observations/attribution, canonical digest `2cf7b481…947a`, and seven focused artifact checks; no runner implementation or accepted Evidence |
 | O-R3a contract-artifact review | independent read-only reviewer; depends on O3a | PASS: independently reproduced all three digests, confirmed schema branch/object closure, representation independence, source-before-use logical binds, exact seven-case coverage/attribution, breaker isolation, bounded event/performance scope, and absence of downstream artifacts |
-| O3b red journey controls | continuity owner; exclusive new OrderedMap journey tests; depends on O-R3a PASS | tests consume the reviewed artifacts, reject duplicate JSON members and any schema-valid noncanonical digest, and intentionally fail at first absent shared/product surfaces; no duplicated plan oracle, hard-coded output, or Stack alias |
-| O-R3b red-control review | independent read-only reviewer; depends on O3b | oracle completeness, negative-control power, execution/I/O boundaries, and regression isolation |
-| O4 shared-substrate extraction | continuity owner; exclusive domain-neutral modules, authority-contract shape, and Stack compatibility wrappers; depends on O-R3b PASS | smallest contract-driven extraction; every Stack test stays green; no universal resolver fiction; no premature OrderedMap final ProductContract |
+| O3b red journey controls | continuity owner; exclusive new OrderedMap journey tests; depends on O-R3a PASS | red candidate: exact input preconditions pass; one intentional failure names missing `canonical_artifact`; nine successor controls skip and freeze the no-argument product wrapper, duplicate-member/input/schema/digest phases, no fallback/execution/content leak, and immutable capture |
+| O-R3b red-control review | independent read-only reviewer; depends on O3b | BLOCK retained: wrapper keywords could override authority; phase failures could return false documents/digests; nested/ancestor/schema-path attacks were absent; returned data could be mutable; structured diagnostic phases were under-frozen |
+| O-S4 red-control correction | continuity owner; exclusive O3b test and plan; depends on O-R3b BLOCK | prove zero-parameter wrapper signature, no conclusions on every failure, nested duplicate, artifact/schema ancestor no-follow matrices, recursive immutability/replay, stronger execution sentinels, and structured phase diagnostics |
+| O-R3c successor red-control review | same independent read-only reviewer; depends on O-S4 | BLOCK retained: root/container immutability did not prove nested mappings immutable; duplicate and no-follow matrices did not freeze every diagnostic source/pointer; one prose count remained stale |
+| O-S5 final red correction | continuity owner; exclusive O3b test and plan; depends on O-R3c BLOCK | add nested address/case-step mutation attacks and replay; freeze exact path/pointer for nested duplicate and every artifact/schema input case; reconcile count |
+| O-R3d final successor red-control review | same independent read-only reviewer; depends on O-S5 | BLOCK retained: replay document equality did not constrain replay status/digest; content-leak failure did not forbid false document/digest authority |
+| O-S6 final authority assertions | continuity owner; exclusive O3b test and plan; depends on O-R3d BLOCK | require replay PASS, empty diagnostics, exact digest, exact document; require leak case failure with no document/digest |
+| O-R3e final red-control review | same independent read-only reviewer; depends on O-S6 | PASS: replay and leak-case authority assertions close the last residuals; 11-test topology remains one green precondition, one intentional missing-module failure, and nine skips |
+| O4 shared-substrate extraction | continuity owner; exclusive domain-neutral modules, authority-contract shape, and Stack compatibility wrappers; depends on O-R3e PASS | smallest contract-driven extraction; every Stack test stays green; no universal resolver fiction; no premature OrderedMap final ProductContract |
 | O5 theory-source publication/graph/projection | continuity owner; exclusive OrderedMap theory-source manifest/authority and domain journey fixtures; depends on O4 and consumes O3a records byte-for-byte | exact valid theory-source publication and graph, authored meaning, visible unknowns, phase/membership attacks, and no execution; final product replay remains open |
 | O6 package packets/Realizations/breaker/Evidence candidates | continuity owner; exclusive OrderedMap implementations/adapters/campaign/package records/reports/Evidence candidates and final manifest inputs; depends on O5 | two independently represented package packets, one targeted breaker, fresh reproducible reports, exact Claim/Evidence bindings, assumptions and exclusions; no final registration claim before O6-G |
 | O6-G final trust convergence | continuity owner; exclusive final manifest, immutable OrderedMap ProductContract, wrapper integration, and affected actor replay; depends on O6 | final contract pins complete manifest, O3 plan, Specification/profile, resolver/effect/boundary rules; publication, package registration, graph, and package views replay under surfaced exact authority |
@@ -177,8 +189,14 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
 - [x] O-G2 design gate accepted; O3a released
 - [x] O3a exact Specification/profile/conformance-plan artifact candidate
 - [x] O-R3a contract-artifact review passed
-- [ ] O3b red journey controls
-- [ ] O-R3b red-control review
+- [x] O3b red journey-control candidate; one intentional failure, nine skips
+- [x] O-R3b red-control review — BLOCK retained
+- [x] O-S4 authority/phase/no-follow/immutability control correction
+- [x] O-R3c successor red-control review — BLOCK retained
+- [x] O-S5 recursive-immutability and diagnostic-location correction
+- [x] O-R3d final successor red-control review — BLOCK retained
+- [x] O-S6 replay-authority and leak-case correction
+- [x] O-R3e final red-control review passed; O4 released
 - [ ] O4 shared-substrate extraction
 - [ ] O5 theory-source publication/graph/projection
 - [ ] O6 package packets/Realizations/breaker/Evidence candidates
@@ -281,6 +299,35 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
   two fail-closed loader requirements: reject duplicate JSON member names before
   canonicalization, and reject any schema-valid artifact whose canonical digest differs
   from the reviewed `2cf7b481…947a` identity.
+- O3b's first red predecessor is the canonical artifact security boundary rather than
+  publication or execution: the exact plan/schema precondition passes, one failure
+  reports the absent generic loader, and nine successor controls remain skipped. The
+  suite requires a no-argument domain wrapper while keeping lower-level fixture
+  inspection explicit; malformed JSON, duplicate members, invalid schema contracts,
+  schema-invalid documents, noncanonical digests, symlinks/directories/absence,
+  post-capture mutation, execution attempts, and diagnostic content leakage stay
+  distinct observations.
+- O-R3b confirms the red shape but rejects five weak controls: positional-only override
+  rejection missed keyword authority, failure diagnostics could coexist with false
+  documents/digests, leaf-only no-follow missed ancestor and schema paths, captured data
+  could be caller-mutated, and diagnostic phase structure could drift. O-S4 makes the
+  wrapper signature empty, requires no downstream conclusion on failure, adds a nested
+  duplicate and both artifact/schema path matrices, requires recursively immutable
+  captures plus replay, expands execution sentinels, and freezes code/path/pointer plus
+  digest-message structure across phases.
+- O-R3c closes most of O-S4 but shows that an immutable root and case tuple could still
+  contain mutable nested dictionaries, and that correct input codes could be attached
+  to the wrong artifact/schema source. O-S5 adds mutations of the nested record address
+  and first case step, requires clean replay, and pins path/pointer for the nested
+  duplicate plus every artifact and schema no-follow input. It also corrects the last
+  stale eight-versus-nine count.
+- O-R3d closes O-S5's named mutations and locations but finds replay authority and the
+  leak-case failure underasserted. O-S6 requires replay status, empty diagnostics,
+  canonical digest, and document to agree, and forbids document/digest conclusions in
+  the leak case.
+- O-R3e passes O-S6 without regression. The accepted red predecessor has one exact
+  missing-loader failure and nine discoverable successor controls; O4 may now implement
+  only the generic canonical artifact inspector and zero-argument OrderedMap wrapper.
 - The first full O3a repository run retained one unchanged Stack proof-fixture timeout
   where a boundary diagnostic was expected. An immediate unchanged rerun passed all 49
   proof contract groups and the full gate, including 10 research tests. No timeout or
@@ -305,10 +352,11 @@ canonical record or implementation is accepted yet. O-R1's BLOCK remains part of
 history and O-R1b's successor PASS closes it without erasure. O2 turns the paper
 contract into exact actor terminal outcomes; O-R2 and O-R2b remain as design revision
 history, and O-R2c passes their final successor. O-G2 is accepted. O3a's artifact
-candidate and O-R3a PASS close the artifact edge. O3b is now live: add red journey
-controls that load and authenticate these exact bytes, then fail only at the first
-absent shared/product surfaces. No runner, package, report, Evidence, or final
-ProductContract exists.
+candidate and O-R3a PASS close the artifact edge. O3b remains intentionally red at the
+absent canonical artifact loader; O-R3b, O-R3c, and O-R3d BLOCKs plus their successors
+are retained, and O-R3e passes the final successor. O4 is live only for the smallest
+generic canonical artifact inspector and zero-argument OrderedMap wrapper. No runner,
+package, report, Evidence, or final ProductContract exists.
 
 ## Stop and escalation conditions
 
