@@ -172,6 +172,17 @@ surfaces product-contract ID/digest and manifest digest. A test may construct a
 separately identified fixture contract, but cannot relabel it as the canonical product
 contract.
 
+The O7 consumer surface is `inspect_ordered_map()` in
+`semantic_packages.ordered_map_inspection`. It invokes the pinned product replay once,
+passes only that replay's detached graph to the one-argument
+`resolve_ordered_map(observation)` boundary, and renders the replay's graph-derived
+publication, package-registration, and theory views beside the decision. The resolver
+closes over the exact accepted `0.1.0` policy, profile, Specification, assurance,
+campaign, effect-scope, nested conformance-plan digest, and interface mapping; callers
+cannot replace them. Semantic status and the directional child-process/NDJSON boundary
+remain separate result fields and separate inspection prose. Pure resolution and
+rendering perform no further filesystem access or artifact execution.
+
 Stack retains an independently pinned `stack-product-contract` compatibility wrapper
 whose observable results and diagnostics stay unchanged. Extraction moves hard-coded
 values into trusted immutable product integration; it does not make them caller policy.

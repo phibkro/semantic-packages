@@ -431,7 +431,9 @@ class OrderedMapConsumerContractTest(unittest.TestCase):
         attacked = _derived_graph(
             self.source.graph,
             effect,
-            lambda item: item["provenance"].update(planSha256="0" * 64),
+            lambda item: item["provenance"]["plan"].update(
+                canonicalSha256="0" * 64
+            ),
         )
         rust = _candidate(self._resolve(attacked), RUST)
         self.assertEqual("unacceptable", rust.semantic_status)
