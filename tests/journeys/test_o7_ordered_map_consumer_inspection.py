@@ -166,10 +166,30 @@ class OrderedMapConsumerContractTest(unittest.TestCase):
         self.assertTrue(result.ok, result.diagnostics)
         self.assertEqual(1, capture.call_count)
         self.assertEqual(0, len(inspect.signature(ordered_map_inspection.inspect_ordered_map).parameters))
+        self.assertEqual(
+            ["observation"],
+            list(inspect.signature(ordered_map_resolution.resolve_ordered_map).parameters),
+        )
         for call in (
             lambda: ordered_map_inspection.inspect_ordered_map(CONTRACT),
             lambda: ordered_map_inspection.inspect_ordered_map(graph=self.source.graph),
             lambda: ordered_map_inspection.inspect_ordered_map(policy=POLICY_ADDRESS),
+        ):
+            with self.assertRaises(TypeError):
+                call()
+        for call in (
+            lambda: ordered_map_resolution.resolve_ordered_map(
+                self.source.graph, policy=POLICY_ADDRESS
+            ),
+            lambda: ordered_map_resolution.resolve_ordered_map(
+                self.source.graph, profile=PROFILE
+            ),
+            lambda: ordered_map_resolution.resolve_ordered_map(
+                self.source.graph, specification=SPECIFICATION
+            ),
+            lambda: ordered_map_resolution.resolve_ordered_map(
+                self.source.graph, contract=CONTRACT
+            ),
         ):
             with self.assertRaises(TypeError):
                 call()
@@ -189,6 +209,21 @@ class OrderedMapConsumerContractTest(unittest.TestCase):
                     disposition = _concern(candidate, concern)
                     self.assertEqual("satisfied", disposition.status)
                     self.assertFalse(disposition.blocks)
+                self.assertEqual(
+                    5, len(_concern(candidate, "law.conformance").supporting_evidence)
+                )
+                self.assertEqual(
+                    1,
+                    len(
+                        _concern(
+                            candidate, "resource.persistence"
+                        ).supporting_evidence
+                    ),
+                )
+                self.assertEqual(
+                    1,
+                    len(_concern(candidate, "effect.conformance").supporting_evidence),
+                )
                 performance = _concern(candidate, "performance")
                 self.assertEqual("optional", performance.priority)
                 self.assertEqual("unsupported", performance.status)
@@ -229,6 +264,8 @@ class OrderedMapConsumerContractTest(unittest.TestCase):
             "effect.conformance: status=satisfied priority=required blocks=no",
             "performance: status=unsupported priority=optional blocks=no",
             "supporting Evidence:",
+            "supporting Evidence: evidence/ordered-map-rust-lookup-empty-conformance/0.1.0 mechanism=bounded-conformance-campaign result=supports review=accepted disposition=selected-applicable",
+            "supporting Evidence: evidence/ordered-map-typescript-ordered-map-effects-conformance/0.1.0 mechanism=bounded-conformance-campaign result=supports review=accepted disposition=selected-applicable",
             "challenging Evidence: none",
             "inconclusive Evidence: none",
             "error Evidence: none",
@@ -261,6 +298,20 @@ class OrderedMapConsumerContractTest(unittest.TestCase):
         self.assertEqual(33, len(self.source.graph.records))
         canonical = _candidate(self._resolve(), RUST)
         self.assertEqual("acceptable", canonical.semantic_status)
+
+        derived_source = replace(self.source, graph=attacked)
+        with mock.patch.object(
+            ordered_map_product,
+            "inspect_product_candidate",
+            return_value=derived_source,
+        ):
+            actor_result = ordered_map_inspection.inspect_ordered_map()
+        actor_rust = _candidate(actor_result.resolution, RUST)
+        self.assertEqual("unacceptable", actor_rust.semantic_status)
+        self.assertIn(
+            "realization/ordered-map-rust/0.1.0: semantic=unacceptable",
+            actor_result.output,
+        )
 
     def test_non_supporting_evidence_axes_remain_visible_and_cannot_satisfy(self) -> None:
         evidence = (
@@ -298,6 +349,29 @@ class OrderedMapConsumerContractTest(unittest.TestCase):
         self.assertIn("lookup-empty", law.missing_declarations)
         self.assertIn("missing-claim", law.reasons)
 
+        invalid = self._resolve(
+            graph.GraphObservation(
+                self.source.graph.records,
+                (record_check.Diagnostic("O7_TEST_INVALID", "<graph>", "#"),),
+            )
+        )
+        self.assertFalse(invalid.ok)
+        self.assertEqual((), invalid.candidates)
+        self.assertIn(
+            "ORDERED_MAP_RESOLUTION_INVALID_GRAPH",
+            [item.code for item in invalid.diagnostics],
+        )
+
+        for selector in (POLICY_ADDRESS, PROFILE, SPECIFICATION):
+            with self.subTest(missing=selector):
+                missing = self._resolve(_without(self.source.graph, selector))
+                self.assertFalse(missing.ok)
+                self.assertEqual((), missing.candidates)
+                self.assertIn(
+                    "ORDERED_MAP_RESOLUTION_SELECTOR_NOT_FOUND",
+                    [item.code for item in missing.diagnostics],
+                )
+
     def test_effect_provenance_and_policy_tokens_fail_closed(self) -> None:
         effect = (
             "evidence",
@@ -314,14 +388,49 @@ class OrderedMapConsumerContractTest(unittest.TestCase):
         self.assertEqual("unsupported", rust.prohibitions[0].status)
         self.assertEqual("child-process-ndjson", rust.boundary.mechanism)
 
-        attacked = _derived_graph(
-            self.source.graph,
-            POLICY_ADDRESS,
-            lambda item: item["concerns"][0].update(minimumAssurance="unknown"),
+        effect_attacks = (
+            (lambda item: item.update(result="challenges"), "contested", "challenging_evidence"),
+            (lambda item: item.update(result="inconclusive"), "unsupported", "inconclusive_evidence"),
+            (lambda item: item.update(result="error"), "unsupported", "error_evidence"),
+            (lambda item: item.update(reviewState="rejected"), "unsupported", "unselected_evidence"),
+            (lambda item: item["applicability"].update(profiles=[]), "unsupported", "inapplicable_evidence"),
         )
-        for candidate in self._resolve(attacked).candidates:
-            self.assertEqual("policy-incomplete", _concern(candidate, "law.conformance").status)
-            self.assertEqual("unacceptable", candidate.semantic_status)
+        for mutate, status, field in effect_attacks:
+            with self.subTest(effect_axis=field):
+                attacked = _derived_graph(self.source.graph, effect, mutate)
+                prohibition = _candidate(self._resolve(attacked), RUST).prohibitions[0]
+                self.assertEqual(status, prohibition.status)
+                self.assertEqual((effect,), getattr(prohibition, field))
+                self.assertTrue(prohibition.blocks)
+
+        policy_attacks = (
+            lambda item: item["concerns"][0].update(minimumAssurance="unknown"),
+            lambda item: item["concerns"][0].update(acceptedMechanisms=[]),
+            lambda item: item["prohibitions"][0].update(acceptedEvidenceScope=[]),
+            lambda item: item.update(specification={"kind": "specification", "id": "other", "version": "0.1.0"}),
+            lambda item: item.update(profile={"kind": "realizationProfile", "id": "other", "version": "0.1.0"}),
+        )
+        for mutate in policy_attacks:
+            with self.subTest(policy_attack=mutate):
+                attacked = _derived_graph(self.source.graph, POLICY_ADDRESS, mutate)
+                result = self._resolve(attacked)
+                self.assertTrue(
+                    not result.ok
+                    or all(item.semantic_status == "unacceptable" for item in result.candidates)
+                )
+
+        mismatch = _derived_graph(
+            self.source.graph,
+            PROFILE,
+            lambda item: item.update(kind="consumerPolicy"),
+        )
+        result = self._resolve(mismatch)
+        self.assertFalse(result.ok)
+        self.assertEqual((), result.candidates)
+        self.assertIn(
+            "ORDERED_MAP_RESOLUTION_SELECTOR_KIND",
+            [item.code for item in result.diagnostics],
+        )
 
     def test_directional_boundary_neither_grants_nor_revokes_semantic_status(self) -> None:
         attacked = _derived_graph(
