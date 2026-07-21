@@ -362,7 +362,7 @@ O0 priority + categorical-memory reconciliation
 | O7-P-S1 authority/dataflow/evidence closure correction | continuity owner; exclusive O7 journey controls and this plan; depends on O-R7-P BLOCK | complete candidate: retain the exact 1-pass/1-failure/12-skip topology while freezing a one-graph/no-override resolver signature, derived-challenge actor causality, invalid and missing/kind/binding selector failures, exact selected-support counts and addresses, all prohibition Evidence axes, and contract-governed mechanism/scope/policy attacks |
 | O-R7-P2 corrected consumer red-control review | independent read-only reviewer; depends on O7-P-S1 | BLOCK retained: the topology/digests/protected bytes reproduce and four prior concern groups close, but support checks constrain only cardinality plus two rendered examples, the breaker render need not name its challenge, and policy-selector mismatch can pass vacuously with zero successful candidates |
 | O7-P-S2 exact-support/selector-vacuity correction | continuity owner; exclusive O7 journey controls and this plan; depends on O-R7-P2 BLOCK | complete candidate: every exact selected support address for both candidates and their prohibition is required in structured/rendered views, the breaker actor render must name its exact challenging Evidence, and policy Specification/profile mismatch must return the exact diagnostic with no candidates; red topology remains 1/1/12 |
-| O-R7-P3 final consumer red-control review | independent read-only reviewer; depends on O7-P-S2 | independently reproduce all frozen controls and close the two retained O-R7-P2 gaps before implementation is released |
+| O-R7-P3 final consumer red-control review | independent read-only reviewer; depends on O7-P-S2 | PASS: exact clean `ff6cd84` reproduces the 1-pass/1-failure/12-skip topology, all six O6-G digests/protected bytes and unchanged Stack resolver blob; exact structured/rendered supports, breaker challenge, non-vacuous binding diagnostics, and every earlier concern close, releasing O7 implementation |
 | O7 consumer decision/inspection | continuity owner; exclusive new OrderedMap-local resolution and presentation modules plus affected documentation/plan; depends on O-R7-P3 PASS | derive semantic status from the exact accepted policy/profile and detached 33-member graph, surface every Evidence axis and graph-derived theory/package view, expose directional compatibility separately, fail closed, and leave Stack `resolve_stack` plus all O6-G accepted bytes untouched |
 | O8 maintenance | continuity owner; exclusive OrderedMap successor snapshot/tests; depends on O7 | exact successor failure or change, no implicit Evidence migration, predecessor recoverability without automatic selection |
 | O-R4 end-to-end review | independent read-only reviewer; depends on O8 | all four actor outcomes, negative controls, known exclusions, Stack regression, and generality claim boundary |
@@ -531,7 +531,7 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
 - [x] O7-P-S1 authority/dataflow/evidence closure correction
 - [x] O-R7-P2 corrected consumer red-control review — BLOCK retained
 - [x] O7-P-S2 exact-support/selector-vacuity correction
-- [ ] O-R7-P3 final consumer red-control review
+- [x] O-R7-P3 final consumer red-control review passed; O7 released
 - [ ] O7 consumer decision/inspection
 - [ ] O8 maintenance
 - [ ] O-R4 end-to-end review
