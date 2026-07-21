@@ -200,6 +200,31 @@ class OrderedMapConsumerContractTest(unittest.TestCase):
         self.assertEqual(REALIZATIONS, tuple(item.realization for item in result.candidates))
         for candidate in result.candidates:
             with self.subTest(candidate=candidate.realization):
+                prefix = candidate.realization[1]
+                expected_law = tuple(
+                    (
+                        "evidence",
+                        f"{prefix}-{declaration}-conformance",
+                        "0.1.0",
+                    )
+                    for declaration in (
+                        "lookup-empty",
+                        "lookup-put-other",
+                        "lookup-put-same",
+                        "put-existing-position",
+                        "put-new-appends",
+                    )
+                )
+                expected_resource = (
+                    ("evidence", f"{prefix}-persistence-conformance", "0.1.0"),
+                )
+                expected_effect = (
+                    (
+                        "evidence",
+                        f"{prefix}-ordered-map-effects-conformance",
+                        "0.1.0",
+                    ),
+                )
                 self.assertEqual("acceptable", candidate.semantic_status)
                 for concern in (
                     "law.conformance",
@@ -210,25 +235,26 @@ class OrderedMapConsumerContractTest(unittest.TestCase):
                     self.assertEqual("satisfied", disposition.status)
                     self.assertFalse(disposition.blocks)
                 self.assertEqual(
-                    5, len(_concern(candidate, "law.conformance").supporting_evidence)
+                    expected_law,
+                    _concern(candidate, "law.conformance").supporting_evidence,
                 )
                 self.assertEqual(
-                    1,
-                    len(
-                        _concern(
-                            candidate, "resource.persistence"
-                        ).supporting_evidence
-                    ),
+                    expected_resource,
+                    _concern(candidate, "resource.persistence").supporting_evidence,
                 )
                 self.assertEqual(
-                    1,
-                    len(_concern(candidate, "effect.conformance").supporting_evidence),
+                    expected_effect,
+                    _concern(candidate, "effect.conformance").supporting_evidence,
                 )
                 performance = _concern(candidate, "performance")
                 self.assertEqual("optional", performance.priority)
                 self.assertEqual("unsupported", performance.status)
                 self.assertFalse(performance.blocks)
                 self.assertEqual("satisfied", candidate.prohibitions[0].status)
+                self.assertEqual(
+                    expected_effect,
+                    candidate.prohibitions[0].supporting_evidence,
+                )
 
     def test_theory_consumer_keeps_all_eighteen_declarations_unclaimed(self) -> None:
         result = ordered_map_inspection.inspect_ordered_map()
@@ -275,6 +301,23 @@ class OrderedMapConsumerContractTest(unittest.TestCase):
             "direction=consumer-to-realization mechanism=child-process-ndjson direct=no",
         ):
             self.assertIn(required, output)
+        for implementation in ("rust", "typescript"):
+            for declaration in (
+                "lookup-empty",
+                "lookup-put-other",
+                "lookup-put-same",
+                "ordered-map-effects",
+                "persistence",
+                "put-existing-position",
+                "put-new-appends",
+            ):
+                self.assertIn(
+                    "supporting Evidence: "
+                    f"evidence/ordered-map-{implementation}-{declaration}-conformance/0.1.0 "
+                    "mechanism=bounded-conformance-campaign result=supports "
+                    "review=accepted disposition=selected-applicable",
+                    output,
+                )
 
     def test_selected_breaker_challenge_rejects_only_its_candidate(self) -> None:
         evidence = (
@@ -310,6 +353,13 @@ class OrderedMapConsumerContractTest(unittest.TestCase):
         self.assertEqual("unacceptable", actor_rust.semantic_status)
         self.assertIn(
             "realization/ordered-map-rust/0.1.0: semantic=unacceptable",
+            actor_result.output,
+        )
+        self.assertIn(
+            "challenging Evidence: "
+            "evidence/ordered-map-rust-put-existing-position-conformance/0.1.0 "
+            "mechanism=bounded-conformance-campaign result=challenges "
+            "review=accepted disposition=selected-applicable",
             actor_result.output,
         )
 
@@ -403,20 +453,46 @@ class OrderedMapConsumerContractTest(unittest.TestCase):
                 self.assertEqual((effect,), getattr(prohibition, field))
                 self.assertTrue(prohibition.blocks)
 
-        policy_attacks = (
+        blocking_policy_attacks = (
             lambda item: item["concerns"][0].update(minimumAssurance="unknown"),
             lambda item: item["concerns"][0].update(acceptedMechanisms=[]),
             lambda item: item["prohibitions"][0].update(acceptedEvidenceScope=[]),
-            lambda item: item.update(specification={"kind": "specification", "id": "other", "version": "0.1.0"}),
-            lambda item: item.update(profile={"kind": "realizationProfile", "id": "other", "version": "0.1.0"}),
         )
-        for mutate in policy_attacks:
+        for mutate in blocking_policy_attacks:
             with self.subTest(policy_attack=mutate):
                 attacked = _derived_graph(self.source.graph, POLICY_ADDRESS, mutate)
                 result = self._resolve(attacked)
+                self.assertTrue(result.ok, result.diagnostics)
+                self.assertEqual(2, len(result.candidates))
                 self.assertTrue(
-                    not result.ok
-                    or all(item.semantic_status == "unacceptable" for item in result.candidates)
+                    all(item.semantic_status == "unacceptable" for item in result.candidates)
+                )
+
+        binding_attacks = (
+            lambda item: item.update(
+                specification={
+                    "kind": "specification",
+                    "id": "other",
+                    "version": "0.1.0",
+                }
+            ),
+            lambda item: item.update(
+                profile={
+                    "kind": "realizationProfile",
+                    "id": "other",
+                    "version": "0.1.0",
+                }
+            ),
+        )
+        for mutate in binding_attacks:
+            with self.subTest(policy_binding=mutate):
+                attacked = _derived_graph(self.source.graph, POLICY_ADDRESS, mutate)
+                result = self._resolve(attacked)
+                self.assertFalse(result.ok)
+                self.assertEqual((), result.candidates)
+                self.assertIn(
+                    "ORDERED_MAP_RESOLUTION_POLICY_SELECTOR_MISMATCH",
+                    [item.code for item in result.diagnostics],
                 )
 
         mismatch = _derived_graph(
