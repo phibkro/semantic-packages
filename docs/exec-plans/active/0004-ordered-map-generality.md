@@ -212,6 +212,8 @@ O0 priority + categorical-memory reconciliation
   -> O6-G-F0 acceptance-gate scheduling observation
   -> O6-G-F1 quiescent reproduction characterization
   -> O6-G final trust-convergence acceptance
+  -> O7-P consumer decision/inspection red controls
+  -> O-R7-P consumer red-control review
   -> O7 resolution + directional boundary + inspection
   -> O8 exact successor/recovery maintenance
   -> O-R4 independent end-to-end review
@@ -351,7 +353,9 @@ O0 priority + categorical-memory reconciliation
 | O6-G-F0 acceptance-gate scheduling observation | lead complete-gate run; depends on O-R6f3 PASS | BLOCK retained for characterization: with exact product commit `5fc9d2b` unchanged and only this plan dirty, the 50-test adapter lane recorded `destructive-new` and `invalid-entry-value` as timeout/extra-output errors and one timeout cleanup at 0.6835s rather than `<0.60s`; all other observed adapter cases passed, matching the previously retained suite-load scheduling class rather than a new O6f path |
 | O6-G-F1 quiescent reproduction characterization | lead focused plus complete rerun; depends on O6-G-F0 BLOCK | PASS: five sequential repetitions of both affected unchanged methods pass 10/10 in 30.964s, then the complete locked gate passes 24/20/38/3 record fixtures, 18 loader groups, 50 adapter tests, 59 cross-language tests, 178 actor journeys, 16 research probes, 20 governance tests, all fresh report/Evidence lanes, and 49 proof groups; no product/test byte changed and the failed receipt remains retained |
 | O6-G final trust-convergence acceptance | lead read-only convergence gate; depends on O6-G-F1 PASS | PASS: accept exact commit `5fc9d2bc78f3c58d2d5967de9b554630a8ab4a62` and its independently reviewed policy `6d0d...291c`, manifest `0dae...3455d`, ProductContract `4bfbc8...eb17`, wrapper `1ea1f5...bbc8`, registration seam `dbe700...82a4`, and closed schema `1e14d6...ab36` as final OrderedMap product authority; retained scheduling evidence changes no reviewed byte or requirement, result objects gain no acceptance conclusion, exclusions remain explicit, and O7 only is released |
-| O7 consumer decision/inspection | continuity owner; exclusive bounded OrderedMap resolution and presentation; depends on O6-G | semantic status under exact policy/profile, every Evidence axis, separate directional boundary, and graph-derived theory/package views |
+| O7-P consumer decision/inspection red controls | continuity owner; exclusive new OrderedMap consumer journey controls and this plan; depends on O6-G | complete candidate: the five raw artifacts plus canonical ProductContract digest reproduce, the accepted 33-member/18-declaration graph precondition passes, one intentional absent-module boundary fails, and twelve successors skip while freezing the zero-argument one-replay actor, graph-only pure decision/presentation, two exact semantic candidates, every Evidence axis, theory non-promotion, breaker isolation, separate directional boundary, deterministic inspection, and fail-closed controls |
+| O-R7-P consumer red-control review | independent read-only reviewer; depends on O7-P | independently challenge the frozen actor boundary, accepted-byte ledger, graph-only dataflow, negative controls, Stack isolation, and semantic/directional separation before implementation is released |
+| O7 consumer decision/inspection | continuity owner; exclusive new OrderedMap-local resolution and presentation modules plus affected documentation/plan; depends on O-R7-P PASS | derive semantic status from the exact accepted policy/profile and detached 33-member graph, surface every Evidence axis and graph-derived theory/package view, expose directional compatibility separately, fail closed, and leave Stack `resolve_stack` plus all O6-G accepted bytes untouched |
 | O8 maintenance | continuity owner; exclusive OrderedMap successor snapshot/tests; depends on O7 | exact successor failure or change, no implicit Evidence migration, predecessor recoverability without automatic selection |
 | O-R4 end-to-end review | independent read-only reviewer; depends on O8 | all four actor outcomes, negative controls, known exclusions, Stack regression, and generality claim boundary |
 | O-G final gate | lead acceptance; depends on O-R4 PASS and locked local/hosted gates | full repository reproduction, retained failures, active-plan result, conventional PR metadata/history, and exact claim of two-domain—not universal—generality |
@@ -514,6 +518,8 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
 - [x] O6-G-F0 acceptance-gate scheduling observation — BLOCK retained
 - [x] O6-G-F1 quiescent reproduction characterization passed
 - [x] O6-G final trust-convergence acceptance passed; O7 released
+- [x] O7-P consumer decision/inspection red controls
+- [ ] O-R7-P consumer red-control review
 - [ ] O7 consumer decision/inspection
 - [ ] O8 maintenance
 - [ ] O-R4 end-to-end review
@@ -1279,6 +1285,14 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
   actor results still expose no accepted/resolution/semantic-status field, reports and
   the breaker remain outside membership, performance remains unclaimed, and O8 reopen
   triggers remain unchanged. O7 consumer decision/inspection only is released.
+- O7 is a new bounded actor over the accepted O6-G replay, not a revision to product
+  authority. The actor may invoke `inspect_product_candidate()` once and then may only
+  consume its detached 33-record graph and already-derived publication, registration,
+  and theory views. Negative controls may transform detached `GraphObservation` values
+  in memory, but no breaker joins accepted membership. OrderedMap-local resolution and
+  presentation therefore get new modules; Stack `resolve_stack`, Stack inspection, and
+  every accepted O6-G byte remain protected. The directional child-process/NDJSON
+  boundary is a separate observation and cannot satisfy or defeat semantic policy.
 - O-R6d-P4 passes the complete predecessor. Independent replay confirms the exact
   12-test topology—one accepted-input pass, one intentional absent-boundary failure,
   and ten skips—plus a clean diff. A cold copied checker cannot read original or copied
