@@ -218,8 +218,12 @@ O0 priority + categorical-memory reconciliation
   -> O-R7-P2 corrected consumer red-control review
   -> O7-P-S2 exact-support/selector-vacuity correction
   -> O-R7-P3 final consumer red-control review
+  -> O7 first green attempt
+  -> O7-F1 nested plan-provenance control correction
   -> O7 resolution + directional boundary + inspection
   -> O-R7 consumer implementation review
+  -> O7-S1 lifecycle-result truth correction
+  -> O-R7-2 successor consumer implementation review
   -> O8 exact successor/recovery maintenance
   -> O-R4 independent end-to-end review
   -> O-G final locked local/hosted gate
@@ -366,8 +370,10 @@ O0 priority + categorical-memory reconciliation
 | O-R7-P3 final consumer red-control review | independent read-only reviewer; depends on O7-P-S2 | PASS: exact clean `ff6cd84` reproduces the 1-pass/1-failure/12-skip topology, all six O6-G digests/protected bytes and unchanged Stack resolver blob; exact structured/rendered supports, breaker challenge, non-vacuous binding diagnostics, and every earlier concern close, releasing O7 implementation |
 | O7 consumer decision/inspection | continuity owner; exclusive new OrderedMap-local resolution and presentation modules plus affected documentation/plan; depends on O-R7-P3 PASS | complete candidate pending O-R7: one zero-argument actor replays the accepted product once, resolves two semantically acceptable candidates from its detached graph under exact selectors/tokens/nested plan provenance, keeps optional performance unsupported and all 18 theory declarations unclaimed, renders every Evidence axis plus package/theory views and a separate directional boundary, and fails closed under the frozen controls without changing Stack or O6-G bytes |
 | O7-F1 nested plan-provenance control correction | continuity owner; exclusive OrderedMap resolver, O7 control, and this plan; depends on the first O7 green attempt | align the effect-scope matcher and falsifier with the accepted OrderedMap Evidence field `provenance.plan.canonicalSha256` rather than the Stack-shaped flat `planSha256`; retain exact digest enforcement and change no accepted artifact or requirement |
-| O-R7 consumer implementation review | independent read-only reviewer; depends on O7 | challenge exact graph causality, semantic/evidence calculations, fail-closed controls, renderer purity/determinism, Stack/private-helper coupling, protected-byte ledger, focused/adjacent evidence, and implementation diff before releasing O8 |
-| O8 maintenance | continuity owner; exclusive OrderedMap successor snapshot/tests; depends on O-R7 PASS | exact successor failure or change, no implicit Evidence migration, predecessor recoverability without automatic selection |
+| O-R7 consumer implementation review | independent read-only reviewer; depends on O7 | BLOCK retained on lifecycle truth only: exact clean `eecb717`, protected digests/bytes, unchanged Stack resolver, 54/54 adjacent checks, and all semantic/dataflow/axis/purity/fail-closed controls pass; narrow private reuse carries only identical shared concern/boundary mechanics and no Stack plan provenance, but Result still claimed no consumer output and the DAG omitted O7-F1 |
+| O7-S1 lifecycle-result truth correction | continuity owner; exclusive this plan; depends on O-R7 BLOCK | record O7-F1 in dependency order, replace stale pre-O7 Result text with the implemented candidate/current gate, and retain the private-helper rationale plus divergence reopen trigger without changing code, tests, or accepted artifacts |
+| O-R7-2 successor consumer implementation review | same independent read-only reviewer; depends on O7-S1 | confirm durable memory now agrees with the already-passing implementation evidence before releasing O8 |
+| O8 maintenance | continuity owner; exclusive OrderedMap successor snapshot/tests; depends on O-R7-2 PASS | exact successor failure or change, no implicit Evidence migration, predecessor recoverability without automatic selection |
 | O-R4 end-to-end review | independent read-only reviewer; depends on O8 | all four actor outcomes, negative controls, known exclusions, Stack regression, and generality claim boundary |
 | O-G final gate | lead acceptance; depends on O-R4 PASS and locked local/hosted gates | full repository reproduction, retained failures, active-plan result, conventional PR metadata/history, and exact claim of two-domain—not universal—generality |
 
@@ -537,7 +543,9 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
 - [x] O-R7-P3 final consumer red-control review passed; O7 released
 - [x] O7-F1 nested plan-provenance control correction
 - [x] O7 consumer decision/inspection complete; review pending
-- [ ] O-R7 consumer implementation review
+- [x] O-R7 consumer implementation review — lifecycle-document BLOCK retained
+- [x] O7-S1 lifecycle-result truth correction
+- [ ] O-R7-2 successor consumer implementation review
 - [ ] O8 maintenance
 - [ ] O-R4 end-to-end review
 - [ ] O-G final gate
@@ -1302,6 +1310,13 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
   actor results still expose no accepted/resolution/semantic-status field, reports and
   the breaker remain outside membership, performance remains unclaimed, and O8 reopen
   triggers remain unchanged. O7 consumer decision/inspection only is released.
+- O7 narrowly reuses private disposition dataclasses, syntactic selectors, the four
+  already-shared concern/assurance mechanics, and the identical NDJSON boundary mapping
+  from the Stack-bounded module without invoking or changing `resolve_stack`. Its
+  effect matcher remains OrderedMap-local and binds the different nested plan
+  provenance. O-R7 finds no current Stack-only semantic leak; reopen and extract a
+  properly shared internal seam if either domain's concern, assurance, or interface
+  token diverges, rather than letting private cross-domain coupling choose semantics.
 - O7 is a new bounded actor over the accepted O6-G replay, not a revision to product
   authority. The actor may invoke `inspect_product_candidate()` once and then may only
   consume its detached 33-record graph and already-derived publication, registration,
@@ -1356,8 +1371,12 @@ OrderedMap Claim and Evidence candidates now exist as the exact O6e 2/14/14 set.
 is now one O6-G-accepted final 4-source/33-member manifest, ProductContract, and
 single-snapshot publication/registration/graph/theory replay at exact commit
 `5fc9d2bc78f3c58d2d5967de9b554630a8ab4a62`; actor results do not self-report that
-external acceptance. There is still no consumer resolver decision, inspection output,
-or maintenance successor. Retained O-R6d through O-R6d5 provenance and reproduction
+external acceptance. O7 now adds one zero-argument consumer actor over that replay:
+both exact Realizations are semantically acceptable under all seven selected supports,
+optional performance stays unsupported, every Evidence axis is inspectable, all 18
+theory declarations remain honestly unclaimed, and the directional child-process
+boundary stays separate. There is still no maintenance successor. Retained O-R6d
+through O-R6d5 provenance and reproduction
 BLOCKs now lead to O-R6d6 PASS. O6d is accepted, O-R6e-P2 passes, O-R6e retains one
 durable-state contradiction corrected by O6e-S1, and O-R6e2 passes. O-R6 macro retains
 load-sensitive full-gate observations without changing any bound artifact. O6-F1 now
@@ -1365,9 +1384,10 @@ combines the unchanged 5x2 focused pass with one clean hosted exact-head reposit
 pass, O-R6-F passes independent characterization review, and O-R6-2 accepts macro
 lifecycle convergence. O-R6f3 combines Fable's exhaustive static challenge with
 independently reproduced digests, focused execution, and real-git diff bounding; O6-G
-accepts the unchanged reviewed ledger. O7 consumer decision/inspection is now the live
-edge. O8 maintenance and the final end-to-end gates remain behind their declared
-dependencies.
+accepts the unchanged reviewed ledger. The first O-R7 implementation review passes all
+code, behavior, protected-byte, adjacent, and private-helper checks but retains a
+lifecycle-document BLOCK; O7-S1 corrects that durable-memory drift. O-R7-2 is now the
+live edge. O8 maintenance and the final end-to-end gates remain behind its PASS.
 
 ## Stop and escalation conditions
 
