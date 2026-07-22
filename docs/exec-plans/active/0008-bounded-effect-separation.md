@@ -123,7 +123,7 @@ python3 scripts/check_repo.py
 - [x] E0 design-spec 0003 revision 2 and exact five-mode census
 - [x] E1 red command/report journey and controls
 - [x] E-R1 independent contract/projection review
-- [ ] E2 effect-separation observation and command
+- [x] E2 effect-separation observation and command
 - [ ] E-R2 independent implementation review
 - [ ] E3 durable documentation and maintenance
 - [ ] E-G convergence, freeze, and one PR
@@ -172,15 +172,23 @@ python3 scripts/check_repo.py
   The reviewer found no remaining concrete bypass across complete native projections,
   full ordered ledgers, symmetric mutations, exact execution authority, governed
   aliases, atomic failure, wildcard boundaries, report shape, or bounded language.
+- 2026-07-22: E2 composes only the ten exact fixture commands through their existing
+  runners, retains each domain's native projection shape and complete event ledger,
+  validates concern locality before publication, and writes one deterministic report
+  atomically. The first green attempt exposed only diagnostic precedence: a permitted
+  effect mutation also changed the aggregate. Validation now reports the local effect
+  mismatch before the complete-campaign aggregate, while adapter errors retain
+  execution-status precedence. The focused suite passes 11 active controls with the
+  intentional red predecessor skipped.
 
 ## Result and remaining work
 
-E0, E1, and E-R1 are complete. The red predecessor names only the absent probe after
-live runner census; the strengthened successor controls cover the complete report,
-immutable projections, classification and concern locality, error asymmetry, exact
-execution authority, output safety, determinism, and bounded language. No probe,
-accepted Effect relation, new Evidence, resolver behavior, or whole-process conclusion
-exists. E2 is released.
+E0 through E2 are complete. The probe is experienceable, and the red predecessor now
+skips because the exact command exists. The reviewed successor controls cover the
+complete report, immutable projections, classification and concern locality, error
+asymmetry, exact execution authority, output safety, determinism, and bounded language.
+No accepted Effect relation, new Evidence, resolver behavior, or whole-process
+conclusion is manufactured. E-R2 is next.
 
 ## Stop and escalation conditions
 
