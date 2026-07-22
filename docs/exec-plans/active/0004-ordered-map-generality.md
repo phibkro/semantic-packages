@@ -385,7 +385,7 @@ O0 priority + categorical-memory reconciliation
 | O8-P-S1 causality/drift/immutability correction | continuity owner; exclusive O8 controls and this plan; depends on O-R8-P BLOCK | complete candidate: topology remains 1-pass/1-failure/10-skip while exact selector absence/kind/binding diagnostics, a detached discovered-but-unsupported `0.2.0` candidate, predecessor/successor mutation/removal plus unexpected-membership closure, exact raw-digest diagnostic provenance, and complete public/nested immutability are frozen |
 | O-R8-P2 corrected successor red-control review | same independent read-only reviewer; depends on O8-P-S1 | BLOCK retained narrowly: causality, digest phase, drift classes, immutability, and prior controls close, but successor policy profile binding and predecessor Specification removal lack symmetric subcases |
 | O8-P-S2 selector/removal symmetry correction | continuity owner; exclusive O8 controls and this plan; depends on O-R8-P2 BLOCK | complete candidate: changed successor profile binding requires the exact policy-selector-mismatch diagnostic and removed accepted Specification requires predecessor drift with no partial result; topology remains 1-pass/1-failure/10-skip with all earlier controls intact |
-| O-R8-P3 final successor red-control review | same independent read-only reviewer; depends on O8-P-S2 | independently close both residuals and release implementation only if the complete frozen boundary remains intact |
+| O-R8-P3 final successor red-control review | same independent read-only reviewer; depends on O8-P-S2 | PASS: exact clean `02cc4a3` reproduces protected hashes, three successor-oracle digests, and 1-pass/1-failure/10-skip topology; both selector/removal residuals and the complete prior causality/drift/digest/immutability boundary close, releasing O8 implementation |
 | O8 maintenance | continuity owner; exclusive OrderedMap successor records/manifest, OrderedMap-local maintenance actor, affected design/plan, and controls; depends on O-R8-P3 PASS | implement the exact two-record append-only successor snapshot and graph-only maintenance observation while preserving accepted `0.1.0` bytes and Stack maintenance behavior |
 | O-R8 successor implementation review | independent read-only reviewer; depends on O8 | reproduce exact bytes, focused/adjacent/full gates, actor output, negative controls, protected surfaces, and lifecycle truth before releasing the end-to-end convergence review |
 | O-R4 end-to-end review | independent read-only reviewer; depends on O-R8 PASS | all four actor outcomes, negative controls, known exclusions, Stack regression, and generality claim boundary |
@@ -565,7 +565,7 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
 - [x] O8-P-S1 causality/drift/immutability correction
 - [x] O-R8-P2 corrected successor red-control review — BLOCK retained
 - [x] O8-P-S2 selector/removal symmetry correction
-- [ ] O-R8-P3 final successor red-control review
+- [x] O-R8-P3 final successor red-control review passed; O8 released
 - [ ] O8 maintenance
 - [ ] O-R8 successor implementation review
 - [ ] O-R4 end-to-end review
