@@ -6,6 +6,7 @@ import hashlib
 import importlib.util
 import io
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -876,6 +877,47 @@ class ExplicitRefinementJourneyTest(unittest.TestCase):
                 input_snapshot, tuple(_path_snapshot(path) for path in inputs)
             )
             self.assertEqual(registry_snapshot, _tree_snapshot(ROOT / "registry"))
+
+    def test_output_cannot_alias_any_exact_input(self) -> None:
+        for aliased_name in ("proposal", "predecessor", "successor"):
+            with self.subTest(aliased_name=aliased_name), tempfile.TemporaryDirectory(
+                prefix="semantic-refinement-output-alias-"
+            ) as raw:
+                directory = Path(raw)
+                nested = directory / "nested"
+                nested.mkdir()
+                proposal = directory / "proposal.prefine"
+                predecessor = directory / "predecessor.json"
+                successor = directory / "successor.json"
+                shutil.copyfile(STACK_PROPOSAL, proposal)
+                shutil.copyfile(STACK_PREDECESSOR, predecessor)
+                shutil.copyfile(STACK_SUCCESSOR, successor)
+                inputs = {
+                    "proposal": proposal,
+                    "predecessor": predecessor,
+                    "successor": successor,
+                }
+                snapshot = tuple(
+                    _path_snapshot(inputs[name])
+                    for name in ("proposal", "predecessor", "successor")
+                )
+                output = Path(
+                    os.fspath(nested / ".." / inputs[aliased_name].name)
+                )
+                result = _run_refinement(
+                    proposal, predecessor, successor, output
+                )
+                self.assertEqual(1, result.returncode, result.stderr)
+                self.assertEqual("", result.stdout)
+                self.assertIn("REFINEMENT_OUTPUT_WRITE", result.stderr)
+                self.assertNotIn("Traceback", result.stderr)
+                self.assertEqual(
+                    snapshot,
+                    tuple(
+                        _path_snapshot(inputs[name])
+                        for name in ("proposal", "predecessor", "successor")
+                    ),
+                )
 
     def test_report_contains_no_resolution_or_evidence_migration_surface(self) -> None:
         with tempfile.TemporaryDirectory(prefix="semantic-refinement-boundary-") as raw:

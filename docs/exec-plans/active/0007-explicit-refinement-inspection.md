@@ -53,6 +53,8 @@ V0 exact two-domain census and design-spec 0002
   -> V-R1Y red-contract release review
   -> V2 proposal decoder, validator, inspector, report, and CLI
   -> V-R2 independent implementation review
+  -> V2-S1 output-alias safety successor
+  -> V-R2S independent safety review
   -> V3 README/design/system-map/backlog maintenance
   -> V-G complete gate, design-spec freeze, and one experienceable PR
 ```
@@ -68,6 +70,7 @@ V0 exact two-domain census and design-spec 0002
 | V1-S4 / V-R1Y | lead/test owner then uninvolved reviewer; tests/plan only | snapshot exact supplied inputs and registry around output-write, usage, and mocked failure paths that bypass the shared helper; V2 or successor |
 | V2 implementation | lead; new refinement modules/CLI plus exact report serialization | both exact reports, all falsifiers, atomic output, unchanged predecessor actors; V-R2; stop on canonical-model or resolver expansion |
 | V-R2 | uninvolved read-only reviewer | counterexamples for mappings, parsing, ordering, hosted opacity, no Evidence migration, generality boundary; V3 or successor |
+| V2-S1 / V-R2S | lead/test owner then uninvolved reviewer; refinement CLI and tests only | reject output aliasing proposal/predecessor/successor through equivalent spellings before any write; V3 or successor |
 | V3 maintenance | lead; README and durable project memory | exact experience/failure/recovery, changed capability map, backlog disposition, known exclusions; V-G |
 | V-G | lead; spec freeze and PR report | complete clean repository gate, conventional range, validated PR metadata, 1:1 PR; stop before fragment PR or unsupported refinement claim |
 
@@ -114,8 +117,10 @@ python3 scripts/check_repo.py
 - [x] V-R1X final red-contract review (BLOCK retained)
 - [x] V1-S4 bypass-path immutability successor
 - [x] V-R1Y red-contract release review (PASS at `1d74c98`)
-- [ ] V2 inspector and CLI (in progress)
-- [ ] V-R2 independent implementation review
+- [x] V2 inspector and CLI
+- [x] V-R2 independent implementation review (BLOCK retained)
+- [ ] V2-S1 output-alias safety successor
+- [ ] V-R2S independent safety review
 - [ ] V3 durable documentation and maintenance
 - [ ] V-G convergence, freeze, and one PR
 
@@ -172,12 +177,17 @@ python3 scripts/check_repo.py
   census PASS, one intentional absent-command FAIL, and fourteen successor SKIPs; all
   retained bypass, inference, phase, side-effect, and overclaim counterexamples close.
   V2 is released without a product-direction change.
+- 2026-07-22: V-R2 BLOCK at exact clean `c9fbf4b`. The inspector passes all focused
+  controls, but an output path equal to an input path replaces that exact input with
+  the report on success. V2-S1 freezes all three input aliases through an equivalent
+  `..` spelling, then rejects them before parsing or writing. No product decision or
+  broader filesystem policy is introduced.
 
 ## Result and remaining work
 
-V0/V1 and all retained review successors through V-R1Y are complete. V2 is active.
-No accepted refinement relation, compatibility conclusion, Evidence transfer, or
-resolver change is authorized by this implementation node.
+V0/V1, V2, and the retained V-R2 BLOCK are complete. V2-S1 is active. No accepted
+refinement relation, compatibility conclusion, Evidence transfer, or resolver change
+is authorized by this safety successor.
 
 ## Stop and escalation conditions
 
