@@ -21,6 +21,7 @@ the active ExecPlan.
 | deferred uninvolved-human inspection journey | [active ExecPlan 0003](../exec-plans/active/0003-cold-human-inspection.md) |
 | accepted OrderedMap second-domain route | [completed ExecPlan 0004](../exec-plans/completed/0004-ordered-map-generality.md) |
 | accepted differentiated deployment-profile route | [completed ExecPlan 0005](../exec-plans/completed/0005-deployment-profile-choice.md) |
+| active shared human-authoring route | [active ExecPlan 0006](../exec-plans/active/0006-shared-human-authoring-surface.md) |
 
 Current route: ExecPlan 0004 is closed at two-domain reuse. ExecPlan 0005 produced
 fresh exact-profile Evidence and an authenticated 69-member authority for differentiated
@@ -29,6 +30,10 @@ profile and TypeScript only for the Deno profile while retaining 21 nonmatching 
 and 21 nonmatching Evidence records as inapplicable in each decision. Its lifecycle is
 closed. The next authored route probes the shared human authoring surface before any
 `.pspec` elaboration or hidden default is selected.
+The A1 candidate freezes the two-domain authoring deficit: shared structural identity
+and references are explicit, while hosted semantic payloads remain unchecked; the
+illustrative Stack surface cannot round-trip without hidden rules and OrderedMap has no
+surface. No grammar or authoring representation is selected before independent review.
 
 ## End-to-end product shape
 

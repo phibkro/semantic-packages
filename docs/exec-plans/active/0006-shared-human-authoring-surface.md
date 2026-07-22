@@ -1,0 +1,188 @@
+# ExecPlan 0006: shared human authoring surface
+
+## Purpose and observable outcome
+
+Enable a theory author to express the accepted Stack and OrderedMap Specification
+records through one documented human-facing authoring contract and receive exact
+canonical records plus actionable diagnostics, without hidden identity/default rules
+or a universal semantic logic.
+
+The first bounded outcome is smaller: freeze what both accepted domains actually
+require, demonstrate why the illustrative Stack `.pspec` cannot yet round-trip, and
+prevent parser or syntax selection until an independently reviewed contract comparison
+passes.
+
+## Context and repository map
+
+ExecPlans 0001, 0004, and 0005 accepted complete Stack, OrderedMap, and exact-profile
+lifecycles. ADR 0003 deliberately kept canonical JSON temporary and `.pspec`
+illustrative for ExecPlan 0001; later accepted plans retained that boundary without
+turning its scoped status into a permanent format decision. The governing sources are
+the constitution, `ARCHITECTURE.md`, `docs/design/core-model.md`,
+`docs/design/spec-language.md`, the two accepted canonical Specification records,
+`schemas/spec.schema.json`, and the
+[A1 research probe](../../research/shared-human-authoring-surface.md).
+
+ExecPlan 0003 remains independently active for cold-human inspection. Its participant
+observation is not authoring Evidence and this plan does not relabel it.
+
+## Non-goals and constraints
+
+- Do not select final syntax, file extension, parser framework, serialization, hosted
+  logic, or proof assistant during A1.
+- Do not infer local IDs, versions, imports, references, or defaults from spelling,
+  order, file paths, or declaration categories.
+- Do not convert hosted semantic strings into checked meaning without an explicit
+  logic/checker boundary and Evidence mechanism.
+- Do not mutate accepted canonical Stack/OrderedMap bytes or claim that authoring
+  usability has passed without an eligible human observation.
+- Preserve plural mathematics, exact identity, Claim/Evidence separation, and semantic
+  versus realization compatibility.
+
+## Specification changes
+
+A0/A1 make no normative Specification change. They classify existing canonical fields
+into explicit structural identity/references and presently hosted semantic payloads.
+Any later elaboration contract must reproduce the same exact canonical records for the
+two accepted domains or propose a separately reviewed migration; author convenience
+cannot silently change product meaning.
+Exact reproduction means canonical record-document equality, not preservation of JSON
+formatting or source bytes. Deterministic serialization remains a separately tested
+contract if a later option requires it.
+
+## Revisioned work-dependency DAG
+
+```text
+A0 roadmap/source census
+  -> A1 two-domain authoring falsifier
+  -> A-R1 independent boundary review
+  -> A-G1 problem-contract gate
+  -> A2 reversible authoring-contract options and diagnostics
+  -> A-R2 independent option review
+  -> A-G2 contract choice or operator escalation
+  -> A3 red two-domain round-trip and ambiguity controls
+  -> A4 minimal elaborator
+  -> A-R4 implementation review
+  -> A5 author journey, documentation, and maintenance
+  -> A-R5 independent end-to-end review
+  -> A-G final convergence
+```
+
+| Node | Owner / exclusive boundary and integration point | Evidence packet, reviewer, gate, and escalation |
+|---|---|---|
+| A0 roadmap census | lead; read-only roadmap/governing docs; integrates into this plan | exact merged base and route ordering; lead verifies; A1; operator owns priority conflict |
+| A1 boundary falsifier | lead/integrator; research note/test, plan, backlog/system-map links, checker requirements | exact digests, identity, per-family IDs, nested references, absent imports/surface, missing-ID and hosted-text controls; A-R1; escalate semantic contradiction to operator |
+| A-R1 boundary review | uninvolved read-only reviewer; integrates concerns into lead-owned plan only | commands/results, counterexamples, omissions, solution-neutrality, PASS/BLOCK; A-G1; protected-boundary concern to operator |
+| A-G1 problem gate | lead; plan-only disposition | retained review packet and full gate; releases A2 or successor A1; values choice remains unauthorized |
+| A2 option probe | future owner; research notes/fixtures only; integrates into lead-owned option matrix | exact round-trip/ambiguity/diagnostic/recovery comparison; A-R2; escalate materially different author experiences without decisive evidence |
+| A-R2 / A-G2 | independent reviewer then lead; review writes none, lead integrates plan/ADR proposal | option attacks and dispositions; choose smallest reversible contract or stop for operator; no parser release without PASS |
+| A3 red contract | future test owner; exclusive authoring-contract fixtures/tests | Stack + OrderedMap exact-output, ambiguous/missing ID/reference, unsupported-payload, deterministic-diagnostic controls; independent contract review; A4 |
+| A4 minimal elaborator | future implementation owner; exclusive new authoring module plus approved dependency metadata | frozen A3 controls, no canonical predecessor changes, focused/full gates; independent implementation review A-R4; toolchain/migration concern escalates |
+| A-R4 | uninvolved read-only reviewer | parser containment, deterministic output/diagnostics, hidden-default and semantic-overclaim attacks; A5 or successor |
+| A5 journey/maintenance | lead/integrator; author command/docs, user-journey controls, check integration, plan | exact two-domain author tasks, regression/sensitivity, recovery, limitations, optional eligible human observation; A-R5 |
+| A-R5 / A-G | uninvolved reviewer then lead; no reviewer writes, lead owns completion move | full lifecycle, negative controls, docs, full local/hosted gates, conventional squash handoff; operator owns unresolved product-direction fork |
+
+## Implementation steps in dependency order
+
+1. A0 reads the merged roadmap and governing authoring boundaries.
+2. A1 freezes exact Stack surface, Stack/OrderedMap canonical record, and schema bytes.
+3. A1 executes the smallest probes for shared mechanics, distinct domain shape, flat
+   explicit IDs, absent OrderedMap surface, missing Stack canonical IDs, and opaque
+   semantic payloads.
+4. A-R1 independently attempts to falsify the resulting problem statement.
+5. Only after A-G1 may A2 compare reversible authoring contracts. No parser code starts
+   before A-G2.
+
+## Quality gates and evidence required
+
+A1 runs:
+
+```text
+python3 -m unittest tests.research.test_shared_human_authoring_surface_probe -v
+python3 scripts/check_repo.py
+```
+
+Expected A1 observation is five focused PASS results covering exact frozen bytes;
+shared-but-distinct field shapes; exact identities, per-family declaration sets and
+nested local/profile references with imports absent; canonical IDs missing from the
+illustrative surface with no OrderedMap surface; and six hosted-text schema fields.
+The full gate must report 32 research probes and preserve all predecessor summaries.
+
+A-R1 must inspect exact inputs and probe sensitivity, distinguish lossless structural
+elaboration from semantic checking, and confirm no solution is smuggled into the
+problem statement. Every later node adds its exact commands and negative observations
+before release.
+
+## Progress checklist
+
+- [x] A0 roadmap and governing-source census
+- [x] A1 candidate two-domain boundary falsifier
+- [x] A-R1 independent boundary review
+- [x] A-G1 problem-contract gate
+- [ ] A2 authoring-contract option probe
+- [ ] A-R2 independent option review
+- [ ] A-G2 contract choice or operator escalation
+- [ ] A3 red round-trip/ambiguity controls
+- [ ] A4 minimal elaborator
+- [ ] A-R4 implementation review
+- [ ] A5 actor journey, documentation, and maintenance
+- [ ] A-R5 end-to-end review
+- [ ] A-G final convergence
+
+## Discoveries and changed assumptions
+
+- 2026-07-22: A0 confirms the merged roadmap names shared human authoring ahead of
+  refinement or a third domain; this is an authored research route, not a new priority
+  choice.
+- 2026-07-22: A1 candidate finds a shared eight-family structural envelope plus one
+  Stack-only derived-observation family, with 11 Stack and 18 OrderedMap declaration
+  IDs. The current Stack sketch omits multiple canonical IDs and there is no OrderedMap
+  sketch. Six semantic payload categories remain schema-valid nonempty strings. These
+  facts reject immediate parser implementation but do not select a replacement.
+- 2026-07-22: A-R1 BLOCK. Green focused/full gates did not make the claimed exact
+  boundary sensitive: the first test version counted IDs without enumerating their
+  per-family sets or nested carrier/profile/local references, and the note mentioned
+  imported addresses although both inputs omit imports. The DAG also lacked explicit
+  integration points, evidence packets, escalation owners, and expected observations
+  for downstream packages. A1 successor enumerates those facts and expands ownership;
+  no parser, syntax, IR, or canonical-format option is promoted by the correction.
+- 2026-07-22: A-R1 successor PASS at exact commit `0e14b0a`. Independent replay
+  confirms exact root identities, per-family declaration sets, global uniqueness,
+  equivalence-carrier edges, performance operation families and exact profile/local
+  references, plus explicit import absence. The note now separates observed facts from
+  future import rules, and the DAG supplies integration, evidence, review, gate, and
+  escalation ownership. Five focused and 32 total research controls pass; the complete
+  repository gate preserves 221 actor journeys and every report/Evidence/proof lane.
+  No material concern remains. A2/A3 must still decide and test whether declaration-
+  array ordering belongs to output document equality even though addressing is order-
+  independent.
+- 2026-07-22: A-G1 PASS. The accepted result is the exact two-domain authoring problem
+  and falsifier only. It releases reversible A2 option research but grants no authority
+  to choose syntax, parser, authoring IR, canonical migration, hosted logic, implicit
+  defaults, or a materially different author workflow.
+
+## Decision log
+
+| Question | Evidence and concerns | Decision / reopen observation |
+|---|---|---|
+| implement the illustrative `.pspec` grammar now | it cannot supply exact accepted Stack IDs without undocumented derivation, has no OrderedMap comparison, and cannot check hosted semantic strings | reject for A1; reopen only after an explicit contract passes exact two-domain round-trip and ambiguity controls |
+| treat canonical JSON as the final author surface | JSON already preserves exact records but human ergonomics have not been observed; ADR 0003 calls it temporary | retain as one A2 comparison option, not a decision |
+| choose one formal logic for semantic payloads | current accepted domains use plural observations/laws/resources and externally governed proof/conformance Evidence | prohibited absent a concrete scoped need; a hosted logic may be selected per aspect later |
+
+## Result and remaining work
+
+A0, A1, A-R1, and A-G1 are complete. The project now has an executable, independently
+reviewed two-domain statement of the authoring deficit without committing to its
+solution. A2 option research is released. Parser, grammar, authoring IR, canonical
+format migration, semantic type checking, declaration-array ordering semantics, and
+human usability remain unimplemented and unaccepted.
+
+## Stop and escalation conditions
+
+- stop if any proposal derives stable identity or exact references from hidden rules;
+- stop if author convenience changes canonical meaning or erases unsupported aspects;
+- stop if parsing hosted text is described as semantic checking;
+- stop before a syntax or canonical-format migration without two-domain round-trip,
+  diagnostic, recovery, and independent-review evidence;
+- escalate if equally viable options encode materially different author workflows or
+  require a hard-to-reverse universal foundation with no actor evidence.
