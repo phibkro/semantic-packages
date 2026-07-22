@@ -255,6 +255,13 @@ this same suite green without weakening or deleting an assertion.
   identity/reference fields, opaque nonempty hosted-text preservation, and stable raw
   detail. The A3 successor adds those exact controls and reconciles ADR 0017's ordering;
   no syntax, workflow, registry, acquisition, or other operator values choice is made.
+- 2026-07-22: A-R3 successor BLOCK at `3635e6c`. The prior gaps close and the revised
+  1 PASS / 1 FAIL / 17 SKIP topology cannot pass through an empty or dependency-blind
+  module, but the wrong-context and duplicate-address oracles did not also require an
+  all-or-none failure. Invalid dependency checks asserted only path order and a code
+  set, allowing truthful codes at false root pointers. The next successor requires
+  `ok == false`, no document, and exact ordered `(code, path, pointer)` tuples. No
+  product-direction decision is involved.
 
 ## Decision log
 

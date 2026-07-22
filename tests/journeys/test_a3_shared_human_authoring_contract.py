@@ -174,6 +174,8 @@ class SharedHumanAuthoringSuccessorContractTest(unittest.TestCase):
             source_label="author/source.json",
             dependencies=(irrelevant,),
         )
+        self.assertFalse(wrong_context.ok)
+        self.assertIsNone(wrong_context.document)
         self.assertEqual(
             (
                 (
@@ -196,25 +198,34 @@ class SharedHumanAuthoringSuccessorContractTest(unittest.TestCase):
         del missing_id["id"]
         first = authoring.AuthoringDependency("z/first.json", missing_version)
         second = authoring.AuthoringDependency("a/second.json", missing_id)
-        for dependencies, expected_paths in (
-            ((first, second), ("z/first.json", "a/second.json")),
-            ((second, first), ("a/second.json", "z/first.json")),
+        for dependencies, expected_diagnostics in (
+            (
+                (first, second),
+                (
+                    ("SCHEMA_MISSING_FIELD", "z/first.json", "#/version"),
+                    ("SCHEMA_MISSING_FIELD", "a/second.json", "#/id"),
+                ),
+            ),
+            (
+                (second, first),
+                (
+                    ("SCHEMA_MISSING_FIELD", "a/second.json", "#/id"),
+                    ("SCHEMA_MISSING_FIELD", "z/first.json", "#/version"),
+                ),
+            ),
         ):
-            with self.subTest(invalid_order=expected_paths):
+            with self.subTest(invalid_order=expected_diagnostics):
                 invalid = authoring.author_specification(
                     _canonical_bytes(source),
                     format_token=FORMAT,
                     source_label="author/source.json",
                     dependencies=dependencies,
                 )
+                self.assertFalse(invalid.ok)
                 self.assertIsNone(invalid.document)
                 self.assertEqual(
-                    expected_paths,
-                    tuple(item.path for item in invalid.diagnostics),
-                )
-                self.assertEqual(
-                    {"SCHEMA_MISSING_FIELD"},
-                    {item.code for item in invalid.diagnostics},
+                    expected_diagnostics,
+                    tuple(_shape(item) for item in invalid.diagnostics),
                 )
                 self.assertNotIn(
                     "LINK_DANGLING_REFERENCE",
@@ -232,6 +243,8 @@ class SharedHumanAuthoringSuccessorContractTest(unittest.TestCase):
                 ),
             ),
         )
+        self.assertFalse(duplicate.ok)
+        self.assertIsNone(duplicate.document)
         self.assertEqual(
             (
                 (
