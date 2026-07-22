@@ -78,7 +78,7 @@ A0 roadmap/source census
 | A-G1 problem gate | lead; plan-only disposition | retained review packet and full gate; releases A2 or successor A1; values choice remains unauthorized |
 | A2 option probe | future owner; research notes/fixtures only; integrates into lead-owned option matrix | exact round-trip/ambiguity/diagnostic/recovery comparison; A-R2; escalate materially different author experiences without decisive evidence |
 | A-R2 / A-G2 | independent reviewer then lead; review writes none, lead integrates plan/ADR proposal | option attacks and dispositions; choose smallest reversible contract or stop for operator; no parser release without PASS |
-| A3 red contract | future test owner; exclusive authoring-contract fixtures/tests | Stack + OrderedMap exact-output; opaque-label nonauthority; invalid bytes/duplicate members/unsupported format; ambiguous/missing/wrong-kind ID/reference; hosted-payload and deterministic-diagnostic controls; independent contract review; A4 |
+| A3 red contract | lead/test owner; exclusive authoring-contract fixtures/tests and proposed dependency-context ADR | Stack + OrderedMap exact-output relative to an explicit finite context; opaque-label nonauthority; invalid bytes/duplicate members/unsupported format; ambiguous/missing/wrong-kind ID/reference; hosted-payload and deterministic-diagnostic controls; independent contract review; A4 |
 | A4 minimal elaborator | future implementation owner; exclusive new authoring module plus approved dependency metadata | frozen A3 controls, no canonical predecessor changes, focused/full gates; independent implementation review A-R4; toolchain/migration concern escalates |
 | A-R4 | uninvolved read-only reviewer | parser containment, deterministic output/diagnostics, hidden-default and semantic-overclaim attacks; A5 or successor |
 | A5 journey/maintenance | lead/integrator; author command/docs, user-journey controls, check integration, plan | exact two-domain author tasks, regression/sensitivity, recovery, limitations, one non-control human-facing adapter, and required operator-coordinated eligible uninvolved-author observation; A-R5 |
@@ -131,6 +131,22 @@ blank hosted text retains the observed coarse root diagnostic; ordinary JSON col
 duplicate members; invalid UTF-8/JSON remain host exceptions; existing diagnostics
 replay deterministically; and array
 reordering changes document equality without changing local addresses or graph validity.
+
+A3 adds an intentionally red predecessor gate:
+
+```text
+python3 -m unittest tests.journeys.test_a3_shared_human_authoring_contract -v
+```
+
+Before A4 exists, the reviewed topology must be 17 tests: one exact-input and
+dependency-gap control PASS, one intentional failure naming only the absent
+`semantic_packages.authoring` module, and fifteen successor controls SKIP. The frozen
+successor contract requires exact Stack and OrderedMap documents relative to explicit
+finite profile contexts; no-default format and dependency inputs; provenance-only
+labels; format/UTF-8/JSON/duplicate-member precedence; all-or-none outcomes; exact
+identity/local-reference/hosted-text diagnostics; order preservation; deterministic
+replay; and isolated input/output snapshots. A4 must turn this same suite green without
+weakening or deleting an assertion.
 
 ## Progress checklist
 
@@ -217,6 +233,15 @@ reordering changes document equality without changing local addresses or graph v
   explicit identity, source-order preservation without position semantics, and no
   independent IR. This releases A3 red controls. It does not select final surface
   grammar or author workflow; unresolved later surface values still escalate.
+- 2026-07-22: A3 candidate exposes one omitted mechanical input in ADR 0016: both
+  retained Specifications reference separate profile records and each produces two
+  exact dangling-reference diagnostics in isolation. Proposed ADR 0017 makes the
+  dependency context finite, explicit, required, and discovery-free; record labels
+  remain provenance-only and success is link-valid relative to that exact context.
+  The focused predecessor has the required 17-test topology: one PASS, one intentional
+  missing-module failure, and fifteen SKIP. This is a contract correction, not a choice
+  of syntax, workflow, registry, or acquisition authority. Independent A3 review must
+  attack the context and red oracles before A4 is released.
 
 ## Decision log
 
@@ -228,6 +253,7 @@ reordering changes document equality without changing local addresses or graph v
 | add a syntax-neutral authoring IR now | only one executable input exists and the current transformation is identity; a second structural model would create drift before it enables composition | reject until a second frontend or non-identity transformation demonstrates the need |
 | preserve declaration-array order or canonicalize it | array positions do not address declarations, but record-document equality observes array order | require each adapter to preserve explicit source declaration order for exact output; do not infer semantic meaning from position; reopen if canonical record equality changes |
 | accept the format-neutral boundary or escalate now | A-R2 confirms the contract closes authority/diagnostic/JSON-inertia gaps, remains reversible, and leaves final surface experience open | accept ADR 0016 and release A3; no operator decision exists until evidence cannot distinguish materially different surface workflows |
+| validate external references without ambient discovery | both retained Specifications are invalid as isolated graphs because their profile references resolve only with separate dependency records | propose an explicit finite caller-supplied dependency context in ADR 0017; A3 review must pass before A4 may implement it |
 
 ## Result and remaining work
 

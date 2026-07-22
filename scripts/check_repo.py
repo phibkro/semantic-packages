@@ -87,6 +87,7 @@ REQUIRED = [
     "registry/stack/successor-manifest.json",
     "docs/decisions/0014-revisioned-successor-source-set.md",
     "docs/decisions/0016-representation-neutral-authoring-boundary.md",
+    "docs/decisions/0017-explicit-authoring-dependency-context.md",
     "schemas/registry-manifest.schema.json",
     "schemas/ordered-map-conformance-plan.schema.json",
     "registry/ordered-map/theory/records/ordered-map-spec.json",

@@ -38,7 +38,10 @@ The accepted A1 problem and A2 comparison now feed an A-G2-accepted format-neutr
 document-or-diagnostics boundary. Canonical JSON is only its first control; hidden
 inference and an unneeded second IR are rejected, while a non-control human-facing
 adapter and author observation remain mandatory before final convergence. A3 freezes
-that boundary red without selecting final syntax.
+that boundary red without selecting final syntax. Because both retained Specifications
+reference separate profile records, A3 also requires a finite caller-supplied dependency
+context; the elaborator performs no ambient discovery and succeeds only relative to
+that exact context.
 
 ## End-to-end product shape
 

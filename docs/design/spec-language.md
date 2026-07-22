@@ -87,11 +87,13 @@ This syntax is provisional. The initial parser may use JSON/YAML internally whil
 
 [ADR 0016](../decisions/0016-representation-neutral-authoring-boundary.md) accepts a
 surface-neutral boundary for ExecPlan 0006. Explicit source bytes, one exact format
-token, and an opaque diagnostic label produce either one exact canonical Specification
-document or ordered source-local diagnostics. The label has no identity or content
-authority; all root/local IDs and references remain explicit. Raw duplicate members,
-invalid encoding/syntax, and unsupported formats fail before record validation. Hosted
-semantic payloads remain unchecked text.
+token, an opaque diagnostic label, and the explicit finite dependency context clarified
+by [ADR 0017](../decisions/0017-explicit-authoring-dependency-context.md) produce either
+one exact canonical Specification document or ordered source-local diagnostics. The
+labels have no identity or content authority; all root/local IDs and references remain
+explicit. The boundary performs no filesystem, manifest, registry, network, version,
+or profile discovery. Raw duplicate members, invalid encoding/syntax, and unsupported
+formats fail before record validation. Hosted semantic payloads remain unchecked text.
 
 `canonical-spec-json-v1` is the first conformance control, not the final human surface.
 The lifecycle cannot close without a non-control surface adapter and eligible
