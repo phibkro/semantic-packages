@@ -5,9 +5,10 @@
 The tracer is complete only when four actors can finish bounded tasks against the
 same canonical records. J1–J5 make those four terminal outcomes and bounded maintenance
 executable; JG accepted hosted release convergence and independent fresh-checkout
-reproduction. The next active plan tests human inspectability without retroactively
-changing these accepted contracts. They are not personas or a promise of hosted
-infrastructure.
+reproduction. ExecPlan 0003's automated human-inspection surface passes while its real
+uninvolved-human observation remains deferred. ExecPlan 0004 now tests whether these
+contracts survive a structurally different OrderedMap domain without retroactively
+changing them. They are not personas or a promise of hosted infrastructure.
 
 For this tracer, a **registry** is one curated finite local source set of immutable,
 exact-version records. To **publish** or **register** is to add records to that set and

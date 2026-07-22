@@ -4,6 +4,15 @@
 
 A single “verified” badge is insufficient. Evidence is indexed by concern and mechanism.
 
+Proof relevance supplies a useful descriptive lens for the Claim/Evidence split. A
+Claim records which proposition is at issue and under which scope without treating one
+witness as the proposition's identity; Evidence preserves witness-level distinctions
+such as mechanism, provenance, result, assumptions, and exclusions. This helps explain
+why two records aimed at the same Claim are not interchangeable. It is not a formal
+identification of every Claim with a proposition in one logic or every Evidence record
+with a proof term: tests, benchmarks, audits, and assertions remain distinct empirical
+or procedural mechanisms under the project's plural-mathematics boundary.
+
 | Concern | Example mechanisms |
 |---|---|
 | algebraic correctness | proof, property tests |

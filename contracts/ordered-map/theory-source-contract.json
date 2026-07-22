@@ -1,0 +1,31 @@
+{
+  "formatVersion": 1,
+  "id": "ordered-map-theory-source-contract",
+  "version": "0.1.0",
+  "authorityClass": "provisional-theory-source",
+  "finalProductAuthority": false,
+  "manifest": {
+    "path": "registry/ordered-map/theory-manifest.json",
+    "rawSha256": "06157079396b8712e31eaf459949c0503eb8d68ac7b6c97ac0b1308cc7f523c7"
+  },
+  "source": {
+    "selector": "ordered-map-theory",
+    "roles": ["theory-authored", "dependency"]
+  },
+  "specification": {
+    "address": {
+      "kind": "specification",
+      "id": "ordered-map",
+      "version": "0.1.0"
+    },
+    "rawSha256": "6049d371603cbdac0e722685f1fd25c7369872f7d963ae2e4f4bae90cce7fd7f"
+  },
+  "profile": {
+    "address": {
+      "kind": "realizationProfile",
+      "id": "ordered-map-ascii-fold",
+      "version": "0.1.0"
+    },
+    "rawSha256": "6d1297892c355a569e244c2b94448a5f5edaf9b1bf2ae54f940d7c4494fe225f"
+  }
+}

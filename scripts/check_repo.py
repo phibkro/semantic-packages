@@ -8,7 +8,8 @@ diagnostic oracles. It also exercises the deterministic local loader's discovery
 normalization, phase, and import-edge fixtures, the tracer-scoped Stack adapter suite,
 the independent Rust/TypeScript candidates and their bound Evidence reports, the
 accepted actor-journey and repository-governance contracts, and ADR 0009's bounded
-Lean proof boundary.
+Lean proof boundary. Retained executable research probes freeze the observed boundary
+between domain-shaped substrate and Stack-specific product authority.
 """
 
 from __future__ import annotations
@@ -27,6 +28,8 @@ from urllib.parse import unquote
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import record_check  # noqa: E402
 import loader_fixture_check  # noqa: E402
+import ordered_map_evidence_check  # noqa: E402
+import ordered_map_report_check  # noqa: E402
 import proof_fixture_check  # noqa: E402
 import wave4_evidence_check  # noqa: E402
 
@@ -37,7 +40,9 @@ REQUIRED = [
     "ARCHITECTURE.md",
     "docs/vision/constitution.md",
     "docs/research/synthesis.md",
+    "docs/research/ordered-map-probe.md",
     "docs/design/core-model.md",
+    "docs/design/ordered-map-tracer.md",
     "docs/design/system-map.md",
     "docs/design/user-journeys.md",
     "docs/design/spec-language.md",
@@ -49,6 +54,7 @@ REQUIRED = [
     "docs/operations/multi-provider-workflow.md",
     ".agent/PLANS.md",
     "docs/exec-plans/active/0003-cold-human-inspection.md",
+    "docs/exec-plans/active/0004-ordered-map-generality.md",
     "docs/exec-plans/completed/0001-tracer-bullet.md",
     "docs/exec-plans/completed/0002-actor-journeys.md",
     "semantic_packages/__init__.py",
@@ -63,6 +69,8 @@ REQUIRED = [
     "scripts/proof_check.py",
     "scripts/check_change_metadata.py",
     "scripts/wave4_evidence_check.py",
+    "scripts/ordered_map_evidence_check.py",
+    "scripts/ordered_map_report_check.py",
     ".github/pull_request_template.md",
     "proofs/stack-pop-empty/StackPopEmpty.lean",
     "proofs/stack-pop-empty/manifest.json",
@@ -70,6 +78,16 @@ REQUIRED = [
     "registry/stack/successor-manifest.json",
     "docs/decisions/0014-revisioned-successor-source-set.md",
     "schemas/registry-manifest.schema.json",
+    "schemas/ordered-map-conformance-plan.schema.json",
+    "registry/ordered-map/theory/records/ordered-map-spec.json",
+    "registry/ordered-map/theory/dependencies/ordered-map-profile.json",
+    "contracts/ordered-map/conformance-plan.json",
+    "reports/ordered-map/rust-campaign-report.json",
+    "reports/ordered-map/typescript-campaign-report.json",
+    "fixtures/candidates/ordered-map/reorder_breaker/README.md",
+    "fixtures/candidates/ordered-map/reorder_breaker/src/main.rs",
+    "fixtures/candidates/ordered-map/reorder_breaker/src/ordered_map.rs",
+    "fixtures/candidates/ordered-map/reorder_breaker/reorder-breaker-report.json",
 ]
 LINK_RE = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
 JSON_EXCLUDED_DIRS = {".git", ".direnv", "node_modules"}
@@ -168,6 +186,10 @@ def main() -> int:
         "journeys", "Actor journey"
     )
     errors += journey_errors
+    research_errors, research_summary = run_contract_checks(
+        "research", "Research probe"
+    )
+    errors += research_errors
     governance_errors, governance_summary = run_contract_checks(
         "governance", "Change governance"
     )
@@ -177,6 +199,14 @@ def main() -> int:
     except (OSError, RuntimeError, subprocess.SubprocessError) as error:
         wave4_errors, wave4_summary = [f"Wave 4 Evidence check failed: {error}"], ""
     errors += wave4_errors
+    ordered_map_errors, ordered_map_summary = (
+        ordered_map_report_check.run_ordered_map_report_checks()
+    )
+    errors += ordered_map_errors
+    ordered_map_evidence_errors, ordered_map_evidence_summary = (
+        ordered_map_evidence_check.run_ordered_map_evidence_candidate_checks()
+    )
+    errors += ordered_map_evidence_errors
     proof_errors, proof_summary = run_proof_checks()
     errors += proof_errors
     if errors:
@@ -189,8 +219,11 @@ def main() -> int:
     print(adapter_summary)
     print(candidate_summary)
     print(journey_summary)
+    print(research_summary)
     print(governance_summary)
     print(wave4_summary)
+    print(ordered_map_summary)
+    print(ordered_map_evidence_summary)
     print(proof_summary)
     print("Repository checks passed.")
     return 0

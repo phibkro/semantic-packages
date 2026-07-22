@@ -1,8 +1,9 @@
-"""Read-only inspection of the frozen Stack theory publication.
+"""Read-only inspection of a manifest-governed theory publication.
 
-This is deliberately a Stack-specific product boundary.  It inventories one
-finite local source set using the governed Wave 3 loader and record/link
-checker; it does not execute proof tooling, registry metadata, or Realizations.
+Shared mechanics inventory one exact theory source selected by supplied
+manifest authority. The Stack actor wrapper pins its product authority and
+accepts no override. Neither path executes proof tooling, registry metadata,
+or Realizations.
 """
 
 from __future__ import annotations
@@ -46,7 +47,8 @@ class _ApprovedRecord:
     mismatch_code: str
 
 
-_MANIFEST = graph._inspect_manifest_projection()
+_MANIFEST = graph.inspect_manifest_authority(graph.DEFAULT_STACK_MANIFEST)
+_THEORY_ROLES = frozenset({"theory-authored", "dependency"})
 
 
 def _publication_role(role: str) -> str:
@@ -59,25 +61,13 @@ def _mismatch_code(address: Address) -> str:
     return "PUBLICATION_SOURCE_DIGEST_MISMATCH"
 
 
-_APPROVED: dict[Address, _ApprovedRecord] = {
-    member.address: _ApprovedRecord(
-        member.sha256,
-        _publication_role(member.role),
-        _mismatch_code(member.address),
-    )
-    for member in _MANIFEST.members
-    if member.source == "theory"
-}
-
-_APPROVED_KIND_IDS = {(kind, record_id) for kind, record_id, _ in _APPROVED}
-
-
 def _inventory(
     records: tuple[_finite_source._SourceRecord, ...],
+    approved_records: dict[Address, _ApprovedRecord],
 ) -> tuple[PublicationRecord, ...]:
     inventory: list[PublicationRecord] = []
     for record in records:
-        approved = _APPROVED.get(record.address)
+        approved = approved_records.get(record.address)
         inventory.append(
             PublicationRecord(
                 address=record.address,
@@ -93,6 +83,8 @@ def _publication_diagnostics(
     inventory: tuple[PublicationRecord, ...],
     records: dict[str, dict],
     graph_diagnostics: list[record_check.Diagnostic],
+    approved_records: dict[Address, _ApprovedRecord],
+    product: str,
 ) -> list[record_check.Diagnostic]:
     diagnostics: list[record_check.Diagnostic] = []
     records_by_path = records
@@ -101,7 +93,10 @@ def _publication_diagnostics(
     # Suppress a redundant missing-address diagnostic only when a graph
     # diagnostic already names that exact requested tuple at an actionable
     # reference.  An unrelated graph failure must not hide a missing leaf.
-    for address in sorted(set(_APPROVED) - observed_addresses):
+    approved_kind_ids = {
+        (kind, record_id) for kind, record_id, _ in approved_records
+    }
+    for address in sorted(set(approved_records) - observed_addresses):
         address_text = record_check.fmt_tuple(
             dict(zip(("kind", "id", "version"), address))
         )
@@ -116,12 +111,12 @@ def _publication_diagnostics(
                 "PUBLICATION_MISSING_ADDRESS",
                 ".",
                 "#",
-                f"the Stack theory publication requires {address_text}",
+                f"the {product} theory publication requires {address_text}",
             )
         )
 
     for item in inventory:
-        approved = _APPROVED.get(item.address)
+        approved = approved_records.get(item.address)
         if approved is not None:
             if item.sha256 != approved.sha256:
                 diagnostics.append(
@@ -139,10 +134,10 @@ def _publication_diagnostics(
         # governed exact-reference linker already diagnosed that exact request
         # at its actionable pointer.  An otherwise unreferenced extra version
         # remains an unexpected publication address.
-        if item.address[:2] in _APPROVED_KIND_IDS:
+        if item.address[:2] in approved_kind_ids:
             accepted = next(
                 address
-                for address in _APPROVED
+                for address in approved_records
                 if address[:2] == item.address[:2]
             )
             accepted_text = record_check.fmt_tuple(
@@ -160,24 +155,61 @@ def _publication_diagnostics(
                 "PUBLICATION_UNEXPECTED_ADDRESS",
                 item.path,
                 "#",
-                f"the Stack theory publication does not include "
+                f"the {product} theory publication does not include "
                 f"{record_check.fmt_tuple(records_by_path[item.path])}",
             )
         )
     return diagnostics
 
 
-def inspect_stack_theory(root: Path) -> PublicationObservation:
-    """Inspect ``root`` without executing or mutating any supplied artifact."""
+def _selector_diagnostic(code: str, message: str) -> PublicationObservation:
+    return PublicationObservation(
+        (), (record_check.Diagnostic(code, ".", "#", message),)
+    )
 
-    if not _MANIFEST.ok:
-        return PublicationObservation((), _MANIFEST.diagnostics)
+
+def inspect_theory_publication(
+    root: Path,
+    *,
+    authority: graph.ManifestAuthority,
+    source: str,
+    product: str,
+) -> PublicationObservation:
+    """Observe one exact theory source under supplied, non-product authority."""
+
+    if not authority.ok:
+        return PublicationObservation((), authority.diagnostics)
+
+    declared_source = next(
+        (item for item in authority.sources if item.source_id == source), None
+    )
+    if declared_source is None:
+        return _selector_diagnostic(
+            "PUBLICATION_UNKNOWN_SOURCE",
+            f"no {product} theory publication source selector for {source!r}",
+        )
+    if not declared_source.roles.issubset(_THEORY_ROLES):
+        return _selector_diagnostic(
+            "PUBLICATION_SOURCE_ROLE_MISMATCH",
+            f"{product} theory publication source {source!r} does not permit only "
+            "theory-authored/dependency roles",
+        )
+
+    approved_records = {
+        member.address: _ApprovedRecord(
+            member.sha256,
+            _publication_role(member.role),
+            _mismatch_code(member.address),
+        )
+        for member in authority.members
+        if member.source == source
+    }
 
     source = _finite_source._observe_finite_source(
         (_finite_source._SourceRoot("", root),)
     )
     diagnostics = list(source.diagnostics)
-    inventory = _inventory(source.records)
+    inventory = _inventory(source.records, approved_records)
     records = {record.path: record.document for record in source.records}
 
     # Preserve the loader's input/schema phase barrier.  Graph and publication
@@ -186,8 +218,79 @@ def inspect_stack_theory(root: Path) -> PublicationObservation:
         graph_diagnostics = record_check.check_graph(records)
         diagnostics.extend(graph_diagnostics)
         diagnostics.extend(
-            _publication_diagnostics(inventory, records, graph_diagnostics)
+            _publication_diagnostics(
+                inventory,
+                records,
+                graph_diagnostics,
+                approved_records,
+                product,
+            )
         )
 
     diagnostics.sort(key=record_check.Diagnostic.sort_key)
     return PublicationObservation(inventory, tuple(diagnostics))
+
+
+def _project_theory_publication(
+    observation: graph.GraphObservation,
+    *,
+    authority: graph.ManifestAuthority,
+    source: str,
+    product: str,
+) -> PublicationObservation:
+    """Internally project publication from an actor-owned captured graph.
+
+    GraphObservation construction is deliberately not an authentication boundary. Actor
+    wrappers must obtain the observation through their pinned graph inspection before
+    using this non-accepting projection seam.
+    """
+
+    if not authority.ok:
+        return PublicationObservation((), authority.diagnostics)
+    declared_source = next(
+        (item for item in authority.sources if item.source_id == source), None
+    )
+    if declared_source is None:
+        return _selector_diagnostic(
+            "PUBLICATION_UNKNOWN_SOURCE",
+            f"no {product} theory publication source selector for {source!r}",
+        )
+    if not declared_source.roles.issubset(_THEORY_ROLES):
+        return _selector_diagnostic(
+            "PUBLICATION_SOURCE_ROLE_MISMATCH",
+            f"{product} theory publication source {source!r} does not permit only "
+            "theory-authored/dependency roles",
+        )
+    if not observation.ok:
+        return PublicationObservation((), observation.diagnostics)
+
+    prefix = f"{source}/"
+    records = tuple(
+        sorted(
+            (
+                PublicationRecord(
+                    record.address,
+                    record.path[len(prefix) :]
+                    if record.path.startswith(prefix)
+                    else record.path,
+                    record.sha256,
+                    _publication_role(record.role or "theory-authored"),
+                )
+                for record in observation.records
+                if record.source == source
+            ),
+            key=lambda item: (item.address, item.path),
+        )
+    )
+    return PublicationObservation(records, ())
+
+
+def inspect_stack_theory(root: Path) -> PublicationObservation:
+    """Inspect the pinned Stack theory surface without actor overrides."""
+
+    return inspect_theory_publication(
+        root,
+        authority=_MANIFEST,
+        source="theory",
+        product="Stack",
+    )

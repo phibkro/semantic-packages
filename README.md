@@ -18,8 +18,9 @@ The project explores a shared specification language that:
 The accepted Stack tracer publishes one nontrivial specification, binds proof and
 conformance Evidence, registers two independent Realizations, resolves them under an
 explicit policy/profile, projects theory meaning, and retains a failed exact successor
-with predecessor recovery. The current journey asks whether an uninvolved human can
-inspect those conclusions before OrderedMap tests generality beyond Stack.
+with predecessor recovery. An exact inspection command is ready, while its
+uninvolved-human observation is retained as deferred backlog work. OrderedMap now tests
+generality beyond Stack without claiming that deferred observation passed.
 
 ## Repository map
 
@@ -37,7 +38,8 @@ inspect those conclusions before OrderedMap tests generality beyond Stack.
 - [`docs/design/lifecycle.md`](docs/design/lifecycle.md): project knowledge, feedback loops, and quality gates.
 - [`docs/operations/multi-provider-workflow.md`](docs/operations/multi-provider-workflow.md): agent route status, model-diverse delegation, security boundaries, and provenance.
 - [`docs/design/tracer-bullet.md`](docs/design/tracer-bullet.md): first vertical slice.
-- [`docs/exec-plans/active/0003-cold-human-inspection.md`](docs/exec-plans/active/0003-cold-human-inspection.md): current human-inspection journey and route to the next semantic tracer.
+- [`docs/exec-plans/active/0003-cold-human-inspection.md`](docs/exec-plans/active/0003-cold-human-inspection.md): executable inspection surface and deferred uninvolved-human gate.
+- [`docs/exec-plans/active/0004-ordered-map-generality.md`](docs/exec-plans/active/0004-ordered-map-generality.md): current second-domain research, design, implementation, and maintenance route.
 - [`docs/exec-plans/completed/0001-tracer-bullet.md`](docs/exec-plans/completed/0001-tracer-bullet.md): completed design, record, proof, adapter, independent-Realization, and Evidence history.
 - [`docs/exec-plans/completed/0002-actor-journeys.md`](docs/exec-plans/completed/0002-actor-journeys.md): completed actor registry, resolver, projection, maintenance, release, and workflow-governance history.
 - [`tasks/backlog.md`](tasks/backlog.md): ordered research and engineering backlog.
@@ -106,6 +108,27 @@ python3 -m unittest tests.candidates.test_cross_language_candidates -v
 The same 18 controls can be run alone with that command. Their reviewed outcomes are
 recorded as declaration-scoped Evidence; the green report itself is only a provenance
 artifact, and the repository gate reproduces and binds it before accepting the records.
+
+Inspect the exact predecessor and failed-successor Stack snapshots without executing
+artifacts or selecting an implicit latest version:
+
+```sh
+python3 -m semantic_packages.inspection \
+  --predecessor-manifest registry/stack/manifest.json \
+  --successor-manifest registry/stack/successor-manifest.json \
+  --profile realizationProfile/stack-default/0.1.0 \
+  --predecessor-specification specification/stack/0.1.0 \
+  --successor-specification specification/stack/0.2.0 \
+  --predecessor-policy consumerPolicy/stack-bounded-policy/0.1.0 \
+  --successor-policy consumerPolicy/stack-bounded-policy/0.2.0
+```
+
+The output keeps authored meaning, Claim and Evidence qualifications, semantic
+acceptability, directional deployment boundaries, and exact-version recovery separate.
+It is a read-only renderer over the two named local graph snapshots; it does not run
+proofs or Realizations, acquire records, reproduce Evidence, or choose a recovery
+candidate. The retained uninvolved-human protocol is documented in
+[`docs/operations/cold-human-inspection.md`](docs/operations/cold-human-inspection.md).
 
 Then open the repository in Codex, an IDE extension, or another coding agent. The agent should begin with `AGENTS.md`, then follow the active ExecPlan.
 

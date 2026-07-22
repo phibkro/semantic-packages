@@ -1,0 +1,1452 @@
+# ExecPlan 0004: OrderedMap second-domain generality tracer
+
+## Purpose and observable outcome
+
+Test whether the accepted semantic-package architecture is a reusable product path or
+an elaborate Stack-specific application. Add `OrderedMap[K,V]` beside Stack and carry
+one smallest honest slice through theory authoring, independent Realizations, scoped
+Claims and Evidence, the curated graph, both consumer projections, an intentional
+breaker, and exact maintenance/recovery.
+
+Acceptance requires an actor starting from canonical OrderedMap records to observe at
+least one representation-independent observation, one falsifiable law, one visible
+unsupported or unknown concern, one challenging negative control, explainable
+policy/profile-relative semantic resolution, and a separate directional deployment
+boundary. Stack remains green and unchanged as the regression comparison. Success does
+not establish arbitrary-domain generality; it establishes only that two structurally
+different domains traverse the same bounded product lifecycle.
+
+## Context and repository map
+
+ExecPlans 0001 and 0002 accepted the Stack substrate and actor journey. ExecPlan 0003
+adds an exact graph-derived inspection surface; its real uninvolved-human observation
+is explicitly deferred in the backlog and is not a predecessor to this plan. The
+constitution, `ARCHITECTURE.md`, core model, specification language, Evidence model,
+compatibility design, lifecycle, and tracer-bullet design govern this work.
+
+The initial O1 census finds three layers. Record schemas, exact-link checking, finite
+source loading, manifest mechanics, and theory projection are mostly domain-shaped
+rather than Stack-shaped. Publication, registration, and graph entrypoint names are
+Stack-bound, with publication/registration additionally freezing exact Stack manifest
+membership. Resolution, conformance campaigns, proof checking, adapters, inspection,
+and maintenance contain intentional Stack concern/protocol semantics. The tracer must
+extract only reuse demonstrated by OrderedMap and preserve domain-local code where the
+semantics genuinely differ.
+
+## Non-goals and constraints
+
+- Do not replace, rename away, or weaken the accepted Stack tracer.
+- Do not infer generality from schemas accepting different identifiers; exercise the
+  whole actor lifecycle and a negative control.
+- Do not implement institutions, a topos, a universal higher-order logic, or a
+  category-theory framework. Adopt categorical structure only after a concrete
+  authoring, import, or refinement falsifier requires it.
+- Do not make Specifications types in one proof assistant. Propositions-as-types may
+  govern a selected proof lane only; proof, testing, benchmarking, audit, and assertion
+  remain distinct Evidence mechanisms.
+- Do not add `.pspec` elaboration, semantic refinement, version-range selection,
+  implicit `latest`, hosted acquisition, signatures, indexing, or a browser UI.
+- Do not force OrderedMap through the Stack adapter protocol or Stack concern tokens
+  merely to maximize code reuse.
+- Do not require a proof artifact unless the chosen OrderedMap claim and assurance
+  policy demonstrate that need. A second tracer should test Evidence plurality rather
+  than make Lean universal by habit.
+- Do not couple this tracer to BANG or Wasm; compiled artifacts may become future
+  Realizations, but no current node depends on that seam.
+
+## Specification and documentation changes
+
+Research first freezes observable OrderedMap meaning without selecting a representation.
+The retained [paper probe](../../research/ordered-map-probe.md) owns the O1b candidate
+contract and executed observations. The
+[actor-complete tracer contract](../../design/ordered-map-tracer.md) owns O2's exact
+profile serialization, records, actor outcomes, campaign, boundary, breaker, extraction
+limit, and successor design until O-G2 accepts or rejects it.
+Candidate observations include exact-key lookup and an ordered entry sequence; candidate
+laws include overwrite/lookup and order preservation. Map/fold/fusion-shaped laws are a
+paper probe, not a commitment: if they require transmitting arbitrary functions through
+the executable boundary, the design must either name a bounded observable operation or
+defer the law rather than smuggle host-language functions into canonical meaning.
+
+The record model may be extended only when an authored declaration cannot be expressed
+honestly with existing carrier, operation, observation, derived-observation,
+equivalence, law, effect, resource, and performance-proposition forms. Any new semantic
+relation or identity rule requires an ADR. Domain-neutral extraction from Stack modules
+must preserve exact typed addresses, phase barriers, Claims/Evidence separation,
+semantic-versus-realization compatibility, and deterministic diagnostics.
+
+## Implementation steps and revisioned DAG
+
+```text
+O0 priority + categorical-memory reconciliation
+  -> O1a Stack-literal and hard-coded-policy census
+  -> O1b OrderedMap semantic/paper-record falsifier
+  -> O-R1 independent research/design review
+  -> O-S1 semantics, reproducibility, and logic-wording correction
+  -> O-R1b independent successor review
+  -> O-G1 domain-contract gate
+  -> O2 actor-complete journey and exact-record design
+  -> O-R2 independent contract/security review
+  -> O-S2 exact authority, protocol, projection, and successor correction
+  -> O-R2b independent successor review
+  -> O-S3 artifact-ordering and per-observation attribution correction
+  -> O-R2c independent successor review
+  -> O-G2 design gate
+  -> O3a exact Specification/profile/conformance-plan artifacts
+  -> O-R3a contract-artifact review
+  -> O3b red journey controls consuming those artifacts
+  -> O-R3b red-control review
+  -> O-S4 authority/phase/no-follow/immutability control correction
+  -> O-R3c successor red-control review
+  -> O-S5 recursive-immutability and diagnostic-location correction
+  -> O-R3d final successor red-control review
+  -> O-S6 replay-authority and leak-case correction
+  -> O-R3e final red-control review
+  -> O4a canonical artifact inspector + pinned plan wrapper
+  -> O-R4a implementation review
+  -> O4a-S1 filesystem/strict-JSON/depth correction
+  -> O-R4a2 successor review
+  -> O4b-R0 manifest-authority red controls
+  -> O-R4b0 red-control review
+  -> O4b-S0 red authority-boundary correction
+  -> O-R4b1 successor red-control review
+  -> O4b-S1 package-selector symmetry correction
+  -> O-R4b2 final red-control review
+  -> O4b manifest authority + Stack-compatible extraction
+  -> O-R4b implementation review
+  -> O5a exact theory-source manifest/contract artifacts
+  -> O-R5a authority-artifact review
+  -> O5a-S1 exact branch/cross-link correction
+  -> O-R5a2 successor authority-artifact review
+  -> O5a-S2 successor dependency correction
+  -> O-R5a3 final authority-artifact review
+  -> O5b red publication/graph/projection controls
+  -> O-R5b red-control review
+  -> O5b-S1 trust/phase/snapshot correction
+  -> O-R5b1 successor red-control review
+  -> O5b-S2 classifier/snapshot/diagnostic correction
+  -> O-R5b2 final red-control review
+  -> O5b-S3 authenticated-byte identity correction
+  -> O-R5b3 final red-control review
+  -> O5c-F1 no-follow diagnostic oracle correction
+  -> O5c theory-source publication + graph + theory projection
+  -> O-R5c implementation review
+  -> O6-P macro lifecycle decomposition
+  -> O-R6-P lifecycle plan review
+  -> O6-P-S1 final-authority review correction
+  -> O-R6-P2 successor lifecycle review
+  -> O6a runner/campaign research + red controls
+  -> O-R6a runner/campaign red-control review
+  -> O6a-S1 oracle/protocol/cleanup correction
+  -> O-R6a2 successor red-control review
+  -> O6a-S2 exact branch/start/immutability correction
+  -> O-R6a3 final successor red-control review
+  -> O6b runner/campaign implementation + hardening
+  -> O-R6b runner/campaign implementation review
+  -> O6b-S1 contradictory-observation retention correction
+  -> O-R6b2 successor runner/campaign review
+  -> O6b-F1 teardown scheduling-margin correction
+  -> O-R6b3 final runner/campaign review
+  -> O6b-F2 stderr-drain cleanup-margin correction
+  -> O-R6b4 final successor runner/campaign review
+  -> O6c-P independent-candidate research + red controls
+  -> O-R6c-P candidate red-control review
+  -> O6c-P-S1 provenance/boundary/framing correction
+  -> O-R6c-P2 successor candidate red-control review
+  -> O6c-P-S2 exact descendant/import closure
+  -> O-R6c-P3 final candidate red-control review
+  -> O6c-P-S3 anchored representation-field closure
+  -> O-R6c-P4 final successor candidate red-control review
+  -> O6c-P-S4 unit-linker/documented-command closure
+  -> O-R6c-P5 acceptance candidate red-control review
+  -> O6c independent Rust + TypeScript candidate packets
+  -> O6c-F1 implementation-triggered control corrections
+  -> O-R6c representation-independence/package review
+  -> O6d-P reproduction/report red controls
+  -> O-R6d-P report red-control review
+  -> O6d-P-S1 exact provenance/outcome/isolation correction
+  -> O-R6d-P2 successor report red-control review
+  -> O6d-P-S2 fresh-execution/binary/closure correction
+  -> O-R6d-P3 final report red-control review
+  -> O6d-P-S3 cold-checker/full-outcome/recipe correction
+  -> O-R6d-P4 acceptance report red-control review
+  -> O6d reproduction + targeted breaker reports
+  -> O6d-F1 path-independent recipe/outcome-order correction
+  -> O6d-F2 breaker-distinct forgery correction
+  -> O-R6d reproducibility/breaker review
+  -> O6d-S1 bound-runner execution correction
+  -> O-R6d2 successor reproducibility/breaker review
+  -> O6d-S2 immutable loaded-runner identity correction
+  -> O-R6d3 final reproducibility/breaker review
+  -> O6d-S3 executable-harness closure correction
+  -> O-R6d4 acceptance reproducibility/breaker review
+  -> O6d-S4 source-to-bytecode identity correction
+  -> O-R6d5 final acceptance reproducibility/breaker review
+  -> O6d-F3 consecutive-reproduction characterization
+  -> O-R6d6 final consecutive-reproduction acceptance
+  -> O6e-P Claim/Evidence candidate red controls
+  -> O-R6e-P candidate-record red-control review
+  -> O6e-P-S1 environment/census/two-package correction
+  -> O-R6e-P2 successor candidate-record red-control review
+  -> O6e Claim + Evidence candidate records
+  -> O-R6e package/evidence-candidate review
+  -> O6e-S1 durable-state truth correction
+  -> O-R6e2 successor package/evidence-candidate review
+  -> O-R6 macro lifecycle acceptance
+  -> O6-F1 quiescent scheduling characterization
+  -> O-R6-F scheduling-characterization review
+  -> O-R6-2 successor macro lifecycle acceptance
+  -> O6f-P final-authority candidate red controls
+  -> O-R6f-P final-authority red-control review
+  -> O6f-P1 independent-oracle red-control correction
+  -> O-R6f-P1 corrected red-control review
+  -> O6f-P2 public-surface/schema-closure correction
+  -> O-R6f-P2 final red-control review
+  -> O6f final-authority candidate + actor replay
+  -> O6f-F1 implementation-triggered lifecycle control correction
+  -> O-R6f final-authority implementation review
+  -> O6f-R1 executable-review capability correction
+  -> O-R6f2 successor final-authority implementation review
+  -> O6f-R2 local executable-evidence routing correction
+  -> O-R6f3 combined final-authority implementation review
+  -> O6-G-F0 acceptance-gate scheduling observation
+  -> O6-G-F1 quiescent reproduction characterization
+  -> O6-G final trust-convergence acceptance
+  -> O7-P consumer decision/inspection red controls
+  -> O-R7-P consumer red-control review
+  -> O7-P-S1 authority/dataflow/evidence closure correction
+  -> O-R7-P2 corrected consumer red-control review
+  -> O7-P-S2 exact-support/selector-vacuity correction
+  -> O-R7-P3 final consumer red-control review
+  -> O7 first green attempt
+  -> O7-F1 nested plan-provenance control correction
+  -> O7 resolution + directional boundary + inspection
+  -> O-R7 consumer implementation review
+  -> O7-S1 lifecycle-result truth correction
+  -> O-R7-2 successor consumer implementation review
+  -> O8-P successor/recovery red controls
+  -> O-R8-P successor red-control review
+  -> O8-P-S1 causality/drift/immutability correction
+  -> O-R8-P2 corrected successor red-control review
+  -> O8-P-S2 selector/removal symmetry correction
+  -> O-R8-P3 final successor red-control review
+  -> O8 first green attempt
+  -> O8-F1 captured-text/raw-phase correction
+  -> O8 exact successor/recovery maintenance
+  -> O-R8 successor implementation review
+  -> O8-S1 lifecycle/private-seam truth correction
+  -> O-R8-2 successor implementation review
+  -> O-R4 independent end-to-end review
+  -> O-G final locked local/hosted gate
+```
+
+| Node | Owner, dependencies, and write boundary | Required evidence and downstream gate |
+|---|---|---|
+| O0 priority and memory | continuity owner; exclusive backlog, research/design explanations, active plans, and orientation links | complete: H2 stays explicitly unobserved in backlog; categorical consultation is reconciled as descriptive grounding and delayed adoption, not new semantics; releases O1a |
+| O1a Stack-literal census | continuity owner; read-only; depends on O0 | complete preliminary inventory of generic, name-only Stack, and semantically Stack-bound surfaces; exact blockers and preserve-as-local decisions release O1b |
+| O1b semantic/paper-record falsifier | continuity owner; exclusive this plan, research notes, and retained research fixture; depends on O1a | complete candidate: current records express a stable-first-insertion OrderedMap with lookup/entries observations, five laws, visible unknowns, effect/resource boundaries, and an overwrite-reordering breaker; replayable record/graph/projection checks pass while Stack-frozen publication blocks with five exact diagnostics |
+| O-R1 research/design review | independent read-only reviewer; depends on O1b | BLOCK retained: key-class order/representative observability was ambiguous, executed evidence was not reproducible, the architecture role count was wrong, and dependent-type wording overclaimed collapse |
+| O-S1 review correction | continuity owner; exclusive plan, research/design wording, retained fixture/test, and repository-gate wiring; depends on O-R1 BLOCK | define three carriers and their equivalences, observe class order without representatives, add a two-key overwrite witness, retain all probe inputs/invocations/oracles, and correct categorical wording |
+| O-R1b successor review | same independent read-only reviewer; depends on O-S1 | PASS: every blocker is closed; fixture digest/content and exact oracles match the corrected equivalence-class semantics, categorical wording is bounded, and the paper-level `KeyClass` serialization concern is retained for O2 |
+| O-G1 domain-contract gate | lead acceptance; depends on O-R1b PASS | PASS, narrowly: the 17-declaration paper contract and publication blocker are accepted as design input, not canonical meaning or proof of quotient typing; releases record/journey design |
+| O2 actor journey and records | continuity owner; exclusive plan/design docs and proposed fixtures; depends on O-G1 | candidate complete: exact ASCII-fold class serialization; four actor terminal outcomes; exact record identities/ownership; policy/profile and Evidence axes; separate non-direct boundary; isolated reorder breaker; shared-extraction limit; unsupported exact successor |
+| O-R2 contract/security review | independent read-only reviewer; depends on O2 | BLOCK retained: performance vocabulary and campaign/session identity were incomplete; manifest/resolver authority was overridable; the theory view crossed into package Evidence; and the stated successor result had no exact-version candidates capable of producing it |
+| O-S2 review correction | continuity owner; exclusive plan and OrderedMap design; depends on O-R2 BLOCK | freeze the performance proposition/profile members, canonical campaign/session lifecycle and attribution, non-overridable product authority identity, specification-only theory view, and honest no-candidate successor |
+| O-R2b successor review | same independent read-only reviewer; depends on O-S2 | BLOCK retained: performance, protocol, trust ownership, projection, and successor meaning close, but plan/record/final-manifest digests were ordered impossibly and one derived-map observation contaminated persistence attribution |
+| O-S3 ordering/attribution correction | continuity owner; exclusive plan and OrderedMap design; depends on O-R2b BLOCK | split reviewed exact input/plan artifacts from final ProductContract convergence, make red controls consume one artifact oracle, and attribute only retained-source observations to persistence |
+| O-R2c successor review | same independent read-only reviewer; depends on O-S3 | PASS: exact-artifact/final-authority ordering is derivable without future bytes; plan consumers cannot create a second oracle; per-observation persistence attribution isolates the reorder breaker; prior performance/protocol/trust/projection/successor corrections remain closed |
+| O-G2 design gate | lead acceptance; depends on O-R2c PASS | PASS: freezes the two-domain-only actor slice and releases only O3a's final-path Specification/profile plus canonical plan artifact/schema, followed by independent artifact review before red controls |
+| O3a exact contract artifacts | continuity owner; exclusive final-path OrderedMap Specification/profile records and one canonical conformance-plan JSON artifact/schema; depends on O-G2 | candidate complete: link-valid 18-declaration Specification/profile, schema-valid seven-case plan, exact logical bindings/observations/attribution, canonical digest `2cf7b481…947a`, and seven focused artifact checks; no runner implementation or accepted Evidence |
+| O-R3a contract-artifact review | independent read-only reviewer; depends on O3a | PASS: independently reproduced all three digests, confirmed schema branch/object closure, representation independence, source-before-use logical binds, exact seven-case coverage/attribution, breaker isolation, bounded event/performance scope, and absence of downstream artifacts |
+| O3b red journey controls | continuity owner; exclusive new OrderedMap journey tests; depends on O-R3a PASS | red candidate: exact input preconditions pass; one intentional failure names missing `canonical_artifact`; nine successor controls skip and freeze the no-argument product wrapper, duplicate-member/input/schema/digest phases, no fallback/execution/content leak, and immutable capture |
+| O-R3b red-control review | independent read-only reviewer; depends on O3b | BLOCK retained: wrapper keywords could override authority; phase failures could return false documents/digests; nested/ancestor/schema-path attacks were absent; returned data could be mutable; structured diagnostic phases were under-frozen |
+| O-S4 red-control correction | continuity owner; exclusive O3b test and plan; depends on O-R3b BLOCK | prove zero-parameter wrapper signature, no conclusions on every failure, nested duplicate, artifact/schema ancestor no-follow matrices, recursive immutability/replay, stronger execution sentinels, and structured phase diagnostics |
+| O-R3c successor red-control review | same independent read-only reviewer; depends on O-S4 | BLOCK retained: root/container immutability did not prove nested mappings immutable; duplicate and no-follow matrices did not freeze every diagnostic source/pointer; one prose count remained stale |
+| O-S5 final red correction | continuity owner; exclusive O3b test and plan; depends on O-R3c BLOCK | add nested address/case-step mutation attacks and replay; freeze exact path/pointer for nested duplicate and every artifact/schema input case; reconcile count |
+| O-R3d final successor red-control review | same independent read-only reviewer; depends on O-S5 | BLOCK retained: replay document equality did not constrain replay status/digest; content-leak failure did not forbid false document/digest authority |
+| O-S6 final authority assertions | continuity owner; exclusive O3b test and plan; depends on O-R3d BLOCK | require replay PASS, empty diagnostics, exact digest, exact document; require leak case failure with no document/digest |
+| O-R3e final red-control review | same independent read-only reviewer; depends on O-S6 | PASS: replay and leak-case authority assertions close the last residuals; 11-test topology remains one green precondition, one intentional missing-module failure, and nine skips |
+| O4a canonical artifact boundary | continuity owner; exclusive canonical JSON inspector, pinned OrderedMap plan wrapper, controls, and plan history; depends on O-R3e PASS | complete: exact digest/schema wrapper plus generic bounded/no-follow/strict/offline/immutable inspector; first implementation review BLOCK retained root/NUL exception escape, nonstandard numeric tokens, and recursive-depth exhaustion; successor PASS closes all three with 14 focused tests and a full 151-journey gate |
+| O4b-R0 manifest-authority red controls | continuity owner; exclusive O4b journey controls and this plan; depends on O4a PASS | candidate: freeze immutable supplied authority, authority-driven graph replay, one retained paper-OrderedMap publication observation, Stack wrapper signatures/result equivalence, and invalid-authority phase closure before source I/O |
+| O-R4b0 red-control review | independent read-only reviewer; depends on O4b-R0 | BLOCK retained: unchanged-input equality allowed manifest reread/default substitution; selector role misuse and invalid-authority graph closure were absent; signatures did not prove override rejection; paper success did not executably retain actor rejection |
+| O4b-S0 red authority-boundary correction | continuity owner; exclusive O4b journey controls and this plan; depends on O-R4b0 BLOCK | require detached authority replay after manifest mutation under a reread sentinel, unknown/wrong-role source closure before I/O, invalid-authority graph closure, exact wrapper signatures plus override attacks, and mechanical-success/actor-rejection coexistence |
+| O-R4b1 successor red-control review | same independent read-only reviewer; depends on O4b-S0 | BLOCK retained: snapshot, invalid-authority, wrapper, paper-boundary, and wrong-role controls close, but unknown package-source selection remained unobserved |
+| O4b-S1 package-selector symmetry correction | continuity owner; exclusive O4b journey control and this plan; depends on O-R4b1 BLOCK | complete: exact unknown-package-source diagnostic and no-I/O assertion are symmetric with the accepted generic registration selector contract |
+| O-R4b2 final red-control review | same independent read-only reviewer; depends on O4b-S1 | PASS: the sole O-R4b1 residual is closed; five controls fail only at the absent authority API and release implementation without expanding O4b scope |
+| O4b manifest authority and Stack extraction | continuity owner; exclusive manifest-authority shape, generic publication/registration/graph mechanics, and Stack compatibility wrappers; depends on O-R4b2 PASS | complete: frozen manifest-only supplied authority, detached graph replay, exact-selector publication/registration mechanics, and pinned Stack wrappers; 72 focused/adjacent and the full 156-journey repository gate pass; no final OrderedMap ProductContract or resolver generalization |
+| O-R4b implementation review | independent read-only reviewer; depends on O4b | PASS: independently confirms manifest-only capture, nested immutability, detached replay, pre-I/O phase closure, exact Stack compatibility, no execution, and no authentication/acceptance claim; public construction and hostile-writable-ancestor TOCTOU remain explicit future triggers |
+| O5a exact theory-source authority artifacts | continuity owner; exclusive OrderedMap theory-source manifest, authority contract/schema, design, focused artifact tests, and this plan; depends on O4 and consumes O3a records byte-for-byte | complete: exact two-member manifest raw SHA `06157079…23c7` plus provisional contract canonical SHA `1ec7d9f0…5a6b` pinning selector/roles and Specification/profile addresses/raw digests; six focused tests and final successor review pass; no actor implementation or final ProductContract |
+| O-R5a authority-artifact review | independent read-only reviewer; depends on O5a | BLOCK retained: every digest reproduced and authority expansion failed, but Specification/profile shared one generic binding schema, so swapping them stayed schema-valid and contract-to-manifest binding was not directly asserted |
+| O5a-S1 exact branch/cross-link correction | continuity owner; exclusive authority schema/test and this plan; depends on O-R5a BLOCK | give Specification/profile exact branch schemas, reject swapped/arbitrary addresses, and prove selector/role/address/digest correspondence to captured manifest authority |
+| O-R5a2 successor authority-artifact review | same independent read-only reviewer; depends on O5a-S1 | BLOCK retained: artifact/security blockers close, but O5b's table dependency still named the permanently blocked O-R5a rather than its successor gate |
+| O5a-S2 successor dependency correction | continuity owner; exclusive this plan; depends on O-R5a2 BLOCK | complete: O5b's declared readiness dependency aligns with the DAG's O-R5a3 successor without changing artifact bytes |
+| O-R5a3 final authority-artifact review | same independent read-only reviewer; depends on O5a-S2 | PASS: lifecycle readiness is consistent, no stale impossible dependency remains, and every O-R5a2 artifact/security positive and digest remains unchanged |
+| O5b red publication/graph/projection controls | continuity owner; exclusive new O5 journey controls and this plan; depends on O-R5a3 PASS | complete: one green authority precondition, one intentional absent-module failure, and eight successor controls freeze zero-argument provisional authority, one-snapshot two-record publication/graph, 18 unclaimed declarations, trust/input/membership/no-execution attacks, detached replay, and explicit non-final status |
+| O-R5b red-control review | independent read-only reviewer; depends on O5b | BLOCK retained: contract/record schema and link phases, manifest/schema no-follow, false-authority closure, exact diagnostic locations/member digests, and a valid one-parse detached snapshot were under-frozen |
+| O5b-S1 trust/phase/snapshot correction | continuity owner; exclusive O5b control and this plan; depends on O-R5b BLOCK | add exact schema/link/no-follow matrices, forbid authority on every trust-root failure, pin diagnostic sources/pointers/messages and member digests, and prove one reviewed manifest parse/one exact source capture survives later manifest mutation |
+| O-R5b1 successor red-control review | same independent read-only reviewer; depends on O5b-S1 | BLOCK retained: most gaps close, but the schema oracle contradicted the current checker, one parse did not bind authenticated bytes to parsed bytes, and digest/membership/link messages remained under-frozen |
+| O5b-S2 classifier/snapshot/diagnostic correction | continuity owner; exclusive O5b control and this plan; depends on O-R5b1 BLOCK | complete: use the existing localized missing-field classifier, instrument the exact manifest descriptor capture and mutate after its close, reject graph-loader reread, and pin observed/expected digest plus requested address/member messages |
+| O-R5b2 final red-control review | same independent read-only reviewer; depends on O5b-S2 | BLOCK retained: the schema pointer omitted the checker's leading `#`, and alternate builtin/pathlib reads could retain manifest bytes before the authenticated descriptor capture |
+| O5b-S3 authenticated-byte identity correction | continuity owner; exclusive O5b control and this plan; depends on O-R5b2 BLOCK | complete: preserve the checker's `#/laws/0/id` pointer and reject builtin/pathlib manifest reads so the sole descriptor capture is the only possible parsed byte source |
+| O-R5b3 final red-control review | same independent read-only reviewer; depends on O5b-S3 | PASS: schema oracle, authenticated-byte identity, exact one-source capture, non-execution, and successor edge all close without implementation pull-forward |
+| O5c-F1 no-follow diagnostic oracle correction | continuity owner; exclusive O5 journey control and this plan; depends on O-R5b3 PASS | align the ancestor-symlink diagnostic path with the established canonical-artifact contract: the requested schema/manifest leaf, not the encountered ancestor |
+| O5c theory-source publication/graph/projection | continuity owner; exclusive OrderedMap theory-source wrapper and affected shared mechanics only if a red falsifier requires them; depends on O5c-F1 | complete: authenticate the pinned provisional contract and raw manifest once, construct authority from captured bytes, observe one finite source, derive exact publication/graph/theory views, and fail closed without final product authority or execution |
+| O-R5c implementation review | independent read-only reviewer; depends on O5c | PASS: focused 10/10 and adjacent 93/93 replay, exact Stack compatibility, phase/authority/execution audit, and private non-authenticating projection disposition accept O5 without pulling final ProductContract, packages, or Evidence forward |
+| O6-P macro lifecycle decomposition | continuity owner; exclusive OrderedMap O6 lifecycle/design reconciliation and this plan; depends on O-R5c PASS | complete: separate runner results, independent implementations, report facts, Claim/Evidence candidates, candidate authority/replay, independent authority review, final trust acceptance, semantic decision, and maintenance into executable successor nodes |
+| O-R6-P lifecycle plan review | independent read-only reviewer; depends on O6-P | BLOCK retained: continuity-owned O6-G both wrote future final manifest/ProductContract/wrapper bytes and released O7 without an independent review after those consequential artifacts existed |
+| O6-P-S1 final-authority review correction | continuity owner; exclusive O6 lifecycle/design reconciliation and this plan; depends on O-R6-P BLOCK | split final authority into O6f candidate bytes/replay, O-R6f independent exact-artifact review, and read-only O6-G acceptance; clarify report-only outcomes, breaker-control wording, maintenance handoff/reopen ownership, and historical candidate-vs-final references |
+| O-R6-P2 successor lifecycle review | same independent read-only reviewer; depends on O6-P-S1 | PASS: artifact order, Claim/Evidence/authority/decision axes, exclusive ownership, candidate independence, maintenance handoff, and reopen triggers are executable with no circular or future-digest dependency |
+| O6a runner/campaign research and red controls | continuity owner; exclusive OrderedMap runner/campaign design reconciliation, new adapter controls, runner/campaign tests, and this plan; depends on O-R6-P2 PASS | complete: one reviewed-plan/fake-adapter precondition passes, one absent-runner failure is intentional, and eleven successors freeze a command-only pinned-plan API, single authenticated plan snapshot, pre-execution authority closure, exact seven-declaration attribution, local semantic challenges, effect classification, transport/lifecycle errors, bounded teardown, trust limits, and immutable fresh replay |
+| O-R6a runner/campaign red-control review | independent read-only reviewer; depends on O6a | BLOCK retained: authenticated-plan capture was not bound to execution, four declaration counts and all case traces were under-frozen, strict nested response/event/error shapes and pre-request output were incomplete, response-timeout cleanup was unproved, event wildcard/ledger semantics were partial, opaque-handle/stderr/nested immutability controls were weak, and fake-report authority wording contradicted ephemeral test use |
+| O6a-S1 oracle/protocol/cleanup correction | continuity owner; exclusive O6a hostile fixture/tests and this plan; depends on O-R6a BLOCK | complete: access-track every captured plan step and compare its complete 30-request/seven-case ledger while forbidding direct plan/schema reads; pin all declaration counts; add strict nested result/error/event/sequence/handle, pre-request output, adapter-error precedence, wildcard, arbitrary-handle, raw-stderr, recursive-immutability, no-persistence/no-authority, and dual-timeout PID-reaping controls |
+| O-R6a2 successor red-control review | same independent read-only reviewer; depends on O6a-S1 | BLOCK retained: major gaps close, but the literal tracker omitted case ID/steps access, later operation/error response branches remained incomplete, the plan barrier patched one process API rather than observing non-start, case immutability/authority vocabulary were partial, and lockstep timing still required an implementation dataflow obligation |
+| O6a-S2 exact branch/start/immutability correction | continuity owner; exclusive O6a hostile fixture/tests and this plan; depends on O-R6a2 BLOCK | complete: track case IDs/steps, exercise every later operation/error branch, prove plan failure through an absent child start marker independent of process API, close case collection/field immutability and authority-axis vocabulary, and carry one-write/one-response lockstep plus copied-oracle audits explicitly to O-R6b |
+| O-R6a3 final successor red-control review | same independent read-only reviewer; depends on O6a-S2 | PASS: exact topology, plan/case/request binding, strict branch matrix, non-start and dual cleanup, event precedence/ledger, opaque handles, raw stderr, recursive immutability, and no-persistence/no-authority controls release O6b only |
+| O6b runner/campaign implementation and hardening | continuity owner; exclusive OrderedMap-local runner/campaign modules, fake adapter controls, affected tests/docs, and this plan; depends on O-R6a3 PASS | complete predecessor: one authenticated immutable plan snapshot drives all seven cases, 30 lockstep requests, expected observations, declaration counts, event classification, and both time bounds; strict protocol/lifecycle errors remain distinct from declaration-local semantic challenges; reports are fresh immutable non-authority facts, candidates are never imported, children are reaped, and registry/Evidence bytes remain untouched |
+| O-R6b runner/campaign implementation review | independent read-only reviewer; depends on O6b | BLOCK retained: plan dataflow, lockstep transport, protocol/lifecycle controls, Stack regression, full gate, and non-authority/no-Evidence boundaries pass, but a novel combined semantic-mismatch-plus-late-process-exit probe showed execution aggregation rewrote an earlier challenge as support and erased its cause |
+| O6b-S1 contradictory-observation retention correction | continuity owner; exclusive OrderedMap hostile fixture, runner aggregation, runner tests, and this plan; depends on O-R6b BLOCK | complete: add a reorder-existing campaign that exits nonzero only after all semantic observations, reproduce the erased `put-existing-position` challenge red, then make retained challenge/cause precedence independent of the overall execution-error axis; focused 14/14 passes |
+| O-R6b2 successor runner/campaign review | same independent read-only reviewer; depends on O6b-S1 | PASS: focused 14/14, adapter 50/50, clean serial full gate, compile/diff checks, and static dataflow/lockstep/non-authority audits confirm prior semantic counterevidence survives a late process failure while the overall report remains `error`; O6c only is released |
+| O6b-F1 teardown scheduling-margin correction | continuity owner; exclusive OrderedMap runner cleanup, affected tests, and this plan; depends on a post-O-R6b2 final-gate timeout failure | complete predecessor: retain both plan-owned 0.2s response/clean-exit deadlines, shorten post-deadline terminate-to-kill signal grace, and use a short pre-write startup observation plus queued-frame fallback; isolated timeout controls improve, but later suite-context evidence remains above the unchanged bound |
+| O-R6b3 final runner/campaign review | same independent read-only reviewer; depends on O6b-F1 | BLOCK retained: an ordinary sequential two-method run records response-timeout teardown at 0.613069s against `<0.60s`; immediate retry and five isolated probes per path pass/reap, confirming semantics but not reliable suite-context margin |
+| O6b-F2 stderr-drain cleanup-margin correction | continuity owner; exclusive OrderedMap runner post-deadline cleanup and this plan; depends on O-R6b3 BLOCK | complete pending O-R6b4: bound the post-reap stderr-drain join by the same 0.05s cleanup grace instead of spending another plan-timeout-sized 0.2s; raw stderr behavior remains unchanged and 40/40 response/EOF timeout probes pass with every PID reaped, worst 0.5250s |
+| O-R6b4 final successor runner/campaign review | same independent read-only reviewer; depends on O6b-F2 | PASS: five sequential repetitions of both timeout-owning methods, focused 14/14, adapter 50/50, raw-stderr fresh replay 10/10, full repository gate, compile/diff checks, and static deadline/cleanup audit pass; O-R6b3 stays retained and O6c only is released |
+| O6c-P independent-candidate research and red controls | continuity owner; exclusive OrderedMap candidate build/package tests and this plan; depends on O-R6b4 PASS | complete: one accepted-runner/locked-toolchain precondition passes, one absent-two-packets failure is intentional, and ten successors freeze exact small source/README boundaries, distinct private representations, no cross-candidate/runner/campaign-oracle imports, direct-rustc and offline-Deno builds, byte-reproducibility, unit checks, valid reordered/split/combined framing, exact campaign support, persistence, clean EOF, and no retained build artifacts |
+| O-R6c-P candidate red-control review | independent read-only reviewer; depends on O6c-P | BLOCK retained: arbitrary executables could satisfy the alleged toolchain lock and GCC was not selected; symlink/external include and README-oracle paths escaped the packet scan; representation strings could live only in comments; reordered framing omitted exact envelopes and trailing-output closure |
+| O6c-P-S1 provenance/boundary/framing correction | continuity owner; exclusive OrderedMap candidate build/package tests and this plan; depends on O-R6c-P BLOCK | pin observed rustc commit/release/host/LLVM, Deno/V8/TypeScript, and GCC versions while passing the exact linker; require regular non-symlink packet files, forbid Rust include/path and nonlocal TypeScript imports, scan README plus sources for copied campaign IDs, inspect uncommented private fields, and require exact seq/status/result/events with no post-close output |
+| O-R6c-P2 successor candidate red-control review | same independent read-only reviewer; depends on O6c-P-S1 | BLOCK retained: broad provenance/framing/oracle fixes close, but the exact-file enumerator hid `__pycache__` descendants and symlink directories, while side-effect and whitespace-dynamic TypeScript imports evaded the import scan |
+| O6c-P-S2 exact descendant/import closure | continuity owner; exclusive OrderedMap candidate build/package tests and this plan; depends on O-R6c-P2 BLOCK | enumerate every descendant entry with no name exemption, reject every file/directory symlink and unexpected directory/nonfile, permit only exact files plus necessary real parents, invoke that boundary inside the source audit, require exactly one local TypeScript import, and reject side-effect, re-export, and whitespace-dynamic import surfaces |
+| O-R6c-P3 final candidate red-control review | same independent read-only reviewer; depends on O6c-P-S2 | BLOCK retained: descendant/symlink/import closures pass, but comment-free representation markers could still live in ordinary string constants while the actual Rust/TypeScript fields used converged or different representations |
+| O6c-P-S3 anchored representation-field closure | continuity owner; exclusive OrderedMap candidate build/package tests and this plan; depends on O-R6c-P3 BLOCK | remove comments and ordinary string literals, then anchor the Rust pair sequence to the actual `OrderedMap` struct field and both TypeScript table/order fields to the opening `OrderedMap` class boundary; retain these as packet-local review facts rather than Specification semantics |
+| O-R6c-P4 final successor candidate red-control review | same independent read-only reviewer; depends on O6c-P-S3 | BLOCK retained: all earlier bypasses and anchored representation fields close, but Rust unit compilation omitted the explicit locked GCC linker and README controls did not require the claimed reproducible build/typecheck/unit/run commands |
+| O6c-P-S4 unit-linker/documented-command closure | continuity owner; exclusive OrderedMap candidate build/package tests and this plan; depends on O-R6c-P4 BLOCK | route Rust unit compilation through the same locked rustc/GCC tuple and freeze packet-specific direct-rustc optimized build/unit outputs and execution, offline-Deno check/run commands, temporary output placement, and observed rustc/GCC/Deno/TypeScript provenance in each README |
+| O-R6c-P5 acceptance candidate red-control review | same independent read-only reviewer; depends on O6c-P-S4 | PASS: exact 1/1/10 red topology, every retained tool/path/import/oracle/representation/framing bypass, locked production/unit linker provenance, executable documented commands, compile/diff, non-promotion, and lifecycle truth pass; O6c implementation only is released |
+| O6c independent Rust and TypeScript candidate packets | continuity owner; exclusive OrderedMap candidate sources/adapters/READMEs, candidate build controls, and this plan; depends on O-R6c-P5 PASS | complete pending O-R6c: Rust uses a persistent vector of class/value pairs with linear lookup; TypeScript uses a cloned read-only class table plus separate frozen order; both dependency-free adapters pass exact framing, offline reproducible build/typecheck/unit, clean EOF, persistence, and the authenticated campaign without cross-importing candidates, runner, contract, or campaign oracle |
+| O6c-F1 implementation-triggered control corrections | continuity owner; exclusive OrderedMap candidate test helper and README phrase case; depends on O6c first green attempt | complete: make framing reads unbuffered and close all pipes so combined responses are observable without warnings; keep Rust lifetimes outside single-string scrubbing; align exact lowercase trust/provenance phrases; candidate semantics and accepted requirements remain unchanged |
+| O-R6c representation-independence/package review | independent read-only reviewer; depends on O6c-F1 | PASS: focused 12/12, retained candidates 30/30, byte-identical independent Rust builds, locked-GCC unit, offline Deno, novel escaped-member C/B/c replacement history, exact envelopes/EOF, full gate, and static persistent-dataflow/no-shared-oracle audit pass; O6d only is released |
+| O6d-P reproduction/report red controls | continuity owner; exclusive report/breaker tests, design reconciliation, and this plan; depends on O-R6c PASS | one accepted-plan/candidate precondition passes, one absent report-boundary failure is intentional, and successors freeze byte-exact fresh replay, repository-relative plan/runner/spec/profile/source/toolchain/command/binary bindings, complete declaration/case facts, authority-axis absence, stale/forged report rejection, and an isolated selective reorder breaker outside registry/report membership |
+| O-R6d-P report red-control review | independent read-only reviewer; depends on O6d-P | BLOCK retained: canonical and raw plan digests were conflated; sources could be empty and paths/commands/toolchains/binary invented; nested outcome ledgers and promotion vocabulary were under-frozen; only one source and outcome mutation were attacked; cross-root determinism, breaker closure, and future membership exclusion were incomplete |
+| O6d-P-S1 exact provenance/outcome/isolation correction | continuity owner; exclusive report/breaker tests and this plan; depends on O-R6d-P BLOCK | separate exact plan raw/canonical identities; pin accepted input paths/digests, exact source sets, normalized commands, full locked tool output, binary identity, recursively exact outcome rows, casefolded non-promotion vocabulary, cross-checkout equality/no-path leaks, every binding/report-axis mutation, breaker-local descendants/import/runtime reads, and all breaker authority identifiers |
+| O-R6d-P2 successor report red-control review | same independent read-only reviewer; depends on O6d-P-S1 | BLOCK retained: exact bindings and ledgers largely close, but theory input paths contradicted a broad registry substring ban; a checker could replay committed/hardcoded reports without execution; binaries were not freshly compared; breaker source scans had whitespace/alias escapes; only TypeScript report mutations were tested; lifecycle status remained stale |
+| O6d-P-S2 fresh-execution/binary/closure correction | continuity owner; exclusive report/breaker tests and this plan; depends on O-R6d-P2 BLOCK | complete: permit only the exact theory-input registry paths through closed schemas; remove retained reports and require unchanged reproduction; spy and perturb all three runner calls so report facts must consume fresh outcomes; independently digest executed binaries; compare exact ordered source rows; normalize breaker code and reject include/path/filesystem/process/environment/network escapes; mutate every report axis for all three reports; mark predecessor truthfully complete |
+| O-R6d-P3 final report red-control review | same independent read-only reviewer; depends on O6d-P-S2 | BLOCK retained: report deletion followed a warmed original-checkout checker; only returned causes were asserted; runner call order and local alias were overprescribed; exact TS/build/check/probe execution and independent breaker build were incomplete; grouped filesystem/environment/cfg-path/Unix-network aliases escaped |
+| O6d-P-S3 cold-checker/full-outcome/recipe correction | continuity owner; exclusive report/breaker tests and this plan; depends on O-R6d-P3 BLOCK | complete: load a new checker from a reportless copied checkout under original-and-copy report read traps before its first call; map fresh executions by command/result identity rather than order; perturb and assert every ConformanceReport field; independently rebuild both exact Rust recipes, typecheck exact Deno inputs, and replay full tool probes; close grouped imports, environment, cfg/path, and Unix-network identifiers while retaining perfect-shadow exclusion |
+| O-R6d-P4 acceptance report red-control review | same independent read-only reviewer; depends on O6d-P-S3 | PASS: exact 1/1/10 red topology, clean diff, cold reportless checker/read traps, canonical runner identity, order-independent full-field perturbation, exact selected tools/argv, independent builds/check/probes, runtime breaker digests, normalized escape closure, all-report mutation matrix, and lifecycle truth release O6d only |
+| O6d reproduction and targeted breaker reports | continuity owner; exclusive reproduction script/check, retained candidate reports, reorder-breaker sources/report, affected docs/tests, and this plan; depends on O-R6d-P4 PASS | accepted by O-R6d6: fresh deterministic candidate packets support all seven exact declarations and bind exact raw/canonical plan, source, binary, runner, normalized command, executable harness, and full toolchain facts; the isolated breaker challenges only `put-existing-position`/`nonlast-overwrite-order`, remains under fixtures, and is absent from report/registry membership; no packet contains Evidence, review, acceptance, or authority axes |
+| O6d-F1 path-independent recipe/outcome-order correction | continuity owner; exclusive report controls/checker/packets/docs and this plan; depends on O6d first-green replay | complete: compile repository-relative Rust source paths so binary/report bytes remain equal across copied roots; align the independently executed recipe and accepted Rust digest; retain the runner's actual declaration order with effects first discovered after the first case; include the full trailing blank GCC version line without weakening provenance |
+| O6d-F2 breaker-distinct forgery correction | continuity owner; exclusive report mutation control and this plan; depends on first full-gate replay | complete: use an impossible `forged` report result for the all-packet top-result mutation so the mutation changes both supporting candidate packets and the already-`challenges` breaker packet; generic byte rejection semantics are unchanged |
+| O-R6d reproducibility/breaker review | independent read-only reviewer; depends on O6d-F2 | BLOCK retained: a copied root could replace its bound runner with invalid bytes, rewrite all report runner digests from the checker's fresh output, and pass because execution still used the checker module's already-imported runner from another checkout |
+| O6d-S1 bound-runner execution correction | continuity owner; exclusive runner-substitution control, report checker, docs, and this plan; depends on O-R6d BLOCK | complete pending O-R6d2: fail closed before tools/build/execution unless the requested root's exact runner bytes equal the loaded canonical runner callable's source bytes; capture that source path before the accepted test seam instruments the callable; retain cross-root identical-copy support; copied invalid runner bytes plus rewritten report bindings are rejected |
+| O-R6d2 successor reproducibility/breaker review | same independent read-only reviewer; depends on O6d-S1 | BLOCK retained: source-path capture closed cross-root substitution, but re-hashing that mutable path allowed post-import same-path mutation to bind invalid new bytes while executing the already-loaded old code object |
+| O6d-S2 immutable loaded-runner identity correction | continuity owner; exclusive post-import runner-mutation control, report checker, docs, and this plan; depends on O-R6d2 BLOCK | complete pending O-R6d3: capture the loaded canonical runner byte digest immutably at module import and compare every requested root to that value; a clean copied-checkout process that mutates the same runner path after import, regenerates packets if possible, and reruns checks now fails closed alongside pre-import substitution and full-outcome instrumentation |
+| O-R6d3 final reproducibility/breaker review | same independent read-only reviewer; depends on O6d-S2 | BLOCK retained: runner identity closes, but a copied root could replace `ordered_map_contract.py` with invalid bytes and pass because the already-imported runner executed its original contract/artifact dependency; reports did not bind the repository-owned executable closure |
+| O6d-S3 executable-harness closure correction | continuity owner; exclusive harness-closure controls/checker/report inputs/docs and this plan; depends on O-R6d3 BLOCK | complete pending O-R6d4: explicitly bind the ordered repository-owned closure—package init, contract input module, canonical artifact inspector, diagnostic module, and plan schema—beside runner and plan; capture immutable loaded module/schema/plan digests; fail before tools on any root drift; freeze pre/post-import dependency mutation; retain Python/jsonschema/referencing toolchain provenance and exact-copy replay |
+| O-R6d4 acceptance reproducibility/breaker review | same independent read-only reviewer; depends on O6d-S3 | BLOCK retained: a copied timestamp/size-valid stale `.pyc` let CPython execute original contract bytecode while the closure captured and reports bound same-length invalid source bytes; source digest alone did not prove executed Python identity |
+| O6d-S4 source-to-bytecode identity correction | continuity owner; exclusive stale-bytecode controls/checker/docs and this plan; depends on O-R6d4 BLOCK | complete pending O-R6d5: for each Python closure module, freshly compile exact bound source with the loaded cache code filename and require complete code-object equality with the local cache code before capturing source digest; fail closed on invalid/mismatched cache; freeze same-size/restored-mtime stale-cache controls for package init, runner, contract, artifact inspector, and diagnostic module |
+| O-R6d5 final acceptance reproducibility/breaker review | same independent read-only reviewer; depends on O6d-S4 | BLOCK retained: source/cache coverage and lifecycle staging agree, but one independent 29-test candidate/report run observed consecutive fresh packets differ when one supporting observation became inconclusive; the earlier full-gate PASS alone cannot release O6e |
+| O6d-F3 consecutive-reproduction characterization | continuity owner; read-only campaign/test replay plus this plan; depends on O-R6d5 BLOCK | complete pending O-R6d6: six direct reproductions remained byte-identical and the exact 29-test candidate/report suite passed unchanged; retain the review observation, change no deadline or assertion, and require the same reviewer to pass three consecutive exact fresh-byte tests before acceptance |
+| O-R6d6 final consecutive-reproduction acceptance | same independent read-only reviewer; depends on O6d-F3 | PASS: the exact fresh-byte/repository-relative test passed three consecutive independent runs in 5.373s, 5.614s, and 8.143s without implementation, test, plan, or deadline relaxation; O6e released |
+| O6e-P Claim/Evidence candidate red controls | continuity owner; exclusive OrderedMap candidate-record tests and this plan; depends on O-R6d6 PASS | complete: one retained-report precondition passes, one missing 30-record/checker boundary fails intentionally, and ten successors freeze the exact 1+7+7 census per package, addresses/concerns/scope/lifecycle/review/result axes, O-R6d6 review lineage, graph/link validity, declaration-local report outcomes, full exact provenance closure, cross-candidate/version/profile/adapter variation, no performance promotion, and absence of manifest/ProductContract/registration/semantic-acceptance artifacts |
+| O-R6e-P candidate-record red-control review | independent read-only reviewer; depends on O6e-P | BLOCK retained: the TypeScript V8 fact copied an older Stack value, non-recursive inventory let nested records escape the 1+7+7 census and absence scans, and variation checks sampled Rust only |
+| O6e-P-S1 environment/census/two-package correction | continuity owner; exclusive O6e-P test and this plan; depends on O-R6e-P BLOCK | align V8 to the retained report, enumerate every nested package entry for exact inventory and every nested JSON document for unsupported/authority scans, and apply the complete Evidence/Claim/census variation matrix to both packages while separately retaining Claim, result, and review axes; keep the 1/1/10 topology |
+| O-R6e-P2 successor candidate-record red-control review | same independent read-only reviewer; depends on O6e-P-S1 | PASS: retained V8 provenance, recursive entry/document census, bidirectional package variation, separate lifecycle/result/review axes, exact 1/1/10 topology, and every original census/graph/lineage/provenance/non-promotion/non-authority obligation pass; O6e implementation released |
+| O6e Claim and Evidence candidate records | continuity owner; exclusive two package record sets, schemas only if falsified, candidate-source manifests/final-manifest inputs, evidence verification checks, docs, and this plan; depends on O-R6e-P2 PASS | complete pending O-R6e: per candidate, one Realization plus seven realization-scoped active Claims and seven accepted-review Evidence candidates bind exact Specification/profile/adapter/plan/report/source/toolchain/outcome facts, assumptions, exclusions, applicability, and mechanism; exact checker and generic graph/link validation pass without final registration or semantic acceptance |
+| O-R6e package/evidence-candidate review | independent read-only reviewer; depends on O6e | BLOCK retained: implementation, 12-test controls, direct 2/14/14 checker, copied-root replay, cross-candidate variation, and declaration-outcome variation pass, but the Result section still says no OrderedMap Claim or Evidence candidate exists and immediately records the implemented set; durable project memory contradicts itself |
+| O6e-S1 durable-state truth correction | continuity owner; exclusive this plan; depends on O-R6e BLOCK | complete: replace the stale absence statement with the exact present candidate state while retaining the absent final manifest/ProductContract, registration acceptance, resolver decision, and maintenance successor; no implementation, record, or accepted control changed |
+| O-R6e2 successor package/evidence-candidate review | same independent read-only reviewer; depends on O6e-S1 | PASS: predecessor BLOCK and DAG ordering remain visible; Result truth now agrees with the exact present 2/14/14 candidate set and absent authority artifacts; no implementation, record, test, provenance, or accepted-control conclusion changed or weakened; macro convergence released |
+| O-R6 macro lifecycle acceptance | lead convergence gate; depends on O-R6e2 PASS | BLOCK retained: O6e implementation and successor review pass, but the first full gate missed an unchanged Stack proof-fixture 3.0-second deadline and its unchanged rerun returned correct OrderedMap `TIMEOUT`/cleanup semantics while exceeding the test's 0.60-second total at 0.6566 seconds; no clean full-gate receipt exists for this convergence edge |
+| O6-F1 quiescent scheduling characterization | continuity owner; read-only replay plus this plan; depends on O-R6 BLOCK | complete pending O-R6-F: no runner, plan, test, report, or record byte changed; five consecutive sequential repetitions of both timeout-owning OrderedMap runner methods passed unchanged, then GitHub Actions run 29705557179 accepted prospective metadata in 1m31s and the exact `491ac00` repository contract in 3m48s on a separate hosted runner; local failed receipts remain retained |
+| O-R6-F scheduling-characterization review | same independent read-only reviewer; depends on O6-F1 | PASS: exact head and unchanged bound bytes, the five sequential two-method repetitions, strict classification/cleanup/0.60-second assertions, every contradictory local receipt, and hosted run 29705557179's complete repository gate agree; scheduler sensitivity remains an explicit reopen trigger rather than a real-time guarantee; O-R6-2 released |
+| O-R6-2 successor macro lifecycle acceptance | lead convergence gate; depends on O-R6-F PASS | PASS: research/design/red-green/refactor/document/reproduction plus maintenance handoff/reopen inputs agree; immutable predecessor bytes, exact reproduction/toolchain ownership, and O8 reopen triggers remain named; two independent candidates, one selective breaker, fresh reports, and the 2/14/14 candidate records pass the complete hosted gate; O6 closes without registration acceptance and releases O6f candidate-authority work only |
+| O6f-P final-authority candidate red controls | continuity owner; exclusive O6f actor tests and this plan; depends on O-R6-2 PASS | freeze the exact consumer policy plus 4-source/33-member candidate manifest, closed canonical ProductContract bindings, one authenticated graph snapshot, zero-argument publication/two-registration/graph/theory replay, common surfaced candidate authority, no execution/resolution/acceptance, fail-closed mutation/override behavior, and repository-gate/Stack/provisional-authority regression before artifact implementation |
+| O-R6f-P final-authority red-control review | independent read-only reviewer; depends on O6f-P | BLOCK: implementation owned its own ProductContract digest, the manifest oracle did not freeze ordering/raw bytes, result fields permitted acceptance aliases, and several host launch paths were not trapped; exact policy/member/token topology and the tightened single-capture controls passed |
+| O6f-P1 independent-oracle red-control correction | continuity owner; exclusive O6f actor tests and this plan; depends on O-R6f-P BLOCK | freeze an ordered full manifest plus test-owned raw digest, full ProductContract plus test-owned canonical digest, exact result/authority public data fields, and all established O5 host-launch paths; preserve the intentional 1-pass/1-fail/10-skip red topology |
+| O-R6f-P1 corrected red-control review | same independent read-only reviewer; depends on O6f-P1 | BLOCK: independent policy/manifest/contract digests, exact topology, one-snapshot controls, and host-launch traps pass, but callable public acceptance/resolution aliases escaped the data-only field census and one rejected property spelling did not prove the ProductContract schema closed every object branch |
+| O6f-P2 public-surface/schema-closure correction | continuity owner; exclusive O6f actor tests and this plan; depends on O-R6f-P1 BLOCK | freeze every public result/authority attribute including callables, require at least ten ProductContract object-schema branches, and require `additionalProperties: false` on every such branch without changing proposed artifact bytes or topology |
+| O-R6f-P2 final red-control review | same independent read-only reviewer; depends on O6f-P2 | PASS: policy `6d0d...291c`, ordered 4-source/33-member manifest `0dae...3455d`, ProductContract `4bfbc8...eb17`, and exact 1-pass/1-failure/10-skip topology independently reproduce; all-public-name and every-object-schema closure controls close both retained BLOCKs; O6f implementation only is released while O6-G/O7 remain closed |
+| O6f final-authority candidate and actor replay | continuity owner; exclusive candidate final manifest, immutable OrderedMap ProductContract, wrapper integration, affected actor replay, tests/docs, and this plan; depends on O-R6f-P2 PASS | complete pending O-R6f: exact canonical policy, ordered 4-source/33-member manifest, closed ProductContract, one-snapshot actor wrapper, and graph-derived registration seam pass all 12 focused controls without execution, resolution, or acceptance |
+| O6f-F1 implementation-triggered lifecycle control correction | continuity owner; exclusive affected O6f/O5 tests and this plan; depends on O6f green attempt | complete: remove the red-phase-only policy-absence assertion while retaining the 32-record predecessor census, thaw the inspector's recursively immutable contract view before exact-document mutation/comparison, and replace O5's permanent future-contract absence claim with explicit provisional/candidate separation; no frozen artifact byte changed |
+| O-R6f final-authority implementation review | independent read-only Fable 5 reviewer; depends on O6f-F1 | BLOCK retained on capability, not a product defect: exhaustive static inspection found zero falsifiers and reproduced all structures/tokens/counts, but the read-only tool grant omitted Bash, so the reviewer could not recompute three digests, run the focused suite, or read external worktree metadata to bound the diff; route provenance was also reported ambiguously rather than treated as authority |
+| O6f-R1 executable-review capability correction | lead review framing only; no repository implementation write; depends on O-R6f BLOCK | preserve the complete Fable static report, then dispatch a different-model strict read-only successor with Bash limited to digest/test/git inspection, bytecode writes disabled, exact evidence commands, and fail-closed treatment of unavailable git metadata |
+| O-R6f2 successor final-authority implementation review | independent read-only Sonnet 5 reviewer; depends on O6f-R1 | BLOCK retained on capability: exact Sonnet 5 resolved, read the governing/artifact surfaces, confirmed the focused suite and files are present, and corroborated the plan receipt, but `--permission-mode plan` prevented its granted Bash tool from executing; its strict sandbox also omitted external worktree metadata, so it returned a plan rather than digest/test/diff evidence |
+| O6f-R2 local executable-evidence routing correction | lead review framing only; no implementation write; depends on O-R6f2 BLOCK | stop cross-provider retries, retain Fable's exhaustive static evidence plus both capability failures, and route only the three mechanical gaps to a separate read-only internal reviewer with real worktree metadata and the accepted Python environment |
+| O-R6f3 combined final-authority implementation review | independent read-only internal reviewer; depends on O6f-R2 | PASS: policy `6d0d...291c`, manifest `0dae...3455d`, and canonical contract `4bfbc8...eb17` independently reproduce; all 12 focused tests pass with bytecode writes disabled; the exact nine-path diff after `4d3b530` is clean and contains no Stack implementation artifact; combined with Fable's zero-defect static challenge, every O-R6f capability gap closes and O6-G is released |
+| O6-G-F0 acceptance-gate scheduling observation | lead complete-gate run; depends on O-R6f3 PASS | BLOCK retained for characterization: with exact product commit `5fc9d2b` unchanged and only this plan dirty, the 50-test adapter lane recorded `destructive-new` and `invalid-entry-value` as timeout/extra-output errors and one timeout cleanup at 0.6835s rather than `<0.60s`; all other observed adapter cases passed, matching the previously retained suite-load scheduling class rather than a new O6f path |
+| O6-G-F1 quiescent reproduction characterization | lead focused plus complete rerun; depends on O6-G-F0 BLOCK | PASS: five sequential repetitions of both affected unchanged methods pass 10/10 in 30.964s, then the complete locked gate passes 24/20/38/3 record fixtures, 18 loader groups, 50 adapter tests, 59 cross-language tests, 178 actor journeys, 16 research probes, 20 governance tests, all fresh report/Evidence lanes, and 49 proof groups; no product/test byte changed and the failed receipt remains retained |
+| O6-G final trust-convergence acceptance | lead read-only convergence gate; depends on O6-G-F1 PASS | PASS: accept exact commit `5fc9d2bc78f3c58d2d5967de9b554630a8ab4a62` and its independently reviewed policy `6d0d...291c`, manifest `0dae...3455d`, ProductContract `4bfbc8...eb17`, wrapper `1ea1f5...bbc8`, registration seam `dbe700...82a4`, and closed schema `1e14d6...ab36` as final OrderedMap product authority; retained scheduling evidence changes no reviewed byte or requirement, result objects gain no acceptance conclusion, exclusions remain explicit, and O7 only is released |
+| O7-P consumer decision/inspection red controls | continuity owner; exclusive new OrderedMap consumer journey controls and this plan; depends on O6-G | complete candidate: the five raw artifacts plus canonical ProductContract digest reproduce, the accepted 33-member/18-declaration graph precondition passes, one intentional absent-module boundary fails, and twelve successors skip while freezing the zero-argument one-replay actor, graph-only pure decision/presentation, two exact semantic candidates, every Evidence axis, theory non-promotion, breaker isolation, separate directional boundary, deterministic inspection, and fail-closed controls |
+| O-R7-P consumer red-control review | independent read-only reviewer; depends on O7-P | BLOCK retained: exact clean `6367ee8` reproduces all accepted digests, unchanged Stack resolver blob, and the 1-pass/1-failure/12-skip topology, but controls do not close resolver overrides, actor use of the replayed graph, invalid/missing/mismatched selectors, exact supporting-Evidence visibility, every effect-prohibition axis, or accepted mechanism/scope/binding attacks |
+| O7-P-S1 authority/dataflow/evidence closure correction | continuity owner; exclusive O7 journey controls and this plan; depends on O-R7-P BLOCK | complete candidate: retain the exact 1-pass/1-failure/12-skip topology while freezing a one-graph/no-override resolver signature, derived-challenge actor causality, invalid and missing/kind/binding selector failures, exact selected-support counts and addresses, all prohibition Evidence axes, and contract-governed mechanism/scope/policy attacks |
+| O-R7-P2 corrected consumer red-control review | independent read-only reviewer; depends on O7-P-S1 | BLOCK retained: the topology/digests/protected bytes reproduce and four prior concern groups close, but support checks constrain only cardinality plus two rendered examples, the breaker render need not name its challenge, and policy-selector mismatch can pass vacuously with zero successful candidates |
+| O7-P-S2 exact-support/selector-vacuity correction | continuity owner; exclusive O7 journey controls and this plan; depends on O-R7-P2 BLOCK | complete candidate: every exact selected support address for both candidates and their prohibition is required in structured/rendered views, the breaker actor render must name its exact challenging Evidence, and policy Specification/profile mismatch must return the exact diagnostic with no candidates; red topology remains 1/1/12 |
+| O-R7-P3 final consumer red-control review | independent read-only reviewer; depends on O7-P-S2 | PASS: exact clean `ff6cd84` reproduces the 1-pass/1-failure/12-skip topology, all six O6-G digests/protected bytes and unchanged Stack resolver blob; exact structured/rendered supports, breaker challenge, non-vacuous binding diagnostics, and every earlier concern close, releasing O7 implementation |
+| O7 consumer decision/inspection | continuity owner; exclusive new OrderedMap-local resolution and presentation modules plus affected documentation/plan; depends on O-R7-P3 PASS | accepted by O-R7-2: one zero-argument actor replays the accepted product once, resolves two semantically acceptable candidates from its detached graph under exact selectors/tokens/nested plan provenance, keeps optional performance unsupported and all 18 theory declarations unclaimed, renders every Evidence axis plus package/theory views and a separate directional boundary, and fails closed under the frozen controls without changing Stack or O6-G bytes |
+| O7-F1 nested plan-provenance control correction | continuity owner; exclusive OrderedMap resolver, O7 control, and this plan; depends on the first O7 green attempt | align the effect-scope matcher and falsifier with the accepted OrderedMap Evidence field `provenance.plan.canonicalSha256` rather than the Stack-shaped flat `planSha256`; retain exact digest enforcement and change no accepted artifact or requirement |
+| O-R7 consumer implementation review | independent read-only reviewer; depends on O7 | BLOCK retained on lifecycle truth only: exact clean `eecb717`, protected digests/bytes, unchanged Stack resolver, 54/54 adjacent checks, and all semantic/dataflow/axis/purity/fail-closed controls pass; narrow private reuse carries only identical shared concern/boundary mechanics and no Stack plan provenance, but Result still claimed no consumer output and the DAG omitted O7-F1 |
+| O7-S1 lifecycle-result truth correction | continuity owner; exclusive this plan; depends on O-R7 BLOCK | record O7-F1 in dependency order, replace stale pre-O7 Result text with the implemented candidate/current gate, and retain the private-helper rationale plus divergence reopen trigger without changing code, tests, or accepted artifacts |
+| O-R7-2 successor consumer implementation review | same independent read-only reviewer; depends on O7-S1 | PASS: exact clean `6085342` changes only this plan with a clean diff; DAG/table/checklist/Result now agree, retain the lifecycle-only BLOCK, record bounded helper reuse/reopen, describe the accepted O7 outcome, and release O8 without rerunning unchanged implementation evidence |
+| O8-P successor/recovery red controls | continuity owner; exclusive new OrderedMap maintenance journey controls and this plan; depends on O-R7-2 PASS | complete candidate: accepted O7/predecessor bytes pass, one intentional absent-successor boundary fails, and ten successors skip while freezing exact compact `0.2.0` Specification/policy bytes and digests, one pinned append-only 35-member snapshot, zero-argument actor, successful zero-candidate resolution, 20 all-unclaimed declarations, 14 historical Evidence records, exact recovery without selection, pure deterministic inspection, and fail-closed authority/drift controls |
+| O-R8-P successor red-control review | independent read-only reviewer; depends on O8-P | BLOCK retained: exact digests/protected bytes and 1-pass/1-failure/10-skip topology reproduce, but zero candidates is not proven graph-causal, selector and full membership drift are undercontrolled, manifest-digest diagnostics are not pinned exactly, and nested/public immutability permits aliases or mutable history |
+| O8-P-S1 causality/drift/immutability correction | continuity owner; exclusive O8 controls and this plan; depends on O-R8-P BLOCK | complete candidate: topology remains 1-pass/1-failure/10-skip while exact selector absence/kind/binding diagnostics, a detached discovered-but-unsupported `0.2.0` candidate, predecessor/successor mutation/removal plus unexpected-membership closure, exact raw-digest diagnostic provenance, and complete public/nested immutability are frozen |
+| O-R8-P2 corrected successor red-control review | same independent read-only reviewer; depends on O8-P-S1 | BLOCK retained narrowly: causality, digest phase, drift classes, immutability, and prior controls close, but successor policy profile binding and predecessor Specification removal lack symmetric subcases |
+| O8-P-S2 selector/removal symmetry correction | continuity owner; exclusive O8 controls and this plan; depends on O-R8-P2 BLOCK | complete candidate: changed successor profile binding requires the exact policy-selector-mismatch diagnostic and removed accepted Specification requires predecessor drift with no partial result; topology remains 1-pass/1-failure/10-skip with all earlier controls intact |
+| O-R8-P3 final successor red-control review | same independent read-only reviewer; depends on O8-P-S2 | PASS: exact clean `02cc4a3` reproduces protected hashes, three successor-oracle digests, and 1-pass/1-failure/10-skip topology; both selector/removal residuals and the complete prior causality/drift/digest/immutability boundary close, releasing O8 implementation |
+| O8 maintenance | continuity owner; exclusive OrderedMap successor records/manifest, OrderedMap-local maintenance actor, affected design/plan, and controls; depends on O-R8-P3 PASS | accepted by O-R8-2: exact compact Specification `05bd...afd0`, policy `db78...e00d`, and pinned append-only 35-member manifest `f5e8...faf3` drive one zero-argument actor; canonical resolution yields zero candidates, theory yields 20 unclaimed declarations, 14 predecessor Evidence records remain history, two exact predecessor candidates remain recoverable but unselected, a detached successor candidate is discovered and rejected, and all 12 focused plus 47 adjacent checks and the complete repository gate pass without changing accepted O6/O7/Stack bytes |
+| O8-F1 captured-text/raw-phase correction | continuity owner; exclusive OrderedMap maintenance actor/control and this plan; depends on the first O8 green attempt | restore the finite-source snapshot's intentionally omitted terminal newline before verifying exact successor raw-record digests, and scope the invalid-successor graph trap to the successor authority so the required predecessor replay remains observable; change no artifact, digest, or requirement |
+| O-R8 successor implementation review | independent read-only reviewer; depends on O8 | BLOCK retained narrowly on durable plan truth: implementation, exact bytes/digests, 12 focused and 47 adjacent checks, failure phases, protected surfaces, and the complete repository gate pass, but the Result retains a stale pre-O8 absence sentence and does not bound the captured-text private seam |
+| O8-S1 lifecycle/private-seam truth correction | continuity owner; exclusive this plan; depends on O-R8 BLOCK | describe successor absence historically and record `_document_text + "\n"` as the deliberately bounded captured-byte seam: graph capture has already authenticated the record, the actor restores the snapshot's omitted terminal newline before exact O8 raw-byte comparison, and any `GraphRecord` serialization or newline-handling change must reopen O8-F1 and its raw-digest/failure-phase controls; change no implementation, artifact, digest, requirement, or protected byte |
+| O-R8-2 successor implementation review | same independent read-only reviewer; depends on O8-S1 | PASS: exact clean `6b15732` changes only this plan after the implementation review; stale successor absence is historical, the captured-byte seam and reopen trigger are durable, DAG/table/checklist/Result agree, and successor manifest `f5e8...faf3`, Specification `05bd...afd0`, policy `db78...e00d`, and protected implementation hashes remain unchanged; releases O-R4 |
+| O-R4 end-to-end review | independent read-only reviewer; depends on O-R8-2 PASS | all four actor outcomes, negative controls, known exclusions, Stack regression, and generality claim boundary |
+| O-G final gate | lead acceptance; depends on O-R4 PASS and locked local/hosted gates | full repository reproduction, retained failures, active-plan result, conventional PR metadata/history, and exact claim of two-domain—not universal—generality |
+
+The continuity owner integrates shared surfaces. Before O-G2, all work is read-only or
+plan/document-local. Once implementation boundaries are known, parallel work is allowed
+only for non-overlapping domain-owned files; one integrator owns every shared module.
+
+## Quality gates and evidence required
+
+- Exact OrderedMap meaning is stated by observations and laws, not storage layout,
+  tree shape, hash buckets, mutation strategy, or host object identity.
+- Key equality and order semantics are explicit enough to generate, observe, compare,
+  and falsify within a finite campaign without narrowing the normative law.
+- Current-schema success is not confused with product-path success; publication,
+  registration, graph, projection, resolution, inspection, and maintenance all run.
+- At least two Realizations use independently reviewable private representations; one
+  targeted breaker produces challenging or missing Evidence for its exact declaration.
+- Evidence mechanism, result, review, applicability, assumptions, exclusions, coverage,
+  and derived status remain distinct.
+- Semantic acceptability remains separate from the directional deployment mechanism.
+- Unsupported/unknown concerns remain visible and do not become false or satisfied.
+- No prior-version or Stack Evidence silently supports OrderedMap.
+- Existing Stack checks remain byte/behavior compatible unless a separately reviewed
+  shared-surface extraction requires a documented compatibility wrapper.
+- `git diff --check`, focused red/green controls, and `python3 scripts/check_repo.py`
+  pass before acceptance; protected publication additionally requires hosted gates.
+
+## Progress
+
+- [x] O0 priority and categorical-memory reconciliation candidate
+- [x] O1a preliminary Stack-literal and hard-coded-policy census
+- [x] O1b OrderedMap semantic/paper-record falsifier candidate
+- [x] O-R1 independent research/design review — BLOCK retained
+- [x] O-S1 semantics, reproducibility, and logic-wording correction
+- [x] O-R1b independent successor review passed
+- [x] O-G1 domain-contract gate accepted with `KeyClass` serialization carried to O2
+- [x] O2 actor-complete journey and exact-record design candidate
+- [x] O-R2 independent contract/security review — BLOCK retained
+- [x] O-S2 exact authority, protocol, projection, and successor correction
+- [x] O-R2b independent successor review — BLOCK retained
+- [x] O-S3 artifact-ordering and per-observation attribution correction
+- [x] O-R2c independent successor review passed
+- [x] O-G2 design gate accepted; O3a released
+- [x] O3a exact Specification/profile/conformance-plan artifact candidate
+- [x] O-R3a contract-artifact review passed
+- [x] O3b red journey-control candidate; one intentional failure, nine skips
+- [x] O-R3b red-control review — BLOCK retained
+- [x] O-S4 authority/phase/no-follow/immutability control correction
+- [x] O-R3c successor red-control review — BLOCK retained
+- [x] O-S5 recursive-immutability and diagnostic-location correction
+- [x] O-R3d final successor red-control review — BLOCK retained
+- [x] O-S6 replay-authority and leak-case correction
+- [x] O-R3e final red-control review passed; O4 released
+- [x] O4 shared-substrate extraction accepted; O5 released
+- [x] O4a canonical artifact inspector and pinned plan wrapper passed
+- [x] O4b-R0 manifest-authority red controls; truthful four-error predecessor
+- [x] O-R4b0 red-control review — BLOCK retained
+- [x] O4b-S0 red authority-boundary correction
+- [x] O-R4b1 successor red-control review — BLOCK retained
+- [x] O4b-S1 package-selector symmetry correction
+- [x] O-R4b2 final red-control review passed; O4b implementation released
+- [x] O4b manifest authority and Stack-compatible extraction complete
+- [x] O-R4b implementation review passed
+- [x] O5a exact theory-source manifest/contract artifacts complete
+- [x] O-R5a authority-artifact review — BLOCK retained
+- [x] O5a-S1 exact branch/cross-link correction
+- [x] O-R5a2 successor authority-artifact review — BLOCK retained
+- [x] O5a-S2 successor dependency correction
+- [x] O-R5a3 final authority-artifact review passed; O5b released
+- [x] O5b red publication/graph/projection controls
+- [x] O-R5b red-control review — BLOCK retained
+- [x] O5b-S1 trust/phase/snapshot correction
+- [x] O-R5b1 successor red-control review — BLOCK retained
+- [x] O5b-S2 classifier/snapshot/diagnostic correction
+- [x] O-R5b2 final red-control review — BLOCK retained
+- [x] O5b-S3 authenticated-byte identity correction
+- [x] O-R5b3 final red-control review passed; O5c released
+- [x] O5c-F1 no-follow diagnostic oracle correction
+- [x] O5c theory-source publication/graph/projection complete
+- [x] O-R5c implementation review passed; O5 accepted and O6 released
+- [x] O6-P macro lifecycle decomposition
+- [x] O-R6-P lifecycle plan review — BLOCK retained
+- [x] O6-P-S1 final-authority review correction
+- [x] O-R6-P2 successor lifecycle review passed; O6a released
+- [x] O6a runner/campaign research and red controls complete
+- [x] O-R6a runner/campaign red-control review — BLOCK retained
+- [x] O6a-S1 oracle/protocol/cleanup correction
+- [x] O-R6a2 successor red-control review — BLOCK retained
+- [x] O6a-S2 exact branch/start/immutability correction
+- [x] O-R6a3 final successor red-control review passed; O6b released
+- [x] O6b runner/campaign implementation and hardening — complete predecessor
+- [x] O-R6b runner/campaign implementation review — BLOCK retained
+- [x] O6b-S1 contradictory-observation retention correction
+- [x] O-R6b2 successor runner/campaign review passed; later timing failure retained
+- [x] O6b-F1 teardown scheduling-margin correction
+- [x] O-R6b3 final runner/campaign review — BLOCK retained
+- [x] O6b-F2 stderr-drain cleanup-margin correction
+- [x] O-R6b4 final successor runner/campaign review passed; O6c released
+- [x] O6c-P independent-candidate research and red controls
+- [x] O-R6c-P candidate red-control review — BLOCK retained
+- [x] O6c-P-S1 provenance/boundary/framing correction
+- [x] O-R6c-P2 successor candidate red-control review — BLOCK retained
+- [x] O6c-P-S2 exact descendant/import closure
+- [x] O-R6c-P3 final candidate red-control review — BLOCK retained
+- [x] O6c-P-S3 anchored representation-field closure
+- [x] O-R6c-P4 final successor candidate red-control review — BLOCK retained
+- [x] O6c-P-S4 unit-linker/documented-command closure
+- [x] O-R6c-P5 acceptance candidate red-control review passed; O6c released
+- [x] O6c independent Rust and TypeScript candidate packets complete; review pending
+- [x] O6c-F1 implementation-triggered control corrections
+- [x] O-R6c representation-independence/package review passed; O6d released
+- [x] O6d-P reproduction/report red controls
+- [x] O-R6d-P report red-control review — BLOCK retained
+- [x] O6d-P-S1 exact provenance/outcome/isolation correction
+- [x] O-R6d-P2 successor report red-control review — BLOCK retained
+- [x] O6d-P-S2 fresh-execution/binary/closure correction
+- [x] O-R6d-P3 final report red-control review — BLOCK retained
+- [x] O6d-P-S3 cold-checker/full-outcome/recipe correction
+- [x] O-R6d-P4 acceptance report red-control review passed; O6d released
+- [x] O6d reproduction and targeted breaker reports complete; review pending
+- [x] O6d-F1 path-independent recipe/outcome-order correction
+- [x] O6d-F2 breaker-distinct forgery correction
+- [x] O-R6d reproducibility/breaker review — BLOCK retained
+- [x] O6d-S1 bound-runner execution correction
+- [x] O-R6d2 successor reproducibility/breaker review — BLOCK retained
+- [x] O6d-S2 immutable loaded-runner identity correction
+- [x] O-R6d3 final reproducibility/breaker review — BLOCK retained
+- [x] O6d-S3 executable-harness closure correction
+- [x] O-R6d4 acceptance reproducibility/breaker review — BLOCK retained
+- [x] O6d-S4 source-to-bytecode identity correction
+- [x] O-R6d5 final acceptance reproducibility/breaker review — BLOCK retained
+- [x] O6d-F3 consecutive-reproduction characterization
+- [x] O-R6d6 final consecutive-reproduction acceptance passed; O6e released
+- [x] O6e-P Claim/Evidence candidate red controls; one pass, one intentional failure, ten skips
+- [x] O-R6e-P candidate-record red-control review — BLOCK retained
+- [x] O6e-P-S1 environment/census/two-package correction
+- [x] O-R6e-P2 successor candidate-record red-control review passed; O6e released
+- [x] O6e Claim and Evidence candidate records complete
+- [x] O-R6e package/evidence-candidate review — BLOCK retained
+- [x] O6e-S1 durable-state truth correction
+- [x] O-R6e2 successor package/evidence-candidate review passed; macro convergence released
+- [x] O-R6 macro lifecycle acceptance — BLOCK retained
+- [x] O6-F1 quiescent scheduling characterization complete; O-R6-F pending
+- [x] O-R6-F scheduling-characterization review passed; successor convergence released
+- [x] O-R6-2 successor macro lifecycle acceptance passed; O6f released
+- [x] O6f-P final-authority candidate red controls
+- [x] O-R6f-P final-authority red-control review — BLOCK retained
+- [x] O6f-P1 independent-oracle red-control correction
+- [x] O-R6f-P1 corrected red-control review — BLOCK retained
+- [x] O6f-P2 public-surface/schema-closure correction
+- [x] O-R6f-P2 final red-control review passed; O6f released
+- [x] O6f final-authority candidate and actor replay complete; review pending
+- [x] O6f-F1 implementation-triggered lifecycle control correction
+- [x] O-R6f final-authority implementation review — capability BLOCK retained
+- [x] O6f-R1 executable-review capability correction
+- [x] O-R6f2 successor final-authority implementation review — capability BLOCK retained
+- [x] O6f-R2 local executable-evidence routing correction
+- [x] O-R6f3 combined final-authority implementation review passed; O6-G released
+- [x] O6-G-F0 acceptance-gate scheduling observation — BLOCK retained
+- [x] O6-G-F1 quiescent reproduction characterization passed
+- [x] O6-G final trust-convergence acceptance passed; O7 released
+- [x] O7-P consumer decision/inspection red controls
+- [x] O-R7-P consumer red-control review — BLOCK retained
+- [x] O7-P-S1 authority/dataflow/evidence closure correction
+- [x] O-R7-P2 corrected consumer red-control review — BLOCK retained
+- [x] O7-P-S2 exact-support/selector-vacuity correction
+- [x] O-R7-P3 final consumer red-control review passed; O7 released
+- [x] O7-F1 nested plan-provenance control correction
+- [x] O7 consumer decision/inspection accepted
+- [x] O-R7 consumer implementation review — lifecycle-document BLOCK retained
+- [x] O7-S1 lifecycle-result truth correction
+- [x] O-R7-2 successor consumer implementation review passed; O8 released
+- [x] O8-P successor/recovery red controls
+- [x] O-R8-P successor red-control review — BLOCK retained
+- [x] O8-P-S1 causality/drift/immutability correction
+- [x] O-R8-P2 corrected successor red-control review — BLOCK retained
+- [x] O8-P-S2 selector/removal symmetry correction
+- [x] O-R8-P3 final successor red-control review passed; O8 released
+- [x] O8-F1 captured-text/raw-phase correction
+- [x] O8 maintenance accepted
+- [x] O-R8 successor implementation review — lifecycle/private-seam documentation BLOCK retained
+- [x] O8-S1 lifecycle/private-seam truth correction
+- [x] O-R8-2 successor implementation review passed; O-R4 released
+- [ ] O-R4 end-to-end review
+- [ ] O-G final gate
+
+## Discoveries and changed assumptions
+
+- Record validation is already domain-shaped: specification declarations are generic
+  IDs plus observable signatures/statements/rules, exact linking is address-based, and
+  no schema literal requires Stack. Passing those schemas alone is a weak generality
+  signal because the product actor views freeze more.
+- `theory_projection` is field-driven across carriers, operations, observations,
+  derived observations, equivalences, laws, effects, resources, and performance; its
+  public name is generic and it is the strongest immediate reuse candidate.
+- Manifest parsing, safe source capture, membership, and immutable graph snapshots are
+  mechanically generic, but the public function/default and prose are named Stack.
+- Publication and registration derive approved membership from the Stack manifest at
+  import time and emit Stack-specific diagnostics. OrderedMap cannot honestly publish
+  or register through them without extracting manifest-driven authority.
+- The resolver is intentionally bounded to Stack concern-to-declaration mappings,
+  exact assurance/scope tokens, campaign provenance, effect semantics, and NDJSON
+  boundary. It must not be cosmetically renamed generic. O1b/O2 must determine the
+  smallest explicit policy vocabulary shared by two domains.
+- Stack proof, runner, adapters, Wave 4 reproduction, inspection, and successor logic
+  contain real domain semantics. Generality requires shared contracts around them, not
+  erasing their domain ownership.
+- The categorical consultation validates the observation-first architecture but does
+  not change semantic authority. Proof relevance is recorded as an analogy for
+  preserved Evidence witnesses; propositions-as-types stays inside proof mechanisms.
+  Institution or coalgebra machinery waits for a demonstrated translation/refinement
+  need.
+- The O1b paper Specification passes current record/link validation with zero
+  diagnostics. A retained one-record supplied manifest also passes graph capture and
+  generic theory projection, which exposes 17 declarations as unknown. The existing publication
+  actor view rejects the same record with four missing frozen Stack addresses and one
+  unexpected OrderedMap address. Publication authority—not schema or projection—is the
+  first observed actor blocker.
+- Higher-order map/fold/fusion laws fail the capability test for this slice: prose is
+  schema-expressible, but the current executable boundary cannot generate or transmit
+  arbitrary functions, so the laws would be unfalsifiable ornament. The minimal
+  contract uses lookup and ordered-entry observations and defers higher-order transport.
+- O-R1 rejected the first candidate because it made order depend on ambiguous concrete
+  keys, supplied no reproducible repository artifact for its executed claims, misstated
+  the architecture role count, and blamed dependent types themselves for a governance
+  collapse. O-S1 instead orders key-equivalence classes, leaves representative choice
+  unobserved, adds an inequivalent-two-key overwrite witness, retains a manifest/spec
+  and exact automated oracle, counts all six roles, and rejects only universalization
+  or inhabitation-as-assurance.
+- O-R1b passes the corrected contract and retained probe. The current schema treats
+  signatures as authored strings and therefore does not typecheck `KeyClass` as a
+  quotient. O-G1 accepts only paper-level expressibility and the observed publication
+  blocker; O2 must freeze a bounded serialized entry-class observation before any red
+  controls or implementation can claim executable meaning.
+- O2 closes that carried concern only for `ordered-map-ascii-fold/0.1.0`: ASCII
+  case-fold equivalence classes serialize as lowercase `a`, `b`, or `c`, so adapters
+  never reveal a stored spelling. The choice scopes bounded Evidence and does not alter
+  the normative Key carrier or create a quotient type checker.
+- The cheapest honest actor slice uses two accepted package packets and keeps the
+  reorder breaker outside accepted manifest membership. A synthetic challenging
+  Evidence control still exercises consumer rejection; a failed breaker report never
+  self-promotes into Evidence.
+- A direct-vs-non-direct deployment choice would duplicate the next profile-selection
+  tracer. O2 instead requires both accepted candidates to report the same explicit
+  non-direct child-process boundary, proving only that boundary and semantic status are
+  distinct axes.
+- O-R2 rejected four underdetermined boundaries and one impossible observation: the
+  named performance declaration lacked exact profile/proposition vocabulary; protocol
+  and campaign lifecycle could drift under unchanged Evidence; manifest and resolver
+  rules lacked a non-overridable trust-root identity; the theory projection was asked
+  to expose realization Evidence; and a Specification-only successor could not fail on
+  one law when all exact-version candidates were absent. O-S2 freezes the missing
+  identities and changes the successor terminal outcome to honest zero-candidate
+  resolution plus exact predecessor recovery.
+- O-R2b closes those semantic/trust-shape corrections but finds their lifecycle order
+  impossible: an O3 plan cannot pin O5-owned record digests, and a final ProductContract
+  cannot pin O6 records before they exist. It also finds a derived-map order check
+  incorrectly attributed to persistence. O-S3 gives O3a ownership of exact
+  Specification/profile/plan bytes, makes O3b consume that single reviewed oracle, and
+  defers candidate manifest/ProductContract bytes and actor replay to O6f and their
+  final trust-convergence acceptance to O6-G; persistence cases observe only retained
+  sources while derived order stays with its own law.
+- O-R2c passes O-S3 without reopening earlier concerns. O-G2 accepts the design as the
+  smallest current end-to-end slice: O3a may now author exact final-path semantic inputs
+  and one plan artifact/schema, but O3b cannot exist until O-R3a independently verifies
+  those bytes, encodings, digest, attribution, and single-oracle property.
+- O3a materializes the final-path theory records before any publication manifest. Their
+  exact graph is link-valid with zero diagnostics; the Specification SHA-256 is
+  `6049d371…7fd7f` and profile SHA-256 is `6d129789…e225f`. One separate plan artifact
+  pins those byte digests, uses a schema-governed logical-handle/step/result form, and
+  has canonical sorted/minified SHA-256 `2cf7b481…947a`. Seven artifact tests freeze
+  schema validity, record binding, case identity, coverage, source-before-use handles,
+  persistence-source attribution, and the exact reorder oracle without implementing a
+  runner.
+- O-R3a independently reproduces the canonical plan digest with a separate JSON/SHA
+  toolchain and passes schema closure, record pins, observation/breaker attribution,
+  logical binding, representation independence, and artifact boundary. O3b inherits
+  two fail-closed loader requirements: reject duplicate JSON member names before
+  canonicalization, and reject any schema-valid artifact whose canonical digest differs
+  from the reviewed `2cf7b481…947a` identity.
+- O3b's first red predecessor is the canonical artifact security boundary rather than
+  publication or execution: the exact plan/schema precondition passes, one failure
+  reports the absent generic loader, and nine successor controls remain skipped. The
+  suite requires a no-argument domain wrapper while keeping lower-level fixture
+  inspection explicit; malformed JSON, duplicate members, invalid schema contracts,
+  schema-invalid documents, noncanonical digests, symlinks/directories/absence,
+  post-capture mutation, execution attempts, and diagnostic content leakage stay
+  distinct observations.
+- O-R3b confirms the red shape but rejects five weak controls: positional-only override
+  rejection missed keyword authority, failure diagnostics could coexist with false
+  documents/digests, leaf-only no-follow missed ancestor and schema paths, captured data
+  could be caller-mutated, and diagnostic phase structure could drift. O-S4 makes the
+  wrapper signature empty, requires no downstream conclusion on failure, adds a nested
+  duplicate and both artifact/schema path matrices, requires recursively immutable
+  captures plus replay, expands execution sentinels, and freezes code/path/pointer plus
+  digest-message structure across phases.
+- O-R3c closes most of O-S4 but shows that an immutable root and case tuple could still
+  contain mutable nested dictionaries, and that correct input codes could be attached
+  to the wrong artifact/schema source. O-S5 adds mutations of the nested record address
+  and first case step, requires clean replay, and pins path/pointer for the nested
+  duplicate plus every artifact and schema no-follow input. It also corrects the last
+  stale eight-versus-nine count.
+- O-R3d closes O-S5's named mutations and locations but finds replay authority and the
+  leak-case failure underasserted. O-S6 requires replay status, empty diagnostics,
+  canonical digest, and document to agree, and forbids document/digest conclusions in
+  the leak case.
+- O-R3e passes O-S6 without regression. The accepted red predecessor has one exact
+  missing-loader failure and nine discoverable successor controls; O4 may now implement
+  only the generic canonical artifact inspector and zero-argument OrderedMap wrapper.
+- O4a's first green implementation passes the accepted 11 controls and the full owner
+  gate, but independent review finds three uncovered generic-input failures: root and
+  embedded-NUL paths can escape as exceptions, Python accepts nonstandard
+  `NaN`/`Infinity`, and small deeply nested JSON can exhaust recursive freezing. These
+  remain an O4a BLOCK. Three successor controls require fail-closed input observations,
+  strict JSON, and a finite depth limit before schema, hashing, or freezing. Static
+  ancestor TOCTOU is retained as a future hostile-writable-provenance trigger; exact
+  digest plus descriptor capture is proportionate for the current local boundary.
+- O4a's successor converts root/NUL paths into fail-closed input observations, rejects
+  all `NaN`/`Infinity` JSON extensions through `parse_constant`, and bounds nesting at
+  128 with iterative post-parse inspection plus parser-recursion conversion. Fourteen
+  focused controls and the full repository gate pass; the independent successor review
+  reproduces the focused result and closes the BLOCK. A hostile writable ancestor
+  remains the explicit trigger for dirfd/openat traversal rather than a claim made by
+  this local exact-digest boundary.
+- O4b's smallest trust boundary is an immutable observation of one supplied manifest,
+  not authentication of the final product. Shared mechanics may consume that authority;
+  accepted actor wrappers retain pinned parameters; O5 owns provisional theory-source
+  identity, O6f owns candidate ProductContract bytes/replay, and O6-G alone owns final
+  trust-convergence acceptance. A paper OrderedMap publication is only a mechanics
+  falsifier and cannot become accepted canonical membership.
+- O-R4b0 blocks the first four-control predecessor: canonical equality does not prove a
+  detached snapshot; selectors and source roles could be ignored; graph invalid-authority
+  closure and actual wrapper override rejection were missing; and paper-fixture success
+  did not itself retain the Stack actor rejection. O4b-S0 adds those falsifiers without
+  requesting O5, O6f candidate-authority, or O6-G acceptance artifacts.
+- O-R4b1 closes every O-R4b0 class except the symmetric unknown package-source branch:
+  wrong-role package selection was frozen, but an absent selector could still observe
+  roots or return an underdetermined result. O4b-S1 adds that one exact pre-I/O case.
+- O-R4b2 passes the complete five-control successor. Its intentional red observation is
+  five errors, each solely the absent `graph.inspect_manifest_authority`; no production
+  module changed before this gate. Successful authority capture remaining manifest-only
+  and the documented hostile-writable-ancestor TOCTOU boundary are retained for the
+  implementation review rather than misstated as authentication.
+- O4b implements only the released seam: frozen `ManifestAuthority` capture never
+  observes declared roots; graph replay consumes the snapshot without manifest reread;
+  publication and registration derive exact membership per supplied authority and
+  selector; Stack wrappers preserve signatures, diagnostics, phase ordering, and actor
+  non-overridability. O-R4b independently passes 72 O4b/J1/J2/J3 tests plus manifest-only
+  and constructed-authority probes. Public construction remains safe only while this is
+  explicitly a non-authenticating integration seam; crossing an untrusted serialization
+  boundary or carrying acceptance reopens sealed/validated construction. The existing
+  hostile-writable-ancestor TOCTOU trigger likewise remains unchanged.
+- O5a materializes the separately identified provisional authority demanded by the
+  staged design: one two-member manifest over the unchanged O3a Specification/profile,
+  and `ordered-map-theory-source-contract/0.1.0` with
+  `finalProductAuthority: false`. The contract pins raw manifest/member digests while
+  its own canonical digest is `1ec7d9f0…5a6b`; none of these artifacts authorize package
+  records, Evidence, resolution, inspection, or final product membership.
+- O-R5a reproduces every raw/canonical digest and rejects final-authority, path,
+  selector, role, and authority-expansion attacks, but blocks the schema because a
+  generic binding branch allowed Specification/profile swaps and the tests did not
+  directly link contract bindings to manifest members. O5a-S1 makes the branches exact
+  and adds selector/role/address/digest correspondence.
+- O-R5a2 closes the artifact and security blockers but finds O5b's table dependency
+  still named the permanently blocked O-R5a while the DAG correctly named the successor.
+  O5a-S2 corrects only that readiness edge; authority artifact bytes stay unchanged.
+- O-R5a3 passes the corrected lifecycle and reaffirms the unchanged independent digest,
+  exact-branch, cross-link, closed-schema, and non-final-authority observations. O5b may
+  now freeze the actor boundary against these reviewed bytes.
+- O5b's red predecessor requires one authenticated manifest snapshot to feed publication,
+  graph, and projection; it forbids manifest reread and multiple finite-source captures.
+  The intended wrapper is zero-argument, surfaces provisional contract/manifest identity,
+  exposes exactly two theory records and all 18 declarations as unclaimed, and returns no
+  partial publication/projection on contract, manifest, input, link, or membership failure.
+- O-R5b blocks that predecessor because its stated phases and snapshot claim were not
+  fully executable. O5b-S1 adds exact contract/record schema and link attacks, pinned
+  manifest/schema no-follow matrices, zero authority leakage before trust convergence,
+  exact diagnostic provenance/member digests, and one reviewed manifest parse followed
+  by mutation and one exact finite-source capture.
+- O-R5b1 closes those broad gaps but shows the schema case would require changing an
+  accepted classifier, parse counting does not bind authenticated bytes to parsed bytes,
+  and messages could still misstate identities. O5b-S2 instead uses the existing
+  localized missing-field classifier, instruments one manifest descriptor read and
+  mutates the path after close, forbids the legacy loader reread, and freezes observed
+  and expected digests plus requested address/profile-member messages.
+- O-R5b2 retains a block because the corrected schema classifier still omitted the
+  checker's leading `#` pointer and the descriptor count did not reject builtin/pathlib
+  reads that could retain manifest bytes before authentication. O5b-S3 preserves the
+  exact `#/laws/0/id` oracle and guards every alternate manifest path read while keeping
+  the post-close mutation and legacy-loader sentinel.
+- O-R5b3 passes the corrected red boundary: the accepted checker oracle is exact,
+  alternate ordinary manifest readers are rejected, one authenticated descriptor feeds
+  the actor before one exact source capture, and no execution or final authority leaks.
+  Hostile writable-ancestor TOCTOU remains excluded; O-R5c must statically confirm that
+  O5c consumes only this authenticated capture and introduces no alternate reader.
+- O5c's first green run turns nine successor controls green and exposes one red-oracle
+  inconsistency: canonical artifact diagnostics have always named the requested leaf
+  when a strict ancestor is symlinked, while O5b recorded the encountered ancestor.
+  O5c-F1 corrects only those two expected paths to the established O3b contract; the
+  no-follow failure code, phase barrier, and target-read prohibition remain unchanged.
+- O5c's corrected focused suite passes all ten theory-source journeys. The adjacent
+  canonical-artifact, manifest-authority, publication, honest-graph, theory-projection,
+  and authority-artifact set passes 93 tests. The full repository gate passes with 24
+  valid/20 schema-invalid/38 link-invalid/3 link-valid record fixtures, 18 loader
+  groups, 36 adapter tests, 18 cross-language candidates, 166 actor journeys, 16
+  research probes, 20 governance tests, two fresh reports/eight Evidence records, and
+  49 proof groups. O-R5c still owns acceptance and the exotic-reader static audit.
+- O-R5c's interim adversarial probe confirms the pinned actor path but demonstrates the
+  retained O4b construction seam: a caller can fabricate a diagnostic-free
+  `GraphObservation`, so graph-derived publication projection cannot authenticate or
+  carry acceptance. The helper is therefore private and explicitly requires an
+  actor-owned pinned graph; untrusted serialization or future acceptance semantics
+  still reopen sealed/validated construction. The same audit also corrects O5c's table
+  dependency to follow O5c-F1, matching the revisioned DAG.
+- O-R5c passes after those dispositions. Independent replay confirms focused O5 10/10,
+  adjacent shared seams 93/93, exact Stack actor/generic publication equality with four
+  records, unchanged public Stack signatures, one authenticated manifest capture, one
+  finite-source capture, and no downstream or final-authority leakage. O5 is accepted
+  and O6 may begin package packets, independently represented Realizations, breaker,
+  reports, and Evidence candidates without creating final registration authority.
+- The released O6 node was too broad for one accountable transition: runner semantics,
+  candidate independence, executable reproduction, and record authority fail in
+  different ways and need different evidence. O6 is therefore a macro lifecycle over
+  O6a red runner/campaign contract, O6b implementation/hardening, O6c two independent
+  candidate packets, O6d reproduction/selective breaker reports, O6e Claim/Evidence
+  candidates, and an O-R6 convergence gate. Each material transition has an independent
+  successor review. Final authority then has its own O6f candidate implementation and
+  O-R6f independent review; O6-G is a read-only acceptance gate and remains the only
+  point where trust convergence becomes final.
+- O-R6-P first blocks the macro frame because continuity-owned final-authority writes
+  and final acceptance shared O6-G, leaving no independent review after future bytes
+  existed. The successor graph passes after separating O6f candidate bytes/replay,
+  O-R6f independent review, and read-only O6-G acceptance. The accepted ordering is
+  runner result -> report fact -> Claim -> Evidence result/review -> candidate
+  registration replay -> reviewed ProductContract candidate -> final authority ->
+  semantic decision -> maintenance; only O6a red controls are released.
+- O6a's first run exposed a copied plan-digest middle that disagreed with the accepted
+  O3 artifact. The test was corrected to consume the existing
+  `2cf7b481946c…947a` identity without changing plan bytes. Its reviewed-plan and
+  hostile-adapter precondition now passes; the 13-test topology has one intentional
+  absent `ordered_map_runner` failure and eleven skipped successor controls. The fake
+  adapter is protocol-only test infrastructure: ephemeral hostile-control reports are
+  allowed, but retained candidate reports, manifests, Claims, Evidence, reviews, and
+  acceptance inputs are forbidden.
+- O-R6a retains the truthful red topology but blocks implementation because plan
+  authentication was not yet bound to the executed request ledger, exact campaign and
+  strict protocol coverage were incomplete, response-timeout cleanup and event
+  precedence were under-frozen, and handle/stderr/nested immutability/no-authority
+  controls were weak. O6a-S1 owns one coherent correction; O-R6a2 must retain a static
+  copied-oracle audit as an O-R6b obligation because black-box testing cannot establish
+  source/dataflow absence conclusively.
+- O6a-S1 preserves the 13-test topology—one reviewed precondition passes, one absent
+  runner fails, and eleven successors skip—while expanding subcases rather than
+  manufacturing extra gates. The captured document is access-tracked down to every
+  step field and must yield the exact 30-request journal and seven case summaries;
+  ordinary direct plan/schema readers are rejected. Both response and EOF timeout
+  controls retain a PID and require bounded kill/reap. Ephemeral hostile-control
+  reports are recursively frozen, retain exact raw stderr/events, expose no authority
+  vocabulary, and leave OrderedMap registry/Evidence bytes unchanged.
+- O-R6a2 confirms those major closures but retains a narrow successor BLOCK: case IDs
+  and step collections themselves were not access-required; some later operation/error
+  shapes could escape behind an earlier strict `empty`; plan failure patched `Popen`
+  rather than observing child non-start; case fields and several authority-axis names
+  remained mutable/unexamined; and lockstep timing is fundamentally a source/dataflow
+  audit. O6a-S2 adds exact subcases and an adapter start marker without changing the
+  13-test topology. O-R6b now explicitly owns both no-copied-oracle and one-write/
+  one-response-before-next-write audits.
+- O-R6a3 passes the final red boundary. Independent replay confirms one green
+  precondition, one intentional absent-runner failure, eleven skips, exact compilation,
+  and a clean diff. O6b alone is released; its review must statically prove captured
+  plan dataflow, one-write/one-response lockstep, and continued non-promotion of fake
+  reports into authority or Evidence.
+- O6b first turns all 13 accepted runner controls green. The authenticated
+  `ArtifactObservation.document` is detached once and supplies every case ID, step,
+  request argument, expected observation, declaration attribution, event rule, domain,
+  and timeout; the runner contains protocol mechanics but no second OrderedMap
+  transition oracle. Each invocation checks for unsolicited output, writes one request,
+  reads and validates exactly its response, then advances. Semantic mismatches challenge
+  only plan-attached declarations, while JSON/framing/adapter/process failures are
+  execution errors. The first aggregation attempt also suppressed earlier semantic
+  challenge conclusions whenever such an error occurred; O-R6b later falsifies that
+  composition rule. Focused replay passes 13/13, adjacent Stack plus OrderedMap runner
+  replay passes 31/31, and the full gate passes with 49 adapter tests and all other
+  ledgers unchanged.
+- O-R6b confirms the original source/dataflow, lockstep, lifecycle, non-authority, and
+  no-Evidence obligations but retains a BLOCK from a novel combined probe: after the
+  existing-position reorder was observed as a semantic counterexample, a late nonzero
+  process exit made the overall report correctly `error` but incorrectly relabelled the
+  prior declaration as `supports` and erased `OBSERVATION_MISMATCH`. O6b-S1 freezes that
+  composition red, then gives retained semantic challenges precedence within their own
+  declaration outcomes while leaving the orthogonal report result `error`. Focused
+  replay now passes 14/14; O-R6b2 must confirm the narrow correction and all original
+  obligations before O6c can begin.
+- O-R6b2 passes that successor. Independent focused replay is 14/14 and adapter
+  discovery is 50/50; the clean serial full gate retains 166 actor journeys, 16
+  research probes, 20 governance tests, two reports/eight Evidence records, and 49
+  proof groups. Static inspection confirms one detached authenticated plan snapshot is
+  the sole semantic input, no candidate or copied OrderedMap transition oracle is
+  imported, and each invocation performs its pre-output check, one write, one
+  read/validation, and post-response extra-output check before advancing. Reports
+  remain immutable ephemeral facts with no registry/Evidence write or authority axis.
+  Adapter faithfulness, event completeness, external effects, realization steps, and
+  perfect-shadow detection remain explicit exclusions; downstream promotion must
+  require a clean report even though partial support and challenge observations survive
+  an overall execution error. Aggressively concurrent duplicate gates produced one
+  non-blocking wall-clock timeout miss under load; immediate unchanged adapter replay
+  and the then-current serial full gate passed.
+- A later required serial full gate turns that timing signal into contradictory evidence:
+  response-timeout teardown takes 0.634s against the unchanged `<0.60s` control. The
+  implementation had composed the plan's 0.2s response deadline, 0.2s clean-exit
+  deadline, and another full 0.2s terminate grace, leaving no scheduling margin.
+  O6b-F1 preserves both semantic deadlines and shortens only the already-post-deadline
+  terminate-to-kill grace to 0.05s. Forty repeated response-timeout/EOF-timeout probes
+  pass with all PIDs reaped and a 0.5687s worst observation before the final reduction
+  from 0.10s to 0.05s grace.
+- O-R6b3 retains the BLOCK: one ordinary sequential two-method run still records
+  0.613069s for response-timeout teardown. An immediate retry and five isolated probes
+  per path pass with every PID reaped, which confirms semantic behavior but cannot erase
+  the failed strict bound. Inspection finds another additive post-deadline wait: stderr
+  joining could spend the full 0.2s exit timeout even after termination/reaping. O6b-F2
+  bounds that join by the same 0.05s cleanup signal grace; raw stderr remains retained,
+  and 40/40 response/EOF timeout probes pass with all PIDs absent and worst 0.5250s.
+  O-R6b4 owns the final suite-context confirmation; O6c remains held.
+- O-R6b4 passes the corrected boundary while retaining O-R6b3's failed evidence. Five
+  sequential repetitions of both existing timeout-owning methods pass their strict
+  `<0.60s`, `error/TIMEOUT`, and PID-absence assertions; focused replay is 14/14,
+  independent adapter discovery is 50/50 with all 36 Stack tests retained, and ten raw
+  stderr campaigns preserve exact bytes while returning ten fresh equal reports. Static
+  inspection confirms the plan-owned 0.2s response and clean-exit deadlines are
+  unchanged; only post-deadline signal grace and post-reap stderr joining use the 0.05s
+  cap. The reviewer full gate passes every ledger. The continuity full gate first hits
+  the already-known isolated Lean harness timeout and then passes unchanged with 24
+  valid/20 schema-invalid/38 link-invalid/3 link-valid record fixtures, 18 loader
+  groups, 50 adapters, 18 cross-language candidates, 166 journeys, 16 research probes,
+  20 governance tests, two reports/eight Evidence records, and 49 proof groups. No
+  proof oracle or deadline was changed. O6c alone is released.
+- O6c-P freezes the independently represented package boundary before either packet
+  exists. The 12-test topology has one accepted-runner/locked-rustc-and-Deno precondition
+  passing, one intentional missing-two-packets failure, and ten skipped successors.
+  Rust is bounded to a package-private immutable sequence of class/value pairs and
+  TypeScript to a separately immutable class table plus order sequence; those checks
+  identify these two packet choices and do not amend Specification meaning. Both must
+  build offline into temporary paths, leave no repository artifact, support the exact
+  authenticated campaign and persistence observations, accept valid reordered,
+  whitespace, combined, and split request framing, exit cleanly on EOF, document trust
+  exclusions, and contain no candidate cross-import, runner/contract import, or copied
+  case/declaration oracle. O-R6c-P must challenge the sufficiency and
+  representation-neutrality of this red boundary before implementation.
+- O-R6c-P retains the truthful 12-test topology but blocks implementation. The first
+  precondition accepted Bash as both rustc and Deno and did not select locked GCC;
+  symlinked files, external Rust includes/paths, TypeScript imports, or README-embedded
+  case data could escape the packet boundary; comments could spoof representation
+  fields; and reordered framing did not require exact envelopes or trailing-output
+  closure. O6c-P-S1 pins observed toolchain versions and the explicit linker, closes
+  every allowed file/import/include boundary, scans packet prose and source for campaign
+  IDs, checks representation fields only after comment removal, and freezes exact
+  valid-frame envelopes plus clean EOF. The red topology remains one pass, one absent-
+  packets failure, and ten skips; O-R6c-P2 must replay the bypasses before O6c.
+- O-R6c-P2 closes those broad classes but retains a narrow boundary BLOCK: the helper's
+  generic `__pycache__` exemption hid executable Rust descendants; extra directory
+  symlinks could resolve modules outside the packet; and TypeScript side-effect or
+  whitespace-dynamic imports evaded `from`-only matching. O6c-P-S2 enumerates every
+  descendant without exemptions, rejects every symlink/unexpected directory/nonfile,
+  and permits only exact packet files with their real parents. The source audit invokes
+  that boundary directly and accepts exactly one local TypeScript import while rejecting
+  side-effect, re-export, and dynamic forms. Topology remains 1/1/10; O-R6c-P3 owns the
+  final bypass replay.
+- O-R6c-P3 confirms the path/import closures but retains one representation-fact BLOCK:
+  uncommented marker strings could live in ordinary constants while the actual fields
+  used another or converged representation. O6c-P-S3 removes comments and string
+  literals before anchoring the Rust pair sequence to the opening `OrderedMap` struct
+  and the TypeScript table plus order fields to the opening `OrderedMap` class. These
+  remain packet-local source-review facts, not a new semantic requirement. The 1/1/10
+  red topology, compilation, and diff remain exact; O-R6c-P4 owns final replay.
+- O-R6c-P4 replays every earlier attack successfully but retains two provenance gaps:
+  Rust unit compilation fell back to ambient linker resolution, and README controls
+  could pass without any build, unit, typecheck, or run command despite O6c promising
+  documented reproduction. O6c-P-S4 routes unit compilation through the exact locked
+  rustc/GCC tuple and requires packet-specific direct-rustc optimized-build/unit outputs
+  plus execution, temporary placement, offline-Deno check/run commands, and observed
+  toolchain version provenance. O-R6c-P5 owns final acceptance replay.
+- O-R6c-P5 passes the complete predecessor. Independent replay confirms the exact
+  12-test shape—one locked runner/toolchain precondition passes, one absent-packets
+  failure is intentional, and ten successors skip—plus every retained Bash-tool,
+  hidden-descendant, symlink-directory, README/include oracle, nonlocal/side-effect/
+  dynamic import, comment/string representation, framing, unit-linker, and documented-
+  command falsifier. Static scans reduce obvious sharing but cannot prove adapter
+  faithfulness or defeat a perfect shadow; O-R6c must inspect implemented source and
+  dataflow before O6d. O6c implementation only is released; reports, breaker, Evidence,
+  authority, registry, and resolver work remain held.
+- O6c implements both independently reviewable packets without shared transition code.
+  Rust owns a private persistent `Vec<(ClassToken, i64)>` and std-only JSON adapter;
+  TypeScript owns a private cloned `ReadonlyMap<ClassToken, number>` plus frozen class
+  order and dependency-free Deno adapter. All 12 accepted controls pass, including
+  byte-reproducible direct-rustc output, locked-GCC unit tests, offline Deno checking,
+  exact valid reordered/combined/split envelopes, clean EOF, exact campaign support,
+  persistence, source/import boundaries, and executable README reproduction. Retained
+  Stack plus OrderedMap candidate replay passes 30/30. The full repository gate passes
+  with 50 adapters, 30 cross-language candidate tests, 166 journeys, 16 research probes,
+  20 governance tests, two reports/eight Evidence records, and 49 proof groups. O-R6c
+  still owns independent source/dataflow/build review before any report is retained.
+- O6c's first green attempt exposes three test-surface defects without changing product
+  meaning: buffered Python pipes hid the second already-buffered combined response and
+  leaked ResourceWarnings; the generic string scrubber consumed Rust's `'static`
+  lifetime; and README trust/provenance phrases differed only by capitalization. O6c-F1
+  uses unbuffered framing pipes with explicit closure, makes single-quoted scrubbing
+  language-aware, and aligns the exact prose tokens. The corrected 12/12 and 30/30
+  results above are the only implementation evidence submitted to O-R6c.
+- O-R6c passes both packets without promoting their private forms into semantics.
+  Independent direct Rust builds are byte-identical at
+  `ae457dde79c86091ff79b4603cf436f8d1c06b67affe4511ed089ecc86cb8a2a`;
+  locked-GCC unit and offline Deno checks pass. A novel escaped-member/operation JSON
+  history inserts C then B, replaces c, and confirms old `[(c,2),(b,1)]`, new
+  `[(c,-2),(b,1)]`, lookup `-2`, exact envelopes, empty diagnostic/trailing output,
+  and clean EOF on both adapters. Static review confirms Rust clones and updates/appends
+  its pair vector while TypeScript clones its table and reuses/appends its frozen order;
+  neither shares transition/oracle data or crosses its packet boundary. The reviewer
+  full gate first retains the known isolated Lean timeout and then passes unchanged with
+  all current ledgers. Bounded valid clients/canonical numbers, adapter faithfulness,
+  event completeness, external effects, performance, interoperation, and malicious
+  same-realm TypeScript reflection remain excluded. No retained report, Evidence, or
+  authority exists. O6d reproduction and targeted-breaker work only is released.
+- O6d-P decomposes the released node before any retained report exists. The red boundary
+  requires a report to be regenerated from exact repository-relative plan, runner,
+  Specification, profile, source, command, toolchain, and (where built) binary facts;
+  retain the runner's complete declaration/case/event result; and expose no Claim,
+  Evidence, review, acceptance, authority, manifest, or semantic-decision axis. Two
+  candidate reports live under `reports/ordered-map`; the negative control and its
+  report live together under `fixtures/candidates/ordered-map/reorder_breaker`, outside
+  candidate-report and registry membership. Fresh replay must reject both a harmless
+  source-byte drift and a forged semantic outcome. O-R6d-P must challenge this boundary
+  before the checker, reports, or breaker source may be implemented.
+- O-R6d-P retains the truthful red topology but blocks implementation. The first
+  control impossibly equated the plan's canonical `2cf7…` identity with its raw
+  `bfff…` file digest; empty source sets and invented paths, commands, tools, or binary
+  identity could pass; nested outcomes and authority vocabulary were incomplete; and
+  same-root replay plus two mutations did not establish cross-checkout determinism or
+  complete stale-input rejection. O6d-P-S1 separates raw/canonical identities and
+  freezes exact accepted inputs, complete runner ledgers, every bound-axis mutation,
+  full locked tool output, checkout/temp/store path absence, and breaker-local/future-
+  membership closure. O-R6d-P2 owns all retained bypasses before implementation.
+- O-R6d-P2 retains a second BLOCK. Although exact digests, ordered ledgers, full tool
+  strings, and cross-root bytes close, the non-promotion oracle also forbade the exact
+  theory inputs it required. More importantly, all reproduction APIs could read or
+  hardcode committed reports without executing candidates, the historical Rust digest
+  and arbitrary breaker digest did not bind fresh executables, whitespace/alias forms
+  escaped breaker scans, and only TypeScript report mutation excluded candidate-specific
+  cheating. O6d-P-S2 removes reports before replay, instruments and perturbs each fresh
+  runner call, independently hashes the executed binaries, normalizes the Rust fixture
+  boundary, mutates every report, and permits only the exact closed-schema theory input
+  paths. O-R6d-P3 owns final predecessor acceptance.
+- O-R6d-P3 retains a third BLOCK: deleting copied reports did not prevent the already-
+  loaded original checker from caching them; only the returned cause was asserted;
+  call order and one import alias were overprescribed; exact recipe execution remained
+  incomplete; and grouped standard-library imports plus environment, conditional path,
+  and Unix-network forms escaped the fixture scan. O6d-P-S3 loads a cold checker from
+  the reportless copy under read traps, associates calls by observed command/result,
+  replaces and checks every runner field, independently rebuilds both Rust packets and
+  the Deno check, replays full tool probes, and rejects those normalized Rust escape
+  identifiers. The perfect-shadow limitation remains explicit. O-R6d-P4 owns final
+  predecessor acceptance.
+- O6d implements the accepted fact boundary. Two canonical candidate packets under
+  `reports/ordered-map` independently rebuild and support all seven declarations across
+  30 requests; the Rust packet retains binary SHA `ae457dde79c8…a2a`, and TypeScript
+  remains source/typecheck bound with no invented binary. The isolated Rust-surface
+  fixture removes then appends an existing class, producing one exact
+  `OBSERVATION_MISMATCH` for `put-existing-position` in `nonlast-overwrite-order` while
+  every lookup, new-class append, persistence, and effects observation still supports.
+  Its source/report remain under fixtures and absent from accepted report/registry
+  membership. The checker rebuilds, typechecks, executes, and compares without writing.
+- O6d's first-green replay finds three predecessor-oracle details rather than product
+  semantic failures: absolute Rust source argv embeds checkout locations in binaries;
+  the expected global declaration order placed effects last instead of retaining the
+  runner's first-case discovery; and full GCC output includes a trailing blank line.
+  O6d-F1 uses the already-recorded repository-relative recipe, aligns the independent
+  build and reviewed stable Rust digest, retains actual runner order, and includes the
+  full probe output. Focused report tests and all 42 candidate tests pass. O-R6d still
+  owns independent reproduction, breaker selectivity/source review, and non-promotion
+  acceptance.
+- The first full gate exposes one mutation-oracle collision: assigning
+  `result: challenges` changes both accepted candidate packets but is identical to the
+  breaker's truthful top-level result, so that breaker subcase cannot expect a byte
+  difference. O6d-F2 assigns the deliberately impossible `forged` token instead. This
+  changes all three packets while retaining the same generic exact-byte rejection
+  obligation; no accepted report or product meaning changes.
+- The corrected full gate first retains the already-known isolated Lean timeout for
+  `StackPopEmpty.lean`; the report checker, all 42 candidate tests, and every other
+  ledger had passed before that unrelated boundary failed. An unchanged rerun passes:
+  24 valid/20 schema-invalid/38 link-invalid/3 link-valid record fixtures, 18 loader
+  groups, 50 adapters, 42 candidates, 166 journeys, 16 research probes, 20 governance
+  tests, two Stack reports/eight Evidence records, two fresh OrderedMap candidate
+  reports plus one selective breaker, and 49 proof groups. No proof deadline or oracle
+  changed. O-R6d still owns independent acceptance before O6e can begin.
+- O-R6d retains a provenance BLOCK from a novel copied-root attack. Replacing the
+  copied `semantic_packages/ordered_map_runner.py` with invalid Python and rewriting
+  every retained report to the checker's fresh bound digest still produced a clean
+  result: `_inputs` described the copied bytes while campaign execution used the
+  original checker's already-imported runner. O6d-S1 freezes that substitution and
+  requires requested runner bytes to equal the source bytes of the exact loaded
+  canonical runner callable before any tool probe, build, or campaign. Identical
+  cross-root copies remain supported; arbitrary root-local runner execution is not
+  introduced. O-R6d2 owns successor acceptance and O6e remains held.
+- O6d-S1 first turns the copied-invalid-runner attack red, then compares its requested
+  bytes with the source file of the exact imported canonical runner before any tool or
+  child execution. The accepted full-outcome spy temporarily replaces the callable
+  during one control, so the checker captures its canonical source path once at import
+  before that instrumentation; object-identity and full-field controls remain intact.
+  Focused substitution and cold-checker replay pass. O-R6d2 still owns independent
+  successor acceptance.
+- O-R6d2 retains a narrower TOCTOU BLOCK. Capturing the runner source path closed a
+  different-root substitution, but the checker re-read that mutable path at replay
+  time. In a clean copied process, mutating the runner file after import left the old
+  code object executing while fresh report inputs bound the new invalid bytes; rewritten
+  packets then passed. O6d-S2 freezes that same-path attack and captures the loaded byte
+  digest immutably at import. O-R6d3 owns final successor acceptance; O6e remains held.
+- O6d-S2 turns the post-import mutation probe red, then captures SHA-256 of the exact
+  canonical runner source bytes beside the imported callable. Pre-import different-root
+  substitution, post-import same-path mutation, and the patchable full-outcome execution
+  seam all pass together; validation no longer derives code identity from a mutable
+  path. O-R6d3 still owns independent final acceptance.
+- O-R6d3 retains an executable-closure BLOCK after the immutable runner correction and
+  a 44-candidate full gate pass. A copied root with invalid
+  `ordered_map_contract.py` still passed because the exact runner code object called
+  its already-imported original contract/artifact dependency while reports named no
+  harness closure. This is not the perfect-shadow/FFI exclusion. O6d-S3 binds and
+  immutably checks package init, contract module, canonical artifact inspector,
+  diagnostic module, plan schema, runner, and plan before tools; pre/post-import
+  dependency mutation controls freeze the attack. O-R6d4 owns acceptance and O6e is
+  held.
+- O6d-S3 turns both dependency-substitution controls red, then retains an ordered
+  harness binding for package init, OrderedMap contract input, canonical artifact
+  inspection, diagnostic module, and plan schema in all three packets. Immutable
+  import-time digests for that closure, runner, and plan are compared with every
+  requested root before tools run. The report toolchain now also records Python 3.14.6,
+  jsonschema 4.26.0, and referencing 0.37.0, with independent probes. Pre-import runner
+  or dependency substitution, post-import same-path mutation, and exact copied replay
+  all pass focused controls. O-R6d4 still owns acceptance.
+- O-R6d4 retains a source-to-code BLOCK. Copying local `__pycache__`, replacing a
+  Python closure source with invalid same-length bytes, and restoring its exact mtime
+  allowed a clean process to execute timestamp/size-valid old bytecode while immutable
+  closure digests and fresh packets bound the invalid source. This is not an external
+  runtime exclusion. O6d-S4 freezes the attack for all five Python closure modules and
+  compares freshly compiled exact source with the complete loaded cache code object before
+  source identity is accepted. O-R6d5 owns final acceptance; O6e remains held.
+- O6d-S4 turns the five-module timestamp/size-cache control green. The checker loads
+  the local cache code without executing it, recompiles the exact requested source
+  under the cache code's filename, and requires complete code-object equality before
+  accepting that source digest. Missing caches still require compilable source;
+  malformed, stale, or mismatched caches fail closed. All 17 focused report contract
+  tests pass; O-R6d5 still owns independent acceptance and O6e remains held.
+- O-R6d5 retains a consecutive-reproduction BLOCK despite the preceding full
+  repository PASS. In one independent combined candidate/report run, the second fresh
+  packet changed one declaration from one supporting observation to zero observations
+  and `inconclusive`. Six unchanged direct reproductions were subsequently byte-exact,
+  and the exact 29-test combined suite passed. O6d-F3 changes no deadline, assertion,
+  report, or implementation; O-R6d6 requires the same reviewer to pass three
+  consecutive exact fresh-byte tests before O6e can be released.
+- O-R6d6 passes three consecutive independent executions of the exact fresh-byte and
+  repository-relative test in 5.373s, 5.614s, and 8.143s. No implementation, test,
+  conformance-plan deadline, or retained report changed after the retained O-R6d5
+  observation. O6d is accepted and O6e Claim/Evidence candidate work is released.
+- The post-O-R6d6 full gate retained an unchanged Stack proof-fixture timeout while
+  unrelated workstation builds drove load beyond available cores. After those builds
+  completed, the immediate unchanged full gate passed all 49 proof groups and the
+  complete 24/20/38/3 record, 18 loader, 50 adapter, 47 candidate, 166 journey,
+  16 research, 20 governance, two-report/eight-Evidence, and three OrderedMap-report
+  ledgers. No proof deadline, oracle, implementation, or report was changed.
+- A resumed Fable 5 product-advisor consultation supports reusing the existing
+  Realization/Claim/Evidence schemas and exact link checker, with one material O6e
+  constraint: `reviewState: accepted` must cite the already-completed O-R6d6 report
+  review lineage rather than future O-R6e, or the candidates would circularly
+  self-ratify. The advisor's Herdr tab remained sandboxed to an older checkout and
+  could not inspect current O6e bytes, so this is a framing-only `supports` edge, not
+  review evidence. O6e-P freezes that lineage plus exact census, provenance, mutations,
+  and non-authority before any candidate record is authored.
+- O6e-P materializes that framing as a 12-test predecessor: the two retained reports
+  pass as candidate facts, the absent checker plus 30 package records produce the one
+  intentional failure, and ten successors skip. The frozen successor boundary covers
+  exact Realization metadata, seven active declaration Claims and seven accepted-review
+  Evidence candidates per package, O-R6d6 rather than O-R6e review lineage, exact
+  environment/freshness/applicability/provenance, generic graph validity, field and
+  census variation sensitivity, report-as-input separation, unsupported performance,
+  absent product authority, and repository-gate integration. O-R6e-P owns review before
+  any candidate record or checker may be added.
+- O-R6e-P retains three red-pattern corrections. The TypeScript environment used the
+  older Stack V8 value rather than the retained OrderedMap report's
+  `14.9.207.2-rusty`; top-level-only inventory let a nested JSON record escape both the
+  exact census and absence scans; and provenance variations sampled only Rust.
+  O6e-P-S1 aligns the report fact, recursively counts every package entry/document,
+  and applies the complete Claim/Evidence/census matrix to both packages while proving
+  lifecycle, result, and review remain separate axes. The exact 1/1/10 red topology is
+  unchanged; O-R6e-P2 owns successor acceptance.
+- O-R6e-P2 passes the corrected predecessor. Independent review confirms the retained
+  TypeScript V8 fact, recursive package inventory and document scans, both-package
+  variation/census coverage, and independent Claim lifecycle, Evidence result, and
+  Evidence review axes. All original graph, O-R6d6 lineage, exact provenance,
+  unsupported-performance, report-input, and no-final-authority controls remain
+  present. O6e record/checker implementation only is released.
+- O6e materializes two exact package-local candidate sets without adding a manifest or
+  product authority. Each has one Realization plus seven active Claims and seven
+  accepted-review Evidence records; O-R6d6 is the non-circular review lineage. The
+  checker derives the expected 2/14/14 documents from the retained candidate reports,
+  compares every exact field and report-section digest, rejects extra nested entries,
+  and then runs ordinary schema/link validation with the reviewed Specification and
+  profile. All 12 accepted controls and the direct candidate checker pass. O-R6e still
+  owns cross-package/scope/provenance/non-promotion acceptance.
+- O-R6e retains one durable-state correction while accepting the implementation facts.
+  The 12-test controls, direct 2/14/14 checker, identical copied-root replay,
+  cross-candidate variation, and declaration-outcome variation pass, but the Result
+  section contradicted the immediately following implementation state. O6e-S1 changes
+  only that stale sentence; O-R6e2 owns successor acceptance.
+- O-R6e2 passes the ledger-only correction. Independent review confirms the retained
+  BLOCK, correct DAG ordering, exact present 2/14/14 candidate state, absent final
+  authority artifacts, and unchanged implementation, record, test, provenance, and
+  accepted-control conclusions. O-R6 macro convergence is released.
+- The first O-R6 macro full-gate run retained one unchanged Stack proof-fixture
+  deadline observation: the schema-invalid Claim case exceeded its 3.0-second harness
+  deadline, exited 124, and emitted no expected diagnostic. No implementation,
+  deadline, assertion, or fixture changed; an unchanged full-gate rerun is required
+  before convergence can pass.
+- The unchanged rerun retained a different scheduling-bound observation. All preceding
+  OrderedMap runner cases passed and the response-timeout case returned `TIMEOUT` and
+  left no child process, but its total elapsed time was 0.6566 seconds against the
+  0.60-second test bound. The runner, 0.20-second plan deadlines, test bound, retained
+  reports, and candidate records remain unchanged while focused characterization and
+  independent disposition determine the smallest honest convergence condition.
+- Independent disposition finds no observed execution-semantic defect: the failed case
+  returned `error/TIMEOUT` and reaped its child, while the plan promises separate
+  0.20-second response and clean-exit deadlines rather than scheduler-independent total
+  time. Three immediate focused repetitions passed unchanged, but the workstation load
+  remained high. O-R6 is retained as BLOCK; O6-F1 requires the previously accepted
+  five-by-two sequential timeout-method shape after competing builds quiesce, followed
+  by one unchanged full gate and O-R6-F review.
+- O6-F1's exact five sequential pairs passed unchanged (two methods per repetition),
+  including the 0.60-second total bounds, classifications, and child cleanup. During
+  the required full gate, a separate Lean/C compilation stream resumed on the shared
+  workstation; the old Stack Rust candidate build then exceeded its unchanged
+  3.0-second process deadline. O6-F1 remains incomplete: retain the successful 5x2
+  characterization and the failed full-gate receipt, wait for the competing build
+  stream to finish, and require one unchanged full-gate PASS without rerunning or
+  weakening the already-passed focused shape.
+- The hosted bench supplies the missing clean full receipt without changing bound
+  bytes. After the PR body was reorganized under the repository's eight exact,
+  locally validated lifecycle headings, GitHub Actions run 29705557179 passed
+  prospective metadata in 1m31s and the repository contract in 3m48s against exact
+  head `491ac00`. Together with the already-passed unchanged 5x2 focused shape, O6-F1
+  is complete pending O-R6-F independent review; every local failed receipt remains
+  visible and no deadline, oracle, implementation, test, report, or record changed.
+- O-R6-F passes the complete characterization. Independent review confirms exact head
+  `491ac00`, unchanged bound bytes, the five sequential two-method repetitions, strict
+  classifications, cleanup, and 0.60-second assertions, every contradictory local
+  receipt, and hosted success across 50 adapters, 59 candidates, 49 proof groups,
+  three OrderedMap reports, and the 2/14/14 candidate set. Scheduler sensitivity stays
+  an explicit reopen trigger rather than becoming a universal real-time guarantee.
+- O-R6-2 passes successor macro convergence. The complete feature lifecycle through
+  scoped Claim/Evidence candidates agrees with immutable predecessor ownership,
+  reproduction/toolchain provenance, maintenance handoff, and O8 reopen inputs. O6
+  closes without registration, resolver, semantic-acceptance, or final-authority
+  promotion. O6f candidate-authority work only is released.
+- O6f-P frames the next red boundary around proposed exact bytes rather than acceptance.
+  The complete manifest must contain exactly the two reviewed theory records, 15
+  records for each reviewed package, and the already-designed bounded consumer policy.
+  Retained reports and the breaker are inputs or controls, never members. Materializing
+  policy before final authority keeps O7's resolution input browsable and avoids a
+  post-acceptance manifest rewrite; O7 still owns decisions and presentation rather
+  than policy authorship. The ProductContract may describe intended
+  final-product authority so O6-G can later accept identical bytes, while the O6f actor
+  result remains a zero-argument candidate replay with no accepted, resolution, or
+  semantic-status conclusion. O-R6f-P owns independent review before implementation.
+- O-R6f-P blocks implementation. Although the 4-source/33-member ledger, exact policy,
+  token mapping, single graph/source capture, and red topology agree, the first controls
+  let the future wrapper supply its own contract digest and did not freeze manifest byte
+  order. Exact result fields also allowed conclusion aliases, while several established
+  host launch paths remained untrapped. O6f-P1 replaces those circular receipts with a
+  full ordered test-owned manifest and raw digest, a full test-owned ProductContract and
+  canonical digest, exact public data-field sets, and the O5 launch-path controls. The
+  focused suite now independently reproduces manifest `0dae972b...3455d`, contract
+  `4bfbc89e...eb17`, and the intended one-pass/one-failure/ten-skip topology; those
+  controls were submitted to O-R6f-P1 without releasing implementation.
+- O-R6f-P1 retains a narrower BLOCK after reproducing every frozen digest and the exact
+  red topology: a data-only public-field census ignored callable `accept`/`resolve`
+  aliases, and rejection of one `accepted` property name did not prove every schema
+  object closed. O6f-P2 now freezes all public result/authority names and requires at
+  least ten object-schema branches with `additionalProperties: false` on every branch.
+  Artifact documents, hashes, member ordering, and red topology remain unchanged;
+  O-R6f-P2 independently reproduces all three digests and the exact topology, passes
+  the corrected boundary, and releases O6f implementation only. O6-G acceptance and
+  O7 resolution remain closed.
+- O6f materializes the test-owned bytes without drift: policy `6d0d...291c`, ordered
+  manifest `0dae...3455d`, and canonical ProductContract `4bfbc8...eb17`. The
+  zero-argument wrapper authenticates the contract and manifest, captures the complete
+  graph once, and projects the two-record publication, 17-record Rust and TypeScript
+  registrations, and 18 unclaimed theory declarations without execution, resolution,
+  or acceptance. The first green run exposed two lifecycle-only test assumptions:
+  policy absence belonged to red staging rather than the predecessor census, and the
+  O5 research control treated future ProductContract absence as permanent rather than
+  requiring provisional/candidate separation. O6f-F1 corrects both and thaws only a
+  test copy of the inspector's immutable contract view for exact comparison/mutation.
+  The locked Nix repository gate then passes 24/20/38/3 record fixtures, 18 loader
+  groups, 50 adapter tests, 59 cross-language candidate tests, 178 actor journeys, 16
+  research probes, 20 governance tests, fresh Wave 4/report/Evidence checks, and 49
+  proof groups. Those bytes and receipts were submitted to O-R6f without releasing
+  O6-G or O7.
+- O-R6f's exact Fable 5 static review finds no artifact defect and independently checks
+  the complete policy/manifest/contract structure, actor dataflow, failure barriers,
+  membership hygiene, counts, immutability, provisional/Stack separation, and O6f-F1
+  intent. It correctly returns BLOCK because its Read/Grep/Glob-only grant cannot
+  recompute the three hashes, execute the 12 focused tests, or traverse the external
+  worktree metadata needed to bound the diff; it also reports route provenance
+  ambiguously, which is retained rather than promoted. O6f-R1 changes no product byte:
+  it routes a different-model strict read-only successor with Bash limited to those
+  missing digest/test/git observations and explicit no-bytecode/no-repository-write
+  constraints. Those observations were submitted to O-R6f2 without releasing O6-G or
+  O7.
+- O-R6f2 resolves exact Sonnet 5 and confirms the governing files, target artifacts,
+  focused suite, and plan receipt are present, but `--permission-mode plan` refuses to
+  execute its granted Bash tool. Its strict sandbox also cannot traverse the worktree's
+  external git directory, so it honestly returns a plan rather than evidence. This is a
+  second capability BLOCK, not a product concern. O6f-R2 stops provider retries and
+  retains both failures: Fable supplies the exhaustive independent static challenge,
+  while a separate read-only internal O-R6f3 reviewer owns only digest recomputation,
+  focused execution, and real-git diff bounding. O-R6f3 independently reproduces all
+  three frozen digests, passes 12/12 focused controls, bounds the exact clean nine-path
+  diff after `4d3b530`, and confirms no Stack implementation artifact changed. Combined
+  with Fable's zero-defect static challenge, it passes and releases O6-G only; O7
+  remains closed.
+- O6-G-F0 retains one acceptance-gate scheduling contradiction without rewriting it as
+  product evidence. On exact unchanged product commit `5fc9d2b` with only this plan
+  dirty, the adapter lane classified the `destructive-new` and `invalid-entry-value`
+  hostile children as timeout/extra-output errors and observed one timeout cleanup at
+  0.6835s, over the strict `<0.60s` bound. O6-G-F1 then runs both complete affected
+  methods five times sequentially: 10/10 pass in 30.964s. An immediate complete locked
+  gate also passes every lane—24/20/38/3 records, 18 loaders, 50 adapters, 59
+  cross-language candidates, 178 actor journeys, 16 research probes, 20 governance
+  tests, fresh report/Evidence checks, and 49 proof groups. No implementation, test,
+  artifact, or requirement byte changed; the failed receipt remains an O8 reopen input.
+- O6-G accepts the exact reviewed commit
+  `5fc9d2bc78f3c58d2d5967de9b554630a8ab4a62` without changing any product byte. The
+  accepted ledger binds policy `6d0d...291c`, ordered manifest `0dae...3455d`, canonical
+  ProductContract `4bfbc8...eb17`, wrapper `1ea1f5...bbc8`, graph-derived registration
+  seam `dbe700...82a4`, and closed schema `1e14d6...ab36`; the two affected controls are
+  `3114f9...a8b` and `f94495...1448`. A clean-worktree 18-test candidate/provisional
+  replay passes after commit. Acceptance remains this external convergence decision:
+  actor results still expose no accepted/resolution/semantic-status field, reports and
+  the breaker remain outside membership, performance remains unclaimed, and O8 reopen
+  triggers remain unchanged. O7 consumer decision/inspection only is released.
+- O7 narrowly reuses private disposition dataclasses, syntactic selectors, the four
+  already-shared concern/assurance mechanics, and the identical NDJSON boundary mapping
+  from the Stack-bounded module without invoking or changing `resolve_stack`. Its
+  effect matcher remains OrderedMap-local and binds the different nested plan
+  provenance. O-R7 finds no current Stack-only semantic leak; reopen and extract a
+  properly shared internal seam if either domain's concern, assurance, or interface
+  token diverges, rather than letting private cross-domain coupling choose semantics.
+- O7 is a new bounded actor over the accepted O6-G replay, not a revision to product
+  authority. The actor may invoke `inspect_product_candidate()` once and then may only
+  consume its detached 33-record graph and already-derived publication, registration,
+  and theory views. Negative controls may transform detached `GraphObservation` values
+  in memory, but no breaker joins accepted membership. OrderedMap-local resolution and
+  presentation therefore get new modules; Stack `resolve_stack`, Stack inspection, and
+  every accepted O6-G byte remain protected. The directional child-process/NDJSON
+  boundary is a separate observation and cannot satisfy or defeat semantic policy.
+- O-R6d-P4 passes the complete predecessor. Independent replay confirms the exact
+  12-test topology—one accepted-input pass, one intentional absent-boundary failure,
+  and ten skips—plus a clean diff. A cold copied checker cannot read original or copied
+  report files, must use the exact accepted runner, and must serialize perturbations to
+  every scalar, nested identity/order/cardinality, event, assumption, exclusion, and
+  stderr field without depending on call order. Independently rebuilt Rust/breaker
+  binaries, exact Deno typecheck/runner argv, full tool probes, runtime breaker source
+  digests, normalized escape scans, and all-three report mutations pass. Exact packet
+  shape is provenance, not OrderedMap meaning. Perfect-shadow/FFI evasion remains an
+  explicit O-R6d source-review limitation. O6d implementation only is released.
+- O4's full repository gate passes with 24 valid/20 schema-invalid/38 link-invalid/3
+  link-valid record fixtures, 18 loader groups, 36 adapter tests, 18 cross-language
+  candidates, 156 actor journeys, 10 research probes, 20 governance tests, two fresh
+  reports/eight Evidence records, and 49 proof groups. This accepts the shared substrate
+  extraction and releases O5; it does not accept an OrderedMap actor path.
+- The first full O3a repository run retained one unchanged Stack proof-fixture timeout
+  where a boundary diagnostic was expected. An immediate unchanged rerun passed all 49
+  proof contract groups and the full gate, including 10 research tests. No timeout or
+  proof oracle was relaxed.
+
+## Decision log
+
+| Question and options | Evidence and concerns | Decision and reopen observation |
+|---|---|---|
+| block on H2 or begin second-domain research | H1/H-S1 automated and independent gates pass; H2 needs an external eligible participant; the user explicitly deferred it | keep H2/H-G open in ExecPlan 0003 and begin this plan; reopen if H2 later exposes a deficit affecting OrderedMap actor output |
+| adopt categorical/HOL machinery now or retain it as a lens | institutions address cross-logic satisfaction and categorical logic relates typed calculi/proof lanes, but no current import translates meaning and the constitution forbids one universal logic | record grounding and adoption triggers only; reopen on an exact OrderedMap authoring/import/refinement falsifier |
+| generalize all Stack modules or extract only demonstrated reuse | record/graph/projection mechanics are largely generic while resolver, campaigns, proof, adapters, and inspection contain intentional Stack semantics | run the census and paper probe, then extract only the shared boundary demanded by two domains; reopen when duplication is observed in an accepted second path |
+| require Lean proof Evidence for OrderedMap | doing so would test repetition of the proof lane, not Evidence plurality, and would risk privileging one logic without an actor need | do not require proof by default; select the cheapest honest mechanism for each Claim and preserve unsupported proof-relevant concerns if any; reopen if policy or law universality makes proof necessary |
+
+## Result and remaining work
+
+O0 through O-G2 establish the reviewed paper contract and exact actor outcomes while
+retaining the deferred cold-human observation and categorical discussion as bounded
+memory. O3 accepts the canonical OrderedMap Specification, realization profile, and
+conformance-plan artifacts. O4 accepts the generic canonical-artifact and manifest
+authority substrate without changing Stack actor behavior. O5 now accepts a pinned,
+provisional OrderedMap theory-source actor: one authenticated manifest snapshot yields
+the exact two-record publication and graph plus all 18 declarations as visible,
+unclaimed meaning. Every retained BLOCK and successor PASS remains in the history.
+There is now an independently accepted plan-driven OrderedMap conformance runner, two
+independently reviewed package packets, two fresh retained candidate report facts, and
+one selectively challenging reorder-breaker fixture/report outside accepted membership.
+OrderedMap Claim and Evidence candidates now exist as the exact O6e 2/14/14 set. There
+is now one O6-G-accepted final 4-source/33-member manifest, ProductContract, and
+single-snapshot publication/registration/graph/theory replay at exact commit
+`5fc9d2bc78f3c58d2d5967de9b554630a8ab4a62`; actor results do not self-report that
+external acceptance. O7 now adds one zero-argument consumer actor over that replay:
+both exact Realizations are semantically acceptable under all seven selected supports,
+optional performance stays unsupported, every Evidence axis is inspectable, all 18
+theory declarations remain honestly unclaimed, and the directional child-process
+boundary stays separate. Before O8, there was no maintenance successor. Retained O-R6d
+through O-R6d5 provenance and reproduction
+BLOCKs now lead to O-R6d6 PASS. O6d is accepted, O-R6e-P2 passes, O-R6e retains one
+durable-state contradiction corrected by O6e-S1, and O-R6e2 passes. O-R6 macro retains
+load-sensitive full-gate observations without changing any bound artifact. O6-F1 now
+combines the unchanged 5x2 focused pass with one clean hosted exact-head repository
+pass, O-R6-F passes independent characterization review, and O-R6-2 accepts macro
+lifecycle convergence. O-R6f3 combines Fable's exhaustive static challenge with
+independently reproduced digests, focused execution, and real-git diff bounding; O6-G
+accepts the unchanged reviewed ledger. O7 passes its 14 focused controls, the 54-test
+Stack inspection/O6-G/O7 adjacent set, and the complete repository gate with 192 actor
+journeys plus every record, loader, adapter, cross-language, research, governance,
+report/Evidence, and proof lane. The first O-R7 implementation review passes all
+code, behavior, protected-byte, adjacent, and private-helper checks but retains a
+lifecycle-document BLOCK; O7-S1 corrects that durable-memory drift and O-R7-2 passes.
+O7 consumer decision/inspection is accepted. O8 now has an exact append-only
+35-member successor snapshot and maintenance actor: the canonical `0.2.0` query returns
+zero candidates, its 20 declarations are unclaimed, all 14 predecessor Evidence
+records remain version-scoped history, and both accepted predecessor candidates are
+recoverable without automatic selection. O8-F1 retains the first green attempt's
+captured-text newline and phase-trap corrections. Its `_document_text + "\n"` use is
+a deliberately bounded private captured-byte seam: graph capture has already
+authenticated the record, the actor restores the finite snapshot's omitted terminal
+newline before exact O8 raw-byte comparison, and any `GraphRecord` serialization or
+newline-handling change must reopen O8-F1 and its raw-digest/failure-phase controls.
+O-R8 passed every implementation and repository check but retained a narrow durable-plan
+BLOCK; O8-S1 corrects that documentation only, and O-R8-2 passes at exact clean
+`6b15732` without changing implementation, artifacts, requirements, digests, or
+protected bytes. O8 maintenance is accepted. O-R4 end-to-end review is now the live
+edge; the final locked gate remains behind it.
+
+## Stop and escalation conditions
+
+- stop if an OrderedMap declaration prescribes representation, host equality, or an
+  algorithm without an actor-visible need;
+- stop if a generic-looking API weakens exact membership, phase barriers, diagnostics,
+  Evidence scope, or Stack regression behavior;
+- stop if a proof, test, benchmark, audit, or assertion is silently promoted over the
+  others or converted into a Claim truth badge;
+- stop if semantic compatibility and directional realization compatibility collapse;
+- stop before adding arbitrary-function transport, institution/refinement machinery,
+  `.pspec`, or hosted infrastructure without its falsifier and successor plan;
+- escalate changes to protected intent, key/order semantics with multiple plausible
+  actor meanings, participant privacy, or any request to claim universal generality.

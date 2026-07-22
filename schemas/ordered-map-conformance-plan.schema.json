@@ -1,0 +1,235 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/package-spec-language/ordered-map-conformance-plan.schema.json",
+  "title": "OrderedMap bounded conformance plan",
+  "type": "object",
+  "required": [
+    "formatVersion",
+    "algorithm",
+    "algorithmVersion",
+    "protocol",
+    "specification",
+    "profile",
+    "domains",
+    "bounds",
+    "eventContract",
+    "cases"
+  ],
+  "properties": {
+    "formatVersion": { "const": 1 },
+    "algorithm": { "const": "ordered-map-conformance-campaign" },
+    "algorithmVersion": { "const": "1" },
+    "protocol": { "const": "ordered-map-runner-json-v1" },
+    "specification": { "$ref": "#/$defs/recordInput" },
+    "profile": { "$ref": "#/$defs/recordInput" },
+    "domains": {
+      "type": "object",
+      "required": ["keys", "values", "classTokens"],
+      "properties": {
+        "keys": { "const": ["A", "a", "B", "b", "C", "c"] },
+        "values": { "const": [-2, -1, 0, 1, 2] },
+        "classTokens": { "const": ["a", "b", "c"] }
+      },
+      "additionalProperties": false
+    },
+    "bounds": {
+      "type": "object",
+      "required": [
+        "maximumHistory",
+        "maximumLiveClasses",
+        "observationLimit",
+        "responseTimeoutSeconds",
+        "exitTimeoutSeconds"
+      ],
+      "properties": {
+        "maximumHistory": { "const": 3 },
+        "maximumLiveClasses": { "const": 3 },
+        "observationLimit": { "const": 3 },
+        "responseTimeoutSeconds": { "const": 0.2 },
+        "exitTimeoutSeconds": { "const": 0.2 }
+      },
+      "additionalProperties": false
+    },
+    "eventContract": {
+      "type": "object",
+      "required": ["forbidden", "optional", "default"],
+      "properties": {
+        "forbidden": { "const": ["io.*"] },
+        "optional": { "const": ["debug.emit"] },
+        "default": { "const": "unspecified" }
+      },
+      "additionalProperties": false
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "items": { "$ref": "#/$defs/case" }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "nonEmptyString": { "type": "string", "minLength": 1 },
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "address": {
+      "type": "object",
+      "required": ["kind", "id", "version"],
+      "properties": {
+        "kind": { "enum": ["specification", "realizationProfile"] },
+        "id": { "$ref": "#/$defs/nonEmptyString" },
+        "version": { "$ref": "#/$defs/nonEmptyString" }
+      },
+      "additionalProperties": false
+    },
+    "recordInput": {
+      "type": "object",
+      "required": ["path", "address", "sha256"],
+      "properties": {
+        "path": { "$ref": "#/$defs/nonEmptyString" },
+        "address": { "$ref": "#/$defs/address" },
+        "sha256": { "$ref": "#/$defs/sha256" }
+      },
+      "additionalProperties": false
+    },
+    "case": {
+      "type": "object",
+      "required": ["id", "steps"],
+      "properties": {
+        "id": { "$ref": "#/$defs/nonEmptyString" },
+        "steps": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "$ref": "#/$defs/step" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "stepBase": {
+      "type": "object",
+      "required": ["op", "effectDeclaration"],
+      "properties": {
+        "op": { "enum": ["empty", "put", "lookup", "entries"] },
+        "effectDeclaration": { "const": "ordered-map-effects" }
+      }
+    },
+    "step": {
+      "oneOf": [
+        {
+          "allOf": [
+            { "$ref": "#/$defs/stepBase" },
+            {
+              "type": "object",
+              "required": ["op", "bind", "effectDeclaration"],
+              "properties": {
+                "op": { "const": "empty" },
+                "bind": { "$ref": "#/$defs/nonEmptyString" },
+                "effectDeclaration": { "const": "ordered-map-effects" }
+              },
+              "additionalProperties": false
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/stepBase" },
+            {
+              "type": "object",
+              "required": ["op", "source", "key", "value", "bind", "effectDeclaration"],
+              "properties": {
+                "op": { "const": "put" },
+                "source": { "$ref": "#/$defs/nonEmptyString" },
+                "key": { "enum": ["A", "a", "B", "b", "C", "c"] },
+                "value": { "enum": [-2, -1, 0, 1, 2] },
+                "bind": { "$ref": "#/$defs/nonEmptyString" },
+                "effectDeclaration": { "const": "ordered-map-effects" }
+              },
+              "additionalProperties": false
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/stepBase" },
+            {
+              "type": "object",
+              "required": ["op", "source", "key", "expected", "declarations", "effectDeclaration"],
+              "properties": {
+                "op": { "const": "lookup" },
+                "source": { "$ref": "#/$defs/nonEmptyString" },
+                "key": { "enum": ["A", "a", "B", "b", "C", "c"] },
+                "expected": { "$ref": "#/$defs/lookupResult" },
+                "declarations": { "$ref": "#/$defs/declarations" },
+                "effectDeclaration": { "const": "ordered-map-effects" }
+              },
+              "additionalProperties": false
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/stepBase" },
+            {
+              "type": "object",
+              "required": ["op", "source", "expected", "declarations", "effectDeclaration"],
+              "properties": {
+                "op": { "const": "entries" },
+                "source": { "$ref": "#/$defs/nonEmptyString" },
+                "expected": {
+                  "type": "array",
+                  "maxItems": 3,
+                  "items": { "$ref": "#/$defs/entry" }
+                },
+                "declarations": { "$ref": "#/$defs/declarations" },
+                "effectDeclaration": { "const": "ordered-map-effects" }
+              },
+              "additionalProperties": false
+            }
+          ]
+        }
+      ]
+    },
+    "lookupResult": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["tag"],
+          "properties": { "tag": { "const": "none" } },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": ["tag", "value"],
+          "properties": {
+            "tag": { "const": "some" },
+            "value": { "enum": [-2, -1, 0, 1, 2] }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "entry": {
+      "type": "object",
+      "required": ["class", "value"],
+      "properties": {
+        "class": { "enum": ["a", "b", "c"] },
+        "value": { "enum": [-2, -1, 0, 1, 2] }
+      },
+      "additionalProperties": false
+    },
+    "declarations": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "lookup-empty",
+          "lookup-put-same",
+          "lookup-put-other",
+          "put-existing-position",
+          "put-new-appends",
+          "persistence"
+        ]
+      }
+    }
+  }
+}

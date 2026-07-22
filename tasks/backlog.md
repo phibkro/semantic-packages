@@ -2,18 +2,26 @@
 
 ## Now
 
-1. Complete ExecPlan 0003 memory reconciliation so current docs and plan locations
-   agree with accepted executable and hosted evidence.
-2. Inventory the exact existing resolver and theory-projection entrypoints against the
-   five cold-human questions before proposing a new interface.
-3. Freeze and run one uninvolved-human inspection protocol; retain failures as product
-   input instead of coaching the participant to a pass.
+1. Frame the OrderedMap generality ExecPlan while retaining Stack as the accepted
+   regression substrate.
+2. Run a Stack-literal census and a paper authoring probe before generalizing code:
+   attempt one OrderedMap observation, law, visible unknown, and breaker through the
+   current record, graph, projection, Evidence, and resolution contracts.
+3. Freeze the smallest actor-complete OrderedMap journey from theory author through
+   package author and both consumer roles; implement only after the falsifier and
+   independent design review pass.
+
+## Deferred operator observation
+
+- Run ExecPlan 0003 H2 with an eligible uninvolved human at one exact public revision,
+  using [`docs/operations/cold-human-inspection.md`](../docs/operations/cold-human-inspection.md).
+  Retain the participant's reviewed answers, navigation, assistance, timing, and
+  privacy-bounded observation. This item is deferred, not passed or replaced by the
+  automated ten-control preflight; an H2 BLOCK still creates the smallest
+  observed-deficit successor before H-G can close.
 
 ## Next
 
-- Add OrderedMap beside Stack as a structurally different end-to-end tracer. First
-  falsify whether current records can express one observation, law, unknown, and
-  breaker without Stack-specific semantics.
 - Demonstrate consumer selection between genuinely differentiated deployment profiles
   and keep performance/resource Evidence inapplicable outside its exact profile.
 - Model explicit specification refinement and cross-version compatibility only after
@@ -57,8 +65,17 @@
 
 ## Research
 
-- Institution-based composition and satisfaction across heterogeneous logics.
-- Coalgebraic behavioral refinement and finite conformance testing.
+- Institution-based composition and satisfaction across heterogeneous logics. Adopt
+  signature morphisms or satisfaction-preserving translations only when a second
+  domain's imports or explicit refinement require meaning preservation; flat-authoring
+  strain is the trigger, not categorical elegance alone.
+- Coalgebraic behavioral refinement and finite conformance testing. OrderedMap should
+  continue the observation-first, representation-independent pattern and test whether
+  map/fold/fusion-shaped laws expose a real need for stronger structure.
+- Proof relevance as a descriptive grounding for Claim/Evidence separation: a Claim
+  records what proposition is at issue and in what scope, while Evidence retains the
+  distinguishing witness metadata. This is an analogy across plural mechanisms, not an
+  identification of all Evidence with proof terms in one type theory.
 - Evidence lattices and provenance.
 - Resource algebras, QTT, ownership, and separation concerns.
 - Cross-language realization compatibility through Wasm components.

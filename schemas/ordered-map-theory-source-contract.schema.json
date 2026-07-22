@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/semantic-packages/ordered-map-theory-source-contract.schema.json",
+  "title": "OrderedMap provisional theory-source authority contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "formatVersion",
+    "id",
+    "version",
+    "authorityClass",
+    "finalProductAuthority",
+    "manifest",
+    "source",
+    "specification",
+    "profile"
+  ],
+  "properties": {
+    "formatVersion": {"const": 1},
+    "id": {"const": "ordered-map-theory-source-contract"},
+    "version": {"const": "0.1.0"},
+    "authorityClass": {"const": "provisional-theory-source"},
+    "finalProductAuthority": {"const": false},
+    "manifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "rawSha256"],
+      "properties": {
+        "path": {"const": "registry/ordered-map/theory-manifest.json"},
+        "rawSha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["selector", "roles"],
+      "properties": {
+        "selector": {"const": "ordered-map-theory"},
+        "roles": {
+          "type": "array",
+          "prefixItems": [
+            {"const": "theory-authored"},
+            {"const": "dependency"}
+          ],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
+        }
+      }
+    },
+    "specification": {"$ref": "#/$defs/specificationBinding"},
+    "profile": {"$ref": "#/$defs/profileBinding"}
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "specificationBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["address", "rawSha256"],
+      "properties": {
+        "address": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "id", "version"],
+          "properties": {
+            "kind": {"const": "specification"},
+            "id": {"const": "ordered-map"},
+            "version": {"const": "0.1.0"}
+          }
+        },
+        "rawSha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "profileBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["address", "rawSha256"],
+      "properties": {
+        "address": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "id", "version"],
+          "properties": {
+            "kind": {"const": "realizationProfile"},
+            "id": {"const": "ordered-map-ascii-fold"},
+            "version": {"const": "0.1.0"}
+          }
+        },
+        "rawSha256": {"$ref": "#/$defs/sha256"}
+      }
+    }
+  }
+}

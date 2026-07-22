@@ -1,9 +1,9 @@
-"""Read-only inspection of independent Stack package registration.
+"""Read-only inspection of manifest-governed package registration.
 
-This is deliberately a Stack-specific product boundary.  It inventories one
-finite local union of a theory source set and one explicitly selected package
-source set using the governed finite-source helper and record/link checker;
-it does not execute adapters, campaigns, proof tooling, or resolution.
+Shared mechanics inventory one exact union of manifest-selected theory and
+package sources. The Stack actor wrapper pins its product authority and accepts
+no override. Neither path executes adapters, campaigns, proof tooling, or
+resolution.
 """
 
 from __future__ import annotations
@@ -41,38 +41,24 @@ class RegistrationObservation:
         return not self.diagnostics
 
 
-_MANIFEST = graph._inspect_manifest_projection()
-_SOURCE_ROOTS = {source.source_id: source.root for source in _MANIFEST.sources}
-_THEORY_APPROVED: dict[Address, str] = {
-    member.address: member.sha256
-    for member in _MANIFEST.members
-    if member.source == "theory"
-}
-_PACKAGE_APPROVED: dict[str, dict[Address, str]] = {
-    source_id: {
-        member.address: member.sha256
-        for member in _MANIFEST.members
-        if member.source == source_id
-    }
-    for source_id, root in _SOURCE_ROOTS.items()
-    if Path(root).parts[:1] == ("packages",)
-}
-_ROLE_BY_ADDRESS: dict[Address, str] = {
-    member.address: member.role for member in _MANIFEST.members
-}
+_MANIFEST = graph.inspect_manifest_authority(graph.DEFAULT_STACK_MANIFEST)
+_THEORY_ROLES = frozenset({"theory-authored", "dependency"})
+_PACKAGE_ROLES = frozenset({"package-authored"})
 
 
 def _root_label(path: str) -> str:
     return path.split("/", 1)[0]
 
 
-def _role_for_record(path: str, address: Address) -> str:
+def _role_for_record(
+    path: str, address: Address, role_by_address: dict[Address, str]
+) -> str:
     # Ownership role is decided by accepted address identity, not by the
     # physical root a record happens to be observed under: an exact theory
     # or package address keeps its authored role even when moved to the
     # other root, since the physical root only governs registration validity
     # (see _registration_diagnostics), never who authored the content.
-    governed_role = _ROLE_BY_ADDRESS.get(address)
+    governed_role = role_by_address.get(address)
     if governed_role is not None:
         return governed_role
     # Wholly unexpected address: no accepted identity exists to attribute
@@ -87,13 +73,14 @@ def _address_text(address: Address) -> str:
 
 def _inventory(
     records: tuple[_finite_source._SourceRecord, ...],
+    role_by_address: dict[Address, str],
 ) -> tuple[RegistrationRecord, ...]:
     inventory = [
         RegistrationRecord(
             address=record.address,
             path=record.path,
             sha256=record.sha256,
-            role=_role_for_record(record.path, record.address),
+            role=_role_for_record(record.path, record.address, role_by_address),
         )
         for record in records
     ]
@@ -118,6 +105,7 @@ def _registration_diagnostics(
     inventory: tuple[RegistrationRecord, ...],
     theory_approved: dict[Address, str],
     package_approved: dict[Address, str],
+    product: str,
 ) -> list[record_check.Diagnostic]:
     diagnostics: list[record_check.Diagnostic] = []
 
@@ -136,7 +124,7 @@ def _registration_diagnostics(
                     "REGISTRATION_MISSING_ADDRESS",
                     ".",
                     "#",
-                    f"Stack package registration requires {_address_text(address)}",
+                    f"{product} package registration requires {_address_text(address)}",
                 )
             )
 
@@ -149,7 +137,7 @@ def _registration_diagnostics(
                     "REGISTRATION_UNEXPECTED_ADDRESS",
                     item.path,
                     "#",
-                    "Stack package registration does not include "
+                    f"{product} package registration does not include "
                     f"{_address_text(item.address)}",
                 )
             )
@@ -166,23 +154,72 @@ def _registration_diagnostics(
     return diagnostics
 
 
-def inspect_stack_package(
-    theory_root: Path, package_root: Path, package: str
+def _selector_observation(
+    package: str, code: str, message: str
 ) -> RegistrationObservation:
-    """Inspect the theory/package union without executing or mutating anything."""
+    return RegistrationObservation(
+        package, (), (record_check.Diagnostic(code, ".", "#", message),)
+    )
 
-    if not _MANIFEST.ok:
-        return RegistrationObservation(package, (), _MANIFEST.diagnostics)
 
-    package_approved = _PACKAGE_APPROVED.get(package)
-    if package_approved is None:
-        diagnostic = record_check.Diagnostic(
-            "REGISTRATION_UNKNOWN_SELECTOR",
-            ".",
-            "#",
-            f"no Stack package registration selector for {package!r}",
+def inspect_package_registration(
+    theory_root: Path,
+    package_root: Path,
+    package: str,
+    *,
+    authority: graph.ManifestAuthority,
+    theory_source: str,
+    product: str,
+) -> RegistrationObservation:
+    """Observe an exact theory/package union under supplied authority."""
+
+    if not authority.ok:
+        return RegistrationObservation(package, (), authority.diagnostics)
+
+    sources = {item.source_id: item for item in authority.sources}
+    declared_theory = sources.get(theory_source)
+    if declared_theory is None:
+        return _selector_observation(
+            package,
+            "REGISTRATION_UNKNOWN_THEORY_SOURCE",
+            f"no {product} theory source selector for {theory_source!r}",
         )
-        return RegistrationObservation(package, (), (diagnostic,))
+    if not declared_theory.roles.issubset(_THEORY_ROLES):
+        return _selector_observation(
+            package,
+            "REGISTRATION_THEORY_SOURCE_ROLE_MISMATCH",
+            f"{product} theory source {theory_source!r} does not permit only "
+            "theory-authored/dependency roles",
+        )
+
+    declared_package = sources.get(package)
+    if declared_package is None:
+        return _selector_observation(
+            package,
+            "REGISTRATION_UNKNOWN_PACKAGE_SOURCE",
+            f"no {product} package source selector for {package!r}",
+        )
+    if not declared_package.roles.issubset(_PACKAGE_ROLES):
+        return _selector_observation(
+            package,
+            "REGISTRATION_PACKAGE_SOURCE_ROLE_MISMATCH",
+            f"{product} package source {package!r} does not permit only "
+            "package-authored roles",
+        )
+
+    theory_approved = {
+        member.address: member.sha256
+        for member in authority.members
+        if member.source == theory_source
+    }
+    package_approved = {
+        member.address: member.sha256
+        for member in authority.members
+        if member.source == package
+    }
+    role_by_address = {
+        member.address: member.role for member in authority.members
+    }
 
     source = _finite_source._observe_finite_source(
         (
@@ -191,7 +228,7 @@ def inspect_stack_package(
         )
     )
     diagnostics = list(source.diagnostics)
-    inventory = _inventory(source.records)
+    inventory = _inventory(source.records, role_by_address)
 
     # Preserve the loader's input/schema phase barrier.  Graph and registration
     # conclusions are not manufactured from a partial record set.
@@ -200,8 +237,112 @@ def inspect_stack_package(
         graph_diagnostics = record_check.check_graph(records)
         diagnostics.extend(graph_diagnostics)
         diagnostics.extend(
-            _registration_diagnostics(inventory, _THEORY_APPROVED, package_approved)
+            _registration_diagnostics(
+                inventory, theory_approved, package_approved, product
+            )
         )
 
     diagnostics.sort(key=record_check.Diagnostic.sort_key)
     return RegistrationObservation(package, inventory, tuple(diagnostics))
+
+
+def _project_package_registration(
+    observation: graph.GraphObservation,
+    *,
+    authority: graph.ManifestAuthority,
+    theory_source: str,
+    package: str,
+    product: str,
+) -> RegistrationObservation:
+    """Internally project registration from an actor-owned captured graph.
+
+    Actor wrappers must authenticate and capture the complete graph before using this
+    non-accepting seam. It deliberately performs no source read, execution, policy
+    resolution, or product-authority decision.
+    """
+
+    if not authority.ok:
+        return RegistrationObservation(package, (), authority.diagnostics)
+
+    sources = {item.source_id: item for item in authority.sources}
+    declared_theory = sources.get(theory_source)
+    if declared_theory is None:
+        return _selector_observation(
+            package,
+            "REGISTRATION_UNKNOWN_THEORY_SOURCE",
+            f"no {product} theory source selector for {theory_source!r}",
+        )
+    if not declared_theory.roles.issubset(_THEORY_ROLES):
+        return _selector_observation(
+            package,
+            "REGISTRATION_THEORY_SOURCE_ROLE_MISMATCH",
+            f"{product} theory source {theory_source!r} does not permit only "
+            "theory-authored/dependency roles",
+        )
+
+    declared_package = sources.get(package)
+    if declared_package is None:
+        return _selector_observation(
+            package,
+            "REGISTRATION_UNKNOWN_PACKAGE_SOURCE",
+            f"no {product} package source selector for {package!r}",
+        )
+    if not declared_package.roles.issubset(_PACKAGE_ROLES):
+        return _selector_observation(
+            package,
+            "REGISTRATION_PACKAGE_SOURCE_ROLE_MISMATCH",
+            f"{product} package source {package!r} does not permit only "
+            "package-authored roles",
+        )
+    if not observation.ok:
+        return RegistrationObservation(package, (), observation.diagnostics)
+
+    records = tuple(
+        sorted(
+            (
+                RegistrationRecord(
+                    record.address,
+                    (
+                        "theory/"
+                        if record.source == theory_source
+                        else "package/"
+                    )
+                    + record.path.split("/", 1)[-1],
+                    record.sha256,
+                    record.role
+                    or (
+                        "theory-authored"
+                        if record.source == theory_source
+                        else "package-authored"
+                    ),
+                )
+                for record in observation.records
+                if record.source in {theory_source, package}
+            ),
+            key=lambda item: (item.address, item.path, item.sha256, item.role),
+        )
+    )
+    return RegistrationObservation(package, records, ())
+
+
+def inspect_stack_package(
+    theory_root: Path, package_root: Path, package: str
+) -> RegistrationObservation:
+    """Inspect the pinned Stack package surface without actor overrides."""
+
+    if not _MANIFEST.ok:
+        return RegistrationObservation(package, (), _MANIFEST.diagnostics)
+    if package not in {"rust", "typescript"}:
+        return _selector_observation(
+            package,
+            "REGISTRATION_UNKNOWN_SELECTOR",
+            f"no Stack package registration selector for {package!r}",
+        )
+    return inspect_package_registration(
+        theory_root,
+        package_root,
+        package,
+        authority=_MANIFEST,
+        theory_source="theory",
+        product="Stack",
+    )
