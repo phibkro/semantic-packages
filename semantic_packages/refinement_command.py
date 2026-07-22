@@ -166,12 +166,33 @@ def _write_atomically(path: Path, document: dict[str, Any]) -> record_check.Diag
     return None
 
 
+def _aliases_input(output: Path, input_path: Path) -> bool:
+    try:
+        return os.path.samefile(output, input_path)
+    except (OSError, ValueError):
+        try:
+            return output.resolve(strict=False) == input_path.resolve(strict=False)
+        except (OSError, RuntimeError, ValueError):
+            return os.path.abspath(output) == os.path.abspath(input_path)
+
+
 def run_inspection(
     proposal_path: Path,
     predecessor_path: Path,
     successor_path: Path,
     output_path: Path,
 ) -> int:
+    for input_path in (proposal_path, predecessor_path, successor_path):
+        if _aliases_input(output_path, input_path):
+            _print(
+                _diagnostic(
+                    "REFINEMENT_OUTPUT_WRITE",
+                    output_path,
+                    "#",
+                    f"output aliases input {input_path}",
+                )
+            )
+            return 1
     proposal, diagnostic = _read_proposal(proposal_path)
     if diagnostic is not None:
         _print(diagnostic)

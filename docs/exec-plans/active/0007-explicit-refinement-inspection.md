@@ -119,7 +119,7 @@ python3 scripts/check_repo.py
 - [x] V-R1Y red-contract release review (PASS at `1d74c98`)
 - [x] V2 inspector and CLI
 - [x] V-R2 independent implementation review (BLOCK retained)
-- [ ] V2-S1 output-alias safety successor
+- [x] V2-S1 output-alias safety successor
 - [ ] V-R2S independent safety review
 - [ ] V3 durable documentation and maintenance
 - [ ] V-G convergence, freeze, and one PR
@@ -182,6 +182,10 @@ python3 scripts/check_repo.py
   the report on success. V2-S1 freezes all three input aliases through an equivalent
   `..` spelling, then rejects them before parsing or writing. No product decision or
   broader filesystem policy is introduced.
+- 2026-07-22: V2-S1 rejects output paths that resolve to or share an existing file
+  identity with proposal, predecessor, or successor before parsing. The 17-test focused
+  journey is green with sixteen active PASS and the intentional red predecessor SKIP;
+  V-R2S remains the release gate for documentation.
 
 ## Result and remaining work
 
