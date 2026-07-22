@@ -3,7 +3,7 @@
 ## Contract status
 
 Active draft for one stacked feature and one future pull request, based on draft PR
-#17 at `78ecc5d`. This contract freezes when its complete, experienceable PR opens.
+#17 at `bc8607b`. This contract freezes when its complete, experienceable PR opens.
 Any revision must record the observation that required it; implementation discoveries
 never silently expand adapter-reported behavior into a whole-process effect claim.
 

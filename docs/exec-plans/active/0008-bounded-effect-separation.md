@@ -8,7 +8,7 @@ variation leaves each complete campaign's non-effect semantic projection unchang
 while optional, forbidden, unspecified, and execution-error dispositions remain
 distinct and visible.
 
-This plan is stacked on draft PR #17 and exact base `78ecc5d`. It develops on
+This plan is stacked on draft PR #17 and exact base `bc8607b`. It develops on
 `agent/effect-classification-journey` without waiting for upstream merge. It must not
 open a PR until the exact two-domain observation is experienceable and all falsifiers
 pass.
