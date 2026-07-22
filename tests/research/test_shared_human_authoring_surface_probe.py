@@ -42,6 +42,63 @@ SHARED_FIELDS = {
     "resources",
     "performancePropositions",
 }
+EXPECTED_IDENTITIES = {
+    STACK_SPEC: ("specification", "stack", "0.1.0"),
+    ORDERED_MAP_SPEC: ("specification", "ordered-map", "0.1.0"),
+}
+EXPECTED_DECLARATIONS = {
+    STACK_SPEC: {
+        "carriers": {"Stack"},
+        "operations": {"empty", "push"},
+        "observations": {"pop"},
+        "derivedObservations": {"elements"},
+        "equivalences": {"stack-equivalence"},
+        "laws": {"pop-empty", "pop-push"},
+        "effects": {"stack-effects"},
+        "resources": {"persistence"},
+        "performancePropositions": {"push-amortized-constant"},
+    },
+    ORDERED_MAP_SPEC: {
+        "carriers": {"Key", "Value", "OrderedMap"},
+        "operations": {"empty", "put"},
+        "observations": {"lookup", "entries"},
+        "equivalences": {
+            "key-equivalence",
+            "value-equivalence",
+            "ordered-map-equivalence",
+        },
+        "laws": {
+            "lookup-empty",
+            "lookup-put-same",
+            "lookup-put-other",
+            "put-existing-position",
+            "put-new-appends",
+        },
+        "effects": {"ordered-map-effects"},
+        "resources": {"persistence"},
+        "performancePropositions": {"put-amortized-constant"},
+    },
+}
+EXPECTED_LOCAL_REFERENCES = {
+    STACK_SPEC: {
+        "equivalenceCarriers": {"stack-equivalence": "Stack"},
+        "operationFamily": ("push",),
+        "profile": ("realizationProfile", "stack-default", "0.1.0"),
+        "workload": "push-sequence",
+        "costMeasure": "realization-steps",
+    },
+    ORDERED_MAP_SPEC: {
+        "equivalenceCarriers": {
+            "key-equivalence": "Key",
+            "value-equivalence": "Value",
+            "ordered-map-equivalence": "OrderedMap",
+        },
+        "operationFamily": ("put",),
+        "profile": ("realizationProfile", "ordered-map-ascii-fold", "0.1.0"),
+        "workload": "put-sequence",
+        "costMeasure": "realization-steps",
+    },
+}
 
 
 def _load(path: Path) -> dict:
@@ -63,6 +120,34 @@ def _declaration_ids(specification: dict) -> tuple[str, ...]:
     return tuple(ids)
 
 
+def _declarations_by_field(specification: dict) -> dict[str, set[str]]:
+    declarations: dict[str, set[str]] = {}
+    for field in DECLARATION_FIELDS:
+        value = specification.get(field)
+        if isinstance(value, dict):
+            declarations[field] = {value["id"]}
+        elif isinstance(value, list):
+            declarations[field] = {item["id"] for item in value}
+    return declarations
+
+
+def _reference_census(specification: dict) -> dict:
+    performance = specification["performancePropositions"][0]
+    workload = performance["workload"]
+    cost_measure = performance["costMeasure"]
+    profile = workload["profile"]
+    assert profile == cost_measure["profile"]
+    return {
+        "equivalenceCarriers": {
+            item["id"]: item["carrier"] for item in specification["equivalences"]
+        },
+        "operationFamily": tuple(performance["operationFamily"]),
+        "profile": tuple(profile[key] for key in ("kind", "id", "version")),
+        "workload": workload["localId"],
+        "costMeasure": cost_measure["localId"],
+    }
+
+
 class SharedHumanAuthoringSurfaceProbeTest(unittest.TestCase):
     def test_exact_probe_inputs_are_frozen(self) -> None:
         self.assertEqual(
@@ -80,18 +165,34 @@ class SharedHumanAuthoringSurfaceProbeTest(unittest.TestCase):
         self.assertEqual(11, len(_declaration_ids(stack)))
         self.assertEqual(18, len(_declaration_ids(ordered_map)))
 
-    def test_every_canonical_declaration_id_is_explicit_and_flat(self) -> None:
-        for path in (STACK_SPEC, ORDERED_MAP_SPEC):
+    def test_exact_identity_declarations_and_references_are_explicit(self) -> None:
+        for path, expected_identity in EXPECTED_IDENTITIES.items():
             with self.subTest(path=path):
-                identifiers = _declaration_ids(_load(path))
+                specification = _load(path)
+                self.assertEqual(
+                    expected_identity,
+                    tuple(specification[key] for key in ("kind", "id", "version")),
+                )
+                self.assertNotIn("imports", specification)
+                self.assertEqual(
+                    EXPECTED_DECLARATIONS[path],
+                    _declarations_by_field(specification),
+                )
+                identifiers = _declaration_ids(specification)
                 self.assertTrue(all(identifiers))
                 self.assertEqual(len(identifiers), len(set(identifiers)))
+                self.assertEqual(
+                    EXPECTED_LOCAL_REFERENCES[path],
+                    _reference_census(specification),
+                )
 
     def test_current_surface_cannot_round_trip_without_hidden_defaults(self) -> None:
         surface = STACK_SURFACE.read_text(encoding="utf-8")
         self.assertFalse(ORDERED_MAP_SURFACE.exists())
         for canonical_id in (
             "stack-equivalence",
+            "pop-empty",
+            "pop-push",
             "stack-effects",
             "push-amortized-constant",
         ):

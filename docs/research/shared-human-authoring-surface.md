@@ -7,7 +7,10 @@ surface to preserve before the project chooses `.pspec` grammar, elaboration rul
 defaults?
 
 This is a boundary probe, not a language proposal. Canonical JSON remains authoritative
-under ADR 0003, and the existing `specs/stack.pspec` remains illustrative.
+for the accepted tracer descendants: ADR 0003's formal decision scope is ExecPlan 0001,
+while later accepted plans retained rather than superseded its temporary interchange
+boundary. Replacing it still requires a new migration decision. The existing
+`specs/stack.pspec` remains illustrative.
 
 ## Exact inputs
 
@@ -27,15 +30,18 @@ The two domains share a real structural authoring envelope: exact Specification
 identity/version; explicit local declaration IDs; carriers, operations, observations,
 equivalences, laws, effects, resources, and profile-bound performance propositions.
 Stack additionally uses a derived observation. The accepted records contain 11 and 18
-flat declaration IDs respectively. These IDs, declaration categories, exact profile
-references, and imported Specification addresses are product identity and cannot be
-invented from spelling or array position.
+flat declaration IDs respectively. The probe enumerates their exact per-family sets,
+equivalence-carrier references, operation families, and workload/cost-measure profile
+and local IDs. Both exact inputs omit `imports`; a future input that uses imports must
+preserve its exact typed addresses under the separately accepted canonical rule. IDs,
+declaration categories, and present references cannot be invented from spelling or
+array position.
 
 The current Stack sketch is not a lossless source for its canonical record. It does
-not explicitly supply canonical IDs such as `stack-equivalence`, `stack-effects`, or
-`push-amortized-constant`, and it omits descriptive canonical payloads. Inferring those
-values would introduce hidden naming/default rules. There is no OrderedMap `.pspec`
-source from which to test the same rules.
+not explicitly supply canonical IDs such as `stack-equivalence`, `pop-empty`,
+`pop-push`, `stack-effects`, or `push-amortized-constant`, and it omits descriptive
+canonical payloads. Inferring those values would introduce hidden naming/default
+rules. There is no OrderedMap `.pspec` source from which to test the same rules.
 
 The canonical schema deliberately treats signatures, derived-observation definitions,
 equivalence definitions, law statements, resource rules, and performance predicates as
@@ -55,6 +61,11 @@ The shared need is an explicit, lossless authoring contract that distinguishes:
 - author conveniences that may desugar only through documented, falsifiable rules;
 - canonical output and diagnostics that must be identical for Stack and OrderedMap
   inputs expressing the same accepted records.
+
+Here “identical canonical output” means equality of the parsed canonical record
+document, including exact addresses, declaration IDs, references, and values. It does
+not require retaining JSON whitespace, member order, or the input surface's bytes;
+deterministic serialization is a separate A2/A3 question.
 
 No syntax, file extension, serialization, parser library, hosted logic, implicit ID
 rule, or default is selected by this result. The next gate must compare reversible

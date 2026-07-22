@@ -16,7 +16,8 @@ passes.
 
 ExecPlans 0001, 0004, and 0005 accepted complete Stack, OrderedMap, and exact-profile
 lifecycles. ADR 0003 deliberately kept canonical JSON temporary and `.pspec`
-illustrative until those tracers exposed authoring needs. The governing sources are
+illustrative for ExecPlan 0001; later accepted plans retained that boundary without
+turning its scoped status into a permanent format decision. The governing sources are
 the constitution, `ARCHITECTURE.md`, `docs/design/core-model.md`,
 `docs/design/spec-language.md`, the two accepted canonical Specification records,
 `schemas/spec.schema.json`, and the
@@ -45,6 +46,9 @@ into explicit structural identity/references and presently hosted semantic paylo
 Any later elaboration contract must reproduce the same exact canonical records for the
 two accepted domains or propose a separately reviewed migration; author convenience
 cannot silently change product meaning.
+Exact reproduction means canonical record-document equality, not preservation of JSON
+formatting or source bytes. Deterministic serialization remains a separately tested
+contract if a later option requires it.
 
 ## Revisioned work-dependency DAG
 
@@ -64,15 +68,19 @@ A0 roadmap/source census
   -> A-G final convergence
 ```
 
-| Node | Owner and exclusive boundary | Required evidence / downstream gate |
+| Node | Owner / exclusive boundary and integration point | Evidence packet, reviewer, gate, and escalation |
 |---|---|---|
-| A0 roadmap census | lead; read-only roadmap and governing docs | accepted next node and protected constraints; releases A1 |
-| A1 boundary falsifier | lead/integrator; research note, research test, this plan, route links | exact input digests, two-domain declaration census, missing surface/ID controls, hosted-text boundary; A-R1 |
-| A-R1 boundary review | uninvolved read-only reviewer | challenge whether facts justify withholding parser/syntax selection and whether any identity/semantic need is omitted; A-G1 |
-| A-G1 problem gate | lead | accept/revise the authoring problem only; no solution authority |
-| A2 option probe | future owner; research fixtures/notes only | compare canonical JSON authoring, explicit low-sugar surface, and syntax-neutral authoring contract against exact round trip and diagnostics |
-| A-R2 / A-G2 | independent reviewer then lead or operator | reject hidden defaults/universal logic; escalate if product values, not evidence, decide materially different author experiences |
-| A3--A5 | future plan revisions with exclusive implementation/test/docs scopes | refute-first round trip, minimal green elaboration, actor observation, regression and maintenance |
+| A0 roadmap census | lead; read-only roadmap/governing docs; integrates into this plan | exact merged base and route ordering; lead verifies; A1; operator owns priority conflict |
+| A1 boundary falsifier | lead/integrator; research note/test, plan, backlog/system-map links, checker requirements | exact digests, identity, per-family IDs, nested references, absent imports/surface, missing-ID and hosted-text controls; A-R1; escalate semantic contradiction to operator |
+| A-R1 boundary review | uninvolved read-only reviewer; integrates concerns into lead-owned plan only | commands/results, counterexamples, omissions, solution-neutrality, PASS/BLOCK; A-G1; protected-boundary concern to operator |
+| A-G1 problem gate | lead; plan-only disposition | retained review packet and full gate; releases A2 or successor A1; values choice remains unauthorized |
+| A2 option probe | future owner; research notes/fixtures only; integrates into lead-owned option matrix | exact round-trip/ambiguity/diagnostic/recovery comparison; A-R2; escalate materially different author experiences without decisive evidence |
+| A-R2 / A-G2 | independent reviewer then lead; review writes none, lead integrates plan/ADR proposal | option attacks and dispositions; choose smallest reversible contract or stop for operator; no parser release without PASS |
+| A3 red contract | future test owner; exclusive authoring-contract fixtures/tests | Stack + OrderedMap exact-output, ambiguous/missing ID/reference, unsupported-payload, deterministic-diagnostic controls; independent contract review; A4 |
+| A4 minimal elaborator | future implementation owner; exclusive new authoring module plus approved dependency metadata | frozen A3 controls, no canonical predecessor changes, focused/full gates; independent implementation review A-R4; toolchain/migration concern escalates |
+| A-R4 | uninvolved read-only reviewer | parser containment, deterministic output/diagnostics, hidden-default and semantic-overclaim attacks; A5 or successor |
+| A5 journey/maintenance | lead/integrator; author command/docs, user-journey controls, check integration, plan | exact two-domain author tasks, regression/sensitivity, recovery, limitations, optional eligible human observation; A-R5 |
+| A-R5 / A-G | uninvolved reviewer then lead; no reviewer writes, lead owns completion move | full lifecycle, negative controls, docs, full local/hosted gates, conventional squash handoff; operator owns unresolved product-direction fork |
 
 ## Implementation steps in dependency order
 
@@ -93,6 +101,12 @@ A1 runs:
 python3 -m unittest tests.research.test_shared_human_authoring_surface_probe -v
 python3 scripts/check_repo.py
 ```
+
+Expected A1 observation is five focused PASS results covering exact frozen bytes;
+shared-but-distinct field shapes; exact identities, per-family declaration sets and
+nested local/profile references with imports absent; canonical IDs missing from the
+illustrative surface with no OrderedMap surface; and six hosted-text schema fields.
+The full gate must report 32 research probes and preserve all predecessor summaries.
 
 A-R1 must inspect exact inputs and probe sensitivity, distinguish lossless structural
 elaboration from semantic checking, and confirm no solution is smuggled into the
@@ -125,6 +139,13 @@ before release.
   IDs. The current Stack sketch omits multiple canonical IDs and there is no OrderedMap
   sketch. Six semantic payload categories remain schema-valid nonempty strings. These
   facts reject immediate parser implementation but do not select a replacement.
+- 2026-07-22: A-R1 BLOCK. Green focused/full gates did not make the claimed exact
+  boundary sensitive: the first test version counted IDs without enumerating their
+  per-family sets or nested carrier/profile/local references, and the note mentioned
+  imported addresses although both inputs omit imports. The DAG also lacked explicit
+  integration points, evidence packets, escalation owners, and expected observations
+  for downstream packages. A1 successor enumerates those facts and expands ownership;
+  no parser, syntax, IR, or canonical-format option is promoted by the correction.
 
 ## Decision log
 
