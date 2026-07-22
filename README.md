@@ -59,7 +59,7 @@ Evidence transfer.
 - [`docs/design/tracer-bullet.md`](docs/design/tracer-bullet.md): first vertical slice.
 - [`design-specs/0001-explicit-pspec-author-journey.md`](design-specs/0001-explicit-pspec-author-journey.md): observable contract and falsifiers for the complete PSpec author experience.
 - [`design-specs/0002-explicit-refinement-inspection-journey.md`](design-specs/0002-explicit-refinement-inspection-journey.md): observable contract and falsifiers for exact proposal-local cross-version inspection.
-- [`docs/exec-plans/active/0007-explicit-refinement-inspection.md`](docs/exec-plans/active/0007-explicit-refinement-inspection.md): live refinement journey, independent review, and convergence evidence.
+- [`docs/exec-plans/completed/0007-explicit-refinement-inspection.md`](docs/exec-plans/completed/0007-explicit-refinement-inspection.md): completed refinement journey, independent review, and convergence evidence.
 - [`docs/exec-plans/active/0003-cold-human-inspection.md`](docs/exec-plans/active/0003-cold-human-inspection.md): executable inspection surface and deferred uninvolved-human gate.
 - [`docs/exec-plans/completed/0004-ordered-map-generality.md`](docs/exec-plans/completed/0004-ordered-map-generality.md): completed OrderedMap second-domain research, implementation, maintenance, and convergence history.
 - [`docs/exec-plans/completed/0005-deployment-profile-choice.md`](docs/exec-plans/completed/0005-deployment-profile-choice.md): completed differentiated-profile research, Evidence, authority, actor, maintenance, and convergence history.

@@ -7,9 +7,9 @@ authors an explicit cross-version declaration disposition for exact Stack or Ord
 Specification files and receives a deterministic structural inspection report that
 leaves semantic refinement unestablished.
 
-This plan is stacked on draft PR #16. It may develop and open its own PR without waiting
-for #16 to merge, but its eventual PR base remains the #16 feature branch until the
-stack is rebased after upstream disposition.
+This completed plan is stacked on draft PR #16. Its complete feature is draft PR #17,
+whose base remains the #16 feature branch until the stack is rebased after upstream
+disposition.
 
 ## Governing sources and exact substrate
 
@@ -122,7 +122,7 @@ python3 scripts/check_repo.py
 - [x] V2-S1 output-alias safety successor
 - [x] V-R2S independent safety review (PASS at `570891f`)
 - [x] V3 durable documentation and maintenance
-- [ ] V-G convergence, freeze, and one PR (clean gate and freeze complete; PR pending)
+- [x] V-G convergence, freeze, and one PR (draft PR #17)
 
 ## Discoveries and changed assumptions
 
@@ -196,12 +196,18 @@ python3 scripts/check_repo.py
   20 governance tests, all Stack/OrderedMap report and Evidence checks, and all record,
   loader, and proof groups. Design-spec 0002 revision 2 freezes the unchanged contract;
   only push, validated stacked PR metadata, and PR recording remain in V-G.
+- 2026-07-22: frozen head `f4c9e8d` repeated the complete repository gate and opened
+  draft PR #17, `agent/specification-refinement-journey` into
+  `agent/human-authoring-journey`. The PR description is the report: both exact felt
+  commands, safe failure/recovery, the real substrate, complete evidence, exclusions,
+  review dispositions, and reopen triggers. ExecPlan 0007 is complete.
 
 ## Result and remaining work
 
-V0/V1, V2/V2-S1, both independent implementation reviews, and V3 are complete. V-G is
-the only remaining node. No accepted refinement relation, compatibility conclusion,
-Evidence transfer, or resolver change is authorized by this feature.
+All nodes are complete and draft PR #17 carries the frozen experienceable feature. No
+accepted refinement relation, compatibility conclusion, Evidence transfer, or resolver
+change is authorized by this feature. Hosted checks remain PR state rather than a new
+plan node; a failure reopens the smallest affected successor.
 
 ## Stop and escalation conditions
 
