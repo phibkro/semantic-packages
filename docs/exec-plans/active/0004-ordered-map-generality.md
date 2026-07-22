@@ -395,8 +395,8 @@ O0 priority + categorical-memory reconciliation
 | O-R8 successor implementation review | independent read-only reviewer; depends on O8 | BLOCK retained narrowly on durable plan truth: implementation, exact bytes/digests, 12 focused and 47 adjacent checks, failure phases, protected surfaces, and the complete repository gate pass, but the Result retains a stale pre-O8 absence sentence and does not bound the captured-text private seam |
 | O8-S1 lifecycle/private-seam truth correction | continuity owner; exclusive this plan; depends on O-R8 BLOCK | describe successor absence historically and record `_document_text + "\n"` as the deliberately bounded captured-byte seam: graph capture has already authenticated the record, the actor restores the snapshot's omitted terminal newline before exact O8 raw-byte comparison, and any `GraphRecord` serialization or newline-handling change must reopen O8-F1 and its raw-digest/failure-phase controls; change no implementation, artifact, digest, requirement, or protected byte |
 | O-R8-2 successor implementation review | same independent read-only reviewer; depends on O8-S1 | PASS: exact clean `6b15732` changes only this plan after the implementation review; stale successor absence is historical, the captured-byte seam and reopen trigger are durable, DAG/table/checklist/Result agree, and successor manifest `f5e8...faf3`, Specification `05bd...afd0`, policy `db78...e00d`, and protected implementation hashes remain unchanged; releases O-R4 |
-| O-R4 end-to-end review | independent read-only reviewer; depends on O-R8-2 PASS | all four actor outcomes, negative controls, known exclusions, Stack regression, and generality claim boundary |
-| O-G final gate | lead acceptance; depends on O-R4 PASS and locked local/hosted gates | full repository reproduction, retained failures, active-plan result, conventional PR metadata/history, and exact claim of two-domain—not universal—generality |
+| O-R4 end-to-end review | independent read-only reviewer; depends on O-R8-2 PASS | PASS at exact clean merged `9c28c852`: O5/O6f/O7/O8 actor controls pass 48/48, OrderedMap plan/runner/breaker/report/Evidence controls pass 62/62, Stack resolution/inspection/maintenance controls pass 40/40, cross-domain graph attacks select no foreign Evidence, and the complete 204-journey repository gate passes; all four actor roles, O8 recovery, retained exclusions, unchanged Stack behavior, and the Stack-plus-one-finite-OrderedMap claim boundary close without universalization |
+| O-G final gate | lead acceptance; depends on O-R4 PASS and locked local/hosted gates | candidate released: reconcile final project memory, retain every failed review and exclusion, reproduce the complete closeout tree locally and through protected hosted checks, require conventional PR metadata/history, and accept exactly two-domain—not universal—generality before moving this plan to completed |
 
 The continuity owner integrates shared surfaces. Before O-G2, all work is read-only or
 plan/document-local. Once implementation boundaries are known, parallel work is allowed
@@ -578,7 +578,7 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
 - [x] O-R8 successor implementation review — lifecycle/private-seam documentation BLOCK retained
 - [x] O8-S1 lifecycle/private-seam truth correction
 - [x] O-R8-2 successor implementation review passed; O-R4 released
-- [ ] O-R4 end-to-end review
+- [x] O-R4 end-to-end review passed; O-G released
 - [ ] O-G final gate
 
 ## Discoveries and changed assumptions
@@ -1434,8 +1434,19 @@ newline-handling change must reopen O8-F1 and its raw-digest/failure-phase contr
 O-R8 passed every implementation and repository check but retained a narrow durable-plan
 BLOCK; O8-S1 corrects that documentation only, and O-R8-2 passes at exact clean
 `6b15732` without changing implementation, artifacts, requirements, digests, or
-protected bytes. O8 maintenance is accepted. O-R4 end-to-end review is now the live
-edge; the final locked gate remains behind it.
+protected bytes. O8 maintenance is accepted. O-R4 then passes independently at exact
+clean merged `9c28c852f4946afc46c1eee2a231a38dde3d300c`: the four O5/O6f/O7/O8 actor
+surfaces, all theory/package author and consumer outcomes, exact maintenance recovery,
+48 focused actor controls, 62 OrderedMap campaign/breaker/report/Evidence controls, 40
+unchanged Stack resolution/inspection/maintenance controls, and the complete
+204-journey repository gate reproduce. A combined-graph falsifier selects no Stack
+Evidence for OrderedMap and no OrderedMap Evidence for Stack. Deletion, arbitrary
+serialization, higher-order transport, performance Evidence, concurrency, remote
+transport, discovery/acquisition, signatures, refinement, and human-usability
+acceptance remain explicit exclusions. The supported generality claim is exactly
+Stack plus one finite OrderedMap lifecycle—not a universal collection, logic,
+resolver, transport, quotient checker, or refinement framework. O-G final memory
+reconciliation and locked local/hosted closeout are now the live edge.
 
 ## Stop and escalation conditions
 
