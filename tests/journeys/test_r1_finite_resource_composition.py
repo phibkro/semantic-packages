@@ -387,7 +387,7 @@ class FiniteResourceJourneyTest(unittest.TestCase):
             _replace(source, 'kind = "finite-commutative-monoid-v1"', 'kind = "invented-algebra"')
             _replace(source, 'unit = "none"', 'unit = "outside"')
             schema = self._assert_failed_preserving_output(source, stack, ordered_map, ("SCHEMA_RESOURCE_ALGEBRA_KIND", "#/resources/0/algebra/kind"))
-            self.assertNotIn("RESOURCE_ALGEBRA_", schema.stderr)
+            self.assertNotIn("RESOURCE_ALGEBRA_UNIT_ELEMENT", schema.stderr)
 
             shutil.copyfile(SOURCE, source)
             _replace(source, 'id = "ordered-map", version = "0.1.0"', 'id = "missing-map", version = "0.1.0"', count=2)

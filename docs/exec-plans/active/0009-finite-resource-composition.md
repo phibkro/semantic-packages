@@ -161,6 +161,12 @@ python3 scripts/check_repo.py
   fold did not assert its exact changed sequence and transitions. The next successor
   requires an exact closed report/observation shape, compound schema/link plus algebra
   failures with no algebra diagnostic, and both exact dynamic fold traces.
+- 2026-07-22: R-R1's next review BLOCK at exact clean `d148dd6` found one
+  self-contradictory negative assertion: the required schema code
+  `SCHEMA_RESOURCE_ALGEBRA_KIND` itself contained the broad forbidden substring
+  `RESOURCE_ALGEBRA_`. The successor excludes the specific later-phase
+  `RESOURCE_ALGEBRA_UNIT_ELEMENT` diagnostic instead; the reviewer found the closed
+  report, compound phase controls, and dynamic fold traces otherwise sound.
 
 ## Maintenance, recovery, and reopen conditions
 
