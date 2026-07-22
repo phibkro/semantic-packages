@@ -59,7 +59,9 @@ I0 design-spec 0005 + substrate census
   -> I1-S1 exact full-trace oracle successor
   -> I-R1b successor contract/oracle review (BLOCK)
   -> I1-S2 authority, phase, independence, and closure successor
-  -> I-R1c final contract/oracle review
+  -> I-R1c successor contract/oracle review (BLOCK)
+  -> I1-S3 exact execution, membership, authoring, alias, Evidence, and report successor
+  -> I-R1d final contract/oracle review
   -> I2 optional protocol authoring/schema + exact Specification/profile/plan
   -> I3 isolated runner + two independent realizations + resurrection breaker
   -> I-R2 implementation, trace, isolation, and authority review
@@ -78,6 +80,8 @@ I0 design-spec 0005 + substrate census
 | I-R1b | same uninvolved read-only reviewer | replay final-state-only, truncation, reorder/renumber, identity loss, fabricated intermediate, and terminal-resurrection attacks against the successor; I2 or another retained successor |
 | I1-S2 | lead/test owner; journey tests and this plan only | bind breaker's first five exact traces and campaign-first mismatch; exact candidate import allowlist; separate valid unaccepted Evidence from schema/link-invalid mutations; exact process/acquisition/governed-input allowlists; closed authority/specification/theory values; duplicate input/output/declaration and stable phase diagnostics; I-R1c |
 | I-R1c | same uninvolved read-only reviewer | replay every I-R1/I-R1b counterexample against the complete red successor; I2 or another retained successor |
+| I1-S3 | lead/test owner; journey tests and this plan only | exact six-per-candidate command multiset; literal manifest-governed member list plus rogue-file rejection; post-link authoring semantics; normalized/symbolic/hard-link output aliases; missing/error/inconclusive Evidence; exact nested report values and full exclusions; I-R1d |
+| I-R1d | same uninvolved read-only reviewer | replay all retained counterexamples against exact committed I1-S3 controls; I2 or another retained successor |
 | I2 semantic artifacts | lead; optional schema/PSpec surface plus new lease Specification/profile/campaign-plan artifacts only | old Specifications remain valid; exact states/transitions/propositions/profile/plan are independently inspectable; I3; stop if a new canonical record kind or implicit cross-record relation is required |
 | I3 candidates/campaign | lead; new lease runner, adapters, realization sources, breaker, and candidate reports only | isolated six-scenario sessions; complete ordered traces; two independent passes; exact resurrection challenge; source/build/runner provenance; I-R2; stop if shared code implements candidate state or the adapter cannot observe required identity/terminal behavior |
 | I-R2 | uninvolved read-only reviewer | execute/reason over trace truncation/reordering, reused state, fabricated identity, candidate dependence, runner self-ratification, breaker specificity, cleanup, input mutation, and overclaim; I4 or successor |
@@ -159,7 +163,9 @@ nix develop --command python3 -m semantic_packages protocol inspect \
 - [x] I1-S1 exact full-trace oracle successor
 - [x] I-R1b successor contract/oracle review — BLOCK retained
 - [x] I1-S2 authority, phase, independence, and closure successor
-- [ ] I-R1c final contract/oracle review
+- [x] I-R1c successor contract/oracle review — BLOCK retained
+- [x] I1-S3 exact execution, membership, authoring, alias, Evidence, and report successor
+- [ ] I-R1d final contract/oracle review
 - [ ] I2 semantic artifacts
 - [ ] I3 candidates and campaign
 - [ ] I-R2 implementation review
@@ -227,6 +233,23 @@ nix develop --command python3 -m semantic_packages protocol inspect \
   empty axes from schema/link-invalid mutations; binds all 14 governed paths and all 18
   child commands; closes manifest/plan/specification/theory/report values; and adds
   duplicate input/output/declaration plus stable raw/schema/protocol pointers.
+- 2026-07-23: I-R1c BLOCK at exact committed successor `4bf4c45`. The execution
+  allowlist fixed only a total and source set rather than six invocations of each exact
+  two-argument command; the governed-file oracle discovered its own expected members
+  and therefore admitted rogue unmanifested JSON; malformed protocol semantics could
+  bypass the authoring surface; normalized, symbolic, and hard-link output aliases
+  were not all challenged; missing/error/inconclusive Evidence states were absent; and
+  nested candidate/scenario/Evidence values plus the complete known-exclusion set
+  remained open. I1-S3 retains all six failures and closes them independently.
+- 2026-07-23: I1-S3 keeps eighteen controls but strengthens their independent oracles.
+  It freezes a command multiset with six exact invocations per source; names the nine
+  governed registry records literally and injects a rogue valid record; observes
+  protocol semantics only after raw/schema/link authoring phases; challenges lexical,
+  symbolic, and inode aliases; distinguishes missing, error, and inconclusive Evidence;
+  and closes every candidate representation/source/result, scenario result, Evidence
+  identity, and six-part exclusion list. The focused journey is green with seventeen
+  active passes and one historical predecessor skip; I-R1d must still challenge the
+  exact committed successor before semantic artifacts are accepted.
 
 ## Decision log
 
@@ -243,9 +266,10 @@ nix develop --command python3 -m semantic_packages protocol inspect \
 
 ## Result and remaining work
 
-The pre-implementation contract is frozen. Production behavior remains absent by
-design. I0 census and I1 red controls are the next nodes. The numerical-kernel journey
-is authorized but cannot begin until the interaction-protocol PR opens.
+The pre-implementation contract is frozen. I1-S3 is the current red-control successor;
+I-R1d is the live convergence gate before the provisional semantic artifacts and
+implementation may be accepted. The numerical-kernel journey is authorized but cannot
+begin until the interaction-protocol PR opens.
 
 ## Stop and escalation conditions
 

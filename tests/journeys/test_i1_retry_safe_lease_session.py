@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import ast
+from collections import Counter
 from dataclasses import replace
 import hashlib
 import importlib.util
@@ -11,6 +12,7 @@ import sys
 import tempfile
 import unittest
 import socket
+import shutil
 from pathlib import Path
 from unittest import mock
 
@@ -92,16 +94,31 @@ CANDIDATE_SHA256 = {
     "implementations/lease-session/object/adapter.py": "9877efd1c25eed2a9024e26bb9c23c7aecef46e69df48dca1488253419895635",
     "fixtures/candidates/lease-session/resurrection_breaker.py": "8d278df9c6208d8ea394affff884c23a12322b316a976396ad87c9e2ffbf43ca",
 }
+GOVERNED_RECORDS = (
+    "registry/lease-session/theory/lease-session-profile.json",
+    "registry/lease-session/theory/lease-session-spec.json",
+    "registry/lease-session/packages/table/lease-session-table-realization.json",
+    "registry/lease-session/packages/table/lease-session-table-claim.json",
+    "registry/lease-session/packages/table/lease-session-table-evidence.json",
+    "registry/lease-session/packages/object/lease-session-object-realization.json",
+    "registry/lease-session/packages/object/lease-session-object-claim.json",
+    "registry/lease-session/packages/object/lease-session-object-evidence.json",
+    "registry/lease-session/consumer/lease-session-policy.json",
+)
 EXPECTED_ASSUMPTIONS = [
     "Each child adapter faithfully exposes its named realization.",
     "The runner observes every response inside the NDJSON child-process boundary.",
 ]
 EXPECTED_EXCLUSIONS = [
-    "No wall-clock, scheduling, concurrency, network, crash, or exhaustive-trace claim.",
+    "No wall-clock timers, scheduling fairness, progress, or liveness claim.",
+    "No concurrency, network partition, process crash, durable recovery, or lease-transfer claim.",
+    "No token entropy, authenticity, authorization, or other security claim.",
+    "No exhaustive-trace or adapter-faithfulness conclusion from the finite campaign.",
+    "No protocol refinement, composition, session-type, or arbitrary-domain generality claim.",
     "Opaque identities are observed only by equality in the retained scenarios.",
 ]
-MANIFEST_SHA256 = "f12e98e9d7c071192f9329f242382c9568ce6c75b3c6bb2ebd3d41d7264123e3"
-PLAN_SHA256 = "4acf333d2f3d4307d581516c8bd51513f3e18d538069836b2d8f1377701b9643"
+MANIFEST_SHA256 = "ef6b53219e8c404521ade83b446fae006c2daaaa217c032dfb219569f7b0c2a4"
+PLAN_SHA256 = "2d1f47896b329c599f11097dbdf4989e724df8a8859864af3b706d8953a4228a"
 
 
 def _sha256(path: Path) -> str:
@@ -371,6 +388,8 @@ class LeaseSessionJourneyTest(unittest.TestCase):
         valid_attacks = (
             (evidence, lambda value: value.__setitem__("result", "challenges")),
             (evidence, lambda value: value.__setitem__("reviewState", "pending")),
+            (evidence, lambda value: value.__setitem__("result", "error")),
+            (evidence, lambda value: value.__setitem__("result", "inconclusive")),
             (evidence, lambda value: value.__setitem__("mechanism", "assertion")),
             (evidence, lambda value: value["provenance"]["source"].__setitem__("rawSha256", "0" * 64)),
             (claim, lambda value: value.__setitem__("state", "withdrawn")),
@@ -386,6 +405,21 @@ class LeaseSessionJourneyTest(unittest.TestCase):
             self.assertFalse(diagnostics)
             self.assertIsNotNone(report)
             self.assertEqual("rejected", report["decisions"][0]["semanticStatus"])
+
+        missing_evidence = self._mutated_graph_many({})
+        missing_evidence = replace(
+            missing_evidence,
+            records=tuple(
+                record for record in missing_evidence.records if record.address != evidence
+            ),
+        )
+        with mock.patch(
+            "semantic_packages.lease_session.graph.inspect_manifest_graph",
+            return_value=missing_evidence,
+        ):
+            report, diagnostics, _ = inspect_protocol_package(MANIFEST)
+        self.assertIsNone(report)
+        self.assertEqual(["PROTOCOL_EVIDENCE_COUNT"], [item.code for item in diagnostics])
         inapplicable = self._mutated_graph_many(
             {
                 claim: lambda value: value.__setitem__("applicableProfiles", []),
@@ -486,6 +520,37 @@ class LeaseSessionJourneyTest(unittest.TestCase):
         self.assertFalse(schema.ok)
         self.assertTrue(schema.diagnostics[0].code.startswith("SCHEMA_"))
 
+        link_document = json.loads(
+            (ROOT / "registry/lease-session/theory/lease-session-spec.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        link_document["imports"] = [
+            {"kind": "specification", "id": "missing", "version": "0.1.0"}
+        ]
+        link = author_specification(
+            json.dumps(link_document).encode(),
+            CANONICAL_SPEC_JSON_V1,
+            "link.json",
+            (),
+        )
+        self.assertFalse(link.ok)
+        self.assertTrue(link.diagnostics[0].code.startswith("LINK_"))
+
+        malformed_protocol = SOURCE.read_text(encoding="utf-8").replace(
+            'initialState = "available"', 'initialState = "completed"', 1
+        )
+        protocol = author_specification(
+            malformed_protocol.encode(),
+            PSPEC_TOML_V1,
+            "malformed-protocol.pspec",
+            (),
+        )
+        self.assertFalse(protocol.ok)
+        self.assertEqual("PROTOCOL_INITIAL_TERMINAL", protocol.diagnostics[0].code)
+        self.assertEqual("malformed-protocol.pspec", protocol.diagnostics[0].path)
+        self.assertEqual("#/protocols/0/initialState", protocol.diagnostics[0].pointer)
+
     def test_output_alias_and_failure_preserve_governed_inputs(self) -> None:
         from semantic_packages.lease_session import inspect_protocol_package, run_protocol_inspection
 
@@ -502,8 +567,10 @@ class LeaseSessionJourneyTest(unittest.TestCase):
         self.assertEqual(plan_before, plan.read_bytes())
         report, diagnostics, governed = inspect_protocol_package(MANIFEST)
         self.assertFalse(diagnostics)
-        expected_members = set((ROOT / "registry/lease-session").rglob("*.json"))
-        expected_governed = expected_members | {
+        accepted_report = report
+        expected_governed = {
+            MANIFEST,
+            *(ROOT / path for path in GOVERNED_RECORDS),
             ROOT / "contracts/lease-session/campaign-plan.json",
             *(ROOT / path for path in CANDIDATE_SHA256),
         }
@@ -529,6 +596,47 @@ class LeaseSessionJourneyTest(unittest.TestCase):
                 self.assertEqual(1, run_protocol_inspection(MANIFEST, output))
             self.assertEqual(accepted, output.read_bytes())
 
+        with tempfile.TemporaryDirectory(prefix="lease-session-unexpected-") as directory:
+            copied_registry = Path(directory) / "lease-session"
+            shutil.copytree(ROOT / "registry/lease-session", copied_registry)
+            rogue = copied_registry / "theory/rogue.json"
+            rogue.write_text(
+                json.dumps(
+                    {
+                        "kind": "specification",
+                        "id": "rogue",
+                        "version": "0.1.0",
+                        "laws": [{"id": "rogue", "statement": "not governed"}],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            report, diagnostics, _ = inspect_protocol_package(
+                copied_registry / "manifest.json"
+            )
+            self.assertIsNone(report)
+            self.assertIn("GRAPH_UNEXPECTED_MEMBER", [item.code for item in diagnostics])
+
+        with tempfile.TemporaryDirectory(prefix="lease-session-alias-") as directory:
+            alias_root = Path(directory)
+            target = ROOT / GOVERNED_RECORDS[0]
+            (alias_root / "nested").mkdir()
+            normalized = alias_root / "nested" / ".." / "normalized.json"
+            normalized_target = alias_root / "normalized.json"
+            os.link(target, normalized_target)
+            symlink = alias_root / "symlink.json"
+            symlink.symlink_to(target)
+            hardlink = alias_root / "hardlink.json"
+            os.link(target, hardlink)
+            target_before = target.read_bytes()
+            for alias in (normalized, symlink, hardlink):
+                with mock.patch(
+                    "semantic_packages.lease_session.inspect_protocol_package",
+                    return_value=(accepted_report, (), governed),
+                ):
+                    self.assertEqual(1, run_protocol_inspection(MANIFEST, alias))
+            self.assertEqual(target_before, target.read_bytes())
+
     def test_acquisition_and_execution_are_exactly_allowlisted(self) -> None:
         from semantic_packages import lease_session
 
@@ -549,10 +657,13 @@ class LeaseSessionJourneyTest(unittest.TestCase):
             report, diagnostics, _ = lease_session.inspect_protocol_package(MANIFEST)
         self.assertFalse(diagnostics)
         self.assertIsNotNone(report)
-        expected_sources = [os.fspath((ROOT / path).resolve()) for path in CANDIDATE_SHA256]
-        self.assertEqual(18, len(calls))
-        self.assertEqual(set(expected_sources), {str(Path(command[1]).resolve()) for command in calls})
-        self.assertTrue(all(command[0] == sys.executable for command in calls))
+        expected_commands = Counter(
+            (sys.executable, os.fspath((ROOT / path).resolve()))
+            for path in CANDIDATE_SHA256
+            for _ in SCENARIOS
+        )
+        self.assertEqual(expected_commands, Counter(calls))
+        self.assertTrue(all(len(command) == 2 for command in calls))
 
     def test_nonauthority_language_and_predecessor_regressions(self) -> None:
         report = self._report()
@@ -561,7 +672,7 @@ class LeaseSessionJourneyTest(unittest.TestCase):
             "real-time guarantee",
             "liveness proved",
             "universal session type",
-            "arbitrary-domain generality",
+            "arbitrary-domain generality established",
         ):
             self.assertNotIn(forbidden, language)
         self.assertEqual(EXPECTED_ASSUMPTIONS, report["assumptions"])
@@ -573,11 +684,51 @@ class LeaseSessionJourneyTest(unittest.TestCase):
             if candidate["result"] == "challenges":
                 expected_keys.add("counterexample")
             self.assertEqual(expected_keys, set(candidate))
+            expected_candidate = {
+                "lease-session-table": (
+                    True,
+                    "table-oriented mutable record",
+                    ["implementations/lease-session/table/adapter.py"],
+                    "supports",
+                ),
+                "lease-session-object": (
+                    True,
+                    "object-oriented branch state",
+                    ["implementations/lease-session/object/adapter.py"],
+                    "supports",
+                ),
+                "lease-session-resurrection-breaker": (
+                    False,
+                    "negative branch-state fixture",
+                    ["fixtures/candidates/lease-session/resurrection_breaker.py"],
+                    "challenges",
+                ),
+            }[candidate["id"]]
+            self.assertEqual(
+                expected_candidate,
+                (
+                    candidate["registered"],
+                    candidate["representation"],
+                    candidate["sources"],
+                    candidate["result"],
+                ),
+            )
             for scenario in candidate["scenarios"]:
                 self.assertEqual({"id", "result", "trace"}, set(scenario))
+            expected_results = ["supports"] * 6
+            if candidate["id"] == "lease-session-resurrection-breaker":
+                expected_results[-1] = "challenges"
+            self.assertEqual(
+                expected_results,
+                [scenario["result"] for scenario in candidate["scenarios"]],
+            )
         for decision in report["decisions"]:
             self.assertEqual({"realization", "semanticStatus", "evidence"}, set(decision))
             self.assertEqual({"id", "mechanism", "result", "reviewState"}, set(decision["evidence"]))
+            realization_id = decision["realization"]["id"]
+            self.assertEqual(
+                f"{realization_id}-protocol-campaign", decision["evidence"]["id"]
+            )
         self.assertEqual(
             PREDECESSOR_SHA256,
             {relative: _sha256(ROOT / relative) for relative in PREDECESSOR_SHA256},
