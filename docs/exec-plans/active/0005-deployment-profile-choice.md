@@ -188,6 +188,17 @@ P0 roadmap selection
   truthful fixed P-R3a/P-R3b acceptance lineage in all fourteen Evidence records;
   Realizations, Claims, every other Evidence field, reports, and report helpers must
   remain byte-identical until the successor review.
+- 2026-07-22: The P3b acceptance successor changes exactly fourteen records and exactly
+  two JSON fields in each: `reviewState` is now `accepted`, and `provenance.review`
+  records bounded P-R3a/P-R3b PASS. A structural comparison against pending checkpoint
+  `01cdef1` reports 14 changed records, only paths `reviewState` and
+  `provenance.review`, and no other delta. The deterministic Evidence gate remains
+  green; P4 stays blocked until P-R3b successor review confirms this promotion.
+- 2026-07-22: P-R3b acceptance-successor review PASS. Independent recursive comparison
+  against `01cdef1` confirmed the authorized two-leaf delta in all fourteen Evidence
+  records and no Realization, Claim, report, plan, profile, source, runner, or report-
+  helper drift. The focused 30-record Evidence gate and diff check pass. P3b is complete
+  and P4 exact authority/resolution/inspection is released.
 
 ## Verification
 

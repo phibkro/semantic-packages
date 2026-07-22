@@ -22,8 +22,11 @@ PREDECESSOR_PROFILE_PATH = Path(
 )
 SPECIFICATION = {"kind": "specification", "id": "ordered-map", "version": "0.1.0"}
 VERSION = "0.2.0"
-REVIEW_STATE = "pending"
-REVIEW_LINEAGE = "P-R3a PASS; P-R3b record review pending."
+REVIEW_STATE = "accepted"
+REVIEW_LINEAGE = (
+    "P-R3a and P-R3b PASS; acceptance is bounded to the exact "
+    "profile-specific report derivation."
+)
 PRODUCED_AT = "2026-07-22T00:00:00Z"
 CANDIDATES = {
     "rust": {
