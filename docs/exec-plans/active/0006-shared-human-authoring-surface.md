@@ -204,7 +204,7 @@ predecessor suite.
 - [x] A5-RI pre-human implementation review (BLOCK retained)
 - [x] A5-I1 parser conversion-limit containment successor
 - [x] A-R5 end-to-end review
-- [ ] A5-P freeze and open experienceable PR
+- [x] A5-P freeze and open experienceable draft PR #16
 - [ ] A5-H eligible uninvolved-author post-open observation
 - [ ] A-G final convergence
 
@@ -407,6 +407,12 @@ predecessor suite.
   retained record, loader, adapter, cross-language, governance, report, Evidence, and
   proof lane. A5-P may freeze/open and release the stacked lane; A5-H still gates A-G
   and merge. Design-spec 0001 is frozen at revision 2 on this evidence.
+- 2026-07-22: A5-P PASS. Frozen design-spec 0001 maps 1:1 to draft PR #16,
+  opened from exact clean `52add24` after prospective PR-metadata validation and a
+  second complete green repository gate. Its report leads with both copy-paste author
+  journeys and the real underlying boundary, retains all falsifiers/review dispositions,
+  and states that no human-usability result exists. The PR releases the stacked next
+  design-spec but remains non-mergeable until A5-H and A-G pass.
 
 ## Decision log
 
@@ -429,9 +435,9 @@ red controls; A-R3 accepts the exact red contract; and A4 implements its strict
 canonical-JSON control with an explicit finite dependency context. Design-spec 0001
 and A5-T contract the first non-control PSpec journey without claiming format
 permanence. A5-I makes the complete automated command journey and documentation
-experienceable. A-R5 is accepted and design-spec 0001 revision 2 is frozen. A5-P is
-the next released node and may open the PR plus stacked next design-spec; the live
-eligible-human observation remains post-open convergence evidence before A-G and merge.
+experienceable. A-R5 and A5-P are accepted, design-spec 0001 revision 2 is frozen, and
+draft PR #16 is open. The stacked next design-spec is released; the live eligible-human
+observation remains post-open convergence evidence before A-G and merge.
 
 ## Stop and escalation conditions
 
