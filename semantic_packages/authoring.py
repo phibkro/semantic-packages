@@ -250,6 +250,14 @@ def _decode_pspec_source(
         return None, [
             _diagnostic("AUTHOR_INVALID_TOML", source_label, message=message)
         ]
+    except ValueError:
+        return None, [
+            _diagnostic(
+                "AUTHOR_INVALID_TOML",
+                source_label,
+                message="numeric conversion exceeds parser limit",
+            )
+        ]
     except RecursionError:
         return None, [
             _diagnostic(

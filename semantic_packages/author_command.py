@@ -132,6 +132,12 @@ def _load_dependency(
             path,
             f"invalid JSON: {detail}",
         )
+    except ValueError:
+        return None, _diagnostic(
+            "AUTHOR_DEPENDENCY_JSON",
+            path,
+            "invalid JSON: numeric conversion exceeds parser limit",
+        )
     if isinstance(document, float) and not math.isfinite(document):
         return None, _diagnostic(
             "AUTHOR_DEPENDENCY_JSON",
