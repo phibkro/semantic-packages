@@ -241,6 +241,25 @@ P0 roadmap selection
   digests, requires the exact reviewed P4 manifest digest and dedicated actor, and
   leaves the stronger authority/actor falsifiers in the frozen P2b suite. The complete
   27-test research suite passes; no product byte or acceptance requirement changed.
+- 2026-07-22: P-R5 PASS at exact commit `2e663a9`. The uninvolved reviewer reproduced
+  the full 221-journey repository path and the focused 17-control profile actor, both
+  fresh reports, exact 2/14/14 record derivation, base OrderedMap reports, the O8
+  append-only prefix and zero-candidate/nonautomatic recovery, and unchanged Stack and
+  base OrderedMap files and decisions. Both exact choices retain 7/21 Claim and
+  Evidence ledgers, optional unsupported performance, and a separate non-direct
+  child-process boundary. Every incomplete-authority, empty-obligation, profile-swap,
+  selector-widening, false-performance, cross-selection, review/result mutation, and
+  added-record control fails closed. No material concern remains. Private resolver-
+  helper reuse, public-actor authentication of provenance-bearing member hashes, actual
+  runtime interoperation, and uninvolved-human observation remain explicit nonblocking
+  residuals.
+- 2026-07-22: P-G local candidate PASS. Two independent complete repository runs pass
+  with 24 valid/20 schema-invalid/38 link-invalid/3 link-valid fixtures, 18 loader
+  groups, 50 adapter tests, 59 cross-language checks, 221 actor journeys, 27 research
+  probes, 20 governance tests, both Stack and base/profile OrderedMap report/Evidence
+  lanes, and 49 proof groups. The documented zero-execution actor demo and every
+  prospective commit in `origin/master..2e663a9` also pass. Hosted exact-head checks
+  remain the sole final P-G edge before the plan may move to completed.
 
 ## Verification
 
