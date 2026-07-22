@@ -5,6 +5,7 @@ import importlib
 import inspect
 import json
 import unittest
+from collections.abc import Mapping
 from copy import deepcopy
 from pathlib import Path
 from types import MappingProxyType
@@ -560,6 +561,44 @@ class SharedHumanAuthoringSuccessorContractTest(unittest.TestCase):
             "dependency document must be a finite JSON value",
             failed.diagnostics[0].message,
         )
+
+    def test_throwing_json_container_fails_inside_snapshot_boundary(self) -> None:
+        class ThrowingMapping(Mapping):
+            def __getitem__(self, key):
+                raise KeyError(key)
+
+            def __iter__(self):
+                raise RuntimeError("mapping iteration failed")
+
+            def __len__(self):
+                return 1
+
+        class ThrowingList(list):
+            def __iter__(self):
+                raise RuntimeError("list iteration failed")
+
+        source = _canonical_bytes(_load(STACK_SPEC))
+        for label, document in (
+            ("dependency/throwing-map", ThrowingMapping()),
+            ("dependency/throwing-list", {"nested": ThrowingList([1])}),
+        ):
+            with self.subTest(label=label):
+                observation = authoring.author_specification(
+                    source,
+                    format_token=FORMAT,
+                    source_label="author/source.json",
+                    dependencies=(authoring.AuthoringDependency(label, document),),
+                )
+                self.assertFalse(observation.ok)
+                self.assertIsNone(observation.document)
+                self.assertEqual(
+                    (("AUTHOR_DEPENDENCY_SNAPSHOT", label, "#"),),
+                    tuple(_shape(item) for item in observation.diagnostics),
+                )
+                self.assertEqual(
+                    "dependency document must be a finite JSON value",
+                    observation.diagnostics[0].message,
+                )
 
 
 class SharedHumanAuthoringRedTopologyTest(unittest.TestCase):

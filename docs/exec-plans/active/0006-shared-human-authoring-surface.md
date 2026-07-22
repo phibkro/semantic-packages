@@ -287,6 +287,13 @@ this same suite green without weakening or deleting an assertion.
   annotation. The successor freezes container/item/label/document and recursive-value
   failures, retains `Mapping`, and must convert them into deterministic diagnostics
   before A-R4 can pass. No final surface or operator values decision is involved.
+- 2026-07-22: A-R4 successor BLOCK at exact clean `5c3dee2`. All prior counterexamples
+  close, 21 focused controls and the complete 242-journey repository gate pass, and
+  mapping proxies, nested proxies, `UserDict`, and recursive context behave correctly.
+  One conforming custom `Mapping` whose iterator raises `RuntimeError` still escapes
+  because snapshot containment catches selected exception types. The next successor
+  freezes throwing top-level/nested JSON containers and contains ordinary `Exception`,
+  while leaving process-control exceptions untouched. No direction choice is involved.
 
 ## Decision log
 
