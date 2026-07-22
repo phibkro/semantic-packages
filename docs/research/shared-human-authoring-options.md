@@ -17,7 +17,8 @@ An admissible route must:
 4. produce canonical record-document equality with deterministic declaration-array
    order while keeping array position semantically irrelevant;
 5. reject missing, duplicate, dangling, and wrong-kind identity/reference inputs with
-   source-local, stable diagnostics;
+   source-local, stable diagnostics, including invalid bytes, duplicate serialized
+   members, unsupported formats, and parse failures before record validation;
 6. avoid a second semantic authority or undocumented desugaring defaults;
 7. remain reversible until an eligible human-author observation supports a final
    workflow.
@@ -34,6 +35,10 @@ JSON path as a control, not as the final author experience:
   member references report their exact nested paths;
 - a blank hosted law statement currently collapses to `SCHEMA_INVALID` at `#`, which
   is too coarse for the authoring outcome and is a concrete improvement trigger;
+- ordinary `json.loads` silently keeps the last duplicate object member, while invalid
+  UTF-8 and malformed JSON escape as host exceptions rather than author diagnostics;
+- unknown record kind and wrong-kind local references are exact, and repeated graph
+  diagnostics are deterministic;
 - reordering declaration arrays changes record-document equality while leaving exact
   local addresses and link validity unchanged. An authoring boundary must therefore
   preserve or deterministically define output order without assigning semantic meaning
@@ -53,22 +58,34 @@ JSON path as a control, not as the final author experience:
 Freeze one representation-neutral authoring boundary before implementation:
 
 ```text
-explicit source bytes + declared source format + source identity
+explicit source bytes + declared source format + opaque source label
   -> exact canonical Specification document | ordered source-local diagnostics
 ```
 
+The source label is provenance for diagnostics only. It can never fill, infer,
+override, or select canonical `(kind, id, version)`, local IDs, references, content, or
+authority. A3 must prove that changing only a label leaves successful output identical
+and changes only the permitted label field in diagnostics.
+
 The boundary owns validation/elaboration outcome shape, exact document equality,
-diagnostic ordering, source-order preservation, and the statement that hosted payloads
-remain unchecked text. It does not own a grammar. A4 may implement the existing
+duplicate-member rejection, diagnostic ordering, source-order preservation, unsupported-
+format handling, and the statement that hosted payloads remain unchecked text. It does
+not own a grammar. A4 may implement the existing
 canonical JSON format as the first control adapter. A future explicit surface adapter
 must pass the same A3 contract and may be selected only after its grammar and author
 experience receive their own evidence. No independent IR is introduced until more than
 one adapter or a real semantic transformation needs it.
 
+The JSON control cannot close this ExecPlan or satisfy its human-facing outcome. Final
+convergence requires at least one non-control human-facing adapter plus an eligible,
+uninvolved author completing the retained Stack and OrderedMap author tasks. This is a
+separate observation from ExecPlan 0003's consumer inspection and requires operator
+coordination only when that later node is ready.
+
 This route is reversible and does not decide the final author workflow. A-R2 must
 challenge whether the boundary is genuinely representation-neutral, whether the JSON
-control would accidentally become permanent, and whether coarse diagnostics require a
-separate successor before A3. If those concerns cannot be resolved without choosing
+control would accidentally become permanent, and whether raw/coarse diagnostics require
+a separate successor before A3. If those concerns cannot be resolved without choosing
 between materially different human experiences, A-G2 stops for the operator.
 
 ## Recovery and reopen triggers

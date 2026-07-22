@@ -76,10 +76,10 @@ A0 roadmap/source census
 | A-G1 problem gate | lead; plan-only disposition | retained review packet and full gate; releases A2 or successor A1; values choice remains unauthorized |
 | A2 option probe | future owner; research notes/fixtures only; integrates into lead-owned option matrix | exact round-trip/ambiguity/diagnostic/recovery comparison; A-R2; escalate materially different author experiences without decisive evidence |
 | A-R2 / A-G2 | independent reviewer then lead; review writes none, lead integrates plan/ADR proposal | option attacks and dispositions; choose smallest reversible contract or stop for operator; no parser release without PASS |
-| A3 red contract | future test owner; exclusive authoring-contract fixtures/tests | Stack + OrderedMap exact-output, ambiguous/missing ID/reference, unsupported-payload, deterministic-diagnostic controls; independent contract review; A4 |
+| A3 red contract | future test owner; exclusive authoring-contract fixtures/tests | Stack + OrderedMap exact-output; opaque-label nonauthority; invalid bytes/duplicate members/unsupported format; ambiguous/missing/wrong-kind ID/reference; hosted-payload and deterministic-diagnostic controls; independent contract review; A4 |
 | A4 minimal elaborator | future implementation owner; exclusive new authoring module plus approved dependency metadata | frozen A3 controls, no canonical predecessor changes, focused/full gates; independent implementation review A-R4; toolchain/migration concern escalates |
 | A-R4 | uninvolved read-only reviewer | parser containment, deterministic output/diagnostics, hidden-default and semantic-overclaim attacks; A5 or successor |
-| A5 journey/maintenance | lead/integrator; author command/docs, user-journey controls, check integration, plan | exact two-domain author tasks, regression/sensitivity, recovery, limitations, optional eligible human observation; A-R5 |
+| A5 journey/maintenance | lead/integrator; author command/docs, user-journey controls, check integration, plan | exact two-domain author tasks, regression/sensitivity, recovery, limitations, one non-control human-facing adapter, and required operator-coordinated eligible uninvolved-author observation; A-R5 |
 | A-R5 / A-G | uninvolved reviewer then lead; no reviewer writes, lead owns completion move | full lifecycle, negative controls, docs, full local/hosted gates, conventional squash handoff; operator owns unresolved product-direction fork |
 
 ## Implementation steps in dependency order
@@ -122,10 +122,12 @@ A2 adds:
 python3 -m unittest tests.research.test_shared_human_authoring_options -v
 ```
 
-Expected A2 observation is six PASS results: two exact canonical controls are valid;
+Expected A2 observation is ten PASS results: two exact canonical controls are valid;
 missing root identity, duplicate/dangling local IDs (including dependent-edge
-cascades), and dangling profile members have exact paths; blank hosted text retains the
-observed coarse root diagnostic; and array
+cascades), unknown/wrong-kind inputs, and dangling profile members have exact paths;
+blank hosted text retains the observed coarse root diagnostic; ordinary JSON collapses
+duplicate members; invalid UTF-8/JSON remain host exceptions; existing diagnostics
+replay deterministically; and array
 reordering changes document equality without changing local addresses or graph validity.
 
 ## Progress checklist
@@ -190,6 +192,16 @@ reordering changes document equality without changing local addresses or graph v
   duplicate `empty` produces both the expected duplicate-ID diagnostic and a truthful
   dependent dangling `operationFamily` diagnostic. The successor oracle requires both
   ordered results rather than suppressing the cascade; no checker behavior changes.
+- 2026-07-22: A-R2 BLOCK. The candidate left `source identity` undefined, allowing a
+  reading where provenance could fill or override canonical identity; it omitted raw
+  duplicate-member, invalid-byte/JSON, wrong-kind, and deterministic replay controls;
+  and the plan could close with JSON alone while human observation was optional. The
+  successor renames this input to an opaque diagnostic label with a nonauthority
+  metamorphic obligation, expands A2/A3 raw and semantic diagnostics, and requires a
+  non-control human-facing adapter plus eligible uninvolved-author observation before
+  final convergence. The coarse blank-payload diagnostic may remain a red A3
+  predecessor; it does not block option research by itself. No operator values call has
+  yet been reached.
 
 ## Decision log
 
