@@ -113,8 +113,8 @@ python3 scripts/check_repo.py
 - [x] V1-S3 failure-path immutability successor
 - [x] V-R1X final red-contract review (BLOCK retained)
 - [x] V1-S4 bypass-path immutability successor
-- [ ] V-R1Y red-contract release review
-- [ ] V2 inspector and CLI
+- [x] V-R1Y red-contract release review (PASS at `1d74c98`)
+- [ ] V2 inspector and CLI (in progress)
 - [ ] V-R2 independent implementation review
 - [ ] V3 durable documentation and maintenance
 - [ ] V-G convergence, freeze, and one PR
@@ -168,12 +168,16 @@ python3 scripts/check_repo.py
   invalid-proposal failure only preserves its output. V1-S4 snapshots every supplied
   existing input and the registry around all three bypass paths. V-R1Y is the release
   review for V2.
+- 2026-07-22: V-R1Y PASS at exact clean `1d74c98`. The focused topology remains one
+  census PASS, one intentional absent-command FAIL, and fourteen successor SKIPs; all
+  retained bypass, inference, phase, side-effect, and overclaim counterexamples close.
+  V2 is released without a product-direction change.
 
 ## Result and remaining work
 
-V0/V1 and all retained review successors through V1-S4 are complete. V-R1Y is the
-next released node. No inspector, report, accepted refinement relation, compatibility
-conclusion, Evidence transfer, or resolver change exists yet; V2 remains held.
+V0/V1 and all retained review successors through V-R1Y are complete. V2 is active.
+No accepted refinement relation, compatibility conclusion, Evidence transfer, or
+resolver change is authorized by this implementation node.
 
 ## Stop and escalation conditions
 

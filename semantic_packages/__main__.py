@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from .author_command import main
+from .refinement_command import main
 
 
 if __name__ == "__main__":
