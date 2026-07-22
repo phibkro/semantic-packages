@@ -110,7 +110,52 @@
       "required": ["id", "rule"],
       "properties": {
         "id": { "$ref": "common.schema.json#/$defs/localDeclarationId" },
-        "rule": { "$ref": "common.schema.json#/$defs/nonEmptyString" }
+        "rule": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+        "algebra": { "$ref": "#/$defs/finiteCommutativeMonoid" }
+      },
+      "additionalProperties": false
+    },
+    "finiteCommutativeMonoid": {
+      "type": "object",
+      "required": ["kind", "carrier", "unit", "composition", "bindings"],
+      "properties": {
+        "kind": { "const": "finite-commutative-monoid-v1" },
+        "carrier": {
+          "type": "array",
+          "items": { "$ref": "common.schema.json#/$defs/localDeclarationId" },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "unit": { "$ref": "common.schema.json#/$defs/localDeclarationId" },
+        "composition": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/resourceCompositionRow" },
+          "minItems": 1
+        },
+        "bindings": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/resourceAlgebraBinding" },
+          "minItems": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "resourceCompositionRow": {
+      "type": "object",
+      "required": ["left", "right", "result"],
+      "properties": {
+        "left": { "$ref": "common.schema.json#/$defs/localDeclarationId" },
+        "right": { "$ref": "common.schema.json#/$defs/localDeclarationId" },
+        "result": { "$ref": "common.schema.json#/$defs/localDeclarationId" }
+      },
+      "additionalProperties": false
+    },
+    "resourceAlgebraBinding": {
+      "type": "object",
+      "required": ["declarationReference", "element"],
+      "properties": {
+        "declarationReference": { "$ref": "common.schema.json#/$defs/declarationReference" },
+        "element": { "$ref": "common.schema.json#/$defs/localDeclarationId" }
       },
       "additionalProperties": false
     },

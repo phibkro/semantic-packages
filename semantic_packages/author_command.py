@@ -87,11 +87,19 @@ def _reject_constant(token: str) -> None:
 def _load_dependency(
     path: Path,
 ) -> tuple[AuthoringDependency | None, record_check.Diagnostic | None]:
+    dependency, _raw, diagnostic = load_authoring_dependency(path)
+    return dependency, diagnostic
+
+
+def load_authoring_dependency(
+    path: Path,
+) -> tuple[AuthoringDependency | None, bytes | None, record_check.Diagnostic | None]:
+    """Load one explicit dependency once, retaining its exact provenance bytes."""
     try:
         raw = path.read_bytes()
     except (OSError, ValueError) as error:
         detail = getattr(error, "strerror", None) or str(error)
-        return None, _diagnostic(
+        return None, None, _diagnostic(
             "AUTHOR_DEPENDENCY_READ",
             path,
             f"cannot read dependency: {detail}",
@@ -99,7 +107,7 @@ def _load_dependency(
     try:
         text = raw.decode("utf-8")
     except UnicodeDecodeError as error:
-        return None, _diagnostic(
+        return None, None, _diagnostic(
             "AUTHOR_DEPENDENCY_UTF8",
             path,
             f"invalid UTF-8 at byte {error.start}",
@@ -111,13 +119,13 @@ def _load_dependency(
             parse_constant=_reject_constant,
         )
     except _DuplicateMember as error:
-        return None, _diagnostic(
+        return None, None, _diagnostic(
             "AUTHOR_DEPENDENCY_JSON",
             path,
             f"invalid JSON: duplicate object member {error.member}",
         )
     except _NonstandardConstant as error:
-        return None, _diagnostic(
+        return None, None, _diagnostic(
             "AUTHOR_DEPENDENCY_JSON",
             path,
             f"invalid JSON: non-standard constant {error}",
@@ -127,24 +135,24 @@ def _load_dependency(
             detail = f"line {error.lineno} column {error.colno} (character {error.pos})"
         else:
             detail = "nesting exceeds parser limit"
-        return None, _diagnostic(
+        return None, None, _diagnostic(
             "AUTHOR_DEPENDENCY_JSON",
             path,
             f"invalid JSON: {detail}",
         )
     except ValueError:
-        return None, _diagnostic(
+        return None, None, _diagnostic(
             "AUTHOR_DEPENDENCY_JSON",
             path,
             "invalid JSON: numeric conversion exceeds parser limit",
         )
     if isinstance(document, float) and not math.isfinite(document):
-        return None, _diagnostic(
+        return None, None, _diagnostic(
             "AUTHOR_DEPENDENCY_JSON",
             path,
             "invalid JSON: non-finite number",
         )
-    return AuthoringDependency(os.fspath(path), document), None
+    return AuthoringDependency(os.fspath(path), document), raw, None
 
 
 def _write_atomically(

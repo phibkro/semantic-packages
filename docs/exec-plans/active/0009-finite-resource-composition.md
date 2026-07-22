@@ -116,9 +116,9 @@ python3 scripts/check_repo.py
 
 - [x] R0 design-spec 0004 and exact substrate census
 - [x] R1 red author/inspect journey and controls
-- [ ] R-R1 independent contract/oracle review
-- [ ] R2 optional schema/link surface and retained PSpec
-- [ ] R3 finite-law inspector, fold report, and atomic command
+- [x] R-R1 independent contract/oracle review
+- [x] R2 optional schema/link surface and retained PSpec
+- [x] R3 finite-law inspector, fold report, and atomic command
 - [ ] R-R2 independent implementation review
 - [ ] R4 durable documentation and maintenance
 - [ ] R-G convergence, freeze, and one PR
@@ -167,6 +167,25 @@ python3 scripts/check_repo.py
   `RESOURCE_ALGEBRA_`. The successor excludes the specific later-phase
   `RESOURCE_ALGEBRA_UNIT_ELEMENT` diagnostic instead; the reviewer found the closed
   report, compound phase controls, and dynamic fold traces otherwise sound.
+- 2026-07-22: the first R2/R3 run exposed a false R0 context assumption. Both exact
+  imported Specifications contain profile-member references, so the accepted
+  all-or-none authoring boundary rejects a context containing only the two
+  Specification records. Design-spec 0004 revision 2 and the journey now name four
+  explicit records: each Specification and its exact profile. This preserves link
+  validation and no-discovery authority; bindings still target only the two imported
+  resource declarations. No predecessor bytes change.
+- 2026-07-22: R-R1 final PASS at exact clean `b0fc049` after three retained BLOCK
+  revisions. The accepted predecessor has three substrate controls passing, the absent
+  command as its sole intentional failure, and twelve production successors skipped;
+  it independently binds complete report authority, phase precedence, exhaustive laws,
+  exact bindings, dynamic folds, normalized aliases, and discovery-free execution.
+- 2026-07-22: R2/R3 turns the same suite green with fifteen active passes and one
+  historical predecessor skip. The optional schema accepts only the named finite
+  candidate; graph checking resolves every binding to a resource declaration in an
+  exact import; the command reuses PSpec authoring with four explicit context records,
+  exhaustively checks the authored table, derives both folds, and publishes atomically.
+  A 42-test authoring/refinement/effect regression set passes, and the exact felt
+  command produces `fold=both-retained` with satisfaction `unestablished`.
 
 ## Maintenance, recovery, and reopen conditions
 

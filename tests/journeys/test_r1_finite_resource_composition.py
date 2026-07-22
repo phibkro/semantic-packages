@@ -23,6 +23,8 @@ STACK_PSPEC = ROOT / "specs/stack.pspec"
 ORDERED_MAP_PSPEC = ROOT / "specs/ordered-map.pspec"
 STACK = ROOT / "registry/stack/theory/records/stack-spec.json"
 ORDERED_MAP = ROOT / "registry/ordered-map/theory/records/ordered-map-spec.json"
+STACK_PROFILE = ROOT / "registry/stack/theory/dependencies/stack-profile.json"
+ORDERED_MAP_PROFILE = ROOT / "registry/ordered-map/theory/dependencies/ordered-map-profile.json"
 RESOURCE_READY = importlib.util.find_spec("semantic_packages.resource_algebra") is not None
 
 
@@ -34,6 +36,11 @@ def _read_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def _record_address(path: Path) -> dict:
+    document = _read_json(path)
+    return {key: document[key] for key in ("kind", "id", "version")}
+
+
 def _run_resource(
     source: Path,
     stack: Path,
@@ -43,7 +50,11 @@ def _run_resource(
     resource: str = "retained-persistence",
     dependencies: tuple[Path, ...] | None = None,
 ) -> subprocess.CompletedProcess[str]:
-    explicit = dependencies if dependencies is not None else (stack, ordered_map)
+    explicit = (
+        dependencies
+        if dependencies is not None
+        else (stack, STACK_PROFILE, ordered_map, ORDERED_MAP_PROFILE)
+    )
     arguments = [
         sys.executable,
         "-m",
@@ -234,8 +245,10 @@ class FiniteResourceJourneyTest(unittest.TestCase):
             self.assertEqual(imports, report["imports"])
             self.assertEqual(
                 [
-                    {"specification": imports[0], "sha256": _sha256(stack)},
-                    {"specification": imports[1], "sha256": _sha256(ordered_map)},
+                    {"record": imports[0], "sha256": _sha256(stack)},
+                    {"record": _record_address(STACK_PROFILE), "sha256": _sha256(STACK_PROFILE)},
+                    {"record": imports[1], "sha256": _sha256(ordered_map)},
+                    {"record": _record_address(ORDERED_MAP_PROFILE), "sha256": _sha256(ORDERED_MAP_PROFILE)},
                 ],
                 report["dependencies"],
             )
@@ -521,7 +534,7 @@ class FiniteResourceJourneyTest(unittest.TestCase):
         with tempfile.TemporaryDirectory(prefix="semantic-resource-output-") as raw:
             directory = Path(raw)
             source, stack, ordered_map = _copy_inputs(directory)
-            for aliased in (source, stack, ordered_map):
+            for aliased in (source, stack, STACK_PROFILE, ordered_map, ORDERED_MAP_PROFILE):
                 with self.subTest(aliased=aliased.name):
                     before = aliased.read_bytes()
                     result = _run_resource(source, stack, ordered_map, aliased)
@@ -551,7 +564,12 @@ class FiniteResourceJourneyTest(unittest.TestCase):
             output = directory / "report.json"
             output.write_bytes(b"prior\n")
             with mock.patch("semantic_packages.resource_algebra.os.replace", side_effect=OSError("publication interrupted")):
-                code = run_resource_inspection(source, (stack, ordered_map), "retained-persistence", output)
+                code = run_resource_inspection(
+                    source,
+                    (stack, STACK_PROFILE, ordered_map, ORDERED_MAP_PROFILE),
+                    "retained-persistence",
+                    output,
+                )
             self.assertEqual(1, code)
             self.assertEqual(b"prior\n", output.read_bytes())
 
@@ -572,7 +590,12 @@ class FiniteResourceJourneyTest(unittest.TestCase):
                 mock.patch("subprocess.Popen", side_effect=AssertionError("child execution")),
                 mock.patch("socket.socket", side_effect=AssertionError("network authority")),
             ):
-                code = run_resource_inspection(source, (stack, ordered_map), "retained-persistence", output)
+                code = run_resource_inspection(
+                    source,
+                    (stack, STACK_PROFILE, ordered_map, ORDERED_MAP_PROFILE),
+                    "retained-persistence",
+                    output,
+                )
             self.assertEqual(0, code)
             self.assertTrue(output.is_file())
 

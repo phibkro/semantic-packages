@@ -19,7 +19,9 @@ monoid before any package or Evidence claims to realize it.
 nix develop --command python3 -m semantic_packages resource inspect \
   specs/persistence-composition.pspec \
   --dependency registry/stack/theory/records/stack-spec.json \
+  --dependency registry/stack/theory/dependencies/stack-profile.json \
   --dependency registry/ordered-map/theory/records/ordered-map-spec.json \
+  --dependency registry/ordered-map/theory/dependencies/ordered-map-profile.json \
   --resource retained-persistence \
   --output /tmp/resource-composition.json
 ```
@@ -163,7 +165,8 @@ The feature is false if any of these observations occur:
 1. Existing Specification bytes or their authored outputs change merely because the
    optional algebra shape exists.
 2. The retained PSpec cannot round-trip through the existing authoring boundary with
-   only the two caller-named exact dependencies.
+   the four caller-named exact context records: the two bound Specifications and the
+   exact profile dependencies required to make those Specifications link-valid.
 3. A missing, duplicate, extra, out-of-carrier, or defaulted composition pair passes,
    or source order changes pair identity.
 4. A nonunital, noncommutative, or nonassociative table passes, including a law failure
@@ -237,3 +240,10 @@ silently encoding any of those in hosted `rule` text or candidate-specific defau
   node after bounded effect separation. Introduces one explicit finite commutative-
   monoid candidate and exact cross-domain resource bindings while preserving existing
   Specification bytes and fixing satisfaction at `unestablished`. Not frozen for PR.
+- **2026-07-22, revision 2:** First implementation observation corrected the finite
+  authoring context from two to four caller-named records. The imported Stack and
+  OrderedMap Specifications each reference an exact profile member, so their profile
+  records are required for the accepted authoring boundary's link phase. The felt
+  command now names both profiles explicitly rather than weakening graph validation or
+  discovering transitive context. Resource bindings still target only the two exact
+  imported Specifications. Not frozen for PR.
