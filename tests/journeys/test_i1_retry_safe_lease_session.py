@@ -5,10 +5,12 @@ from dataclasses import replace
 import hashlib
 import importlib.util
 import json
+import os
 import subprocess
 import sys
 import tempfile
 import unittest
+import socket
 from pathlib import Path
 from unittest import mock
 
@@ -98,6 +100,8 @@ EXPECTED_EXCLUSIONS = [
     "No wall-clock, scheduling, concurrency, network, crash, or exhaustive-trace claim.",
     "Opaque identities are observed only by equality in the retained scenarios.",
 ]
+MANIFEST_SHA256 = "f12e98e9d7c071192f9329f242382c9568ce6c75b3c6bb2ebd3d41d7264123e3"
+PLAN_SHA256 = "4acf333d2f3d4307d581516c8bd51513f3e18d538069836b2d8f1377701b9643"
 
 
 def _sha256(path: Path) -> str:
@@ -175,6 +179,9 @@ class LeaseSessionJourneyTest(unittest.TestCase):
             return json.loads(output.read_text(encoding="utf-8"))
 
     def _mutated_graph(self, address: tuple[str, str, str], mutate) -> object:
+        return self._mutated_graph_many({address: mutate})
+
+    def _mutated_graph_many(self, mutations: dict[tuple[str, str, str], object]) -> object:
         from semantic_packages import graph
 
         authority = graph.inspect_manifest_authority(MANIFEST)
@@ -182,9 +189,9 @@ class LeaseSessionJourneyTest(unittest.TestCase):
         self.assertTrue(observation.ok, observation.diagnostics)
         records = []
         for record in observation.records:
-            if record.address == address:
+            if record.address in mutations:
                 document = record.document
-                mutate(document)
+                mutations[record.address](document)
                 record = replace(
                     record,
                     _document_text=json.dumps(document, sort_keys=True, separators=(",", ":")),
@@ -212,6 +219,15 @@ class LeaseSessionJourneyTest(unittest.TestCase):
         )
         self.assertEqual("protocol-package-inspection-v1", report["kind"])
         self.assertEqual("bounded-protocol-package-observed", report["conclusion"])
+        self.assertEqual(
+            {"kind": "specification", "id": "lease-session", "version": "0.1.0"},
+            report["specification"],
+        )
+        self.assertEqual(
+            {"manifestRawSha256": MANIFEST_SHA256, "memberCount": 9},
+            report["authority"],
+        )
+        self.assertEqual(PLAN_SHA256, report["campaign"]["planRawSha256"])
         self.assertEqual(18, report["campaign"]["traceCaseCount"])
         self.assertEqual(list(SCENARIOS), report["campaign"]["scenarioOrder"])
 
@@ -288,15 +304,22 @@ class LeaseSessionJourneyTest(unittest.TestCase):
         self.assertEqual(2, breaker["counterexample"]["step"])
         self.assertEqual("expired", breaker["counterexample"]["expectedState"])
         self.assertEqual("completed", breaker["counterexample"]["actualState"])
-        expected = EXPECTED_TRACES["expiry-closure"]
-        observed = breaker["scenarios"][-1]["trace"]
-        mismatch = next(
-            index for index, (wanted, actual) in enumerate(zip(expected, observed, strict=True))
+        observed_by_scenario = {item["id"]: item["trace"] for item in breaker["scenarios"]}
+        for scenario in SCENARIOS[:5]:
+            self.assertEqual(EXPECTED_TRACES[scenario], observed_by_scenario[scenario])
+        first_mismatch = next(
+            (scenario, index, wanted, actual)
+            for scenario in SCENARIOS
+            for index, (wanted, actual) in enumerate(
+                zip(EXPECTED_TRACES[scenario], observed_by_scenario[scenario], strict=True)
+            )
             if wanted != actual
         )
+        scenario, mismatch, wanted, actual = first_mismatch
+        self.assertEqual(scenario, breaker["counterexample"]["scenario"])
         self.assertEqual(mismatch, breaker["counterexample"]["step"])
-        self.assertEqual(expected[mismatch]["after"]["state"], breaker["counterexample"]["expectedState"])
-        self.assertEqual(observed[mismatch]["after"]["state"], breaker["counterexample"]["actualState"])
+        self.assertEqual(wanted["after"]["state"], breaker["counterexample"]["expectedState"])
+        self.assertEqual(actual["after"]["state"], breaker["counterexample"]["actualState"])
 
     def test_two_registered_realizations_are_independent_and_policy_accepted(self) -> None:
         report = self._report()
@@ -313,20 +336,19 @@ class LeaseSessionJourneyTest(unittest.TestCase):
         self.assertEqual(CANDIDATE_SHA256, {path: _sha256(ROOT / path) for path in CANDIDATE_SHA256})
         for relative in tuple(CANDIDATE_SHA256)[:2]:
             tree = ast.parse((ROOT / relative).read_text(encoding="utf-8"))
-            imports = {
-                alias.name
-                for node in ast.walk(tree)
-                if isinstance(node, (ast.Import, ast.ImportFrom))
-                for alias in node.names
-            }
-            self.assertFalse(any("lease_session" in name for name in imports))
-            self.assertNotIn("semantic_packages", imports)
+            imports = set()
+            for node in ast.walk(tree):
+                if isinstance(node, ast.Import):
+                    imports.update(alias.name for alias in node.names)
+                elif isinstance(node, ast.ImportFrom):
+                    imports.add(node.module or "")
+            self.assertEqual({"__future__", "json", "sys"}, imports)
 
     def test_evidence_theory_projection_and_boundaries_remain_separate(self) -> None:
         report = self._report()
         self.assertEqual({"declarations", "packageEvidenceIncluded"}, set(report["theory"]))
         self.assertFalse(report["theory"]["packageEvidenceIncluded"])
-        self.assertIn("protocol-conformance", report["theory"]["declarations"])
+        self.assertEqual(["protocol-conformance"], report["theory"]["declarations"])
         for decision in report["decisions"]:
             self.assertEqual("bounded-protocol-campaign", decision["evidence"]["mechanism"])
             self.assertEqual("accepted", decision["evidence"]["reviewState"])
@@ -346,17 +368,15 @@ class LeaseSessionJourneyTest(unittest.TestCase):
         evidence = ("evidence", "lease-session-table-protocol-campaign", "0.1.0")
         claim = ("claim", "lease-session-table-protocol-conformance", "0.1.0")
         policy = ("consumerPolicy", "lease-session-bounded-policy", "0.1.0")
-        attacks = (
+        valid_attacks = (
             (evidence, lambda value: value.__setitem__("result", "challenges")),
-            (evidence, lambda value: value.__setitem__("reviewState", "draft")),
+            (evidence, lambda value: value.__setitem__("reviewState", "pending")),
             (evidence, lambda value: value.__setitem__("mechanism", "assertion")),
-            (evidence, lambda value: value["adapter"].__setitem__("id", "wrong")),
-            (evidence, lambda value: value["applicability"].__setitem__("profiles", [])),
             (evidence, lambda value: value["provenance"]["source"].__setitem__("rawSha256", "0" * 64)),
             (claim, lambda value: value.__setitem__("state", "withdrawn")),
             (policy, lambda value: value["concerns"][0].__setitem__("acceptedMechanisms", [])),
         )
-        for address, mutate in attacks:
+        for address, mutate in valid_attacks:
             observation = self._mutated_graph(address, mutate)
             with mock.patch(
                 "semantic_packages.lease_session.graph.inspect_manifest_graph",
@@ -366,6 +386,43 @@ class LeaseSessionJourneyTest(unittest.TestCase):
             self.assertFalse(diagnostics)
             self.assertIsNotNone(report)
             self.assertEqual("rejected", report["decisions"][0]["semanticStatus"])
+        inapplicable = self._mutated_graph_many(
+            {
+                claim: lambda value: value.__setitem__("applicableProfiles", []),
+                evidence: lambda value: value["applicability"].__setitem__("profiles", []),
+            }
+        )
+        with mock.patch(
+            "semantic_packages.lease_session.graph.inspect_manifest_graph",
+            return_value=inapplicable,
+        ):
+            report, diagnostics, _ = inspect_protocol_package(MANIFEST)
+        self.assertFalse(diagnostics)
+        self.assertEqual("rejected", report["decisions"][0]["semanticStatus"])
+
+        invalid_attacks = (
+            ("schema", evidence, lambda value: value.__setitem__("reviewState", "draft")),
+            ("link", evidence, lambda value: value["adapter"].__setitem__("id", "wrong")),
+            ("link", evidence, lambda value: value["applicability"].__setitem__("profiles", [])),
+        )
+        from scripts import record_check
+        schemas = record_check.SchemaRegistry()
+        for phase, address, mutate in invalid_attacks:
+            observation = self._mutated_graph(address, mutate)
+            documents = {record.path: record.document for record in observation.records}
+            schema_problems = tuple(
+                problem
+                for path, document in documents.items()
+                if (problem := record_check.validate_record(schemas, path, document)) is not None
+            )
+            if phase == "schema":
+                self.assertTrue(schema_problems, address)
+                self.assertTrue(all(problem.code.startswith("SCHEMA_") for problem in schema_problems))
+            else:
+                self.assertFalse(schema_problems)
+                link_problems = record_check.check_graph(documents)
+                self.assertTrue(link_problems, address)
+                self.assertTrue(all(problem.code.startswith("LINK_") for problem in link_problems))
 
     def test_structural_and_authority_mutations_fail_closed(self) -> None:
         from semantic_packages.lease_session import inspect_protocol_document
@@ -395,10 +452,20 @@ class LeaseSessionJourneyTest(unittest.TestCase):
             dict(duplicate_transition["protocols"][0]["transitions"][0])
         )
         mutations.append((duplicate_transition, "PROTOCOL_DUPLICATE_TRANSITION"))
+        duplicate_input = json.loads(json.dumps(document))
+        duplicate_input["protocols"][0]["inputs"].append("acquire-new")
+        mutations.append((duplicate_input, "PROTOCOL_DUPLICATE_INPUT"))
+        duplicate_output = json.loads(json.dumps(document))
+        duplicate_output["protocols"][0]["outputs"].append("granted")
+        mutations.append((duplicate_output, "PROTOCOL_DUPLICATE_OUTPUT"))
+        duplicate_declaration = json.loads(json.dumps(document))
+        duplicate_declaration["protocols"][0]["id"] = "acquire"
+        mutations.append((duplicate_declaration, "PROTOCOL_DUPLICATE_DECLARATION"))
         for attacked, code in mutations:
             observation = inspect_protocol_document(attacked)
             self.assertFalse(observation.ok)
             self.assertEqual(code, observation.diagnostics[0].code)
+            self.assertTrue(observation.diagnostics[0].pointer.startswith("#/"))
 
     def test_protocol_less_predecessor_and_authoring_phase_order_remain_valid(self) -> None:
         from semantic_packages.authoring import AuthoringDependency, CANONICAL_SPEC_JSON_V1, PSPEC_TOML_V1, author_specification
@@ -420,6 +487,8 @@ class LeaseSessionJourneyTest(unittest.TestCase):
         self.assertTrue(schema.diagnostics[0].code.startswith("SCHEMA_"))
 
     def test_output_alias_and_failure_preserve_governed_inputs(self) -> None:
+        from semantic_packages.lease_session import inspect_protocol_package, run_protocol_inspection
+
         before = MANIFEST.read_bytes()
         result = self._run(MANIFEST)
         self.assertNotEqual(0, result.returncode)
@@ -431,6 +500,24 @@ class LeaseSessionJourneyTest(unittest.TestCase):
         self.assertNotEqual(0, plan_result.returncode)
         self.assertIn("PROTOCOL_OUTPUT_ALIAS", plan_result.stderr)
         self.assertEqual(plan_before, plan.read_bytes())
+        report, diagnostics, governed = inspect_protocol_package(MANIFEST)
+        self.assertFalse(diagnostics)
+        expected_members = set((ROOT / "registry/lease-session").rglob("*.json"))
+        expected_governed = expected_members | {
+            ROOT / "contracts/lease-session/campaign-plan.json",
+            *(ROOT / path for path in CANDIDATE_SHA256),
+        }
+        self.assertEqual({path.resolve() for path in expected_governed}, {path.resolve() for path in governed})
+        snapshots = {path.resolve(): path.read_bytes() for path in governed}
+        with tempfile.TemporaryDirectory(prefix="lease-session-snapshot-") as directory:
+            self.assertEqual(0, self._run(Path(directory) / "report.json").returncode)
+        self.assertEqual(snapshots, {path.resolve(): path.read_bytes() for path in governed})
+        for governed_path in governed:
+            with mock.patch(
+                "semantic_packages.lease_session.inspect_protocol_package",
+                return_value=(report, (), governed),
+            ):
+                self.assertEqual(1, run_protocol_inspection(MANIFEST, governed_path))
         with tempfile.TemporaryDirectory(prefix="lease-session-preserve-") as directory:
             output = Path(directory) / "report.json"
             self.assertEqual(0, self._run(output).returncode)
@@ -439,10 +526,33 @@ class LeaseSessionJourneyTest(unittest.TestCase):
                 "semantic_packages.lease_session.inspect_protocol_package",
                 return_value=(None, (type("D", (), {"code": "PROTOCOL_TEST_FAILURE", "path": "<test>", "pointer": "#", "message": "forced"})(),), ()),
             ):
-                from semantic_packages.lease_session import run_protocol_inspection
-
                 self.assertEqual(1, run_protocol_inspection(MANIFEST, output))
             self.assertEqual(accepted, output.read_bytes())
+
+    def test_acquisition_and_execution_are_exactly_allowlisted(self) -> None:
+        from semantic_packages import lease_session
+
+        calls = []
+        original = lease_session.subprocess.run
+
+        def tracked(command, *args, **kwargs):
+            calls.append(tuple(command))
+            return original(command, *args, **kwargs)
+
+        with (
+            mock.patch("semantic_packages.lease_session.subprocess.run", side_effect=tracked),
+            mock.patch.object(Path, "glob", side_effect=AssertionError("glob discovery forbidden")),
+            mock.patch.object(Path, "rglob", side_effect=AssertionError("rglob discovery forbidden")),
+            mock.patch.object(Path, "iterdir", side_effect=AssertionError("directory discovery forbidden")),
+            mock.patch.object(socket, "socket", side_effect=AssertionError("network access forbidden")),
+        ):
+            report, diagnostics, _ = lease_session.inspect_protocol_package(MANIFEST)
+        self.assertFalse(diagnostics)
+        self.assertIsNotNone(report)
+        expected_sources = [os.fspath((ROOT / path).resolve()) for path in CANDIDATE_SHA256]
+        self.assertEqual(18, len(calls))
+        self.assertEqual(set(expected_sources), {str(Path(command[1]).resolve()) for command in calls})
+        self.assertTrue(all(command[0] == sys.executable for command in calls))
 
     def test_nonauthority_language_and_predecessor_regressions(self) -> None:
         report = self._report()

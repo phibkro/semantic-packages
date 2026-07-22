@@ -57,7 +57,9 @@ I0 design-spec 0005 + substrate census
   -> I1 frozen refute-first author/package/consumer controls
   -> I-R1 contract, oracle, and anti-overfitting review (BLOCK)
   -> I1-S1 exact full-trace oracle successor
-  -> I-R1b successor contract/oracle review
+  -> I-R1b successor contract/oracle review (BLOCK)
+  -> I1-S2 authority, phase, independence, and closure successor
+  -> I-R1c final contract/oracle review
   -> I2 optional protocol authoring/schema + exact Specification/profile/plan
   -> I3 isolated runner + two independent realizations + resurrection breaker
   -> I-R2 implementation, trace, isolation, and authority review
@@ -74,6 +76,8 @@ I0 design-spec 0005 + substrate census
 | I-R1 | uninvolved read-only reviewer | challenge semantic completeness, oracle independence, trace prefix/final-state shortcuts, token identity, terminal closure, finite-evidence wording, and phase precedence; I2 or explicit successor |
 | I1-S1 | lead/test owner; journey tests and this plan only | freeze every exact input/before/output/after step, six trace lengths, all identity shapes, terminal suffixes, and breaker's valid prefix before its exact step-2 divergence; I-R1b |
 | I-R1b | same uninvolved read-only reviewer | replay final-state-only, truncation, reorder/renumber, identity loss, fabricated intermediate, and terminal-resurrection attacks against the successor; I2 or another retained successor |
+| I1-S2 | lead/test owner; journey tests and this plan only | bind breaker's first five exact traces and campaign-first mismatch; exact candidate import allowlist; separate valid unaccepted Evidence from schema/link-invalid mutations; exact process/acquisition/governed-input allowlists; closed authority/specification/theory values; duplicate input/output/declaration and stable phase diagnostics; I-R1c |
+| I-R1c | same uninvolved read-only reviewer | replay every I-R1/I-R1b counterexample against the complete red successor; I2 or another retained successor |
 | I2 semantic artifacts | lead; optional schema/PSpec surface plus new lease Specification/profile/campaign-plan artifacts only | old Specifications remain valid; exact states/transitions/propositions/profile/plan are independently inspectable; I3; stop if a new canonical record kind or implicit cross-record relation is required |
 | I3 candidates/campaign | lead; new lease runner, adapters, realization sources, breaker, and candidate reports only | isolated six-scenario sessions; complete ordered traces; two independent passes; exact resurrection challenge; source/build/runner provenance; I-R2; stop if shared code implements candidate state or the adapter cannot observe required identity/terminal behavior |
 | I-R2 | uninvolved read-only reviewer | execute/reason over trace truncation/reordering, reused state, fabricated identity, candidate dependence, runner self-ratification, breaker specificity, cleanup, input mutation, and overclaim; I4 or successor |
@@ -153,7 +157,9 @@ nix develop --command python3 -m semantic_packages protocol inspect \
 - [x] I1 refute-first controls
 - [x] I-R1 independent contract/oracle review — BLOCK retained
 - [x] I1-S1 exact full-trace oracle successor
-- [ ] I-R1b successor contract/oracle review
+- [x] I-R1b successor contract/oracle review — BLOCK retained
+- [x] I1-S2 authority, phase, independence, and closure successor
+- [ ] I-R1c final contract/oracle review
 - [ ] I2 semantic artifacts
 - [ ] I3 candidates and campaign
 - [ ] I-R2 implementation review
@@ -205,6 +211,22 @@ nix develop --command python3 -m semantic_packages protocol inspect \
   failure and freezes all 19 exact steps per passing candidate: every input, before
   state, output, after state, opaque identity, scenario length/order, four-step terminal
   suffix, and the breaker's valid expiry prefix plus exact late-completion input.
+- 2026-07-23: I-R1b BLOCK at exact committed successor `45e0c08`. Exact passing traces
+  close final-state/truncation/reordering/identity/resurrection attacks, but the breaker
+  may fail an earlier scenario; `ImportFrom.module` can hide a shared state engine;
+  schema/link-invalid Evidence mutations are incorrectly treated as valid policy axes;
+  acquisition/process/member aliasing lacks an exact allowlist; nested authority,
+  Specification, and theory values remain open; and duplicate input/output/declaration
+  plus stable protocol-phase diagnostics are incomplete. I1-S2 must close all six
+  classes before I2/I3 can be accepted.
+- 2026-07-23: I1-S2 expands the frozen suite to eighteen controls: seventeen active
+  passes against the provisional implementation and one retained predecessor skip.
+  It compares the breaker's first five scenarios and derives the first mismatch across
+  campaign order; admits only `__future__`, `json`, and `sys` in each registered
+  adapter; separates valid pending/challenging/assertion/withdrawn/inapplicable/policy-
+  empty axes from schema/link-invalid mutations; binds all 14 governed paths and all 18
+  child commands; closes manifest/plan/specification/theory/report values; and adds
+  duplicate input/output/declaration plus stable raw/schema/protocol pointers.
 
 ## Decision log
 
