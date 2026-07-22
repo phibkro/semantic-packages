@@ -45,6 +45,8 @@ V0 exact two-domain census and design-spec 0002
   -> V-R1 independent contract/control review
   -> V1-S1 oracle-sensitivity successor
   -> V-R1S independent successor review
+  -> V1-S2 executable-boundary successor
+  -> V-R1F final contract review
   -> V2 proposal decoder, validator, inspector, report, and CLI
   -> V-R2 independent implementation review
   -> V3 README/design/system-map/backlog maintenance
@@ -57,6 +59,7 @@ V0 exact two-domain census and design-spec 0002
 | V1 red journey | lead/test owner; `refinements/*.prefine`, V1 journey tests, this plan | TOML parses, complete explicit dispositions, intentional absent refinement command, successor controls; V-R1; stop if proposal cannot represent both examples |
 | V-R1 | uninvolved read-only reviewer | attack completeness, nonauthority, digest binding, phase order, no overclaim, and red topology; V2 or explicit successor |
 | V1-S1 / V-R1S | lead/test owner then uninvolved reviewer; proposal fixtures remain unchanged | same/cross-family swaps, overlaps/duplicates, positive removal, both-side binding, opaque versions, reorder relations, phase barriers, side-effect snapshot; V2 or successor |
+| V1-S2 / V-R1F | lead/test owner then uninvolved reviewer; tests/plan only | patch real resolver entrypoints/aliases, mirror successor address mutations, snapshot all three exact inputs; V2 or successor |
 | V2 implementation | lead; new refinement modules/CLI plus exact report serialization | both exact reports, all falsifiers, atomic output, unchanged predecessor actors; V-R2; stop on canonical-model or resolver expansion |
 | V-R2 | uninvolved read-only reviewer | counterexamples for mappings, parsing, ordering, hosted opacity, no Evidence migration, generality boundary; V3 or successor |
 | V3 maintenance | lead; README and durable project memory | exact experience/failure/recovery, changed capability map, backlog disposition, known exclusions; V-G |
@@ -98,7 +101,9 @@ python3 scripts/check_repo.py
 - [x] V1 red complete proposals and journey controls
 - [x] V-R1 independent contract/control review (BLOCK retained)
 - [x] V1-S1 oracle-sensitivity successor
-- [ ] V-R1S independent successor review
+- [x] V-R1S independent successor review (BLOCK retained)
+- [x] V1-S2 executable-boundary successor
+- [ ] V-R1F final contract review
 - [ ] V2 inspector and CLI
 - [ ] V-R2 independent implementation review
 - [ ] V3 durable documentation and maintenance
@@ -136,10 +141,16 @@ python3 scripts/check_repo.py
   disposition authority. Both source bindings, reverse-looking opaque versions, exact
   report provenance/mapping pairs, full reorder relations, parse/schema phase barriers,
   and registry/resolver/process side-effect oracles are frozen for V-R1S.
+- 2026-07-22: V-R1S BLOCK at exact clean `436ca58`. All original V-R1 relation gaps
+  close, but the resolver oracle patched nonexistent `resolver.resolve_exact` rather
+  than the real Stack, OrderedMap, and maintenance entrypoints; V2 could not turn it
+  green honestly. Successor kind/id mutations and `.prefine` input immutability were
+  also absent. V1-S2 patches the real entrypoints plus command aliases, mirrors both
+  successor address fields, and snapshots proposal/predecessor/successor bytes.
 
 ## Result and remaining work
 
-V0/V1, the first V-R1, and V1-S1 are complete with the BLOCK retained. V-R1S is the
+V0/V1 and both retained review successors through V1-S2 are complete. V-R1F is the
 next released node. No inspector, report, accepted refinement relation, compatibility
 conclusion, Evidence transfer, or resolver change exists yet; V2 remains held.
 

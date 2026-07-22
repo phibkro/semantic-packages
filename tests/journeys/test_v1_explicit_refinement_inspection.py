@@ -236,9 +236,22 @@ class ExplicitRefinementJourneyTest(unittest.TestCase):
                 additions,
             ) in cases:
                 with self.subTest(proposal=proposal.name):
+                    input_bytes = (
+                        proposal.read_bytes(),
+                        predecessor.read_bytes(),
+                        successor.read_bytes(),
+                    )
                     output = directory / f"{proposal.stem}.json"
                     result = _run_refinement(proposal, predecessor, successor, output)
                     self.assertEqual(0, result.returncode, result.stderr)
+                    self.assertEqual(
+                        input_bytes,
+                        (
+                            proposal.read_bytes(),
+                            predecessor.read_bytes(),
+                            successor.read_bytes(),
+                        ),
+                    )
                     report = _read_json(output)
                     unchanged, changed, added, removed = counts
                     self.assertEqual("refinement-inspection-v1", report["kind"])
@@ -263,7 +276,7 @@ class ExplicitRefinementJourneyTest(unittest.TestCase):
                         },
                         report["successor"],
                     )
-                    authored = tomllib.loads(proposal.read_text(encoding="utf-8"))
+                    authored = tomllib.loads(input_bytes[0].decode("utf-8"))
                     self.assertEqual(
                         [item["predecessor"] for item in authored["mappings"]],
                         [item["predecessor"] for item in report["mappings"]],
@@ -622,6 +635,28 @@ class ExplicitRefinementJourneyTest(unittest.TestCase):
                         ("REFINEMENT_SPEC_ADDRESS", "#/predecessor"),
                     )
 
+            successor_address_mutations = (
+                (
+                    '[successor]\nkind = "specification"',
+                    '[successor]\nkind = "claim"',
+                ),
+                (
+                    '[successor]\nkind = "specification"\nid = "stack"',
+                    '[successor]\nkind = "specification"\nid = "other"',
+                ),
+            )
+            for index, (old, new) in enumerate(successor_address_mutations):
+                with self.subTest(successor_address=index):
+                    mutated = directory / f"successor-address-{index}.prefine"
+                    shutil.copyfile(STACK_PROPOSAL, mutated)
+                    self._replace(mutated, old, new)
+                    self._assert_failed_without_output_change(
+                        mutated,
+                        STACK_PREDECESSOR,
+                        STACK_SUCCESSOR,
+                        ("REFINEMENT_SPEC_ADDRESS", "#/successor"),
+                    )
+
     def test_raw_parse_schema_and_numeric_limits_are_contained_by_phase(self) -> None:
         with tempfile.TemporaryDirectory(prefix="semantic-refinement-raw-") as raw:
             directory = Path(raw)
@@ -852,7 +887,12 @@ class ExplicitRefinementJourneyTest(unittest.TestCase):
                 self.assertNotIn(forbidden, serialized)
 
     def test_in_process_inspection_never_calls_resolver_or_process_boundary(self) -> None:
-        from semantic_packages import refinement_command, resolver
+        from semantic_packages import (
+            maintenance,
+            ordered_map_resolution,
+            refinement_command,
+            resolver,
+        )
 
         with tempfile.TemporaryDirectory(prefix="semantic-refinement-pure-") as raw:
             output = Path(raw) / "report.json"
@@ -871,7 +911,25 @@ class ExplicitRefinementJourneyTest(unittest.TestCase):
             ]
             forbidden = AssertionError("refinement inspection crossed a forbidden boundary")
             with (
-                mock.patch.object(resolver, "resolve_exact", side_effect=forbidden),
+                mock.patch.object(resolver, "resolve_stack", side_effect=forbidden),
+                mock.patch.object(
+                    ordered_map_resolution,
+                    "resolve_ordered_map",
+                    side_effect=forbidden,
+                ),
+                mock.patch.object(maintenance, "resolve_exact", side_effect=forbidden),
+                mock.patch.object(
+                    refinement_command,
+                    "resolve_stack",
+                    create=True,
+                    side_effect=forbidden,
+                ),
+                mock.patch.object(
+                    refinement_command,
+                    "resolve_ordered_map",
+                    create=True,
+                    side_effect=forbidden,
+                ),
                 mock.patch.object(
                     refinement_command,
                     "resolve_exact",
