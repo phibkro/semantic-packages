@@ -18,6 +18,7 @@ OLD_POLICY = ROOT / "registry" / "ordered-map" / "consumers" / "package" / "reco
 OLD_MANIFEST = ROOT / "registry" / "ordered-map" / "manifest.json"
 O8_MANIFEST = ROOT / "registry" / "ordered-map" / "successor-manifest.json"
 PROFILE_CHOICE_MANIFEST = ROOT / "registry" / "ordered-map" / "profile-choice-manifest.json"
+PROFILE_CHOICE_ACTOR = ROOT / "semantic_packages" / "ordered_map_profile_choice.py"
 PROBE = ROOT / "fixtures" / "research" / "ordered-map-profile-choice"
 PROFILES = ROOT / "registry" / "ordered-map" / "profile-choice" / "profiles" / "records"
 POLICIES = ROOT / "registry" / "ordered-map" / "profile-choice" / "consumers" / "records"
@@ -48,6 +49,9 @@ EXPECTED_PREDECESSOR_SHA256 = {
     OLD_MANIFEST: "0dae972b40c850f691df0856577cf8a9d66449a4655dcbb0c328b20c6993455d",
     O8_MANIFEST: "f5e87e65c4765865203158cdd6cbfbf46774dd7d068ddadeaa37c41a5f6ffaf3",
 }
+EXPECTED_PROFILE_CHOICE_MANIFEST_SHA256 = (
+    "d6be0eec8439e02434a4f39a021a3c0abcc20f98ff10a02c3749359c1b78f8c7"
+)
 
 
 def _load(path: Path) -> dict:
@@ -154,12 +158,21 @@ class OrderedMapProfileChoiceArtifactTest(unittest.TestCase):
                     _canonical_sha256(plan),
                 )
 
-    def test_artifacts_are_inputs_not_a_premature_product_authority(self) -> None:
+    def test_artifacts_remain_inputs_after_dedicated_product_authority(self) -> None:
         self.assertEqual(
             EXPECTED_PREDECESSOR_SHA256,
             {path: _raw_sha256(path) for path in EXPECTED_PREDECESSOR_SHA256},
         )
-        self.assertFalse(PROFILE_CHOICE_MANIFEST.exists())
+        self.assertTrue(PROFILE_CHOICE_MANIFEST.is_file())
+        self.assertTrue(PROFILE_CHOICE_ACTOR.is_file())
+        self.assertEqual(
+            EXPECTED_PROFILE_CHOICE_MANIFEST_SHA256,
+            _raw_sha256(PROFILE_CHOICE_MANIFEST),
+        )
+        self.assertEqual(
+            ROOT / "registry" / "ordered-map",
+            PROFILE_CHOICE_MANIFEST.parent,
+        )
 
 
 if __name__ == "__main__":

@@ -20,14 +20,14 @@ the active ExecPlan.
 | accepted actor-journey and governance successor history | [completed ExecPlan 0002](../exec-plans/completed/0002-actor-journeys.md) |
 | deferred uninvolved-human inspection journey | [active ExecPlan 0003](../exec-plans/active/0003-cold-human-inspection.md) |
 | accepted OrderedMap second-domain route | [completed ExecPlan 0004](../exec-plans/completed/0004-ordered-map-generality.md) |
-| active differentiated deployment-profile route | [active ExecPlan 0005](../exec-plans/active/0005-deployment-profile-choice.md) |
+| differentiated deployment-profile route | [active ExecPlan 0005](../exec-plans/active/0005-deployment-profile-choice.md) |
 
-Current route: ExecPlan 0004 is closed at two-domain reuse. ExecPlan 0005 now tests
-exact consumer choice across differentiated native-process and Deno-sandbox profiles;
-its first probe forbids reusing old profile-bound Evidence by resemblance.
-P2a freezes the exact profile, policy, campaign-plan, and append-only graph contract;
-the profile-choice product authority and actor remain deliberately absent until fresh
-profile-bound Evidence exists.
+Current route: ExecPlan 0004 is closed at two-domain reuse. ExecPlan 0005 has produced
+fresh exact-profile Evidence and an authenticated 69-member authority for differentiated
+native-process and Deno-sandbox choices. Its actor selects Rust only for the native
+profile and TypeScript only for the Deno profile while retaining 21 nonmatching Claims
+and 21 nonmatching Evidence records as inapplicable in each decision. P5 convergence
+and hosted acceptance remain before plan closure.
 
 ## End-to-end product shape
 
@@ -151,9 +151,9 @@ sandbox assurance, and cannot perform writes or ratify a gate.
 | L5 semantic Evidence | one named-law proof with exact model/tool/input provenance | executable and deliberately bounded |
 | L6 realization execution | opaque-handle child adapter and event observation | executable under separate Stack and OrderedMap NDJSON protocols |
 | L7 independent conformance | exact harness-owned campaigns against Rust/TypeScript and breakers | executable for both domains without shared transition or oracle code |
-| L8 Evidence binding | declaration-scoped Claims and exact-bound review/provenance fields | executable as eight accepted Stack records and 14 accepted OrderedMap records; assurance remains policy-relative |
-| L9 product registry | curated honest source sets distinct from fixture history | executable for exact Stack 24/31-record snapshots and OrderedMap 33/35-record snapshots |
-| L10 resolution | policy/profile-relative semantic selection and interoperation explanation | executable for exact Stack and OrderedMap queries; semantic status stays separate from directional boundaries |
+| L8 Evidence binding | declaration-scoped Claims and exact-bound review/provenance fields | executable as eight accepted Stack records, 14 accepted base OrderedMap records, and 14 accepted exact-profile OrderedMap records; assurance remains policy-relative |
+| L9 product registry | curated honest source sets distinct from fixture history | executable for exact Stack 24/31-record snapshots and OrderedMap 33/35/69-record snapshots |
+| L10 resolution | policy/profile-relative semantic selection and interoperation explanation | executable for exact Stack, OrderedMap maintenance, and two differentiated-profile queries; semantic status stays separate from directional boundaries |
 | L11 projections | theory and package consumer views derived from the graph | both bounded consumer views are graph-only and executable in both domains |
 | L12 maintenance | exact successors, staleness, withdrawal, failure recovery | executable for bounded Stack and OrderedMap snapshots; OrderedMap `0.2.0` has zero candidates and exact nonautomatic `0.1.0` recovery; no lineage, migration, automatic selection, or freshness engine |
 
@@ -218,13 +218,24 @@ Realizations; the exact `0.2.0` successor adds `size`/`size-put` but no Realizat
 Claim, or Evidence, so its honest query returns zero candidates while retaining
 historical predecessor Evidence and nonautomatic recovery.
 
+### OrderedMap — exact deployment-profile choice
+
+ExecPlan 0005 extends the O8 graph append-only with two profiles, two unchanged-strength
+policies, and two fresh 15-record package sets. Fresh native and Deno campaigns bind
+the same OrderedMap meaning to different exact deployment envelopes. One authenticated
+actor makes both decisions from the 69-member graph: Rust `0.2.0` under the native
+profile and TypeScript `0.2.0` under the Deno profile. Each decision exposes seven
+selected and 21 inapplicable Claims plus the same Evidence ledger; optional performance
+remains unsupported. The directional child-process boundary is reported separately
+and does not grant semantic acceptance.
+
 ## Actor data flows
 
 | Actor | Data-plane path | Current edge |
 |---|---|---|
 | theory author | semantic source -> canonical Specification/Claim -> graph checks -> proof or other Evidence | finite exact Stack and OrderedMap publication inspection executable; `.pspec` elaboration and hosted publication absent |
 | package author | Realization/adapter -> explicit build -> campaign -> report -> reviewed declaration Evidence -> graph | executable for independently represented Rust and TypeScript packages in both domains |
-| package consumer | Specification + policy + profile -> Evidence selection -> semantic result -> boundary mechanism | executable exact Stack and OrderedMap queries with every Evidence axis, version-scoped recovery, and separate directional child-process boundaries |
+| package consumer | Specification + policy + profile -> Evidence selection -> semantic result -> boundary mechanism | executable exact Stack and OrderedMap queries, including two differentiated-profile choices with complete non-transfer ledgers, version-scoped recovery, and separate directional child-process boundaries |
 | theory consumer | exact Specification -> declarations/imports -> Claims/Evidence/unknowns -> derived view | executable Stack and OrderedMap projections; realization-scoped Evidence never becomes Specification assurance |
 
 ## Trust boundaries
@@ -293,6 +304,8 @@ steps.
 - bounded conformance is not universal verification or adapter faithfulness;
 - shared adapter protocol conformance is not cross-language interoperability;
 - accepted Evidence is mechanism-, profile-, version-, and policy-relative;
+- exact profile choice does not imply profile refinement, Evidence migration, runtime
+  interoperability, or version compatibility;
 - descriptive Realization entrypoints cannot become automatic execution instructions;
 - unsupported performance propositions remain visible through current resolvers and
   graph projections; a hosted browser remains absent;

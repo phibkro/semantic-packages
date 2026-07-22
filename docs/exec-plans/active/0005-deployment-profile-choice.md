@@ -227,6 +227,20 @@ P0 roadmap selection
   data-flow, or claim-scope gap remains. Private-helper coupling and reliance on
   authenticated member hashes for provenance fields remain nonblocking maintenance
   observations. P5 is released.
+- 2026-07-22: P5 candidate confirms the frozen P2b suite already owns the maintenance
+  obligations: exact O8-plus-34 append-only authority, predecessor-byte retention,
+  zero-candidate O8 behavior with nonautomatic recovery, and unchanged Stack/O6--O8
+  actors. The two fresh report and 30-record Evidence derivation checks now join the
+  repository-wide gate. README, system map, user journeys, profile-choice design, and
+  backlog expose the exact two-decision outcome and retain the non-transfer,
+  performance, refinement, interoperation, version, and arbitrary-generality limits.
+  P-R5 must independently review this convergence candidate before P-G may close.
+- 2026-07-22: The first full P5 repository run found one phase-local P2a research
+  assertion still requiring the profile-choice manifest to be globally absent after
+  P4 had accepted it. The successor-safe control now preserves both predecessor
+  digests, requires the exact reviewed P4 manifest digest and dedicated actor, and
+  leaves the stronger authority/actor falsifiers in the frozen P2b suite. The complete
+  27-test research suite passes; no product byte or acceptance requirement changed.
 
 ## Verification
 
@@ -262,3 +276,13 @@ python3 scripts/ordered_map_report_check.py
 
 Later nodes add their focused commands here before closure. Every merge must also pass
 the repository's hosted conventional-commit and squash-only governance.
+
+P5 and convergence add:
+
+```text
+python3 -m unittest tests.journeys.test_p2b_ordered_map_profile_choice -v
+python3 scripts/ordered_map_profile_choice_report_check.py
+python3 scripts/ordered_map_profile_choice_evidence_check.py
+python3 scripts/ordered_map_report_check.py
+python3 scripts/check_repo.py
+```

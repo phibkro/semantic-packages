@@ -2,17 +2,17 @@
 
 ## Scope and authority
 
-This document freezes the bounded P2 product contract released by the
+This document records the bounded product contract released by the
 [deployment-profile probe](../research/deployment-profile-choice.md). It selects no new
 semantic domain and adds no profile inheritance, version range, preference score, or
 Evidence-transfer rule. It specializes the accepted OrderedMap `0.1.0` meaning to two
 exact deployment envelopes and keeps the O8 source set as the append-only predecessor.
 
-The P2a records and plans are reviewed campaign inputs, not product authority. No
-profile-choice manifest exists yet, and no consumer may infer acceptance from the
-presence, path, runtime metadata, or schema validity of these artifacts. P3 must
-produce fresh profile-bound reports and Evidence before P4 can construct and inspect
-the final authority.
+The P2a records and plans remain reviewed campaign inputs, not product authority.
+P3 produced fresh profile-bound reports and accepted Evidence before P4 constructed
+the exact profile-choice manifest. Consumer acceptance now comes only from replaying
+that authenticated authority through the closed actor; presence, path, runtime
+metadata, or schema validity alone still grants no acceptance.
 
 ## Exact P2a inputs
 
@@ -41,8 +41,10 @@ policies must render performance as optional and unsupported.
 
 ## Final append-only graph contract
 
-P4 will construct `registry/ordered-map/profile-choice-manifest.json` only after P3
-produces every authorized record. It extends the exact 35-member O8 successor graph;
+P4 constructed `registry/ordered-map/profile-choice-manifest.json` only after P3
+produced every authorized record. Its raw SHA-256 is
+`d6be0eec8439e02434a4f39a021a3c0abcc20f98ff10a02c3749359c1b78f8c7`.
+It extends the exact 35-member O8 successor graph;
 it does not branch from, rewrite, or replace either accepted predecessor manifest.
 The final graph has exactly 69 members and ten sources:
 
@@ -70,7 +72,7 @@ record loading can produce a product conclusion.
 
 ## Actor and decision contract
 
-The future public actor is the zero-argument
+The public actor is the zero-argument
 `inspect_ordered_map_profile_choices()`. It captures the one pinned profile-choice
 manifest once and makes exactly two decisions in this order:
 
@@ -97,9 +99,9 @@ Claims and Evidence. Inapplicable support is neither challenge nor assurance. Th
 zero-candidate successor remains observable through its own maintenance actor and is
 not silently recovered, ranked, or selected by this actor.
 
-## P2b negative controls and exclusions
+## Maintenance controls and exclusions
 
-P2b freezes the actor boundary before P3/P4 implementation. It must cover exact
+The frozen P2b suite now guards the implemented actor boundary. It covers exact
 artifact and predecessor bytes, 69-member/ten-source authority, zero-argument and
 one-capture behavior, no discovery or execution, immutable detached replay, both
 terminal decisions, the 7/21 applicability ledgers, all Evidence result/review axes,
@@ -113,6 +115,12 @@ promotion, candidate cross-selection, and any attempt to pass authority or selec
 overrides to the public actor. A targeted swapped-profile control must remain valid
 Evidence for its own exact profile while becoming inapplicable and blocking assurance
 under the requested profile.
+
+The same suite retains the accepted 33-member OrderedMap decision, the O8 35-member
+zero-candidate successor and nonautomatic predecessor recovery, and the Stack actor
+without calling Stack resolution from the new actor. Reports reproduce independently;
+Evidence records are derived from their exact accepted bytes; the repository-wide gate
+runs both checks alongside all actor regressions.
 
 This contract does not authorize profile refinement, Evidence migration, benchmarking,
 runtime interoperability, Specification `0.2.0` recovery, a generic resolver language,
