@@ -13,7 +13,7 @@ The project explores a shared specification language that:
 
 ## Current phase
 
-**Two-domain local tracer accepted → human inspection and differentiated profiles.**
+**Exact differentiated-profile choice accepted → shared human authoring probe.**
 
 The accepted Stack tracer publishes one nontrivial specification, binds proof and
 conformance Evidence, registers two independent Realizations, resolves them under an
@@ -24,7 +24,10 @@ traverses the same bounded lifecycle with a different semantic shape: independen
 Realizations, policy-relative resolution, a separate directional boundary, and an
 append-only zero-candidate successor with exact predecessor recovery. This establishes
 only Stack-plus-finite-OrderedMap generality and does not claim that the deferred human
-observation or arbitrary-domain generality passed.
+observation or arbitrary-domain generality passed. Its exact-profile successor now
+selects Rust for a native-process envelope and TypeScript for a Deno-sandbox envelope
+from one append-only graph, retaining every nonmatching Claim and Evidence record as
+inapplicable rather than transferring assurance.
 
 ## Repository map
 
@@ -44,6 +47,7 @@ observation or arbitrary-domain generality passed.
 - [`docs/design/tracer-bullet.md`](docs/design/tracer-bullet.md): first vertical slice.
 - [`docs/exec-plans/active/0003-cold-human-inspection.md`](docs/exec-plans/active/0003-cold-human-inspection.md): executable inspection surface and deferred uninvolved-human gate.
 - [`docs/exec-plans/completed/0004-ordered-map-generality.md`](docs/exec-plans/completed/0004-ordered-map-generality.md): completed OrderedMap second-domain research, implementation, maintenance, and convergence history.
+- [`docs/exec-plans/completed/0005-deployment-profile-choice.md`](docs/exec-plans/completed/0005-deployment-profile-choice.md): completed differentiated-profile research, Evidence, authority, actor, maintenance, and convergence history.
 - [`docs/exec-plans/completed/0001-tracer-bullet.md`](docs/exec-plans/completed/0001-tracer-bullet.md): completed design, record, proof, adapter, independent-Realization, and Evidence history.
 - [`docs/exec-plans/completed/0002-actor-journeys.md`](docs/exec-plans/completed/0002-actor-journeys.md): completed actor registry, resolver, projection, maintenance, release, and workflow-governance history.
 - [`tasks/backlog.md`](tasks/backlog.md): ordered research and engineering backlog.
@@ -61,10 +65,11 @@ python3 scripts/check_repo.py
 ```
 
 The gate includes record/link fixtures, 18 loader groups, 50 adapter/campaign tests,
-59 cross-language candidate/Evidence-binding controls, 204 actor journeys, 16 research
-probes, 20 governance tests, two fresh Stack reports/eight records, two fresh OrderedMap
-reports plus one selective breaker, the exact 2/14/14 OrderedMap candidate census, and
-the 49-group proof boundary. Check the accepted proof Evidence directly with:
+59 cross-language candidate/Evidence-binding controls, 221 actor journeys, 27 research
+probes, 20 governance tests, two fresh Stack reports/eight records, two fresh base
+OrderedMap reports plus one selective breaker, the exact base and profile-choice
+2/14/14 candidate censuses, two fresh profile-bound reports, and the 49-group proof
+boundary. Check the accepted proof Evidence directly with:
 
 ```sh
 python3 scripts/proof_check.py \
@@ -114,6 +119,18 @@ The same 18 controls can be run alone with that command. Their reviewed outcomes
 recorded as declaration-scoped Evidence; the green report itself is only a provenance
 artifact, and the repository gate reproduces and binds it before accepting the records.
 
+Inspect both exact OrderedMap deployment choices without executing either Realization:
+
+```sh
+python3 -c 'from semantic_packages.ordered_map_profile_choice import inspect_ordered_map_profile_choices as inspect; result = inspect(); assert result.ok; print(result.output, end="")'
+```
+
+The read-only actor authenticates one 69-member graph, selects Rust `0.2.0` only for
+the native-process policy/profile and TypeScript `0.2.0` only for the Deno-sandbox
+policy/profile, and renders every selected or inapplicable Claim and Evidence item.
+It does not infer profile refinement, move Evidence between profiles, benchmark the
+candidates, execute them, or treat the separate child-process boundary as assurance.
+
 Inspect the exact predecessor and failed-successor Stack snapshots without executing
 artifacts or selecting an implicit latest version:
 
@@ -139,6 +156,8 @@ Then open the repository in Codex, an IDE extension, or another coding agent. Th
 
 ## Status
 
-This repository is an executable research prototype with complete bounded local Stack
-and finite OrderedMap lifecycles. It is not yet a stable standard, an arbitrary-domain
-semantic-package ecosystem, or a hosted production registry.
+This repository is an executable research prototype with complete bounded local Stack,
+finite OrderedMap, and exact differentiated-profile lifecycles. The next authored node
+probes their shared human authoring surface before selecting elaboration rules. This is
+not yet a stable standard, an arbitrary-domain semantic-package ecosystem, or a hosted
+production registry.

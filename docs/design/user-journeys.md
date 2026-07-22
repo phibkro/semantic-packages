@@ -6,9 +6,11 @@ The tracer is complete only when four actors can finish bounded tasks against th
 same canonical records. J1–J5 make those four terminal outcomes and bounded maintenance
 executable; JG accepted hosted release convergence and independent fresh-checkout
 reproduction. ExecPlan 0003's automated human-inspection surface passes while its real
-uninvolved-human observation remains deferred. ExecPlan 0004 now tests whether these
+uninvolved-human observation remains deferred. ExecPlan 0004 demonstrated that these
 contracts survive a structurally different OrderedMap domain without retroactively
-changing them. They are not personas or a promise of hosted infrastructure.
+changing them. ExecPlan 0005 adds two exact deployment envelopes while preventing
+Evidence from crossing profile boundaries by resemblance. They are not personas or a
+promise of hosted infrastructure.
 
 For this tracer, a **registry** is one curated finite local source set of immutable,
 exact-version records. To **publish** or **register** is to add records to that set and
@@ -117,6 +119,13 @@ separately from directional process-boundary interoperation. The fixtures includ
 an operationally composable but semantically unacceptable candidate and a semantically
 acceptable candidate that needs a non-direct boundary.
 
+The differentiated-profile successor makes two closed OrderedMap decisions from one
+authenticated 69-member graph. The native policy/profile selects Rust `0.2.0`; the
+Deno policy/profile selects TypeScript `0.2.0`. Each result keeps seven selected and
+21 inapplicable Claims and the same Evidence counts visible, leaves optional
+performance unsupported, and reports the non-direct child-process boundary separately.
+No Evidence, assurance, selector, or candidate transfers between profiles.
+
 ### J4T — theory consumer browses and imports
 
 The projection shows exact Stack identity, declarations, import edges,
@@ -143,6 +152,11 @@ both independent campaigns, replays negative controls, resolves the package-cons
 query, renders or queries both consumer projections, and exercises successor/staleness
 failure. The gate retains exact commands, inputs, outputs, assumptions, exclusions,
 and known recovery limits.
+
+ExecPlan 0005 extends this release observation with exact reproduction of both
+profile-bound reports, derivation of the two 15-record package sets, two actor decisions,
+cross-profile and incomplete-authority negatives, and unchanged Stack and OrderedMap
+predecessor decisions.
 
 ## Scenario evidence map
 

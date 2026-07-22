@@ -2,15 +2,9 @@
 
 ## Now
 
-1. Demonstrate consumer selection between genuinely differentiated deployment profiles
-   while keeping performance/resource Evidence inapplicable outside its exact profile.
-   The retained [deployment-profile probe](../docs/research/deployment-profile-choice.md)
-   and [ExecPlan 0005](../docs/exec-plans/active/0005-deployment-profile-choice.md)
-   establish the exact-profile falsifier and successor route; implementation remains
-   active.
-2. Probe the shared human authoring surface revealed by Stack and OrderedMap before
+1. Probe the shared human authoring surface revealed by Stack and OrderedMap before
    committing `.pspec` to elaboration rules or hidden defaults.
-3. Model explicit specification refinement and cross-version compatibility only from
+2. Model explicit specification refinement and cross-version compatibility only from
    a concrete two-domain migration or composition falsifier.
 
 ## Deferred operator observation
@@ -46,6 +40,11 @@
   authority, both consumer views, a selective breaker, and an append-only zero-candidate
   successor with nonautomatic predecessor recovery. Its accepted claim is two-domain
   reuse only, not universal generality.
+- [ExecPlan 0005](../docs/exec-plans/completed/0005-deployment-profile-choice.md)
+  completed the exact deployment-profile tracer: fresh
+  native-process and Deno-sandbox campaigns, profile-bound Evidence, one append-only
+  69-member authority, two explainable exact choices, complete non-transfer ledgers,
+  unchanged Stack/O6--O8 regressions, and exact-head local and hosted convergence.
 - Stack remains the regression substrate. A later semantic package must join it rather
   than erase the only accepted comparison point.
 

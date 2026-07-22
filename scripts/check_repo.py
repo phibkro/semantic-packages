@@ -29,6 +29,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import record_check  # noqa: E402
 import loader_fixture_check  # noqa: E402
 import ordered_map_evidence_check  # noqa: E402
+import ordered_map_profile_choice_evidence_check  # noqa: E402
+import ordered_map_profile_choice_report_check  # noqa: E402
 import ordered_map_report_check  # noqa: E402
 import proof_fixture_check  # noqa: E402
 import wave4_evidence_check  # noqa: E402
@@ -43,6 +45,7 @@ REQUIRED = [
     "docs/research/ordered-map-probe.md",
     "docs/design/core-model.md",
     "docs/design/ordered-map-tracer.md",
+    "docs/design/ordered-map-profile-choice.md",
     "docs/design/system-map.md",
     "docs/design/user-journeys.md",
     "docs/design/spec-language.md",
@@ -54,6 +57,7 @@ REQUIRED = [
     "docs/operations/multi-provider-workflow.md",
     ".agent/PLANS.md",
     "docs/exec-plans/active/0003-cold-human-inspection.md",
+    "docs/exec-plans/completed/0005-deployment-profile-choice.md",
     "docs/exec-plans/completed/0004-ordered-map-generality.md",
     "docs/exec-plans/completed/0001-tracer-bullet.md",
     "docs/exec-plans/completed/0002-actor-journeys.md",
@@ -70,6 +74,8 @@ REQUIRED = [
     "scripts/check_change_metadata.py",
     "scripts/wave4_evidence_check.py",
     "scripts/ordered_map_evidence_check.py",
+    "scripts/ordered_map_profile_choice_evidence_check.py",
+    "scripts/ordered_map_profile_choice_report_check.py",
     "scripts/ordered_map_report_check.py",
     ".github/pull_request_template.md",
     "proofs/stack-pop-empty/StackPopEmpty.lean",
@@ -81,6 +87,7 @@ REQUIRED = [
     "schemas/ordered-map-conformance-plan.schema.json",
     "registry/ordered-map/theory/records/ordered-map-spec.json",
     "registry/ordered-map/theory/dependencies/ordered-map-profile.json",
+    "registry/ordered-map/profile-choice-manifest.json",
     "contracts/ordered-map/conformance-plan.json",
     "reports/ordered-map/rust-campaign-report.json",
     "reports/ordered-map/typescript-campaign-report.json",
@@ -207,6 +214,14 @@ def main() -> int:
         ordered_map_evidence_check.run_ordered_map_evidence_candidate_checks()
     )
     errors += ordered_map_evidence_errors
+    profile_choice_report_errors, profile_choice_report_summary = (
+        ordered_map_profile_choice_report_check.run_profile_choice_report_checks()
+    )
+    errors += profile_choice_report_errors
+    profile_choice_evidence_errors, profile_choice_evidence_summary = (
+        ordered_map_profile_choice_evidence_check.run_profile_choice_evidence_checks()
+    )
+    errors += profile_choice_evidence_errors
     proof_errors, proof_summary = run_proof_checks()
     errors += proof_errors
     if errors:
@@ -224,6 +239,8 @@ def main() -> int:
     print(wave4_summary)
     print(ordered_map_summary)
     print(ordered_map_evidence_summary)
+    print(profile_choice_report_summary)
+    print(profile_choice_evidence_summary)
     print(proof_summary)
     print("Repository checks passed.")
     return 0
