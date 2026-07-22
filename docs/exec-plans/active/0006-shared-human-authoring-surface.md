@@ -203,9 +203,9 @@ predecessor suite.
 - [x] A5-I author command, adapter, examples, documentation, and maintenance
 - [x] A5-RI pre-human implementation review (BLOCK retained)
 - [x] A5-I1 parser conversion-limit containment successor
+- [x] A-R5 end-to-end review
 - [ ] A5-P freeze and open experienceable PR
 - [ ] A5-H eligible uninvolved-author post-open observation
-- [ ] A-R5 end-to-end review
 - [ ] A-G final convergence
 
 ## Discoveries and changed assumptions
@@ -398,6 +398,15 @@ predecessor suite.
   contradicting ADR 0016 and `docs/design/spec-language.md`. A5-I2 binds observations
   to exact public candidate `1621f1b`, closes object/type/category shapes, and restores
   A5-H before A-G while preserving the operator-authorized PR/stack release.
+- 2026-07-22: A-R5 successor PASS at exact clean `61b1990`. Eleven focused A5
+  controls pass and one retired predecessor skips. Independent replay rejects the
+  original permissive report plus wrong/extra keys, Boolean or nonpositive duration,
+  unknown or duplicate assistance, malformed or duplicate ambiguities, failed tasks,
+  and revisions other than the real ancestor authority `1621f1b`. The complete exact-
+  head repository gate passes 255 actor journeys, 42 research probes, and every
+  retained record, loader, adapter, cross-language, governance, report, Evidence, and
+  proof lane. A5-P may freeze/open and release the stacked lane; A5-H still gates A-G
+  and merge. Design-spec 0001 is frozen at revision 2 on this evidence.
 
 ## Decision log
 
@@ -420,9 +429,9 @@ red controls; A-R3 accepts the exact red contract; and A4 implements its strict
 canonical-JSON control with an explicit finite dependency context. Design-spec 0001
 and A5-T contract the first non-control PSpec journey without claiming format
 permanence. A5-I makes the complete automated command journey and documentation
-experienceable. A-R5, A5-P, A5-H, and A-G remain unaccepted. A5-P may release the PR
-and stacked next design-spec after final review and gates; the live eligible-human
-observation remains post-open convergence evidence before A-G and merge.
+experienceable. A-R5 is accepted and design-spec 0001 revision 2 is frozen. A5-P is
+the next released node and may open the PR plus stacked next design-spec; the live
+eligible-human observation remains post-open convergence evidence before A-G and merge.
 
 ## Stop and escalation conditions
 

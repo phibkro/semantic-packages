@@ -2,10 +2,9 @@
 
 ## Contract status
 
-Active draft for one feature and one future pull request. This contract freezes when
-that pull request opens. Any contract change before or after that point is recorded in
-the revision history with the observation that required it; implementation never
-silently changes the target.
+Frozen at revision 2 for the A5-P feature pull request. Any later contract change is
+recorded in the revision history with the observation that required it; implementation
+never silently changes the target.
 
 ## Felt user journey
 
@@ -213,4 +212,5 @@ change, or an independently governed dependency acquisition workflow becomes nec
   post-open convergence evidence: A-G and merge remain open until it is retained.
   Its public protocol, exact candidate authority, truthful retention, and reopen
   obligation remain; no participant result is invented and no executable behavior or
-  protected boundary changes. Not yet frozen for PR.
+  protected boundary changes. Frozen for A5-P after A-R5 successor PASS at exact clean
+  `61b1990`; A5-H still gates A-G and merge.
