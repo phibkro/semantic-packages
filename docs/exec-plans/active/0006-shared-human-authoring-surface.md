@@ -199,7 +199,7 @@ not omit any predecessor suite.
 - [x] A5-T red end-to-end journey controls
 - [x] A5-I author command, adapter, examples, documentation, and maintenance
 - [x] A5-RI pre-human implementation review (BLOCK retained)
-- [ ] A5-I1 parser conversion-limit containment successor
+- [x] A5-I1 parser conversion-limit containment successor
 - [ ] A5-H eligible uninvolved-author observation
 - [ ] A-R5 end-to-end review
 - [ ] A-G final convergence
@@ -367,6 +367,14 @@ not omit any predecessor suite.
   and the missing human observation remains a distinct truthful gate. A5-I1 freezes
   both values with sentinel output and must map them to `AUTHOR_INVALID_TOML` and
   `AUTHOR_DEPENDENCY_JSON` without masking process-control exceptions before A5-H.
+- 2026-07-22: A5-I1 PASS at exact clean `24afce0`. The 5,000-digit TOML and
+  dependency-JSON controls now exit `1` with stable diagnostics, no traceback or
+  standard output, and unchanged disposable sentinel output. The first full-gate
+  attempt exposed that the control itself had written a sentinel beside the checked-in
+  Stack source; `24afce0` confines every sentinel to a disposable directory, and the
+  independent successor review observed a clean tree before and after. It also
+  confirmed `KeyboardInterrupt` and `SystemExit` remain unmasked, all 27 A1/A3
+  regressions pass, and only the truthful A5-H observation gate remains red.
 
 ## Decision log
 
@@ -390,7 +398,8 @@ canonical-JSON control with an explicit finite dependency context. Design-spec 0
 and A5-T contract the first non-control PSpec journey without claiming format
 permanence. A5-I makes the complete automated command journey and documentation
 experienceable. The eligible human observation, A-R5, and A-G remain unaccepted. A5-H
-is the next released node; no PR opens until the entire journey is complete.
+is the next released node after the independently accepted A5-I1 containment
+successor; no PR opens until the entire journey is complete.
 
 ## Stop and escalation conditions
 
