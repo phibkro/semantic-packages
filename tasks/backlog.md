@@ -18,6 +18,13 @@
 
 ## Deferred operator observation
 
+- Run the explicit PSpec Stack/OrderedMap author tasks with an eligible uninvolved
+  human at one exact public revision, using
+  [`docs/operations/explicit-pspec-author-observation.md`](../docs/operations/explicit-pspec-author-observation.md).
+  Retain the participant-reviewed timing, assistance, blocking ambiguity, and result
+  truthfully. This post-open maintenance item is not a claim that author usability has
+  passed; a failed task reopens the smallest affected design-spec or implementation
+  successor.
 - Run ExecPlan 0003 H2 with an eligible uninvolved human at one exact public revision,
   using [`docs/operations/cold-human-inspection.md`](../docs/operations/cold-human-inspection.md).
   Retain the participant's reviewed answers, navigation, assistance, timing, and

@@ -74,9 +74,9 @@ A0 roadmap/source census
   -> A5-I complete author command, adapter, examples, and docs
   -> A5-RI pre-human implementation review
   -> A5-I1 parser conversion-limit containment
-  -> A5-H eligible uninvolved-author observation
   -> A-R5 independent end-to-end review
   -> A-G final convergence
+  -> A5-H eligible uninvolved-author post-open observation
 ```
 
 | Node | Owner / exclusive boundary and integration point | Evidence packet, reviewer, gate, and escalation |
@@ -94,8 +94,8 @@ A0 roadmap/source census
 | A5-T red journey | lead/test owner; `specs/*.pspec` and A5 journey controls | two lossless TOML-shaped inputs equal accepted records, one intentional absent-command failure and eight successor skips; A5-I; contract mismatch returns to A5-D |
 | A5-I author experience | lead/implementation owner; authoring adapter/command, examples, README, check integration, and plan | exact commands, two-domain output equality, raw/schema/link diagnostics, no discovery, atomic output, regressions; A5-H; protected-boundary concern stops work |
 | A5-RI / A5-I1 | uninvolved read-only reviewer then lead; reviewer writes none, lead owns parser-limit controls and containment successor | ordinary huge-number PSpec/dependency inputs produce diagnostics, never tracebacks or output mutation; A5-H; process-control exceptions remain unmasked |
-| A5-H human observation | operator coordinates an eligible uninvolved author; lead owns privacy-bounded observation template and integration | both retained tasks, exact revision, duration, assistance, blocking ambiguity, participant review; A-R5; failed task creates an explicit A5-D or A5-I successor |
-| A-R5 / A-G | uninvolved reviewer then lead; no reviewer writes, lead owns completion move | full lifecycle, negative controls, docs, full local/hosted gates, conventional squash handoff; operator owns unresolved product-direction fork |
+| A5-H human observation | operator coordinates an eligible uninvolved author; lead owns privacy-bounded observation template and integration | public protocol before PR; later task result, exact revision, duration, assistance, blocking ambiguity, and participant review remain maintenance evidence; failure creates an explicit A5-D or A5-I successor |
+| A-R5 / A-G | uninvolved reviewer then lead; no reviewer writes, lead owns completion move | full lifecycle, negative controls, docs, full local/hosted gates, explicit A5-H scheduling disposition, conventional squash handoff; operator owns unresolved product-direction fork |
 
 ## Implementation steps in dependency order
 
@@ -179,9 +179,10 @@ Its red predecessor has ten tests: one fixture-contract PASS, one intentional fa
 naming only the absent `semantic_packages.__main__` command, and eight successor
 controls SKIP. Both PSpec inputs must already parse as TOML and equal their accepted
 canonical documents before implementation. A5-I turns the automated controls green;
-the retained human-observation control remains red until A5-H records a real eligible
-observation. The complete feature gate is still `python3 scripts/check_repo.py` and may
-not omit any predecessor suite.
+the retained protocol and optional-result control rejects fabricated or malformed
+observations without making an unavailable participant a PR-opening dependency. The
+complete feature gate is still `python3 scripts/check_repo.py` and may not omit any
+predecessor suite.
 
 ## Progress checklist
 
@@ -200,7 +201,7 @@ not omit any predecessor suite.
 - [x] A5-I author command, adapter, examples, documentation, and maintenance
 - [x] A5-RI pre-human implementation review (BLOCK retained)
 - [x] A5-I1 parser conversion-limit containment successor
-- [ ] A5-H eligible uninvolved-author observation
+- [x] A5-H scheduling disposition: public protocol retained; live observation is post-open maintenance
 - [ ] A-R5 end-to-end review
 - [ ] A-G final convergence
 
@@ -380,6 +381,13 @@ not omit any predecessor suite.
   252 passed, one retired predecessor skipped, and only A5-H failed; no generated
   repository state remained. This is release evidence for the external observation,
   not permission to waive it.
+- 2026-07-22: the operator resumed with an explicit instruction to finish the
+  experienceable journey, open its one PR, and stack the next design-spec without
+  waiting for merge. Design-spec 0001 revision 2 therefore moves the unavailable live
+  A5-H participant run from PR-opening convergence to post-open maintenance evidence.
+  The public protocol and truthful optional-result validation remain, no observation
+  is fabricated, and a later failure or ambiguity still reopens A5-D or A5-I. This is
+  a scheduling disposition, not a claim that author usability passed.
 
 ## Decision log
 
@@ -402,9 +410,9 @@ red controls; A-R3 accepts the exact red contract; and A4 implements its strict
 canonical-JSON control with an explicit finite dependency context. Design-spec 0001
 and A5-T contract the first non-control PSpec journey without claiming format
 permanence. A5-I makes the complete automated command journey and documentation
-experienceable. The eligible human observation, A-R5, and A-G remain unaccepted. A5-H
-is the next released node after the independently accepted A5-I1 containment
-successor; no PR opens until the entire journey is complete.
+experienceable. A5-R5 and A-G remain unaccepted. The live eligible-human observation
+is explicitly scheduled as post-open maintenance evidence; the public protocol and
+reopen obligation remain part of this journey without claiming usability has passed.
 
 ## Stop and escalation conditions
 

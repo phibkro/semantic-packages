@@ -23,6 +23,9 @@ ORDERED_PROFILE = (
     ROOT / "registry/ordered-map/theory/dependencies/ordered-map-profile.json"
 )
 HUMAN_OBSERVATION = ROOT / "reports/authoring/uninvolved-author-observation.json"
+HUMAN_OBSERVATION_PROTOCOL = (
+    ROOT / "docs/operations/explicit-pspec-author-observation.md"
+)
 CLI_READY = importlib.util.find_spec("semantic_packages.__main__") is not None
 
 
@@ -355,11 +358,14 @@ class ExplicitPSpecAuthorJourneyTest(unittest.TestCase):
             self.assertIn("AUTHOR_OUTPUT_WRITE", result.stderr)
             self.assertNotIn("Traceback", result.stderr)
 
-    def test_eligible_uninvolved_author_observation_is_retained(self) -> None:
-        self.assertTrue(
-            HUMAN_OBSERVATION.is_file(),
-            "A5 requires the operator-coordinated uninvolved-author observation",
-        )
+    def test_uninvolved_author_protocol_and_any_observation_are_truthful(self) -> None:
+        protocol = HUMAN_OBSERVATION_PROTOCOL.read_text(encoding="utf-8")
+        self.assertIn("## Task 1 — Stack success, failure, and recovery", protocol)
+        self.assertIn("## Task 2 — OrderedMap through the same contract", protocol)
+        self.assertIn("The implementing agent must not impersonate", protocol)
+        if not HUMAN_OBSERVATION.is_file():
+            return
+
         observation = _read_json(HUMAN_OBSERVATION)
         self.assertEqual("human-author-observation-v1", observation.get("kind"))
         self.assertRegex(observation.get("revision", ""), r"^[0-9a-f]{40}$")

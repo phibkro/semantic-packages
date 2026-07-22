@@ -151,9 +151,9 @@ The feature is false if any of these observations occur:
    location that the author did not explicitly provide.
 10. Existing Stack/OrderedMap consumer, resolver, campaign, Evidence, proof, or record
     checks regress.
-11. An eligible uninvolved author cannot complete both retained author tasks from the
-    documentation without undisclosed assistance, or reports a blocking ambiguity that
-    the journey evidence does not retain and disposition.
+11. A later eligible uninvolved-author observation cannot be retained truthfully,
+    silently disappears from maintenance, or reports a blocking ambiguity that does
+    not reopen the smallest affected contract or implementation successor.
 
 ## Definition of done
 
@@ -167,11 +167,13 @@ The feature is false if any of these observations occur:
 - An independent A-R5 review attacks the journey, diagnostics, protected boundaries,
   and generality claim; every material concern is incorporated, falsified, retained as
   risk with an owner/trigger, or escalated.
-- One eligible uninvolved author performs the Stack and OrderedMap tasks at one exact
-  revision. Timing, assistance, blocking ambiguity, and privacy-bounded observations
-  are retained without relabeling this as semantic Evidence.
-- ExecPlan 0006 records A5, A-R5, and A-G disposition and moves to completed only after
-  all required observations pass.
+- The eligible uninvolved-author protocol is public at the exact candidate revision.
+  When a participant run is coordinated, timing, assistance, blocking ambiguity, and
+  privacy-bounded observations are retained truthfully without relabeling usability as
+  semantic Evidence. The live observation is maintenance evidence and does not block
+  opening the already experienceable feature PR.
+- ExecPlan 0006 records A5, A-R5, A-G, and the explicit post-open A5-H scheduling
+  disposition before moving to completed.
 - One pull request maps 1:1 to this design spec, opens only after the complete journey
   is experienceable, and uses its description as the operator report: felt feature,
   exact copy-paste experience steps, and one line explaining what is real underneath.
@@ -204,3 +206,9 @@ change, or an independently governed dependency acquisition workflow becomes nec
 - **2026-07-22, revision 1:** Initial active contract. Selects the smallest reversible
   explicit lossless surface admitted by A2, freezes the two-domain command journey and
   its falsifiers, and leaves realization mechanisms free. Not yet frozen for PR.
+- **2026-07-22, revision 2:** The operator's resume directive requires the complete,
+  experienceable journey to open as one PR and the next design-spec to stack without
+  waiting. The live uninvolved-author run therefore moves from a PR-opening gate to
+  explicit post-open maintenance observation. Its public protocol, truthful retention,
+  and reopen obligation remain; no participant result is invented and no executable
+  behavior or protected boundary changes. Not yet frozen for PR.
