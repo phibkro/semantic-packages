@@ -121,7 +121,7 @@ python3 scripts/check_repo.py
 ## Progress checklist
 
 - [x] E0 design-spec 0003 revision 2 and exact five-mode census
-- [ ] E1 red command/report journey and controls
+- [x] E1 red command/report journey and controls
 - [ ] E-R1 independent contract/projection review
 - [ ] E2 effect-separation observation and command
 - [ ] E-R2 independent implementation review
@@ -144,11 +144,19 @@ python3 scripts/check_repo.py
   unspecified events, and OrderedMap already asserts forbidden concern locality. The
   missing product observation is an experienceable exact cross-domain comparison with
   durable report, assumptions, exclusions, failure behavior, and no overclaim.
+- 2026-07-22: E1's first executable census rejected an assumed round Stack event
+  multiplicity. Each complete eventful Stack campaign retains exactly 177 invocation
+  events; OrderedMap retains 30. The oracle now derives from the exact runners and the
+  red topology is two passing substrate controls, one intentional absent-probe failure,
+  and seven skipped successor controls.
 
 ## Result and remaining work
 
-E0 is complete. No probe, comparison report, accepted Effect relation, new Evidence,
-resolver behavior, or whole-process conclusion exists. E1 is the next released node.
+E0 and E1 are complete. The red predecessor names only the absent probe after live
+runner census; successor controls cover the complete report, immutable projections,
+classification and concern locality, error asymmetry, exact execution authority,
+output safety, determinism, and bounded language. No probe, accepted Effect relation,
+new Evidence, resolver behavior, or whole-process conclusion exists. E-R1 is next.
 
 ## Stop and escalation conditions
 
