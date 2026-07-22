@@ -20,6 +20,11 @@ the active ExecPlan.
 | accepted actor-journey and governance successor history | [completed ExecPlan 0002](../exec-plans/completed/0002-actor-journeys.md) |
 | deferred uninvolved-human inspection journey | [active ExecPlan 0003](../exec-plans/active/0003-cold-human-inspection.md) |
 | accepted OrderedMap second-domain route | [completed ExecPlan 0004](../exec-plans/completed/0004-ordered-map-generality.md) |
+| active differentiated deployment-profile route | [active ExecPlan 0005](../exec-plans/active/0005-deployment-profile-choice.md) |
+
+Current route: ExecPlan 0004 is closed at two-domain reuse. ExecPlan 0005 now tests
+exact consumer choice across differentiated native-process and Deno-sandbox profiles;
+its first probe forbids reusing old profile-bound Evidence by resemblance.
 
 ## End-to-end product shape
 
