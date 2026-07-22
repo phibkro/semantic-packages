@@ -62,6 +62,17 @@ claim. The automated journey is implemented under
 uninvolved author must still complete both retained tasks before A5 and ExecPlan 0006
 are accepted.
 
+### A6 — theory author inspects an explicit exact-version proposal
+
+The theory author or maintainer names one predecessor Specification, one successor
+Specification, and a complete explicit declaration disposition. Acceptance requires
+exact address and raw-byte binding, proposal-order mappings, explicit additions and
+removals, all-or-none diagnostics, immutable inputs, and the fixed conclusion that
+semantic refinement remains unestablished. Stack demonstrates one changed effect
+document; OrderedMap demonstrates two additions. Neither example creates lineage,
+compatibility, resolver authority, migration, or Evidence transfer. The executable
+contract is [design-spec 0002](../../design-specs/0002-explicit-refinement-inspection-journey.md).
+
 ### J0 — vocabulary and local boundary
 
 Acceptance requires the actor definitions above; distinct observations for publish,

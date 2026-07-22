@@ -120,8 +120,8 @@ python3 scripts/check_repo.py
 - [x] V2 inspector and CLI
 - [x] V-R2 independent implementation review (BLOCK retained)
 - [x] V2-S1 output-alias safety successor
-- [ ] V-R2S independent safety review
-- [ ] V3 durable documentation and maintenance
+- [x] V-R2S independent safety review (PASS at `570891f`)
+- [x] V3 durable documentation and maintenance
 - [ ] V-G convergence, freeze, and one PR
 
 ## Discoveries and changed assumptions
@@ -186,12 +186,17 @@ python3 scripts/check_repo.py
   identity with proposal, predecessor, or successor before parsing. The 17-test focused
   journey is green with sixteen active PASS and the intentional red predecessor SKIP;
   V-R2S remains the release gate for documentation.
+- 2026-07-22: V-R2S PASS at exact clean `570891f`. Existing file identities and
+  equivalent path spellings are rejected before any parse or write, all prior V-R2
+  surfaces remain green, and V3 is released. README, compatibility, user journeys,
+  system map, backlog, and repository-required surfaces now describe the exact felt
+  commands, recovery, structural-only authority, and two-example boundary.
 
 ## Result and remaining work
 
-V0/V1, V2, and the retained V-R2 BLOCK are complete. V2-S1 is active. No accepted
-refinement relation, compatibility conclusion, Evidence transfer, or resolver change
-is authorized by this safety successor.
+V0/V1, V2/V2-S1, both independent implementation reviews, and V3 are complete. V-G is
+the only remaining node. No accepted refinement relation, compatibility conclusion,
+Evidence transfer, or resolver change is authorized by this feature.
 
 ## Stop and escalation conditions
 

@@ -13,7 +13,7 @@ The project explores a shared specification language that:
 
 ## Current phase
 
-**Human PSpec author journey experienceable → uninvolved-author observation.**
+**Explicit exact-version refinement inspection experienceable; semantic verdict held.**
 
 The accepted Stack tracer publishes one nontrivial specification, binds proof and
 conformance Evidence, registers two independent Realizations, resolves them under an
@@ -35,6 +35,11 @@ profile contexts, publishes output atomically, and returns deterministic source-
 diagnostics without hidden identity, defaults, acquisition, or hosted-text
 interpretation. Automated journey controls pass; eligible uninvolved-author observation
 and final independent acceptance remain open.
+On top of that still-gated authoring PR, a theory maintainer can now inspect an explicit
+proposal between exact Stack or OrderedMap Specification versions. The report preserves
+authored declaration mappings and structural changes while fixing semantic refinement
+at `unestablished`; it creates no compatibility decision, resolver edge, migration, or
+Evidence transfer.
 
 ## Repository map
 
@@ -53,6 +58,8 @@ and final independent acceptance remain open.
 - [`docs/operations/multi-provider-workflow.md`](docs/operations/multi-provider-workflow.md): agent route status, model-diverse delegation, security boundaries, and provenance.
 - [`docs/design/tracer-bullet.md`](docs/design/tracer-bullet.md): first vertical slice.
 - [`design-specs/0001-explicit-pspec-author-journey.md`](design-specs/0001-explicit-pspec-author-journey.md): observable contract and falsifiers for the complete PSpec author experience.
+- [`design-specs/0002-explicit-refinement-inspection-journey.md`](design-specs/0002-explicit-refinement-inspection-journey.md): observable contract and falsifiers for exact proposal-local cross-version inspection.
+- [`docs/exec-plans/active/0007-explicit-refinement-inspection.md`](docs/exec-plans/active/0007-explicit-refinement-inspection.md): live refinement journey, independent review, and convergence evidence.
 - [`docs/exec-plans/active/0003-cold-human-inspection.md`](docs/exec-plans/active/0003-cold-human-inspection.md): executable inspection surface and deferred uninvolved-human gate.
 - [`docs/exec-plans/completed/0004-ordered-map-generality.md`](docs/exec-plans/completed/0004-ordered-map-generality.md): completed OrderedMap second-domain research, implementation, maintenance, and convergence history.
 - [`docs/exec-plans/completed/0005-deployment-profile-choice.md`](docs/exec-plans/completed/0005-deployment-profile-choice.md): completed differentiated-profile research, Evidence, authority, actor, maintenance, and convergence history.
@@ -119,6 +126,64 @@ or discover profiles.
 
 The exact privacy-bounded acceptance task for an eligible uninvolved author is in
 [`docs/operations/explicit-pspec-author-observation.md`](docs/operations/explicit-pspec-author-observation.md).
+
+### Inspect an explicit exact-version refinement proposal
+
+Inspect Stack's exact effect-contract change:
+
+```sh
+nix develop --command python3 -m semantic_packages refinement inspect \
+  refinements/stack-0.1.0-to-0.2.0.prefine \
+  --predecessor registry/stack/theory/records/stack-spec.json \
+  --successor registry/stack/successors/j5/theory/stack-spec.json \
+  --output /tmp/stack-refinement.json
+```
+
+Expected summary:
+
+```text
+inspected refinement stack-0.1.0-to-0.2.0: 10 unchanged, 1 changed, 0 additions, 0 removals; semantic refinement unestablished -> /tmp/stack-refinement.json
+```
+
+Inspect OrderedMap's exact additive successor through the same surface:
+
+```sh
+nix develop --command python3 -m semantic_packages refinement inspect \
+  refinements/ordered-map-0.1.0-to-0.2.0.prefine \
+  --predecessor registry/ordered-map/theory/records/ordered-map-spec.json \
+  --successor registry/ordered-map/successors/o8/theory/ordered-map-spec.json \
+  --output /tmp/ordered-map-refinement.json
+```
+
+Expected summary:
+
+```text
+inspected refinement ordered-map-0.1.0-to-0.2.0: 18 unchanged, 0 changed, 2 additions, 0 removals; semantic refinement unestablished -> /tmp/ordered-map-refinement.json
+```
+
+To experience a safe failure and recovery, mis-map one declaration in a disposable
+proposal, then restore the reviewed bytes:
+
+```sh
+sed '0,/family = "carriers"/s//family = "laws"/' \
+  refinements/stack-0.1.0-to-0.2.0.prefine \
+  > /tmp/stack-mis-mapped.prefine
+nix develop --command python3 -m semantic_packages refinement inspect \
+  /tmp/stack-mis-mapped.prefine \
+  --predecessor registry/stack/theory/records/stack-spec.json \
+  --successor registry/stack/successors/j5/theory/stack-spec.json \
+  --output /tmp/stack-refinement.json
+cp refinements/stack-0.1.0-to-0.2.0.prefine /tmp/stack-mis-mapped.prefine
+```
+
+The failed command exits `1`, preserves the prior report and every input, and identifies
+the exact dangling declaration reference. Rerun it after the `cp` to recover.
+
+What is real underneath: the command strictly parses one explicit TOML disposition,
+schema-validates two caller-named Specification files, binds their exact addresses and
+raw digests, and atomically writes a structural report. Equal documents are not treated
+as semantic equivalence; no versions are discovered, no artifacts execute, and no
+Claim or Evidence moves between versions.
 
 ### Verify the repository
 
