@@ -2,7 +2,7 @@
 
 ## Status
 
-Proposed for ExecPlan 0006 A3 independent contract review.
+Accepted for ExecPlan 0006 A4 after A-R3 PASS at `49a9923`.
 
 ## Context
 

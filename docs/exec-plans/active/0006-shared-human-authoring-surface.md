@@ -158,7 +158,7 @@ this same suite green without weakening or deleting an assertion.
 - [x] A2 authoring-contract option probe
 - [x] A-R2 independent option review
 - [x] A-G2 contract choice or operator escalation
-- [ ] A3 red round-trip/ambiguity controls
+- [x] A3 red round-trip/ambiguity controls
 - [ ] A4 minimal elaborator
 - [ ] A-R4 implementation review
 - [ ] A5 actor journey, documentation, and maintenance
@@ -262,6 +262,16 @@ this same suite green without weakening or deleting an assertion.
   set, allowing truthful codes at false root pointers. The next successor requires
   `ok == false`, no document, and exact ordered `(code, path, pointer)` tuples. No
   product-direction decision is involved.
+- 2026-07-22: A-R3 final PASS at exact clean commit `49a9923`. The reviewer reproduces
+  the final 1 PASS / 1 intentional FAIL / 17 SKIP topology and confirms that mixed
+  document-plus-diagnostic outcomes and false root pointers now fail. Exact dependency
+  schema diagnostics follow caller input order, while wrong context, invalid context,
+  and duplicate addresses all require `ok == false` and no document. ADR 0017 is
+  accepted for A4. The complete repository gate runs all 240 actor journeys and every
+  retained record, loader, adapter, candidate, research, governance, report, Evidence,
+  and proof lane; its sole failure is the declared absent A4 module and the same 17
+  successor controls skip. A3 remains an intentionally red checkpoint and must not
+  merge until A4 turns the same suite green without weakening an assertion.
 
 ## Decision log
 
@@ -277,12 +287,12 @@ this same suite green without weakening or deleting an assertion.
 
 ## Result and remaining work
 
-A0, A1, A-R1, and A-G1 are complete. The project now has an executable, independently
+A0 through A3 are complete. The project now has an executable, independently
 reviewed two-domain statement of the authoring deficit without committing to final
 surface syntax. A2/A-R2/A-G2 accept the representation-neutral boundary and release A3
-red controls. Parser implementation, grammar, independent authoring IR, canonical
-format migration, semantic type checking, non-control surface, and human usability
-remain unimplemented and unaccepted.
+red controls; A-R3 accepts the exact red contract and releases A4. Parser implementation,
+grammar, independent authoring IR, canonical format migration, semantic type checking,
+non-control surface, and human usability remain unimplemented and unaccepted.
 
 ## Stop and escalation conditions
 
