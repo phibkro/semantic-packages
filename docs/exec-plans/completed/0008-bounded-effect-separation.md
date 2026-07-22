@@ -126,7 +126,7 @@ python3 scripts/check_repo.py
 - [x] E2 effect-separation observation and command
 - [x] E-R2 independent implementation review
 - [x] E3 durable documentation and maintenance
-- [ ] E-G convergence, freeze, and one PR
+- [x] E-G convergence, freeze, and one PR
 
 ## Discoveries and changed assumptions
 
@@ -204,15 +204,20 @@ python3 scripts/check_repo.py
   moves the authored backlog item to completed; and makes the contract, plan, module,
   and script required repository memory. Maintenance reopens on any design-spec trigger
   or exact campaign/projection/ledger fingerprint change.
+- 2026-07-22: E-G passed the complete clean repository gate: 24/20/38/3 record
+  fixtures, 18 loader groups, 50 adapter tests, 59 candidate controls, 285 actor
+  journeys, 42 research probes, 20 governance tests, all retained Stack/OrderedMap
+  report and Evidence bindings, both profile-choice bindings, and 49 proof groups.
+  Design-spec 0003 revision 3 is frozen for the single experienceable stacked PR.
 
 ## Result and remaining work
 
-E0 through E2 are complete. The probe is experienceable, and the red predecessor now
-skips because the exact command exists. The reviewed successor controls cover the
-complete report, immutable projections, classification and concern locality, error
-asymmetry, exact execution authority, output safety, determinism, and bounded language.
-No accepted Effect relation, new Evidence, resolver behavior, or whole-process
-conclusion is manufactured. E3 is complete; E-G convergence remains.
+ExecPlan 0008 is complete. The probe is experienceable, its 12 active focused controls
+pass with the red predecessor skipped, both independent reviews pass, durable memory
+agrees, and the complete repository gate is green. No accepted Effect relation, new
+Evidence, resolver behavior, or whole-process conclusion is manufactured. Maintenance
+reopens through design-spec 0003's explicit triggers or any exact campaign/projection/
+ledger binding change.
 
 ## Stop and escalation conditions
 

@@ -66,7 +66,7 @@ semantic equivalence, accepted Evidence, or arbitrary-domain generality.
 - [`design-specs/0001-explicit-pspec-author-journey.md`](design-specs/0001-explicit-pspec-author-journey.md): observable contract and falsifiers for the complete PSpec author experience.
 - [`design-specs/0002-explicit-refinement-inspection-journey.md`](design-specs/0002-explicit-refinement-inspection-journey.md): observable contract and falsifiers for exact proposal-local cross-version inspection.
 - [`design-specs/0003-bounded-effect-separation-observation.md`](design-specs/0003-bounded-effect-separation-observation.md): observable contract and falsifiers for the exact two-domain effect-separation probe.
-- [`docs/exec-plans/active/0008-bounded-effect-separation.md`](docs/exec-plans/active/0008-bounded-effect-separation.md): reviewed red controls, implementation, maintenance, and convergence state for that probe.
+- [`docs/exec-plans/completed/0008-bounded-effect-separation.md`](docs/exec-plans/completed/0008-bounded-effect-separation.md): completed red controls, independent reviews, implementation, maintenance, and convergence evidence for that probe.
 - [`docs/exec-plans/completed/0007-explicit-refinement-inspection.md`](docs/exec-plans/completed/0007-explicit-refinement-inspection.md): completed refinement journey, independent review, and convergence evidence.
 - [`docs/exec-plans/active/0003-cold-human-inspection.md`](docs/exec-plans/active/0003-cold-human-inspection.md): executable inspection surface and deferred uninvolved-human gate.
 - [`docs/exec-plans/completed/0004-ordered-map-generality.md`](docs/exec-plans/completed/0004-ordered-map-generality.md): completed OrderedMap second-domain research, implementation, maintenance, and convergence history.
@@ -246,7 +246,7 @@ python3 scripts/check_repo.py
 ```
 
 The gate includes record/link fixtures, 18 loader groups, 50 adapter/campaign tests,
-59 cross-language candidate/Evidence-binding controls, 253 actor journeys, 42 research
+59 cross-language candidate/Evidence-binding controls, 285 actor journeys, 42 research
 probes, 20 governance tests, two fresh Stack reports/eight records, two fresh base
 OrderedMap reports plus one selective breaker, the exact base and profile-choice
 2/14/14 candidate censuses, two fresh profile-bound reports, and the 49-group proof

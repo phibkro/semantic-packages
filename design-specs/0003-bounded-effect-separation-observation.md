@@ -2,10 +2,10 @@
 
 ## Contract status
 
-Active draft for one stacked feature and one future pull request, based on draft PR
-#17 at `bc8607b`. This contract freezes when its complete, experienceable PR opens.
-Any revision must record the observation that required it; implementation discoveries
-never silently expand adapter-reported behavior into a whole-process effect claim.
+Frozen on 2026-07-22 for one complete stacked feature and its experienceable pull
+request, based on PR #17 at `bc8607b`. Any successor revision must record the
+observation that requires it; implementation discoveries never silently expand
+adapter-reported behavior into a whole-process effect claim.
 
 ## Felt user journey
 
@@ -231,3 +231,8 @@ rather than bounded separation.
   adapter-error mode reports `io.read`; Stack's retained `status-error` mode reports no
   event. Both remain execution errors and establish no projection comparison. The user
   journey and bounded-separation goal are unchanged.
+- **2026-07-22, revision 3 (frozen):** Freeze the observable contract after independent
+  red-control and implementation reviews, exact native projection/ledger/effect-surface
+  counterexamples, the experienceable command and safe-failure path, durable project
+  memory, and the complete clean repository gate. No Claim, Evidence, resolver rule,
+  effect algebra, external-effect observation, or generality claim was added.

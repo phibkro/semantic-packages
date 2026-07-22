@@ -24,7 +24,7 @@ from semantic_packages.stack_runner import (
 
 ROOT = Path(__file__).resolve().parents[2]
 DESIGN_SPEC = ROOT / "design-specs/0003-bounded-effect-separation-observation.md"
-EXEC_PLAN = ROOT / "docs/exec-plans/active/0008-bounded-effect-separation.md"
+EXEC_PLAN = ROOT / "docs/exec-plans/completed/0008-bounded-effect-separation.md"
 SCRIPT = ROOT / "scripts/effect_separation_probe.py"
 STACK_FIXTURE = ROOT / "fixtures/adapters/v1/fake_stack_adapter.py"
 ORDERED_MAP_FIXTURE = (
