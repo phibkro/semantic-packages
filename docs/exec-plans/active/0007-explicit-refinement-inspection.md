@@ -122,7 +122,7 @@ python3 scripts/check_repo.py
 - [x] V2-S1 output-alias safety successor
 - [x] V-R2S independent safety review (PASS at `570891f`)
 - [x] V3 durable documentation and maintenance
-- [ ] V-G convergence, freeze, and one PR
+- [ ] V-G convergence, freeze, and one PR (clean gate and freeze complete; PR pending)
 
 ## Discoveries and changed assumptions
 
@@ -191,6 +191,11 @@ python3 scripts/check_repo.py
   surfaces remain green, and V3 is released. README, compatibility, user journeys,
   system map, backlog, and repository-required surfaces now describe the exact felt
   commands, recovery, structural-only authority, and two-example boundary.
+- 2026-07-22: the complete repository gate passed from exact clean `0931340`: 272
+  actor journeys, 50 adapter tests, 59 cross-language controls, 42 research probes,
+  20 governance tests, all Stack/OrderedMap report and Evidence checks, and all record,
+  loader, and proof groups. Design-spec 0002 revision 2 freezes the unchanged contract;
+  only push, validated stacked PR metadata, and PR recording remain in V-G.
 
 ## Result and remaining work
 

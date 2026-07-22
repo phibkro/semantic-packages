@@ -2,9 +2,9 @@
 
 ## Contract status
 
-Active draft for one stacked feature and one future pull request, based on draft PR
-#16. This contract freezes when its own complete, experienceable PR opens. Any change
-is recorded in the revision history with the observation that required it; the
+Frozen for one stacked feature and one pull request, based on draft PR #16. The complete
+clean repository gate passed at `0931340` before freeze. Any later change must be
+recorded in the revision history with the observation that requires it; the
 implementation never silently changes the target.
 
 ## Felt user journey
@@ -236,3 +236,8 @@ consumer upgrade decisions require a separately governed compatibility policy.
   change and OrderedMap additive successor. It freezes a complete explicit proposal
   and inspection experience while leaving semantic refinement unestablished and the
   realization free. Not yet frozen for PR.
+- **2026-07-22, revision 2:** Freeze the unchanged observable contract after both
+  independent implementation reviews and the complete clean repository gate passed.
+  The output/input-alias counterexample was corrected below the mechanism-freedom line;
+  it strengthens the existing immutable-input requirement without changing the user
+  journey, conclusion, or known exclusions.
