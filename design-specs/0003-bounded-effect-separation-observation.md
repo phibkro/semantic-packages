@@ -21,11 +21,12 @@ nix develop --command python3 scripts/effect_separation_probe.py \
 
 The command executes the repository-owned exact Stack and OrderedMap fixture campaigns
 in five named modes: quiet baseline, optional `debug.emit`, forbidden `io.read`,
-unspecified domain-specific event, and adapter error carrying `io.read`. It writes one
-deterministic report and prints:
+unspecified domain-specific event, and each domain's retained adapter-error control.
+OrderedMap's error response carries `io.read`; Stack's does not carry an event. It
+writes one deterministic report and prints:
 
 ```text
-observed bounded effect separation: 2 domains, 10 comparisons, 0 semantic drifts, 2 effect challenges, 2 execution errors -> /tmp/effect-separation.json
+observed bounded effect separation: 2 domains, 10 observations, 0 semantic drifts, 2 effect challenges, 2 execution errors -> /tmp/effect-separation.json
 ```
 
 For each domain, the optional, forbidden, and unspecified variants have the same
@@ -33,9 +34,10 @@ non-effect declaration outcomes and case observations as the quiet baseline. Opt
 and unspecified variants retain their exact event ledgers without challenging the
 effect declaration. The forbidden variant changes only the effect declaration to
 `challenges`, so the whole campaign challenges without manufacturing a law or resource
-failure. The adapter-error variant remains an execution `error`, retains the forbidden
-event observation, and does not reclassify an incomplete semantic campaign as an effect
-conformance counterexample.
+failure. Each adapter-error variant remains an execution `error`; OrderedMap retains
+the forbidden event observed before its error, while Stack truthfully retains no event.
+An incomplete semantic campaign is never reclassified as an effect-conformance
+counterexample.
 
 The report calls this `bounded-separation-observed`. It never calls it program
 noninterference, effect erasure for arbitrary contexts, external-effect absence,
@@ -75,12 +77,16 @@ and Evidence work a concrete falsifier without selecting a universal effect calc
 
 - The probe runs only the retained Stack and OrderedMap fixture adapters under the
   exact campaign plans already governed by their runners and repository gate.
-- Each domain has exactly five named observations in stable order: `quiet`,
-  `optional`, `forbidden`, `unspecified`, and `adapter-error-forbidden`.
+- Each domain has exactly five observation roles in stable order: `quiet`, `optional`,
+  `forbidden`, `unspecified`, and `adapter-error`. The report also retains the exact
+  adapter mode: Stack uses `reference`, `optional-event`, `forbidden-event`,
+  `unspecified-event`, and `status-error`; OrderedMap uses `reference`,
+  `optional-event`, `forbidden-event`, `unspecified-event`, and
+  `adapter-error-forbidden`.
 - `quiet` reports no events and is the semantic baseline. `optional` reports exactly
-  `debug.emit`; `forbidden` reports exactly `io.read`; `unspecified` reports the
-  domain's retained nonmatching event; `adapter-error-forbidden` reports `io.read`
-  before the exact adapter error.
+  `debug.emit`; `forbidden` reports exactly `io.read`; and `unspecified` reports the
+  domain's retained nonmatching event. OrderedMap's adapter-error response also reports
+  `io.read`; Stack's retained adapter-error response reports no event.
 - Event classification comes from each exact Specification contract: `debug.emit` is
   optional, proper descendants of `io.*` are forbidden, and the retained nonmatching
   event follows `default: unspecified`. A prefix resemblance such as `io` or `io.`
@@ -158,7 +164,7 @@ The feature is false if any of these observations occur:
    effect absence.
 5. `io` or `io.` matches `io.*`, or a proper descendant such as `io.read` does not.
 6. An adapter error becomes `supports`/`challenges`, establishes a projection comparison,
-   or loses the event observed before failure.
+   invents an event for Stack, or loses OrderedMap's event observed before failure.
 7. The probe mutates an accepted input, follows registry execution metadata, searches
    for packages/versions, accesses the network, or publishes a partial report.
 8. Stack-specific declarations, transitions, or runner types become authority for the
@@ -220,3 +226,8 @@ rather than bounded separation.
   two-domain evaluator observation. It distinguishes semantic projection invariance,
   effect concern locality, and execution failure while retaining the completeness and
   external-effect exclusions. Not yet frozen for PR.
+- **2026-07-22, revision 2:** Correct the initial false symmetry discovered by the
+  exact fixture census before planning or implementation. OrderedMap's retained
+  adapter-error mode reports `io.read`; Stack's retained `status-error` mode reports no
+  event. Both remain execution errors and establish no projection comparison. The user
+  journey and bounded-separation goal are unchanged.
