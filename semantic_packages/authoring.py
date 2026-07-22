@@ -9,7 +9,8 @@ by the caller.
 from __future__ import annotations
 
 import json
-from copy import deepcopy
+import math
+from collections.abc import Mapping as MappingABC
 from dataclasses import dataclass
 from typing import Any, Mapping
 
@@ -61,6 +62,10 @@ class _NonStandardConstant(ValueError):
     def __init__(self, token: str) -> None:
         super().__init__(token)
         self.token = token
+
+
+class _InvalidDependencyValue(ValueError):
+    pass
 
 
 def _diagnostic(
@@ -152,6 +157,14 @@ def _decode_source(
                 ),
             )
         ]
+    except RecursionError:
+        return None, [
+            _diagnostic(
+                "AUTHOR_INVALID_JSON",
+                source_label,
+                message="JSON nesting exceeds parser limit",
+            )
+        ]
     return document, []
 
 
@@ -194,6 +207,44 @@ def _validate_authored_source(
     return diagnostic
 
 
+def _snapshot_json_value(value: Any, active: set[int] | None = None) -> Any:
+    """Detach a finite JSON value without relying on object pickle protocols."""
+
+    if value is None or isinstance(value, (str, bool, int)):
+        return value
+    if isinstance(value, float):
+        if not math.isfinite(value):
+            raise _InvalidDependencyValue
+        return value
+
+    if active is None:
+        active = set()
+    if isinstance(value, MappingABC):
+        identity = id(value)
+        if identity in active:
+            raise _InvalidDependencyValue
+        active.add(identity)
+        try:
+            result: dict[str, Any] = {}
+            for key, item in value.items():
+                if not isinstance(key, str):
+                    raise _InvalidDependencyValue
+                result[key] = _snapshot_json_value(item, active)
+            return result
+        finally:
+            active.remove(identity)
+    if isinstance(value, (list, tuple)):
+        identity = id(value)
+        if identity in active:
+            raise _InvalidDependencyValue
+        active.add(identity)
+        try:
+            return [_snapshot_json_value(item, active) for item in value]
+        finally:
+            active.remove(identity)
+    raise _InvalidDependencyValue
+
+
 def author_specification(
     source: bytes,
     format_token: str,
@@ -205,6 +256,18 @@ def author_specification(
     Phases are strict: format dispatch, raw decode, source/dependency schema checks,
     then isolated graph links.  Any failure returns diagnostics and no document.
     """
+
+    if not isinstance(source_label, str):
+        return _failure(
+            [
+                _diagnostic(
+                    "AUTHOR_SOURCE_LABEL_TYPE",
+                    "<source>",
+                    "#/sourceLabel",
+                    "source label must be a string",
+                )
+            ]
+        )
 
     if format_token != CANONICAL_SPEC_JSON_V1:
         return _failure(
@@ -225,10 +288,66 @@ def author_specification(
             [_diagnostic("AUTHOR_EXPECTED_SPECIFICATION", source_label, "#/kind")]
         )
 
+    if not isinstance(dependencies, tuple):
+        return _failure(
+            [
+                _diagnostic(
+                    "AUTHOR_DEPENDENCIES_TYPE",
+                    source_label,
+                    "#/dependencies",
+                    "dependencies must be a tuple",
+                )
+            ]
+        )
+
     dependency_snapshots: list[tuple[str, dict[str, Any]]] = []
     dependency_schema_diagnostics: list[record_check.Diagnostic] = []
-    for dependency in dependencies:
-        dependency_document = deepcopy(dependency.document)
+    for index, dependency in enumerate(dependencies):
+        if not isinstance(dependency, AuthoringDependency):
+            return _failure(
+                [
+                    _diagnostic(
+                        "AUTHOR_DEPENDENCY_TYPE",
+                        source_label,
+                        f"#/dependencies/{index}",
+                        "dependency must be AuthoringDependency",
+                    )
+                ]
+            )
+        if not isinstance(dependency.source_label, str):
+            return _failure(
+                [
+                    _diagnostic(
+                        "AUTHOR_DEPENDENCY_LABEL_TYPE",
+                        source_label,
+                        f"#/dependencies/{index}/sourceLabel",
+                        "dependency source label must be a string",
+                    )
+                ]
+            )
+        if not isinstance(dependency.document, MappingABC):
+            return _failure(
+                [
+                    _diagnostic(
+                        "AUTHOR_DEPENDENCY_DOCUMENT_TYPE",
+                        dependency.source_label,
+                        message="dependency document must be a mapping",
+                    )
+                ]
+            )
+        try:
+            dependency_document = _snapshot_json_value(dependency.document)
+        except (RecursionError, _InvalidDependencyValue, TypeError, ValueError):
+            return _failure(
+                [
+                    _diagnostic(
+                        "AUTHOR_DEPENDENCY_SNAPSHOT",
+                        dependency.source_label,
+                        message="dependency document must be a finite JSON value",
+                    )
+                ]
+            )
+        assert isinstance(dependency_document, dict)
         diagnostic = record_check.validate_record(
             schemas,
             dependency.source_label,
