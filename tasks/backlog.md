@@ -7,8 +7,10 @@
    [A1 boundary probe](../docs/research/shared-human-authoring-surface.md) and
    [ExecPlan 0006](../docs/exec-plans/active/0006-shared-human-authoring-surface.md)
    freeze the accepted problem contract. The
-   [A2 option comparison](../docs/research/shared-human-authoring-options.md) is the
-   current review candidate; no final syntax or author workflow has been selected.
+   [A2 option comparison](../docs/research/shared-human-authoring-options.md) and
+   [ADR 0016](../docs/decisions/0016-representation-neutral-authoring-boundary.md)
+   release the format-neutral A3 red contract; no final syntax or author workflow has
+   been selected.
 2. Model explicit specification refinement and cross-version compatibility only from
    a concrete two-domain migration or composition falsifier.
 

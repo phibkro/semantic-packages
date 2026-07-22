@@ -21,7 +21,9 @@ turning its scoped status into a permanent format decision. The governing source
 the constitution, `ARCHITECTURE.md`, `docs/design/core-model.md`,
 `docs/design/spec-language.md`, the two accepted canonical Specification records,
 `schemas/spec.schema.json`, and the
-[A1 research probe](../../research/shared-human-authoring-surface.md).
+[A1 research probe](../../research/shared-human-authoring-surface.md). The accepted A2
+boundary is recorded in
+[ADR 0016](../../decisions/0016-representation-neutral-authoring-boundary.md).
 
 ExecPlan 0003 remains independently active for cold-human inspection. Its participant
 observation is not authoring Evidence and this plan does not relabel it.
@@ -136,9 +138,9 @@ reordering changes document equality without changing local addresses or graph v
 - [x] A1 candidate two-domain boundary falsifier
 - [x] A-R1 independent boundary review
 - [x] A-G1 problem-contract gate
-- [x] A2 authoring-contract option probe candidate
-- [ ] A-R2 independent option review
-- [ ] A-G2 contract choice or operator escalation
+- [x] A2 authoring-contract option probe
+- [x] A-R2 independent option review
+- [x] A-G2 contract choice or operator escalation
 - [ ] A3 red round-trip/ambiguity controls
 - [ ] A4 minimal elaborator
 - [ ] A-R4 implementation review
@@ -202,6 +204,19 @@ reordering changes document equality without changing local addresses or graph v
   final convergence. The coarse blank-payload diagnostic may remain a red A3
   predecessor; it does not block option research by itself. No operator values call has
   yet been reached.
+- 2026-07-22: A-R2 successor PASS at exact commit `48333d2`. Ten focused controls and
+  the full 42-research/221-journey repository gate pass. The reviewer confirms opaque
+  labels have no authority, raw ambiguity and diagnostic deficits are sufficient A3
+  predecessors, JSON cannot close the lifecycle, the IR rejection remains justified,
+  and blank hosted text may remain an explicit red A3 case. Remaining A3 details are
+  exact format dispatch, raw-parse precedence, all-or-none outcome/location shape, and
+  deterministic source-to-array mapping. No operator values call exists at this gate.
+- 2026-07-22: A-G2 PASS. ADR 0016 accepts the reviewed representation-neutral boundary
+  with exact `canonical-spec-json-v1` control dispatch, provenance-only labels,
+  all-or-none document/diagnostic outcomes, raw rejection before record validation,
+  explicit identity, source-order preservation without position semantics, and no
+  independent IR. This releases A3 red controls. It does not select final surface
+  grammar or author workflow; unresolved later surface values still escalate.
 
 ## Decision log
 
@@ -212,14 +227,16 @@ reordering changes document equality without changing local addresses or graph v
 | choose one formal logic for semantic payloads | current accepted domains use plural observations/laws/resources and externally governed proof/conformance Evidence | prohibited absent a concrete scoped need; a hosted logic may be selected per aspect later |
 | add a syntax-neutral authoring IR now | only one executable input exists and the current transformation is identity; a second structural model would create drift before it enables composition | reject until a second frontend or non-identity transformation demonstrates the need |
 | preserve declaration-array order or canonicalize it | array positions do not address declarations, but record-document equality observes array order | require each adapter to preserve explicit source declaration order for exact output; do not infer semantic meaning from position; reopen if canonical record equality changes |
+| accept the format-neutral boundary or escalate now | A-R2 confirms the contract closes authority/diagnostic/JSON-inertia gaps, remains reversible, and leaves final surface experience open | accept ADR 0016 and release A3; no operator decision exists until evidence cannot distinguish materially different surface workflows |
 
 ## Result and remaining work
 
 A0, A1, A-R1, and A-G1 are complete. The project now has an executable, independently
-reviewed two-domain statement of the authoring deficit without committing to its
-solution. A2 option research is released. Parser, grammar, authoring IR, canonical
-format migration, semantic type checking, declaration-array ordering semantics, and
-human usability remain unimplemented and unaccepted.
+reviewed two-domain statement of the authoring deficit without committing to final
+surface syntax. A2/A-R2/A-G2 accept the representation-neutral boundary and release A3
+red controls. Parser implementation, grammar, independent authoring IR, canonical
+format migration, semantic type checking, non-control surface, and human usability
+remain unimplemented and unaccepted.
 
 ## Stop and escalation conditions
 
