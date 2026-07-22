@@ -13,14 +13,18 @@ The project explores a shared specification language that:
 
 ## Current phase
 
-**First complete local tracer → human inspection and second-domain generality.**
+**Two-domain local tracer accepted → human inspection and differentiated profiles.**
 
 The accepted Stack tracer publishes one nontrivial specification, binds proof and
 conformance Evidence, registers two independent Realizations, resolves them under an
 explicit policy/profile, projects theory meaning, and retains a failed exact successor
 with predecessor recovery. An exact inspection command is ready, while its
-uninvolved-human observation is retained as deferred backlog work. OrderedMap now tests
-generality beyond Stack without claiming that deferred observation passed.
+uninvolved-human observation is retained as deferred backlog work. OrderedMap now
+traverses the same bounded lifecycle with a different semantic shape: independent
+Realizations, policy-relative resolution, a separate directional boundary, and an
+append-only zero-candidate successor with exact predecessor recovery. This establishes
+only Stack-plus-finite-OrderedMap generality and does not claim that the deferred human
+observation or arbitrary-domain generality passed.
 
 ## Repository map
 
@@ -39,7 +43,7 @@ generality beyond Stack without claiming that deferred observation passed.
 - [`docs/operations/multi-provider-workflow.md`](docs/operations/multi-provider-workflow.md): agent route status, model-diverse delegation, security boundaries, and provenance.
 - [`docs/design/tracer-bullet.md`](docs/design/tracer-bullet.md): first vertical slice.
 - [`docs/exec-plans/active/0003-cold-human-inspection.md`](docs/exec-plans/active/0003-cold-human-inspection.md): executable inspection surface and deferred uninvolved-human gate.
-- [`docs/exec-plans/active/0004-ordered-map-generality.md`](docs/exec-plans/active/0004-ordered-map-generality.md): current second-domain research, design, implementation, and maintenance route.
+- [`docs/exec-plans/active/0004-ordered-map-generality.md`](docs/exec-plans/active/0004-ordered-map-generality.md): final convergence and closeout for the accepted second-domain route.
 - [`docs/exec-plans/completed/0001-tracer-bullet.md`](docs/exec-plans/completed/0001-tracer-bullet.md): completed design, record, proof, adapter, independent-Realization, and Evidence history.
 - [`docs/exec-plans/completed/0002-actor-journeys.md`](docs/exec-plans/completed/0002-actor-journeys.md): completed actor registry, resolver, projection, maintenance, release, and workflow-governance history.
 - [`tasks/backlog.md`](tasks/backlog.md): ordered research and engineering backlog.
@@ -56,10 +60,11 @@ python3 -m pip install -r requirements-dev.txt
 python3 scripts/check_repo.py
 ```
 
-The gate includes record/link fixtures, 18 loader groups, 36 shared adapter/campaign
-tests, 18 cross-language candidate/Evidence-binding controls, two freshly reproduced Wave 4 reports,
-eight bound realization Evidence records, and the 49-group proof boundary. Check the
-accepted proof Evidence directly with:
+The gate includes record/link fixtures, 18 loader groups, 50 adapter/campaign tests,
+59 cross-language candidate/Evidence-binding controls, 204 actor journeys, 16 research
+probes, 20 governance tests, two fresh Stack reports/eight records, two fresh OrderedMap
+reports plus one selective breaker, the exact 2/14/14 OrderedMap candidate census, and
+the 49-group proof boundary. Check the accepted proof Evidence directly with:
 
 ```sh
 python3 scripts/proof_check.py \
@@ -134,6 +139,6 @@ Then open the repository in Codex, an IDE extension, or another coding agent. Th
 
 ## Status
 
-This repository is an executable research prototype with one complete local Stack
-tracer. It is not yet a stable standard, a general semantic-package ecosystem, or a
-hosted production registry.
+This repository is an executable research prototype with complete bounded local Stack
+and finite OrderedMap lifecycles. It is not yet a stable standard, an arbitrary-domain
+semantic-package ecosystem, or a hosted production registry.

@@ -2,14 +2,12 @@
 
 ## Now
 
-1. Frame the OrderedMap generality ExecPlan while retaining Stack as the accepted
-   regression substrate.
-2. Run a Stack-literal census and a paper authoring probe before generalizing code:
-   attempt one OrderedMap observation, law, visible unknown, and breaker through the
-   current record, graph, projection, Evidence, and resolution contracts.
-3. Freeze the smallest actor-complete OrderedMap journey from theory author through
-   package author and both consumer roles; implement only after the falsifier and
-   independent design review pass.
+1. Demonstrate consumer selection between genuinely differentiated deployment profiles
+   while keeping performance/resource Evidence inapplicable outside its exact profile.
+2. Probe the shared human authoring surface revealed by Stack and OrderedMap before
+   committing `.pspec` to elaboration rules or hidden defaults.
+3. Model explicit specification refinement and cross-version compatibility only from
+   a concrete two-domain migration or composition falsifier.
 
 ## Deferred operator observation
 
@@ -22,12 +20,6 @@
 
 ## Next
 
-- Demonstrate consumer selection between genuinely differentiated deployment profiles
-  and keep performance/resource Evidence inapplicable outside its exact profile.
-- Model explicit specification refinement and cross-version compatibility only after
-  the second semantic domain exposes which relations are general.
-- Elaborate `.pspec` into exact canonical records only after Stack and OrderedMap reveal
-  the shared human authoring surface; introduce no hidden defaults or assurance.
 - Define adapter-faithfulness Evidence only if a paper probe finds a non-circular
   observation mechanism outside the adapter being judged.
 - Promote fallback schema diagnostics into exact actionable oracles when a new

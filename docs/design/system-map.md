@@ -19,7 +19,7 @@ the active ExecPlan.
 | Waves 1–4 node history, failures, evidence, and counts | [completed ExecPlan 0001](../exec-plans/completed/0001-tracer-bullet.md) |
 | accepted actor-journey and governance successor history | [completed ExecPlan 0002](../exec-plans/completed/0002-actor-journeys.md) |
 | deferred uninvolved-human inspection journey | [active ExecPlan 0003](../exec-plans/active/0003-cold-human-inspection.md) |
-| current OrderedMap second-domain route | [active ExecPlan 0004](../exec-plans/active/0004-ordered-map-generality.md) |
+| OrderedMap second-domain route and final closeout | [active ExecPlan 0004](../exec-plans/active/0004-ordered-map-generality.md) |
 
 ## End-to-end product shape
 
@@ -59,9 +59,10 @@ finite theory publication, independent package registration, one honest curated 
 proof checking, child-process conformance, reviewed Rust/TypeScript Evidence, both
 consumer projections, exact successor recovery, protected hosted release, and
 fresh-clone reproduction. The graph-derived human inspection surface is executable,
-but its uninvolved-human observation remains deferred and unobserved. OrderedMap
-second-domain research is now the live implementation route; neither state changes the
-accepted local Stack semantics.
+but its uninvolved-human observation remains deferred and unobserved. The finite
+OrderedMap tracer now traverses the same actor-complete lifecycle without changing the
+accepted local Stack semantics. This is evidence of reuse across exactly two
+structurally different domains, not arbitrary-domain generality.
 
 For the tracer, **registry** means one curated finite local source set of immutable
 exact-version records. It does not yet mean hosted acquisition, authentication,
@@ -135,18 +136,18 @@ sandbox assurance, and cannot perform writes or ratify a gate.
 | Layer | Responsibility | State |
 |---|---|---|
 | L0 protected intent | mission, principles, non-goals, consumer authority | accepted governance; human authority |
-| L1 semantic model | operations, observations, laws, effects, resources, profiles | Stack boundary accepted |
+| L1 semantic model | operations, observations, laws, effects, resources, profiles | bounded Stack and finite OrderedMap boundaries accepted |
 | L2 canonical records | six immutable exact-version record kinds and typed references | executable |
 | L3 graph integrity | schema, duplicates, dangling/wrong-kind references, coherent scope | executable |
 | L4 local loading | deterministic finite source-set discovery and exact import edges | executable |
 | L5 semantic Evidence | one named-law proof with exact model/tool/input provenance | executable and deliberately bounded |
-| L6 realization execution | opaque-handle child adapter and event observation | executable |
-| L7 independent conformance | exact shared campaign against Rust/TypeScript and breakers | executable |
-| L8 Evidence binding | declaration-scoped Claims and exact-bound review/provenance fields | executable for the Stack campaign; bounded policy disposition exists, while general assurance derivation is absent |
-| L9 product registry | curated honest source sets distinct from fixture history | executable as two explicitly selected immutable Stack snapshots: the five-source/24-record predecessor and append-only eight-source/31-record successor |
-| L10 resolution | policy/profile-relative semantic selection and interoperation explanation | executable for the exact Stack policy/profile/Specification query; pure over one accepted graph snapshot |
-| L11 projections | theory and package consumer views derived from the graph | both bounded consumer views executable and graph-only |
-| L12 maintenance | exact successors, staleness, withdrawal, failure recovery | executable for the bounded two-snapshot Stack successor: exact nonselection, lifecycle-state observation, and same-world predecessor recovery; no lineage, automatic selection, or freshness engine |
+| L6 realization execution | opaque-handle child adapter and event observation | executable under separate Stack and OrderedMap NDJSON protocols |
+| L7 independent conformance | exact harness-owned campaigns against Rust/TypeScript and breakers | executable for both domains without shared transition or oracle code |
+| L8 Evidence binding | declaration-scoped Claims and exact-bound review/provenance fields | executable as eight accepted Stack records and 14 accepted OrderedMap records; assurance remains policy-relative |
+| L9 product registry | curated honest source sets distinct from fixture history | executable for exact Stack 24/31-record snapshots and OrderedMap 33/35-record snapshots |
+| L10 resolution | policy/profile-relative semantic selection and interoperation explanation | executable for exact Stack and OrderedMap queries; semantic status stays separate from directional boundaries |
+| L11 projections | theory and package consumer views derived from the graph | both bounded consumer views are graph-only and executable in both domains |
+| L12 maintenance | exact successors, staleness, withdrawal, failure recovery | executable for bounded Stack and OrderedMap snapshots; OrderedMap `0.2.0` has zero candidates and exact nonautomatic `0.1.0` recovery; no lineage, migration, automatic selection, or freshness engine |
 
 ## Tracer increments
 
@@ -198,14 +199,25 @@ The release edge is accepted: protected hosted governance and the operator's ind
 fresh-clone reproduction both passed. The next plan separately tests whether an
 uninvolved human can understand the graph-derived consumer output.
 
+### OrderedMap — second-domain lifecycle
+
+ExecPlan 0004 carries one finite OrderedMap through representation-independent
+authoring, a separately owned profile and policy, independent Rust and TypeScript
+packages, harness-owned bounded conformance, declaration-scoped Evidence, exact
+publication and registration, package/theory consumer views, a selective reorder
+breaker, and append-only maintenance. The accepted `0.1.0` graph resolves both
+Realizations; the exact `0.2.0` successor adds `size`/`size-put` but no Realization,
+Claim, or Evidence, so its honest query returns zero candidates while retaining
+historical predecessor Evidence and nonautomatic recovery.
+
 ## Actor data flows
 
 | Actor | Data-plane path | Current edge |
 |---|---|---|
-| theory author | semantic source -> canonical Specification/Claim -> graph checks -> proof Evidence | finite exact JSON publication inspection and bounded proof executable; `.pspec` elaboration and hosted publication absent |
-| package author | Realization/adapter -> explicit build -> campaign -> report -> reviewed declaration Evidence -> graph | executable for the tracer |
-| package consumer | Specification + policy + profile -> Evidence selection -> semantic result -> boundary mechanism | executable bounded Stack queries for predecessor and failed successor, with explicit unmet/contested/inapplicable outcomes, same-snapshot recovery candidates, and a separate directional child-process boundary |
-| theory consumer | exact Specification -> declarations/imports -> Claims/Evidence/unknowns -> derived view | executable exact Stack predecessor/successor and UndoHistory projections with missing-import failure, no inherited proof, and no inferred namespace composition |
+| theory author | semantic source -> canonical Specification/Claim -> graph checks -> proof or other Evidence | finite exact Stack and OrderedMap publication inspection executable; `.pspec` elaboration and hosted publication absent |
+| package author | Realization/adapter -> explicit build -> campaign -> report -> reviewed declaration Evidence -> graph | executable for independently represented Rust and TypeScript packages in both domains |
+| package consumer | Specification + policy + profile -> Evidence selection -> semantic result -> boundary mechanism | executable exact Stack and OrderedMap queries with every Evidence axis, version-scoped recovery, and separate directional child-process boundaries |
+| theory consumer | exact Specification -> declarations/imports -> Claims/Evidence/unknowns -> derived view | executable Stack and OrderedMap projections; realization-scoped Evidence never becomes Specification assurance |
 
 ## Trust boundaries
 
@@ -274,11 +286,11 @@ steps.
 - shared adapter protocol conformance is not cross-language interoperability;
 - accepted Evidence is mechanism-, profile-, version-, and policy-relative;
 - descriptive Realization entrypoints cannot become automatic execution instructions;
-- the unsupported performance proposition must remain visible through the future
-  resolver and browser;
+- unsupported performance propositions remain visible through current resolvers and
+  graph projections; a hosted browser remains absent;
 - `.pspec` remains illustrative until elaboration is executable;
-- exact-version staleness, withdrawal, and same-snapshot recovery are executable only
-  for the bounded Stack successor; time freshness, lineage, automatic migration, and
+- exact-version staleness and same-snapshot recovery are executable for the bounded
+  Stack and OrderedMap successors; time freshness, lineage, automatic migration, and
   compatibility-relative supersession remain absent;
 - the local repository gate alone is not a release gate; hosted CI now provisions every
   pinned Python, Lean, Rust/linker, and Deno dependency and must remain green alongside
