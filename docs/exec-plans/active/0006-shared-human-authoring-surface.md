@@ -24,6 +24,10 @@ the constitution, `ARCHITECTURE.md`, `docs/design/core-model.md`,
 [A1 research probe](../../research/shared-human-authoring-surface.md). The accepted A2
 boundary is recorded in
 [ADR 0016](../../decisions/0016-representation-neutral-authoring-boundary.md).
+The complete A5 felt feature is now governed 1:1 by
+[design-spec 0001](../../../design-specs/0001-explicit-pspec-author-journey.md).
+That contract owns the observable author journey and falsifiers; this ExecPlan remains
+the living implementation, evidence, review, and convergence handoff.
 
 ExecPlan 0003 remains independently active for cold-human inspection. Its participant
 observation is not authoring Evidence and this plan does not relabel it.
@@ -65,7 +69,10 @@ A0 roadmap/source census
   -> A3 red two-domain round-trip and ambiguity controls
   -> A4 minimal elaborator
   -> A-R4 implementation review
-  -> A5 author journey, documentation, and maintenance
+  -> A5-D explicit PSpec journey design-spec
+  -> A5-T red end-to-end journey controls
+  -> A5-I complete author command, adapter, examples, and docs
+  -> A5-H eligible uninvolved-author observation
   -> A-R5 independent end-to-end review
   -> A-G final convergence
 ```
@@ -81,7 +88,10 @@ A0 roadmap/source census
 | A3 red contract | lead/test owner; exclusive authoring-contract fixtures/tests and proposed dependency-context ADR | Stack + OrderedMap exact-output relative to an explicit finite context; opaque-label nonauthority; invalid bytes/duplicate members/unsupported format; ambiguous/missing/wrong-kind ID/reference; hosted-payload and deterministic-diagnostic controls; independent contract review; A4 |
 | A4 minimal elaborator | lead/implementation owner; exclusive new authoring module plus approved dependency metadata | frozen A3 controls, no canonical predecessor changes, focused/full gates; independent implementation review A-R4; toolchain/migration concern escalates |
 | A-R4 | uninvolved read-only reviewer | parser containment, deterministic output/diagnostics, hidden-default and semantic-overclaim attacks; A5 or successor |
-| A5 journey/maintenance | lead/integrator; author command/docs, user-journey controls, check integration, plan | exact two-domain author tasks, regression/sensitivity, recovery, limitations, one non-control human-facing adapter, and required operator-coordinated eligible uninvolved-author observation; A-R5 |
+| A5-D journey contract | lead/product integrator; `design-specs/0001-explicit-pspec-author-journey.md` only | felt journey, Goal/Values/Constraints, eleven falsifiers, DoD, exclusions, and recovery; A5-T; revise explicitly on contradictory observation |
+| A5-T red journey | lead/test owner; `specs/*.pspec` and A5 journey controls | two lossless TOML-shaped inputs equal accepted records, one intentional absent-command failure and eight successor skips; A5-I; contract mismatch returns to A5-D |
+| A5-I author experience | lead/implementation owner; authoring adapter/command, examples, README, check integration, and plan | exact commands, two-domain output equality, raw/schema/link diagnostics, no discovery, atomic output, regressions; A5-H; protected-boundary concern stops work |
+| A5-H human observation | operator coordinates an eligible uninvolved author; lead owns privacy-bounded observation template and integration | both retained tasks, exact revision, duration, assistance, blocking ambiguity, participant review; A-R5; failed task creates an explicit A5-D or A5-I successor |
 | A-R5 / A-G | uninvolved reviewer then lead; no reviewer writes, lead owns completion move | full lifecycle, negative controls, docs, full local/hosted gates, conventional squash handoff; operator owns unresolved product-direction fork |
 
 ## Implementation steps in dependency order
@@ -156,6 +166,20 @@ rejection, and containment of ordinary traversal exceptions without masking
 `BaseException` process control. The complete A4 gate must report 243 actor journeys
 and preserve every predecessor summary.
 
+A5-T adds:
+
+```text
+python3 -m unittest tests.journeys.test_a5_explicit_pspec_author_journey -v
+```
+
+Its red predecessor has ten tests: one fixture-contract PASS, one intentional failure
+naming only the absent `semantic_packages.__main__` command, and eight successor
+controls SKIP. Both PSpec inputs must already parse as TOML and equal their accepted
+canonical documents before implementation. A5-I turns the automated controls green;
+the retained human-observation control remains red until A5-H records a real eligible
+observation. The complete feature gate is still `python3 scripts/check_repo.py` and may
+not omit any predecessor suite.
+
 ## Progress checklist
 
 - [x] A0 roadmap and governing-source census
@@ -168,7 +192,10 @@ and preserve every predecessor summary.
 - [x] A3 red round-trip/ambiguity controls
 - [x] A4 minimal elaborator
 - [x] A-R4 implementation review
-- [ ] A5 actor journey, documentation, and maintenance
+- [x] A5-D explicit PSpec journey design-spec
+- [x] A5-T red end-to-end journey controls
+- [ ] A5-I author command, adapter, examples, documentation, and maintenance
+- [ ] A5-H eligible uninvolved-author observation
 - [ ] A-R5 end-to-end review
 - [ ] A-G final convergence
 
@@ -307,6 +334,15 @@ and preserve every predecessor summary.
   `AUTHOR_DEPENDENCY_SNAPSHOT` diagnostics, while `KeyboardInterrupt` and `SystemExit`
   remain unmasked. No residual hidden discovery/default, Mapping, hosted-semantics,
   independent-IR, or semantic-overclaim concern remains within A4. This releases A5.
+- 2026-07-22: The project-wide workflow now requires one design-spec, one complete
+  experienceable feature, and one eventual PR. Design-spec 0001 revision 1 selects the
+  only admissible A2 surface class—an explicit lossless adapter—and makes its first
+  experience concrete as UTF-8 TOML-shaped PSpec plus an explicit author command.
+  Every identity/reference remains visible, dependencies and output are command
+  arguments, and parser architecture remains free. The two frozen inputs parse and
+  equal the accepted Stack and OrderedMap documents. The A5-T predecessor has one PASS,
+  one intentional absent-command FAIL, and eight SKIP controls; this releases A5-I
+  without opening a fragment PR.
 
 ## Decision log
 
@@ -322,14 +358,15 @@ and preserve every predecessor summary.
 
 ## Result and remaining work
 
-A0 through A4/A-R4 are complete. The project now has an executable, independently
+A0 through A4/A-R4 and A5-D/A5-T are complete. The project now has an executable, independently
 reviewed two-domain statement of the authoring deficit without committing to final
 surface syntax. A2/A-R2/A-G2 accept the representation-neutral boundary and release A3
 red controls; A-R3 accepts the exact red contract; and A4 implements its strict
-canonical-JSON control with an explicit finite dependency context. Final grammar,
-independent authoring IR, canonical format migration, semantic type checking,
-non-control surface, author command, and human usability remain unimplemented or
-unaccepted. A5 is the next released node.
+canonical-JSON control with an explicit finite dependency context. Design-spec 0001
+and A5-T now contract the first non-control PSpec journey without claiming format
+permanence. The author command, automated successor behavior, documentation, human
+observation, A-R5, and A-G remain unimplemented or unaccepted. A5-I is the next
+released node; no PR opens until the entire journey is experienceable.
 
 ## Stop and escalation conditions
 

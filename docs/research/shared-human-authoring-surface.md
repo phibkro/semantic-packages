@@ -9,14 +9,15 @@ defaults?
 This is a boundary probe, not a language proposal. Canonical JSON remains authoritative
 for the accepted tracer descendants: ADR 0003's formal decision scope is ExecPlan 0001,
 while later accepted plans retained rather than superseded its temporary interchange
-boundary. Replacing it still requires a new migration decision. The existing
-`specs/stack.pspec` remains illustrative.
+boundary. Replacing it still requires a new migration decision. A1's exact illustrative
+Stack input is retained under `fixtures/authoring/a1/` so later live authoring surfaces
+cannot rewrite this historical observation.
 
 ## Exact inputs
 
 | Input | SHA-256 |
 |---|---|
-| `specs/stack.pspec` | `86f60cc9415353b951b21d1993430b0bd4369a6e560359aaeb67af7cc682596a` |
+| `fixtures/authoring/a1/stack-illustrative.pspec` | `86f60cc9415353b951b21d1993430b0bd4369a6e560359aaeb67af7cc682596a` |
 | Stack Specification `0.1.0` | `dd083a71a4631cc44be051a16b8e20ff0cee7199e46d3823322665d1fdeec6c1` |
 | OrderedMap Specification `0.1.0` | `6049d371603cbdac0e722685f1fd25c7369872f7d963ae2e4f4bae90cce7fd7f` |
 | Specification schema | `c77c1089e61f4b4c88b5e9a93429ea121753ab5753c76c11889a285c0265cd84` |
@@ -37,11 +38,11 @@ preserve its exact typed addresses under the separately accepted canonical rule.
 declaration categories, and present references cannot be invented from spelling or
 array position.
 
-The current Stack sketch is not a lossless source for its canonical record. It does
+The Stack sketch observed at A1 is not a lossless source for its canonical record. It does
 not explicitly supply canonical IDs such as `stack-equivalence`, `pop-empty`,
 `pop-push`, `stack-effects`, or `push-amortized-constant`, and it omits descriptive
 canonical payloads. Inferring those values would introduce hidden naming/default
-rules. There is no OrderedMap `.pspec` source from which to test the same rules.
+rules. No OrderedMap `.pspec` source existed at A1 from which to test the same rules.
 
 The canonical schema deliberately treats signatures, derived-observation definitions,
 equivalence definitions, law statements, resource rules, and performance predicates as
