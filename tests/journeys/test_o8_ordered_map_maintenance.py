@@ -379,6 +379,14 @@ class OrderedMapMaintenanceContractTest(unittest.TestCase):
                 ),
                 "ORDERED_MAP_SUCCESSOR_POLICY_SELECTOR_MISMATCH",
             ),
+            (
+                _derived_graph(
+                    self.successor,
+                    NEW_POLICY,
+                    lambda item: item["profile"].update(id="other"),
+                ),
+                "ORDERED_MAP_SUCCESSOR_POLICY_SELECTOR_MISMATCH",
+            ),
         )
         for attacked, code in selector_attacks:
             with self.subTest(selector_failure=code):
@@ -506,6 +514,10 @@ class OrderedMapMaintenanceContractTest(unittest.TestCase):
                     lambda item: item.update(version="changed"),
                 ),
                 "ORDERED_MAP_SUCCESSOR_CONTRACT_DRIFT",
+            ),
+            (
+                _without(self.successor, OLD_SPECIFICATION),
+                "ORDERED_MAP_SUCCESSOR_PREDECESSOR_DRIFT",
             ),
             (
                 _without(self.successor, OLD_POLICY),

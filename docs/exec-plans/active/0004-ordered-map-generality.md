@@ -228,6 +228,8 @@ O0 priority + categorical-memory reconciliation
   -> O-R8-P successor red-control review
   -> O8-P-S1 causality/drift/immutability correction
   -> O-R8-P2 corrected successor red-control review
+  -> O8-P-S2 selector/removal symmetry correction
+  -> O-R8-P3 final successor red-control review
   -> O8 exact successor/recovery maintenance
   -> O-R8 successor implementation review
   -> O-R4 independent end-to-end review
@@ -381,8 +383,10 @@ O0 priority + categorical-memory reconciliation
 | O8-P successor/recovery red controls | continuity owner; exclusive new OrderedMap maintenance journey controls and this plan; depends on O-R7-2 PASS | complete candidate: accepted O7/predecessor bytes pass, one intentional absent-successor boundary fails, and ten successors skip while freezing exact compact `0.2.0` Specification/policy bytes and digests, one pinned append-only 35-member snapshot, zero-argument actor, successful zero-candidate resolution, 20 all-unclaimed declarations, 14 historical Evidence records, exact recovery without selection, pure deterministic inspection, and fail-closed authority/drift controls |
 | O-R8-P successor red-control review | independent read-only reviewer; depends on O8-P | BLOCK retained: exact digests/protected bytes and 1-pass/1-failure/10-skip topology reproduce, but zero candidates is not proven graph-causal, selector and full membership drift are undercontrolled, manifest-digest diagnostics are not pinned exactly, and nested/public immutability permits aliases or mutable history |
 | O8-P-S1 causality/drift/immutability correction | continuity owner; exclusive O8 controls and this plan; depends on O-R8-P BLOCK | complete candidate: topology remains 1-pass/1-failure/10-skip while exact selector absence/kind/binding diagnostics, a detached discovered-but-unsupported `0.2.0` candidate, predecessor/successor mutation/removal plus unexpected-membership closure, exact raw-digest diagnostic provenance, and complete public/nested immutability are frozen |
-| O-R8-P2 corrected successor red-control review | same independent read-only reviewer; depends on O8-P-S1 | independently close every retained O-R8-P concern before releasing implementation |
-| O8 maintenance | continuity owner; exclusive OrderedMap successor records/manifest, OrderedMap-local maintenance actor, affected design/plan, and controls; depends on O-R8-P2 PASS | implement the exact two-record append-only successor snapshot and graph-only maintenance observation while preserving accepted `0.1.0` bytes and Stack maintenance behavior |
+| O-R8-P2 corrected successor red-control review | same independent read-only reviewer; depends on O8-P-S1 | BLOCK retained narrowly: causality, digest phase, drift classes, immutability, and prior controls close, but successor policy profile binding and predecessor Specification removal lack symmetric subcases |
+| O8-P-S2 selector/removal symmetry correction | continuity owner; exclusive O8 controls and this plan; depends on O-R8-P2 BLOCK | complete candidate: changed successor profile binding requires the exact policy-selector-mismatch diagnostic and removed accepted Specification requires predecessor drift with no partial result; topology remains 1-pass/1-failure/10-skip with all earlier controls intact |
+| O-R8-P3 final successor red-control review | same independent read-only reviewer; depends on O8-P-S2 | independently close both residuals and release implementation only if the complete frozen boundary remains intact |
+| O8 maintenance | continuity owner; exclusive OrderedMap successor records/manifest, OrderedMap-local maintenance actor, affected design/plan, and controls; depends on O-R8-P3 PASS | implement the exact two-record append-only successor snapshot and graph-only maintenance observation while preserving accepted `0.1.0` bytes and Stack maintenance behavior |
 | O-R8 successor implementation review | independent read-only reviewer; depends on O8 | reproduce exact bytes, focused/adjacent/full gates, actor output, negative controls, protected surfaces, and lifecycle truth before releasing the end-to-end convergence review |
 | O-R4 end-to-end review | independent read-only reviewer; depends on O-R8 PASS | all four actor outcomes, negative controls, known exclusions, Stack regression, and generality claim boundary |
 | O-G final gate | lead acceptance; depends on O-R4 PASS and locked local/hosted gates | full repository reproduction, retained failures, active-plan result, conventional PR metadata/history, and exact claim of two-domain—not universal—generality |
@@ -559,7 +563,9 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
 - [x] O8-P successor/recovery red controls
 - [x] O-R8-P successor red-control review — BLOCK retained
 - [x] O8-P-S1 causality/drift/immutability correction
-- [ ] O-R8-P2 corrected successor red-control review
+- [x] O-R8-P2 corrected successor red-control review — BLOCK retained
+- [x] O8-P-S2 selector/removal symmetry correction
+- [ ] O-R8-P3 final successor red-control review
 - [ ] O8 maintenance
 - [ ] O-R8 successor implementation review
 - [ ] O-R4 end-to-end review
