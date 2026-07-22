@@ -1,15 +1,17 @@
 """Representation-neutral authoring of one canonical Specification document.
 
-The first adapter accepts strict JSON as a conformance control.  It performs no
-filesystem, manifest, registry, network, version, profile, or identity discovery.
-External references are checked only against the finite dependency records supplied
-by the caller.
+The strict JSON conformance control and explicit PSpec surface perform no filesystem,
+manifest, registry, network, version, profile, or identity discovery. External
+references are checked only against the finite dependency records supplied by the
+caller.
 """
 
 from __future__ import annotations
 
 import json
 import math
+import re
+import tomllib
 from collections.abc import Mapping as MappingABC
 from dataclasses import dataclass
 from typing import Any, Mapping
@@ -18,6 +20,7 @@ from scripts import record_check
 
 
 CANONICAL_SPEC_JSON_V1 = "canonical-spec-json-v1"
+PSPEC_TOML_V1 = "pspec-toml-v1"
 
 
 @dataclass(frozen=True)
@@ -101,7 +104,7 @@ def _reject_nonstandard_constant(token: str) -> None:
     raise _NonStandardConstant(token)
 
 
-def _decode_source(
+def _decode_json_source(
     source: bytes,
     source_label: str,
 ) -> tuple[Any | None, list[record_check.Diagnostic]]:
@@ -163,6 +166,107 @@ def _decode_source(
                 "AUTHOR_INVALID_JSON",
                 source_label,
                 message="JSON nesting exceeds parser limit",
+            )
+        ]
+    return document, []
+
+
+def _toml_error_location(text: str, error: tomllib.TOMLDecodeError) -> tuple[int, int]:
+    line = getattr(error, "lineno", None)
+    column = getattr(error, "colno", None)
+    if isinstance(line, int) and isinstance(column, int):
+        return line, column
+
+    match = re.search(r"\(at line (\d+), column (\d+)\)$", str(error))
+    if match is not None:
+        return int(match.group(1)), int(match.group(2))
+
+    lines = text.split("\n")
+    return len(lines), len(lines[-1]) + 1
+
+
+def _json_pointer(parts: tuple[str | int, ...]) -> str:
+    if not parts:
+        return "#"
+    encoded = [str(part).replace("~", "~0").replace("/", "~1") for part in parts]
+    return "#/" + "/".join(encoded)
+
+
+def _first_non_json_pointer(
+    value: Any,
+    parts: tuple[str | int, ...] = (),
+) -> str | None:
+    if value is None or isinstance(value, (str, bool, int)):
+        return None
+    if isinstance(value, float):
+        return None if math.isfinite(value) else _json_pointer(parts)
+    if isinstance(value, dict):
+        for key, item in value.items():
+            pointer = _first_non_json_pointer(item, (*parts, key))
+            if pointer is not None:
+                return pointer
+        return None
+    if isinstance(value, list):
+        for index, item in enumerate(value):
+            pointer = _first_non_json_pointer(item, (*parts, index))
+            if pointer is not None:
+                return pointer
+        return None
+    return _json_pointer(parts)
+
+
+def _decode_pspec_source(
+    source: bytes,
+    source_label: str,
+) -> tuple[Any | None, list[record_check.Diagnostic]]:
+    if not isinstance(source, bytes):
+        return None, [
+            _diagnostic(
+                "AUTHOR_SOURCE_TYPE",
+                source_label,
+                message="source must be bytes",
+            )
+        ]
+    try:
+        text = source.decode("utf-8")
+    except UnicodeDecodeError as error:
+        return None, [
+            _diagnostic(
+                "AUTHOR_INVALID_UTF8",
+                source_label,
+                message=f"invalid UTF-8 at byte {error.start}",
+            )
+        ]
+
+    try:
+        document = tomllib.loads(text)
+    except tomllib.TOMLDecodeError as error:
+        line, column = _toml_error_location(text, error)
+        detail = str(error).split(" (at", 1)[0]
+        if "overwrite" in detail.casefold():
+            message = f"duplicate TOML key at line {line} column {column}"
+        else:
+            message = f"invalid TOML at line {line} column {column}: {detail}"
+        return None, [
+            _diagnostic("AUTHOR_INVALID_TOML", source_label, message=message)
+        ]
+    except RecursionError:
+        return None, [
+            _diagnostic(
+                "AUTHOR_INVALID_TOML",
+                source_label,
+                message="TOML nesting exceeds parser limit",
+            )
+        ]
+
+    pointer = _first_non_json_pointer(document)
+    if pointer is not None:
+        return None, [
+            _diagnostic(
+                "AUTHOR_TOML_NON_JSON",
+                source_label,
+                pointer,
+                "PSpec values must belong to the JSON data model",
             )
         ]
     return document, []
@@ -269,12 +373,16 @@ def author_specification(
             ]
         )
 
-    if format_token != CANONICAL_SPEC_JSON_V1:
+    if format_token == CANONICAL_SPEC_JSON_V1:
+        decoder = _decode_json_source
+    elif format_token == PSPEC_TOML_V1:
+        decoder = _decode_pspec_source
+    else:
         return _failure(
             [_diagnostic("AUTHOR_FORMAT_UNSUPPORTED", source_label)]
         )
 
-    document, raw_diagnostics = _decode_source(source, source_label)
+    document, raw_diagnostics = decoder(source, source_label)
     if raw_diagnostics:
         return _failure(raw_diagnostics)
 

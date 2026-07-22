@@ -98,6 +98,10 @@ class ExplicitPSpecAuthorJourneyTest(unittest.TestCase):
         self.assertEqual(1, result.returncode)
         self.assertEqual("", result.stdout)
         self.assertNotIn("Traceback", result.stderr)
+        self.assertTrue(
+            all(": " in line for line in result.stderr.splitlines()),
+            result.stderr,
+        )
         for fragment in expected:
             self.assertIn(fragment, result.stderr)
         self.assertEqual(sentinel, output.read_text(encoding="utf-8"))
@@ -201,6 +205,16 @@ class ExplicitPSpecAuthorJourneyTest(unittest.TestCase):
                     '[[operations]]\nid = "empty"\n',
                     "[[operations]]\n",
                     ("SCHEMA_MISSING_FIELD", "#/operations/0/id"),
+                ),
+                (
+                    'id = "push"',
+                    'id = "empty"',
+                    (
+                        "LINK_DUPLICATE_DECLARATION_ID",
+                        "#/operations/1/id",
+                        "LINK_DANGLING_DECLARATION",
+                        "#/performancePropositions/0/operationFamily/0",
+                    ),
                 ),
                 (
                     'carrier = "Stack"',

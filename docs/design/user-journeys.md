@@ -50,6 +50,18 @@ creates a successor node; it does not rewrite a previously observed result.
 
 ## Journey contracts
 
+### A5 — theory author authors Stack and OrderedMap Specifications
+
+The theory author edits one explicit PSpec v1 source, names every finite canonical
+dependency and output path, and runs one command. Acceptance requires exact Stack and
+OrderedMap canonical document equality; deterministic raw/schema/link diagnostics;
+visible root/local identity and references; no ambient acquisition or defaults; atomic
+failure recovery; and preservation of hosted semantic text without a truth or Evidence
+claim. The automated journey is implemented under
+[design-spec 0001](../../design-specs/0001-explicit-pspec-author-journey.md). An eligible
+uninvolved author must still complete both retained tasks before A5 and ExecPlan 0006
+are accepted.
+
 ### J0 — vocabulary and local boundary
 
 Acceptance requires the actor definitions above; distinct observations for publish,
@@ -70,8 +82,9 @@ that is a separate package-consumer role. Acceptance requires:
 - the named-law proof reproduces with its checker, assumptions, and exclusions;
 - duplicate addresses, wrong versions, malformed records, and dangling references
   fail with stable diagnostics;
-- the provisional `.pspec` syntax is not presented as executable authoring until an
-  elaborator exists.
+- executable PSpec authoring is presented only through the explicit A5 contract and
+  command; the earlier illustrative sketch remains frozen as historical research rather
+  than undocumented desugaring authority.
 
 The accepted tracer slice performs read-only inspection of the finite Stack theory
 source set, rejects hidden or unexpected records without following symlinks, exact-binds

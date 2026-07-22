@@ -194,7 +194,7 @@ not omit any predecessor suite.
 - [x] A-R4 implementation review
 - [x] A5-D explicit PSpec journey design-spec
 - [x] A5-T red end-to-end journey controls
-- [ ] A5-I author command, adapter, examples, documentation, and maintenance
+- [x] A5-I author command, adapter, examples, documentation, and maintenance
 - [ ] A5-H eligible uninvolved-author observation
 - [ ] A-R5 end-to-end review
 - [ ] A-G final convergence
@@ -343,6 +343,18 @@ not omit any predecessor suite.
   equal the accepted Stack and OrderedMap documents. The A5-T predecessor has one PASS,
   one intentional absent-command FAIL, and eight SKIP controls; this releases A5-I
   without opening a fragment PR.
+- 2026-07-22: A5-I implements `pspec-toml-v1` inside the accepted all-or-none
+  authoring boundary and exposes `python3 -m semantic_packages author` as the explicit
+  source/dependency/output file edge. Both documented commands succeed and their
+  documents equal the accepted Stack and OrderedMap records. Automated PSpec controls
+  cover lossless output, provenance-only path renames, absent/wrong/duplicate/corrupt
+  dependencies, raw/schema/link diagnostics, non-JSON TOML values, declaration order,
+  hosted text, required arguments, and atomic recovery. The focused A5 suite has eight
+  automated PASS, one fixture PASS, one retired predecessor SKIP, and one truthful
+  missing-human-observation FAIL. A complete gate reproduced that sole journey failure;
+  it also observed one TypeScript Deno report mismatch whose immediate isolated replay
+  passed both fresh profile reports, so final convergence must rerun the complete gate
+  rather than treating the transient as resolved product Evidence. A5-H is released.
 
 ## Decision log
 
@@ -363,10 +375,10 @@ reviewed two-domain statement of the authoring deficit without committing to fin
 surface syntax. A2/A-R2/A-G2 accept the representation-neutral boundary and release A3
 red controls; A-R3 accepts the exact red contract; and A4 implements its strict
 canonical-JSON control with an explicit finite dependency context. Design-spec 0001
-and A5-T now contract the first non-control PSpec journey without claiming format
-permanence. The author command, automated successor behavior, documentation, human
-observation, A-R5, and A-G remain unimplemented or unaccepted. A5-I is the next
-released node; no PR opens until the entire journey is experienceable.
+and A5-T contract the first non-control PSpec journey without claiming format
+permanence. A5-I makes the complete automated command journey and documentation
+experienceable. The eligible human observation, A-R5, and A-G remain unaccepted. A5-H
+is the next released node; no PR opens until the entire journey is complete.
 
 ## Stop and escalation conditions
 

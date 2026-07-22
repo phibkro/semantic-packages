@@ -28,9 +28,9 @@ fresh exact-profile Evidence and an authenticated 69-member authority for differ
 native-process and Deno-sandbox choices. Its actor selects Rust only for the native
 profile and TypeScript only for the Deno profile while retaining 21 nonmatching Claims
 and 21 nonmatching Evidence records as inapplicable in each decision. Its lifecycle is
-closed. The next authored route probes the shared human authoring surface before any
-`.pspec` elaboration or hidden default is selected.
-The A1 candidate freezes the two-domain authoring deficit: shared structural identity
+closed. The active authored route now turns the reviewed shared-authoring boundary into
+one complete human PSpec journey.
+The archived A1 candidate freezes the original two-domain authoring deficit: shared structural identity
 and references are explicit, while hosted semantic payloads remain unchecked; the
 illustrative Stack surface cannot round-trip without hidden rules and OrderedMap has no
 surface. No grammar or authoring representation is selected before independent review.
@@ -40,8 +40,10 @@ implements the `canonical-spec-json-v1` control with strict raw phases, total
 diagnostics, detached output, and a finite caller-supplied dependency context. It
 performs no ambient discovery and succeeds only relative to that exact context.
 Canonical JSON remains a control rather than the final human surface; hidden inference
-and an unneeded second IR are rejected, while A5 still owes a non-control human-facing
-adapter, author command, and eligible uninvolved-author observation.
+and an unneeded second IR are rejected. Design-spec 0001 now drives a TOML-shaped,
+lossless `pspec-toml-v1` adapter and explicit atomic author command across both domains.
+Automated A5 controls pass; eligible uninvolved-author observation, A-R5, and A-G remain
+open.
 
 ## End-to-end product shape
 
@@ -247,7 +249,7 @@ and does not grant semantic acceptance.
 
 | Actor | Data-plane path | Current edge |
 |---|---|---|
-| theory author | semantic source -> canonical Specification/Claim -> graph checks -> proof or other Evidence | finite exact Stack and OrderedMap publication inspection executable; `.pspec` elaboration and hosted publication absent |
+| theory author | semantic source -> canonical Specification/Claim -> graph checks -> proof or other Evidence | explicit Stack and OrderedMap PSpec-to-canonical author command experienceable; automated checks pass, while uninvolved-author acceptance, hosted publication, and semantic checking remain absent |
 | package author | Realization/adapter -> explicit build -> campaign -> report -> reviewed declaration Evidence -> graph | executable for independently represented Rust and TypeScript packages in both domains |
 | package consumer | Specification + policy + profile -> Evidence selection -> semantic result -> boundary mechanism | executable exact Stack and OrderedMap queries, including two differentiated-profile choices with complete non-transfer ledgers, version-scoped recovery, and separate directional child-process boundaries |
 | theory consumer | exact Specification -> declarations/imports -> Claims/Evidence/unknowns -> derived view | executable Stack and OrderedMap projections; realization-scoped Evidence never becomes Specification assurance |
