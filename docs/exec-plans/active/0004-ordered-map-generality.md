@@ -230,6 +230,8 @@ O0 priority + categorical-memory reconciliation
   -> O-R8-P2 corrected successor red-control review
   -> O8-P-S2 selector/removal symmetry correction
   -> O-R8-P3 final successor red-control review
+  -> O8 first green attempt
+  -> O8-F1 captured-text/raw-phase correction
   -> O8 exact successor/recovery maintenance
   -> O-R8 successor implementation review
   -> O-R4 independent end-to-end review
@@ -386,7 +388,8 @@ O0 priority + categorical-memory reconciliation
 | O-R8-P2 corrected successor red-control review | same independent read-only reviewer; depends on O8-P-S1 | BLOCK retained narrowly: causality, digest phase, drift classes, immutability, and prior controls close, but successor policy profile binding and predecessor Specification removal lack symmetric subcases |
 | O8-P-S2 selector/removal symmetry correction | continuity owner; exclusive O8 controls and this plan; depends on O-R8-P2 BLOCK | complete candidate: changed successor profile binding requires the exact policy-selector-mismatch diagnostic and removed accepted Specification requires predecessor drift with no partial result; topology remains 1-pass/1-failure/10-skip with all earlier controls intact |
 | O-R8-P3 final successor red-control review | same independent read-only reviewer; depends on O8-P-S2 | PASS: exact clean `02cc4a3` reproduces protected hashes, three successor-oracle digests, and 1-pass/1-failure/10-skip topology; both selector/removal residuals and the complete prior causality/drift/digest/immutability boundary close, releasing O8 implementation |
-| O8 maintenance | continuity owner; exclusive OrderedMap successor records/manifest, OrderedMap-local maintenance actor, affected design/plan, and controls; depends on O-R8-P3 PASS | implement the exact two-record append-only successor snapshot and graph-only maintenance observation while preserving accepted `0.1.0` bytes and Stack maintenance behavior |
+| O8 maintenance | continuity owner; exclusive OrderedMap successor records/manifest, OrderedMap-local maintenance actor, affected design/plan, and controls; depends on O-R8-P3 PASS | complete candidate pending O-R8: exact compact Specification `05bd...afd0`, policy `db78...e00d`, and pinned append-only 35-member manifest `f5e8...faf3` drive one zero-argument actor; canonical resolution yields zero candidates, theory yields 20 unclaimed declarations, 14 predecessor Evidence records remain history, two exact predecessor candidates remain recoverable but unselected, a detached successor candidate is discovered and rejected, and all 12 focused plus 47 adjacent checks pass without changing accepted O6/O7/Stack bytes |
+| O8-F1 captured-text/raw-phase correction | continuity owner; exclusive OrderedMap maintenance actor/control and this plan; depends on the first O8 green attempt | restore the finite-source snapshot's intentionally omitted terminal newline before verifying exact successor raw-record digests, and scope the invalid-successor graph trap to the successor authority so the required predecessor replay remains observable; change no artifact, digest, or requirement |
 | O-R8 successor implementation review | independent read-only reviewer; depends on O8 | reproduce exact bytes, focused/adjacent/full gates, actor output, negative controls, protected surfaces, and lifecycle truth before releasing the end-to-end convergence review |
 | O-R4 end-to-end review | independent read-only reviewer; depends on O-R8 PASS | all four actor outcomes, negative controls, known exclusions, Stack regression, and generality claim boundary |
 | O-G final gate | lead acceptance; depends on O-R4 PASS and locked local/hosted gates | full repository reproduction, retained failures, active-plan result, conventional PR metadata/history, and exact claim of two-domain—not universal—generality |
@@ -566,7 +569,8 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
 - [x] O-R8-P2 corrected successor red-control review — BLOCK retained
 - [x] O8-P-S2 selector/removal symmetry correction
 - [x] O-R8-P3 final successor red-control review passed; O8 released
-- [ ] O8 maintenance
+- [x] O8-F1 captured-text/raw-phase correction
+- [x] O8 maintenance complete; review pending
 - [ ] O-R8 successor implementation review
 - [ ] O-R4 end-to-end review
 - [ ] O-G final gate
@@ -1411,8 +1415,13 @@ journeys plus every record, loader, adapter, cross-language, research, governanc
 report/Evidence, and proof lane. The first O-R7 implementation review passes all
 code, behavior, protected-byte, adjacent, and private-helper checks but retains a
 lifecycle-document BLOCK; O7-S1 corrects that durable-memory drift and O-R7-2 passes.
-O7 consumer decision/inspection is accepted. O8 maintenance is now the live edge; the
-final end-to-end gates remain behind it.
+O7 consumer decision/inspection is accepted. O8 now has an exact append-only
+35-member successor snapshot and maintenance actor: the canonical `0.2.0` query returns
+zero candidates, its 20 declarations are unclaimed, all 14 predecessor Evidence
+records remain version-scoped history, and both accepted predecessor candidates are
+recoverable without automatic selection. O8-F1 retains the first green attempt's
+captured-text newline and phase-trap corrections. O-R8 implementation review is now
+the live edge; the final end-to-end gates remain behind it.
 
 ## Stop and escalation conditions
 

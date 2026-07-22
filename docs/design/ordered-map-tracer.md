@@ -445,6 +445,18 @@ shows `size`, `size-put`, and all other successor declarations unclaimed. The ac
 explanations. The system does not automatically select the predecessor, migrate
 Evidence, infer refinement, or define removal and reinsertion semantics.
 
+O8 materializes the two successor records as canonical compact JSON with raw SHA-256
+`05bd1dee...a3afd0` for the Specification and `db788f7f...ece00d` for the policy. The
+append-only `registry/ordered-map/successor-manifest.json` retains all four predecessor
+sources and 33 members exactly, adds two separately owned successor sources and those
+two records, and is pinned at raw SHA-256 `f5e87e65...6ffaf3`.
+`inspect_ordered_map_maintenance()` authenticates that manifest after replaying the
+accepted predecessor once, captures the 35-member graph once, and then performs only
+pure comparison, exact successor resolution, theory projection, recovery derivation,
+and rendering. A detached synthetic successor Realization is discoverable but
+unacceptable without successor Claims/Evidence; it is a falsifier only and never joins
+the pinned manifest.
+
 ## Review falsifiers and exclusions
 
 Any successor review must reopen O-G2 if any of these observations can occur:

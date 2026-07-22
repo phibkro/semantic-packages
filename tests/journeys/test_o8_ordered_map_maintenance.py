@@ -569,12 +569,19 @@ class OrderedMapMaintenanceContractTest(unittest.TestCase):
             manifest["members"] = manifest["members"][:-1]
             manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
             observed = hashlib.sha256(manifest_path.read_bytes()).hexdigest()
+            original_graph = graph.inspect_manifest_graph
+
+            def reject_successor_capture(authority):
+                if authority.manifest_path == manifest_path:
+                    raise AssertionError("invalid authority reached graph capture")
+                return original_graph(authority)
+
             with mock.patch.object(
                 ordered_map_maintenance, "_ROOT", root
             ), mock.patch.object(
                 graph,
                 "inspect_manifest_graph",
-                side_effect=AssertionError("invalid authority reached graph capture"),
+                side_effect=reject_successor_capture,
             ):
                 result = ordered_map_maintenance.inspect_ordered_map_maintenance()
         self.assertFalse(result.ok)
