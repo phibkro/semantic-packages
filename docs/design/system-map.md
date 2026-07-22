@@ -25,6 +25,9 @@ the active ExecPlan.
 Current route: ExecPlan 0004 is closed at two-domain reuse. ExecPlan 0005 now tests
 exact consumer choice across differentiated native-process and Deno-sandbox profiles;
 its first probe forbids reusing old profile-bound Evidence by resemblance.
+P2a freezes the exact profile, policy, campaign-plan, and append-only graph contract;
+the profile-choice product authority and actor remain deliberately absent until fresh
+profile-bound Evidence exists.
 
 ## End-to-end product shape
 

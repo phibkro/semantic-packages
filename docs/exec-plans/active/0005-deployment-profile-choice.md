@@ -26,6 +26,8 @@ first material finding: retained reports and Evidence bind
 profile. New acceptable candidates require append-only Realization, Claim, Evidence,
 policy, report, and authority facts. The two candidate profile records remain research
 fixtures until a reviewed design gate releases their final registry paths and bytes.
+The [exact profile-choice design](../../design/ordered-map-profile-choice.md) owns P2's
+paths, bytes, append-only census, actor outcomes, and negative-control contract.
 
 No policy may reduce the accepted OrderedMap required concerns merely to obtain a
 green candidate. Performance stays optional and unsupported unless new exact Evidence
@@ -39,8 +41,10 @@ P0 roadmap selection
   -> P1 differentiated-profile falsifier
   -> P-R1 independent research review
   -> P-G1 profile-contract gate
-  -> P2 exact records, plans, actor journeys, and red controls
-  -> P-R2 independent red-control review
+  -> P2a exact profile, policy, and plan artifacts
+  -> P-R2a independent artifact review
+  -> P2b actor/evidence red controls
+  -> P-R2b independent red-control review
   -> P3 profile-specific campaigns, reports, Claims, and Evidence
   -> P-R3 independent evidence review
   -> P4 append-only authority, exact resolution, and inspection
@@ -56,8 +60,10 @@ P0 roadmap selection
 | P1 differentiated-profile falsifier | lead; exclusive research fixtures, probe test, research note, and this plan | successor candidate: two schema-valid profiles hold meaning constant and differ at the runtime boundary; executable controls freeze all 14 Claims, 14 Evidence records, two Realizations, and two reports as exact to the old profile, with relabel/addition sensitivity |
 | P-R1 independent research review | uninvolved read-only reviewer | review profile differentiation, exact-applicability falsifier, implementation release, exclusions, and absence of hidden refinement; PASS releases P-G1, BLOCK retains concerns here |
 | P-G1 profile-contract gate | lead acceptance after P-R1 | accept or revise the exact actor contract; no canonical product records before PASS |
-| P2 exact design and red controls | lead/integrator; exclusive new profile-choice artifacts and journey controls | freeze paths, addresses, manifest census, two policies, campaign bindings, output, inapplicability controls, no-override entrypoint, and unchanged predecessor behavior |
-| P-R2 red-control review | uninvolved read-only reviewer | confirm tests fail only at absent implementation and cover authority, exactness, evidence axes, negative controls, Stack, and O6--O8 bytes |
+| P2a exact artifact contract | lead/integrator; exclusive profile/policy/plan records, artifact tests, exact design, and this plan | promote reviewed profile bytes; freeze two unchanged-strength policies, two profile-bound seven-case plans, exact digests, 69-member/ten-source final shape, and absence of premature authority |
+| P-R2a artifact review | uninvolved read-only reviewer | reproduce every digest; confirm schema/link validity, byte promotion, policy non-weakening, plan-only profile substitution, append-only ordering, actor census, performance exclusion, and no authority claim |
+| P2b actor/evidence red controls | lead/integrator; exclusive new profile-choice journey controls and this plan | freeze final paths/addresses/census, two decisions, 7/21 Claim and Evidence ledgers, all evidence axes, no-override/one-capture actor, fail-closed breakers, and unchanged predecessor behavior before implementation |
+| P-R2b red-control review | uninvolved read-only reviewer | confirm controls fail only at absent P3/P4 implementation and cover authority, exactness, Evidence applicability/result/review axes, selector and cross-profile negatives, Stack, and O6--O8 bytes |
 | P3 evidence production | lead/integrator; exclusive new plans/reports/successor records | two fresh reproducible campaigns; exact report-to-Evidence derivation; required law/resource/effect support; optional performance remains unsupported; targeted cross-profile breaker |
 | P-R3 evidence review | uninvolved read-only reviewer | independently reproduce reports and reject profile swapping, stale bytes, mismatched applicability, and false performance promotion |
 | P4 authority and actor | lead/integrator; exclusive new manifest, resolver, inspection, and tests | one capture, two exact decisions, one acceptable package per profile, visible inapplicable Evidence, separate directional boundary, fail-closed diagnostics |
@@ -90,6 +96,25 @@ P0 roadmap selection
   repository checks because `research` is not an allowed Conventional Commit type.
   Reclassify the executable probe checkpoint as `test(profiles)` and rerun hosted gates;
   no product or accepted-record bytes change in this correction.
+- 2026-07-22: P2 decomposed into P2a artifacts and P2b red controls. This preserves a
+  green, independently reviewable artifact checkpoint and keeps intentionally red
+  actor/evidence controls coupled to their later implementation rather than merging a
+  known-red mainline state.
+- 2026-07-22: P2a candidate promotes both reviewed profile records byte-for-byte,
+  retains the predecessor policy contract under two exact profile selectors, and
+  freezes two schema-valid seven-case plans whose only change is the profile binding.
+  The design fixes the future O8-plus-34, 69-member/ten-source authority and exact
+  actor/applicability outcomes without creating a premature manifest.
+- 2026-07-22: P-R2a PASS. An independent read-only reviewer reproduced all six raw and
+  two canonical digests, byte promotion, schema/link validity, policy non-weakening,
+  plan-only profile substitution, O8-plus-34 census, exact successor scheme, 7/21
+  ledgers, performance exclusion, and absence of product authority. No material P2a
+  concern remains; P2b is released with its stated red-control obligations.
+- 2026-07-22: The first full P2a repository run under concurrent review load retained
+  three bounded Lean proof-checker timeout diagnostics in place of their expected
+  proof-boundary results. Focused artifact/probe and documentation gates remained
+  green. Do not weaken timeouts or oracles; rerun the complete gate quiescently before
+  delivery convergence.
 
 ## Verification
 
@@ -98,6 +123,12 @@ P1 runs:
 ```text
 python3 -m unittest tests.research.test_ordered_map_profile_choice_probe
 python3 scripts/check_repo.py
+```
+
+P2a adds:
+
+```text
+python3 -m unittest tests.research.test_ordered_map_profile_choice_artifacts
 ```
 
 Later nodes add their focused commands here before closure. Every merge must also pass
