@@ -1,0 +1,305 @@
+{
+  "formatVersion": 1,
+  "algorithm": "ordered-map-conformance-campaign",
+  "algorithmVersion": "1",
+  "protocol": "ordered-map-runner-json-v1",
+  "specification": {
+    "path": "registry/ordered-map/theory/records/ordered-map-spec.json",
+    "address": {
+      "kind": "specification",
+      "id": "ordered-map",
+      "version": "0.1.0"
+    },
+    "sha256": "6049d371603cbdac0e722685f1fd25c7369872f7d963ae2e4f4bae90cce7fd7f"
+  },
+  "profile": {
+    "path": "registry/ordered-map/profile-choice/profiles/records/ordered-map-native-process.json",
+    "address": {
+      "kind": "realizationProfile",
+      "id": "ordered-map-native-process",
+      "version": "0.1.0"
+    },
+    "sha256": "788481758572ec2d94d3e97b009b9ca30e0322d07b93dcb37b6417243fffc450"
+  },
+  "domains": {
+    "keys": ["A", "a", "B", "b", "C", "c"],
+    "values": [-2, -1, 0, 1, 2],
+    "classTokens": ["a", "b", "c"]
+  },
+  "bounds": {
+    "maximumHistory": 3,
+    "maximumLiveClasses": 3,
+    "observationLimit": 3,
+    "responseTimeoutSeconds": 0.2,
+    "exitTimeoutSeconds": 0.2
+  },
+  "eventContract": {
+    "forbidden": ["io.*"],
+    "optional": ["debug.emit"],
+    "default": "unspecified"
+  },
+  "cases": [
+    {
+      "id": "lookup-empty",
+      "steps": [
+        {
+          "op": "empty",
+          "bind": "h0",
+          "effectDeclaration": "ordered-map-effects"
+        },
+        {
+          "op": "lookup",
+          "source": "h0",
+          "key": "A",
+          "expected": {"tag": "none"},
+          "declarations": ["lookup-empty"],
+          "effectDeclaration": "ordered-map-effects"
+        }
+      ]
+    },
+    {
+      "id": "same-class-replacement",
+      "steps": [
+        {
+          "op": "empty",
+          "bind": "h0",
+          "effectDeclaration": "ordered-map-effects"
+        },
+        {
+          "op": "put",
+          "source": "h0",
+          "key": "A",
+          "value": 1,
+          "bind": "h1",
+          "effectDeclaration": "ordered-map-effects"
+        },
+        {
+          "op": "lookup",
+          "source": "h1",
+          "key": "a",
+          "expected": {"tag": "some", "value": 1},
+          "declarations": ["lookup-put-same"],
+          "effectDeclaration": "ordered-map-effects"
+        },
+        {
+          "op": "put",
+          "source": "h1",
+          "key": "a",
+          "value": -1,
+          "bind": "h2",
+          "effectDeclaration": "ordered-map-effects"
+        },
+        {
+          "op": "lookup",
+          "source": "h2",
+          "key": "A",
+          "expected": {"tag": "some", "value": -1},
+          "declarations": ["lookup-put-same"],
+          "effectDeclaration": "ordered-map-effects"
+        }
+      ]
+    },
+    {
+      "id": "other-class-preservation",
+      "steps": [
+        {
+          "op": "empty",
+          "bind": "h0",
+          "effectDeclaration": "ordered-map-effects"
+        },
+        {
+          "op": "put",
+          "source": "h0",
+          "key": "A",
+          "value": 1,
+          "bind": "h1",
+          "effectDeclaration": "ordered-map-effects"
+        },
+        {
+          "op": "put",
+          "source": "h1",
+          "key": "B",
+          "value": 2,
+          "bind": "h2",
+          "effectDeclaration": "ordered-map-effects"
+        },
+        {
+          "op": "lookup",
+          "source": "h2",
+          "key": "a",
+          "expected": {"tag": "some", "value": 1},
+          "declarations": ["lookup-put-other"],
+          "effectDeclaration": "ordered-map-effects"
+        }
+      ]
+    },
+    {
+      "id": "nonlast-overwrite-order",
+      "steps": [
+        {
+          "op": "empty",
+          "bind": "h0",
+          "effectDeclaration": "ordered-map-effects"
+        },
+        {
+          "op": "put",
+          "source": "h0",
+          "key": "A",
+          "value": 1,
+          "bind": "h1",
+          "effectDeclaration": "ordered-map-effects"
+        },
+        {
+          "op": "put",
+          "source": "h1",
+          "key": "B",
+          "value": 2,
+          "bind": "h2",
+          "effectDeclaration": "ordered-map-effects"
+        },
+        {
+          "op": "put",
+          "source": "h2",
+          "key": "a",
+          "value": -1,
+          "bind": "h3",
+          "effectDeclaration": "ordered-map-effects"
+        },
+        {
+          "op": "entries",
+          "source": "h3",
+          "expected": [
+            {"class": "a", "value": -1},
+            {"class": "b", "value": 2}
+          ],
+          "declarations": ["put-existing-position"],
+          "effectDeclaration": "ordered-map-effects"
+        }
+      ]
+    },
+    {
+      "id": "new-class-append-three",
+      "steps": [
+        {
+          "op": "empty",
+          "bind": "h0",
+          "effectDeclaration": "ordered-map-effects"
+        },
+        {
+          "op": "put",
+          "source": "h0",
+          "key": "A",
+          "value": 1,
+          "bind": "h1",
+          "effectDeclaration": "ordered-map-effects"
+        },
+        {
+          "op": "put",
+          "source": "h1",
+          "key": "B",
+          "value": 2,
+          "bind": "h2",
+          "effectDeclaration": "ordered-map-effects"
+        },
+        {
+          "op": "put",
+          "source": "h2",
+          "key": "C",
+          "value": -2,
+          "bind": "h3",
+          "effectDeclaration": "ordered-map-effects"
+        },
+        {
+          "op": "entries",
+          "source": "h3",
+          "expected": [
+            {"class": "a", "value": 1},
+            {"class": "b", "value": 2},
+            {"class": "c", "value": -2}
+          ],
+          "declarations": ["put-new-appends"],
+          "effectDeclaration": "ordered-map-effects"
+        }
+      ]
+    },
+    {
+      "id": "retained-new-class-source",
+      "steps": [
+        {
+          "op": "empty",
+          "bind": "h0",
+          "effectDeclaration": "ordered-map-effects"
+        },
+        {
+          "op": "put",
+          "source": "h0",
+          "key": "A",
+          "value": 1,
+          "bind": "h1",
+          "effectDeclaration": "ordered-map-effects"
+        },
+        {
+          "op": "put",
+          "source": "h1",
+          "key": "B",
+          "value": 2,
+          "bind": "h2",
+          "effectDeclaration": "ordered-map-effects"
+        },
+        {
+          "op": "entries",
+          "source": "h1",
+          "expected": [
+            {"class": "a", "value": 1}
+          ],
+          "declarations": ["persistence"],
+          "effectDeclaration": "ordered-map-effects"
+        }
+      ]
+    },
+    {
+      "id": "retained-existing-class-source",
+      "steps": [
+        {
+          "op": "empty",
+          "bind": "h0",
+          "effectDeclaration": "ordered-map-effects"
+        },
+        {
+          "op": "put",
+          "source": "h0",
+          "key": "A",
+          "value": 1,
+          "bind": "h1",
+          "effectDeclaration": "ordered-map-effects"
+        },
+        {
+          "op": "put",
+          "source": "h1",
+          "key": "B",
+          "value": 2,
+          "bind": "h2",
+          "effectDeclaration": "ordered-map-effects"
+        },
+        {
+          "op": "put",
+          "source": "h2",
+          "key": "a",
+          "value": -1,
+          "bind": "h3",
+          "effectDeclaration": "ordered-map-effects"
+        },
+        {
+          "op": "entries",
+          "source": "h2",
+          "expected": [
+            {"class": "a", "value": 1},
+            {"class": "b", "value": 2}
+          ],
+          "declarations": ["persistence"],
+          "effectDeclaration": "ordered-map-effects"
+        }
+      ]
+    }
+  ]
+}

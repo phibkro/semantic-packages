@@ -1,0 +1,56 @@
+{
+  "kind": "consumerPolicy",
+  "id": "ordered-map-native-process-policy",
+  "version": "0.1.0",
+  "specification": {
+    "kind": "specification",
+    "id": "ordered-map",
+    "version": "0.1.0"
+  },
+  "profile": {
+    "kind": "realizationProfile",
+    "id": "ordered-map-native-process",
+    "version": "0.1.0"
+  },
+  "concerns": [
+    {
+      "concern": "law.conformance",
+      "priority": "required",
+      "acceptedMechanisms": ["bounded-conformance-campaign"],
+      "minimumAssurance": "per-declaration-one-accepted-applicable-support-no-selected-challenge"
+    },
+    {
+      "concern": "resource.persistence",
+      "priority": "required",
+      "acceptedMechanisms": ["bounded-conformance-campaign"],
+      "minimumAssurance": "per-declaration-one-accepted-applicable-support-no-selected-challenge"
+    },
+    {
+      "concern": "effect.conformance",
+      "priority": "required",
+      "acceptedMechanisms": ["bounded-conformance-campaign"],
+      "minimumAssurance": "per-declaration-one-accepted-applicable-support-no-selected-challenge"
+    },
+    {
+      "concern": "performance",
+      "priority": "optional",
+      "acceptedMechanisms": ["proof", "proof-audit"],
+      "minimumAssurance": "per-declaration-one-accepted-applicable-support-no-selected-challenge"
+    }
+  ],
+  "prohibitions": [
+    {
+      "proposition": {
+        "specification": {
+          "kind": "specification",
+          "id": "ordered-map",
+          "version": "0.1.0"
+        },
+        "declarationId": "ordered-map-effects"
+      },
+      "description": "No io.* events inside the adapter-observed invocation trace.",
+      "eventPattern": "io.*",
+      "acceptedEvidenceScope": ["adapter-invocation-trace"]
+    }
+  ]
+}

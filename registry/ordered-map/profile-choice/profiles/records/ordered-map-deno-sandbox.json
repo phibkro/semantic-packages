@@ -1,0 +1,31 @@
+{
+  "kind": "realizationProfile",
+  "id": "ordered-map-deno-sandbox",
+  "version": "0.1.0",
+  "platform": "Deno 2.9 x86_64-linux sandboxed child process",
+  "hostCapabilities": [
+    "process.execution",
+    "runtime.deno-2.9.x86_64-linux",
+    "network.denied"
+  ],
+  "scale": "At most three put operations, three live key-equivalence classes, and three returned entries per observation.",
+  "concurrency": "single-threaded lockstep requests",
+  "trust": "The Deno child process and adapter output are untrusted; launch denies remote, npm, prompt, and network access before independent checking.",
+  "portability": "Keys are exactly A, a, B, b, C, or c under ASCII-lowercase equivalence; values are JSON integers from -2 through 2; entry class tokens are a, b, or c.",
+  "workloads": [
+    {
+      "id": "put-sequence",
+      "startingState": "empty",
+      "sizeFunction": "n is the number of consecutive put operations",
+      "definition": "For every n >= 0 and every permitted length-n key/value sequence, start at empty and apply the n puts in order."
+    }
+  ],
+  "costMeasures": [
+    {
+      "id": "realization-steps",
+      "unit": "primitive realization step",
+      "aggregation": "sum over the workload",
+      "instrumentation": "A profile-specific performance campaign must report a nonnegative step count for every put invocation; the current OrderedMap campaign does not report this measure."
+    }
+  ]
+}
