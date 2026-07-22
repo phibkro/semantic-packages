@@ -234,6 +234,8 @@ O0 priority + categorical-memory reconciliation
   -> O8-F1 captured-text/raw-phase correction
   -> O8 exact successor/recovery maintenance
   -> O-R8 successor implementation review
+  -> O8-S1 lifecycle/private-seam truth correction
+  -> O-R8-2 successor implementation review
   -> O-R4 independent end-to-end review
   -> O-G final locked local/hosted gate
 ```
@@ -388,10 +390,12 @@ O0 priority + categorical-memory reconciliation
 | O-R8-P2 corrected successor red-control review | same independent read-only reviewer; depends on O8-P-S1 | BLOCK retained narrowly: causality, digest phase, drift classes, immutability, and prior controls close, but successor policy profile binding and predecessor Specification removal lack symmetric subcases |
 | O8-P-S2 selector/removal symmetry correction | continuity owner; exclusive O8 controls and this plan; depends on O-R8-P2 BLOCK | complete candidate: changed successor profile binding requires the exact policy-selector-mismatch diagnostic and removed accepted Specification requires predecessor drift with no partial result; topology remains 1-pass/1-failure/10-skip with all earlier controls intact |
 | O-R8-P3 final successor red-control review | same independent read-only reviewer; depends on O8-P-S2 | PASS: exact clean `02cc4a3` reproduces protected hashes, three successor-oracle digests, and 1-pass/1-failure/10-skip topology; both selector/removal residuals and the complete prior causality/drift/digest/immutability boundary close, releasing O8 implementation |
-| O8 maintenance | continuity owner; exclusive OrderedMap successor records/manifest, OrderedMap-local maintenance actor, affected design/plan, and controls; depends on O-R8-P3 PASS | complete candidate pending O-R8: exact compact Specification `05bd...afd0`, policy `db78...e00d`, and pinned append-only 35-member manifest `f5e8...faf3` drive one zero-argument actor; canonical resolution yields zero candidates, theory yields 20 unclaimed declarations, 14 predecessor Evidence records remain history, two exact predecessor candidates remain recoverable but unselected, a detached successor candidate is discovered and rejected, and all 12 focused plus 47 adjacent checks pass without changing accepted O6/O7/Stack bytes |
+| O8 maintenance | continuity owner; exclusive OrderedMap successor records/manifest, OrderedMap-local maintenance actor, affected design/plan, and controls; depends on O-R8-P3 PASS | complete candidate pending O-R8-2: exact compact Specification `05bd...afd0`, policy `db78...e00d`, and pinned append-only 35-member manifest `f5e8...faf3` drive one zero-argument actor; canonical resolution yields zero candidates, theory yields 20 unclaimed declarations, 14 predecessor Evidence records remain history, two exact predecessor candidates remain recoverable but unselected, a detached successor candidate is discovered and rejected, and all 12 focused plus 47 adjacent checks pass without changing accepted O6/O7/Stack bytes |
 | O8-F1 captured-text/raw-phase correction | continuity owner; exclusive OrderedMap maintenance actor/control and this plan; depends on the first O8 green attempt | restore the finite-source snapshot's intentionally omitted terminal newline before verifying exact successor raw-record digests, and scope the invalid-successor graph trap to the successor authority so the required predecessor replay remains observable; change no artifact, digest, or requirement |
-| O-R8 successor implementation review | independent read-only reviewer; depends on O8 | reproduce exact bytes, focused/adjacent/full gates, actor output, negative controls, protected surfaces, and lifecycle truth before releasing the end-to-end convergence review |
-| O-R4 end-to-end review | independent read-only reviewer; depends on O-R8 PASS | all four actor outcomes, negative controls, known exclusions, Stack regression, and generality claim boundary |
+| O-R8 successor implementation review | independent read-only reviewer; depends on O8 | BLOCK retained narrowly on durable plan truth: implementation, exact bytes/digests, 12 focused and 47 adjacent checks, failure phases, protected surfaces, and the complete repository gate pass, but the Result retains a stale pre-O8 absence sentence and does not bound the captured-text private seam |
+| O8-S1 lifecycle/private-seam truth correction | continuity owner; exclusive this plan; depends on O-R8 BLOCK | describe successor absence historically and record `_document_text + "\n"` as the deliberately bounded captured-byte seam: graph capture has already authenticated the record, the actor restores the snapshot's omitted terminal newline before exact O8 raw-byte comparison, and any `GraphRecord` serialization or newline-handling change must reopen O8-F1 and its raw-digest/failure-phase controls; change no implementation, artifact, digest, requirement, or protected byte |
+| O-R8-2 successor implementation review | same independent read-only reviewer; depends on O8-S1 | verify the documentation-only correction, exact diff boundary, lifecycle agreement, and retained private-seam reopen trigger before releasing the end-to-end convergence review |
+| O-R4 end-to-end review | independent read-only reviewer; depends on O-R8-2 PASS | all four actor outcomes, negative controls, known exclusions, Stack regression, and generality claim boundary |
 | O-G final gate | lead acceptance; depends on O-R4 PASS and locked local/hosted gates | full repository reproduction, retained failures, active-plan result, conventional PR metadata/history, and exact claim of two-domain—not universal—generality |
 
 The continuity owner integrates shared surfaces. Before O-G2, all work is read-only or
@@ -571,7 +575,9 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
 - [x] O-R8-P3 final successor red-control review passed; O8 released
 - [x] O8-F1 captured-text/raw-phase correction
 - [x] O8 maintenance complete; review pending
-- [ ] O-R8 successor implementation review
+- [x] O-R8 successor implementation review — lifecycle/private-seam documentation BLOCK retained
+- [x] O8-S1 lifecycle/private-seam truth correction
+- [ ] O-R8-2 successor implementation review
 - [ ] O-R4 end-to-end review
 - [ ] O-G final gate
 
@@ -1400,7 +1406,7 @@ external acceptance. O7 now adds one zero-argument consumer actor over that repl
 both exact Realizations are semantically acceptable under all seven selected supports,
 optional performance stays unsupported, every Evidence axis is inspectable, all 18
 theory declarations remain honestly unclaimed, and the directional child-process
-boundary stays separate. There is still no maintenance successor. Retained O-R6d
+boundary stays separate. Before O8, there was no maintenance successor. Retained O-R6d
 through O-R6d5 provenance and reproduction
 BLOCKs now lead to O-R6d6 PASS. O6d is accepted, O-R6e-P2 passes, O-R6e retains one
 durable-state contradiction corrected by O6e-S1, and O-R6e2 passes. O-R6 macro retains
@@ -1420,8 +1426,14 @@ O7 consumer decision/inspection is accepted. O8 now has an exact append-only
 zero candidates, its 20 declarations are unclaimed, all 14 predecessor Evidence
 records remain version-scoped history, and both accepted predecessor candidates are
 recoverable without automatic selection. O8-F1 retains the first green attempt's
-captured-text newline and phase-trap corrections. O-R8 implementation review is now
-the live edge; the final end-to-end gates remain behind it.
+captured-text newline and phase-trap corrections. Its `_document_text + "\n"` use is
+a deliberately bounded private captured-byte seam: graph capture has already
+authenticated the record, the actor restores the finite snapshot's omitted terminal
+newline before exact O8 raw-byte comparison, and any `GraphRecord` serialization or
+newline-handling change must reopen O8-F1 and its raw-digest/failure-phase controls.
+O-R8 passed every implementation and repository check but retained a narrow durable-plan
+BLOCK; O8-S1 corrects that documentation only, and O-R8-2 successor review is now the
+live edge. The final end-to-end gates remain behind it.
 
 ## Stop and escalation conditions
 
