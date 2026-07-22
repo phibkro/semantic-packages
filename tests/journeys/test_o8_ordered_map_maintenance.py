@@ -190,6 +190,32 @@ def _derived_graph(observation, address, mutate):
     return graph.GraphObservation(tuple(records), ())
 
 
+def _without(observation, address):
+    return graph.GraphObservation(
+        tuple(item for item in observation.records if item.address != address), ()
+    )
+
+
+def _with_synthetic_successor_realization(observation):
+    predecessor = next(
+        item
+        for item in observation.records
+        if item.address == ("realization", "ordered-map-rust", "0.1.0")
+    )
+    document = predecessor.document
+    document["version"] = "0.2.0"
+    document["specification"]["version"] = "0.2.0"
+    synthetic = replace(
+        predecessor,
+        address=("realization", "ordered-map-rust", "0.2.0"),
+        path="successors/o8/synthetic/ordered-map-rust-realization.json",
+        sha256="0" * 64,
+        source="o8-detached-control",
+        _document_text=json.dumps(document, sort_keys=True, separators=(",", ":")),
+    )
+    return graph.GraphObservation(observation.records + (synthetic,), ())
+
+
 class OrderedMapMaintenancePreconditionTest(unittest.TestCase):
     def test_o7_and_the_accepted_predecessor_remain_exact(self) -> None:
         self.assertEqual(
@@ -324,6 +350,64 @@ class OrderedMapMaintenanceContractTest(unittest.TestCase):
         self.assertEqual((), result.successor_resolution.candidates)
         self.assertEqual(REALIZATIONS, result.recovery_candidates)
 
+        selector_attacks = (
+            (
+                _without(self.successor, NEW_POLICY),
+                "ORDERED_MAP_SUCCESSOR_SELECTOR_NOT_FOUND",
+            ),
+            (
+                _without(self.successor, NEW_SPECIFICATION),
+                "ORDERED_MAP_SUCCESSOR_SELECTOR_NOT_FOUND",
+            ),
+            (
+                _without(self.successor, PROFILE),
+                "ORDERED_MAP_SUCCESSOR_SELECTOR_NOT_FOUND",
+            ),
+            (
+                _derived_graph(
+                    self.successor,
+                    PROFILE,
+                    lambda item: item.update(kind="consumerPolicy"),
+                ),
+                "ORDERED_MAP_SUCCESSOR_SELECTOR_KIND",
+            ),
+            (
+                _derived_graph(
+                    self.successor,
+                    NEW_POLICY,
+                    lambda item: item["specification"].update(version="0.1.0"),
+                ),
+                "ORDERED_MAP_SUCCESSOR_POLICY_SELECTOR_MISMATCH",
+            ),
+        )
+        for attacked, code in selector_attacks:
+            with self.subTest(selector_failure=code):
+                resolution = ordered_map_maintenance._resolve_ordered_map_successor(
+                    attacked
+                )
+                self.assertFalse(resolution.ok)
+                self.assertEqual((), resolution.candidates)
+                self.assertIn(code, [item.code for item in resolution.diagnostics])
+
+        synthetic_graph = _with_synthetic_successor_realization(self.successor)
+        synthetic = ordered_map_maintenance._resolve_ordered_map_successor(
+            synthetic_graph
+        )
+        self.assertTrue(synthetic.ok, synthetic.diagnostics)
+        self.assertEqual(1, len(synthetic.candidates))
+        candidate = synthetic.candidates[0]
+        self.assertEqual(
+            ("realization", "ordered-map-rust", "0.2.0"),
+            candidate.realization,
+        )
+        self.assertEqual("unacceptable", candidate.semantic_status)
+        self.assertTrue(
+            all(item.status == "unsupported" for item in candidate.concerns[:3])
+        )
+        self.assertTrue(all(not item.supporting_evidence for item in candidate.concerns))
+        self.assertTrue(candidate.prohibitions[0].blocks)
+        self.assertEqual((), result.successor_resolution.candidates)
+
     def test_successor_theory_adds_size_and_size_put_but_promotes_no_assurance(self) -> None:
         result = self._observe()
         theory = result.successor_theory
@@ -390,21 +474,65 @@ class OrderedMapMaintenanceContractTest(unittest.TestCase):
             self.assertIn(required, result.output)
 
     def test_predecessor_drift_and_invalid_graph_fail_before_any_decision(self) -> None:
-        attacked = _derived_graph(
-            self.successor,
-            OLD_SPECIFICATION,
-            lambda item: item.update(version="changed"),
+        attacks = (
+            (
+                _derived_graph(
+                    self.successor,
+                    OLD_SPECIFICATION,
+                    lambda item: item.update(version="changed"),
+                ),
+                "ORDERED_MAP_SUCCESSOR_PREDECESSOR_DRIFT",
+            ),
+            (
+                _derived_graph(
+                    self.successor,
+                    OLD_POLICY,
+                    lambda item: item.update(version="changed"),
+                ),
+                "ORDERED_MAP_SUCCESSOR_PREDECESSOR_DRIFT",
+            ),
+            (
+                _derived_graph(
+                    self.successor,
+                    NEW_SPECIFICATION,
+                    lambda item: item.update(version="changed"),
+                ),
+                "ORDERED_MAP_SUCCESSOR_CONTRACT_DRIFT",
+            ),
+            (
+                _derived_graph(
+                    self.successor,
+                    NEW_POLICY,
+                    lambda item: item.update(version="changed"),
+                ),
+                "ORDERED_MAP_SUCCESSOR_CONTRACT_DRIFT",
+            ),
+            (
+                _without(self.successor, OLD_POLICY),
+                "ORDERED_MAP_SUCCESSOR_PREDECESSOR_DRIFT",
+            ),
+            (
+                _without(self.successor, NEW_SPECIFICATION),
+                "ORDERED_MAP_SUCCESSOR_CONTRACT_DRIFT",
+            ),
+            (
+                _without(self.successor, NEW_POLICY),
+                "ORDERED_MAP_SUCCESSOR_CONTRACT_DRIFT",
+            ),
+            (
+                _with_synthetic_successor_realization(self.successor),
+                "ORDERED_MAP_SUCCESSOR_UNEXPECTED_MEMBERSHIP",
+            ),
         )
-        result = self._observe(attacked)
-        self.assertFalse(result.ok)
-        self.assertIsNone(result.predecessor_resolution)
-        self.assertIsNone(result.successor_resolution)
-        self.assertIsNone(result.successor_theory)
-        self.assertIsNone(result.output)
-        self.assertIn(
-            "ORDERED_MAP_SUCCESSOR_PREDECESSOR_DRIFT",
-            [item.code for item in result.diagnostics],
-        )
+        for attacked, code in attacks:
+            with self.subTest(drift=code):
+                result = self._observe(attacked)
+                self.assertFalse(result.ok)
+                self.assertIsNone(result.predecessor_resolution)
+                self.assertIsNone(result.successor_resolution)
+                self.assertIsNone(result.successor_theory)
+                self.assertIsNone(result.output)
+                self.assertIn(code, [item.code for item in result.diagnostics])
 
         invalid = graph.GraphObservation(
             self.successor.records,
@@ -428,6 +556,7 @@ class OrderedMapMaintenanceContractTest(unittest.TestCase):
             manifest = _load(manifest_path)
             manifest["members"] = manifest["members"][:-1]
             manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+            observed = hashlib.sha256(manifest_path.read_bytes()).hexdigest()
             with mock.patch.object(
                 ordered_map_maintenance, "_ROOT", root
             ), mock.patch.object(
@@ -442,6 +571,15 @@ class OrderedMapMaintenanceContractTest(unittest.TestCase):
         self.assertIsNone(result.successor_resolution)
         self.assertIsNone(result.successor_theory)
         self.assertIsNone(result.output)
+        self.assertEqual(1, len(result.diagnostics))
+        diagnostic = result.diagnostics[0]
+        self.assertEqual("ARTIFACT_RAW_DIGEST_MISMATCH", diagnostic.code)
+        self.assertEqual(os.fspath(manifest_path), diagnostic.path)
+        self.assertEqual("#", diagnostic.pointer)
+        self.assertEqual(
+            f"raw SHA-256 {observed}, expected {EXPECTED_SUCCESSOR_MANIFEST_SHA256}",
+            diagnostic.message,
+        )
 
     def test_observation_and_rendering_use_no_io_or_execution_after_capture(self) -> None:
         touched: list[str] = []
@@ -490,8 +628,44 @@ class OrderedMapMaintenanceContractTest(unittest.TestCase):
             },
             set(vars(first)),
         )
+        self.assertEqual(
+            {
+                "source",
+                "successor_graph",
+                "successor_manifest_raw_sha256",
+                "predecessor_preserved",
+                "added_addresses",
+                "stale_evidence",
+                "predecessor_resolution",
+                "successor_resolution",
+                "successor_theory",
+                "recovery_candidates",
+                "output",
+                "diagnostics",
+                "ok",
+            },
+            {name for name in dir(first) if not name.startswith("_")},
+        )
+        self.assertIsInstance(first.added_addresses, tuple)
+        self.assertIsInstance(first.stale_evidence, tuple)
+        self.assertIsInstance(first.recovery_candidates, tuple)
+        self.assertEqual(
+            {"address", "reason"}, set(vars(first.stale_evidence[0]))
+        )
+        self.assertEqual(
+            {"address", "reason"},
+            {
+                name
+                for name in dir(first.stale_evidence[0])
+                if not name.startswith("_")
+            },
+        )
         with self.assertRaises((AttributeError, TypeError)):
             first.output = "changed"  # type: ignore[misc]
+        with self.assertRaises((AttributeError, TypeError)):
+            first.stale_evidence[0].reason = "changed"  # type: ignore[misc]
+        with self.assertRaises((AttributeError, TypeError)):
+            first.recovery_candidates[0] = ("realization", "latest", "latest")  # type: ignore[index]
 
 
 if __name__ == "__main__":
