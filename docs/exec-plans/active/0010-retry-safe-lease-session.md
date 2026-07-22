@@ -55,7 +55,9 @@ uses a separate design spec, plan, branch, and PR.
 ```text
 I0 design-spec 0005 + substrate census
   -> I1 frozen refute-first author/package/consumer controls
-  -> I-R1 contract, oracle, and anti-overfitting review
+  -> I-R1 contract, oracle, and anti-overfitting review (BLOCK)
+  -> I1-S1 exact full-trace oracle successor
+  -> I-R1b successor contract/oracle review
   -> I2 optional protocol authoring/schema + exact Specification/profile/plan
   -> I3 isolated runner + two independent realizations + resurrection breaker
   -> I-R2 implementation, trace, isolation, and authority review
@@ -70,6 +72,8 @@ I0 design-spec 0005 + substrate census
 | I0 contract/census | lead; design-spec 0005 and this plan | frozen need/scenarios/falsifiers; exact reusable versus domain-local substrate; I1; stop if the bounded server-side observation cannot express the user need without wall-clock or concurrency claims |
 | I1 red controls | lead/test owner; new interaction journey tests and negative fixtures only | intentional absent-protocol-surface/command failures plus independent oracles for authoring, traces, identity, isolation, breaker, Evidence, projections, boundaries, authority, atomicity, and regressions; I-R1; stop if a falsifier has no representation-independent oracle |
 | I-R1 | uninvolved read-only reviewer | challenge semantic completeness, oracle independence, trace prefix/final-state shortcuts, token identity, terminal closure, finite-evidence wording, and phase precedence; I2 or explicit successor |
+| I1-S1 | lead/test owner; journey tests and this plan only | freeze every exact input/before/output/after step, six trace lengths, all identity shapes, terminal suffixes, and breaker's valid prefix before its exact step-2 divergence; I-R1b |
+| I-R1b | same uninvolved read-only reviewer | replay final-state-only, truncation, reorder/renumber, identity loss, fabricated intermediate, and terminal-resurrection attacks against the successor; I2 or another retained successor |
 | I2 semantic artifacts | lead; optional schema/PSpec surface plus new lease Specification/profile/campaign-plan artifacts only | old Specifications remain valid; exact states/transitions/propositions/profile/plan are independently inspectable; I3; stop if a new canonical record kind or implicit cross-record relation is required |
 | I3 candidates/campaign | lead; new lease runner, adapters, realization sources, breaker, and candidate reports only | isolated six-scenario sessions; complete ordered traces; two independent passes; exact resurrection challenge; source/build/runner provenance; I-R2; stop if shared code implements candidate state or the adapter cannot observe required identity/terminal behavior |
 | I-R2 | uninvolved read-only reviewer | execute/reason over trace truncation/reordering, reused state, fabricated identity, candidate dependence, runner self-ratification, breaker specificity, cleanup, input mutation, and overclaim; I4 or successor |
@@ -147,7 +151,9 @@ nix develop --command python3 -m semantic_packages protocol inspect \
 - [x] I0 design-spec 0005 user need/scenarios/falsifiers frozen
 - [x] I0 substrate census and red-oracle inventory
 - [x] I1 refute-first controls
-- [ ] I-R1 independent contract/oracle review
+- [x] I-R1 independent contract/oracle review — BLOCK retained
+- [x] I1-S1 exact full-trace oracle successor
+- [ ] I-R1b successor contract/oracle review
 - [ ] I2 semantic artifacts
 - [ ] I3 candidates and campaign
 - [ ] I-R2 implementation review
@@ -192,6 +198,13 @@ nix develop --command python3 -m semantic_packages protocol inspect \
   weakening report closure, trace completeness, exact retry/conflict/token/terminal
   observations, breaker location, representation independence, Evidence/projection/
   boundary separation, structural fail-closure, output safety, or nonauthority.
+- 2026-07-23: I-R1 BLOCK at exact committed red predecessor `5bde6dd`. The alleged
+  independent oracle froze only six scenario names and three candidate IDs; successor
+  checks allowed a one-step final-state-only transcript with fabricated empty identity,
+  renumbered order, and omitted intermediate resurrection to pass. I1-S1 retains that
+  failure and freezes all 19 exact steps per passing candidate: every input, before
+  state, output, after state, opaque identity, scenario length/order, four-step terminal
+  suffix, and the breaker's valid expiry prefix plus exact late-completion input.
 
 ## Decision log
 
