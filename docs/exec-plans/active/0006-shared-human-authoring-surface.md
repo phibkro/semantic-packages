@@ -117,8 +117,8 @@ before release.
 
 - [x] A0 roadmap and governing-source census
 - [x] A1 candidate two-domain boundary falsifier
-- [ ] A-R1 independent boundary review
-- [ ] A-G1 problem-contract gate
+- [x] A-R1 independent boundary review
+- [x] A-G1 problem-contract gate
 - [ ] A2 authoring-contract option probe
 - [ ] A-R2 independent option review
 - [ ] A-G2 contract choice or operator escalation
@@ -146,6 +146,20 @@ before release.
   integration points, evidence packets, escalation owners, and expected observations
   for downstream packages. A1 successor enumerates those facts and expands ownership;
   no parser, syntax, IR, or canonical-format option is promoted by the correction.
+- 2026-07-22: A-R1 successor PASS at exact commit `0e14b0a`. Independent replay
+  confirms exact root identities, per-family declaration sets, global uniqueness,
+  equivalence-carrier edges, performance operation families and exact profile/local
+  references, plus explicit import absence. The note now separates observed facts from
+  future import rules, and the DAG supplies integration, evidence, review, gate, and
+  escalation ownership. Five focused and 32 total research controls pass; the complete
+  repository gate preserves 221 actor journeys and every report/Evidence/proof lane.
+  No material concern remains. A2/A3 must still decide and test whether declaration-
+  array ordering belongs to output document equality even though addressing is order-
+  independent.
+- 2026-07-22: A-G1 PASS. The accepted result is the exact two-domain authoring problem
+  and falsifier only. It releases reversible A2 option research but grants no authority
+  to choose syntax, parser, authoring IR, canonical migration, hosted logic, implicit
+  defaults, or a materially different author workflow.
 
 ## Decision log
 
@@ -157,11 +171,11 @@ before release.
 
 ## Result and remaining work
 
-A0 is complete and A1 is a review candidate. The project now has an executable,
-two-domain statement of the authoring deficit without committing to its solution.
-A-R1 and A-G1 remain before option research. Parser, grammar, authoring IR, canonical
-format migration, semantic type checking, and human usability remain unimplemented and
-unaccepted.
+A0, A1, A-R1, and A-G1 are complete. The project now has an executable, independently
+reviewed two-domain statement of the authoring deficit without committing to its
+solution. A2 option research is released. Parser, grammar, authoring IR, canonical
+format migration, semantic type checking, declaration-array ordering semantics, and
+human usability remain unimplemented and unaccepted.
 
 ## Stop and escalation conditions
 
