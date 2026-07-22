@@ -115,6 +115,24 @@ P0 roadmap selection
   proof-boundary results. Focused artifact/probe and documentation gates remained
   green. Do not weaken timeouts or oracles; rerun the complete gate quiescently before
   delivery convergence.
+- 2026-07-22: The first P-R2b review BLOCKED a legitimate but under-specified red
+  topology. The sole failure was the three absent P3/P4 modules, but count-only
+  authority and ledger assertions, checker-mediated report assertions, an incoherent
+  swapped-profile mutant, incomplete review states, and missing selector/authority
+  breakers could permit the future implementation to pass vacuously.
+- 2026-07-22: The P2b successor candidate now freezes exact source/member/address and
+  record/profile mappings, exact per-decision Claim and Evidence sets, checked-in
+  report bytes and provenance, every nonaccepted review state, a coherent valid
+  other-profile Evidence control, exact selector/profile/candidate negatives, false
+  performance promotion, and replaced or expanded authority before record loading.
+  The unused ProductContract/schema precondition was removed: P4's governed surface is
+  the exact manifest, resolver, and inspection actor, not a second phantom authority.
+- 2026-07-22: P-R2b successor review PASS. The independent reviewer reproduced the
+  exact 17-test predecessor topology (one exact-input PASS, one intentional failure
+  naming only the three absent P3/P4 modules, fifteen SKIP) and found no remaining
+  material oracle or coherence gap. Exact 7/21 tuple lengths prevent duplicate-ledger
+  vacuity, and P4 must expose a module-owned literal manifest digest used by the
+  authenticated one-capture boundary.
 
 ## Verification
 
@@ -130,6 +148,16 @@ P2a adds:
 ```text
 python3 -m unittest tests.research.test_ordered_map_profile_choice_artifacts
 ```
+
+P2b adds an intentionally red predecessor gate:
+
+```text
+python3 -m unittest tests.journeys.test_p2b_ordered_map_profile_choice -v
+```
+
+Before P3/P4 exist, the reviewed topology must be 17 tests: one exact-input PASS, one
+FAIL naming only the three absent modules, and fifteen successor controls SKIP. P3/P4
+must turn that same suite green without weakening or deleting an assertion.
 
 Later nodes add their focused commands here before closure. Every merge must also pass
 the repository's hosted conventional-commit and squash-only governance.
