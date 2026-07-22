@@ -337,7 +337,7 @@ def author_specification(
             )
         try:
             dependency_document = _snapshot_json_value(dependency.document)
-        except (RecursionError, _InvalidDependencyValue, TypeError, ValueError):
+        except Exception:
             return _failure(
                 [
                     _diagnostic(
