@@ -47,6 +47,8 @@ V0 exact two-domain census and design-spec 0002
   -> V-R1S independent successor review
   -> V1-S2 executable-boundary successor
   -> V-R1F final contract review
+  -> V1-S3 failure-path immutability successor
+  -> V-R1X final red-contract review
   -> V2 proposal decoder, validator, inspector, report, and CLI
   -> V-R2 independent implementation review
   -> V3 README/design/system-map/backlog maintenance
@@ -60,6 +62,7 @@ V0 exact two-domain census and design-spec 0002
 | V-R1 | uninvolved read-only reviewer | attack completeness, nonauthority, digest binding, phase order, no overclaim, and red topology; V2 or explicit successor |
 | V1-S1 / V-R1S | lead/test owner then uninvolved reviewer; proposal fixtures remain unchanged | same/cross-family swaps, overlaps/duplicates, positive removal, both-side binding, opaque versions, reorder relations, phase barriers, side-effect snapshot; V2 or successor |
 | V1-S2 / V-R1F | lead/test owner then uninvolved reviewer; tests/plan only | patch real resolver entrypoints/aliases, mirror successor address mutations, snapshot all three exact inputs; V2 or successor |
+| V1-S3 / V-R1X | lead/test owner then uninvolved reviewer; tests/plan only | snapshot every existing input and the registry on every failure, exercise the forbidden resolver/process boundary on failure; V2 or successor |
 | V2 implementation | lead; new refinement modules/CLI plus exact report serialization | both exact reports, all falsifiers, atomic output, unchanged predecessor actors; V-R2; stop on canonical-model or resolver expansion |
 | V-R2 | uninvolved read-only reviewer | counterexamples for mappings, parsing, ordering, hosted opacity, no Evidence migration, generality boundary; V3 or successor |
 | V3 maintenance | lead; README and durable project memory | exact experience/failure/recovery, changed capability map, backlog disposition, known exclusions; V-G |
@@ -103,7 +106,9 @@ python3 scripts/check_repo.py
 - [x] V1-S1 oracle-sensitivity successor
 - [x] V-R1S independent successor review (BLOCK retained)
 - [x] V1-S2 executable-boundary successor
-- [ ] V-R1F final contract review
+- [x] V-R1F final contract review (BLOCK retained)
+- [x] V1-S3 failure-path immutability successor
+- [ ] V-R1X final red-contract review
 - [ ] V2 inspector and CLI
 - [ ] V-R2 independent implementation review
 - [ ] V3 durable documentation and maintenance
@@ -147,10 +152,16 @@ python3 scripts/check_repo.py
   green honestly. Successor kind/id mutations and `.prefine` input immutability were
   also absent. V1-S2 patches the real entrypoints plus command aliases, mirrors both
   successor address fields, and snapshots proposal/predecessor/successor bytes.
+- 2026-07-22: V-R1F BLOCK at exact clean `fa5eae0`. The relation, provenance,
+  parser-phase, and executable-boundary concerns close, but the shared failure helper
+  snapshots only the output. V1-S3 snapshots every proposal/Specification input and
+  the complete registry for every negative case, and executes invalid UTF-8 under the
+  same forbidden resolver/process mocks as a successful inspection. V-R1X remains the
+  final release gate before implementation.
 
 ## Result and remaining work
 
-V0/V1 and both retained review successors through V1-S2 are complete. V-R1F is the
+V0/V1 and all retained review successors through V1-S3 are complete. V-R1X is the
 next released node. No inspector, report, accepted refinement relation, compatibility
 conclusion, Evidence transfer, or resolver change exists yet; V2 remains held.
 

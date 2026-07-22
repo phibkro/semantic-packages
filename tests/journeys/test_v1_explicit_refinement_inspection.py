@@ -75,6 +75,14 @@ def _tree_snapshot(root: Path) -> tuple[tuple[str, str], ...]:
     )
 
 
+def _path_snapshot(path: Path) -> tuple[str, bytes | None]:
+    if path.is_file():
+        return "file", path.read_bytes()
+    if path.is_dir():
+        return "directory", None
+    return "missing", None
+
+
 def _run_refinement(
     proposal: Path,
     predecessor: Path,
@@ -184,6 +192,9 @@ class ExplicitRefinementJourneyTest(unittest.TestCase):
         successor: Path,
         expected: tuple[str, ...],
     ) -> str:
+        inputs = (proposal, predecessor, successor)
+        input_snapshot = tuple(_path_snapshot(path) for path in inputs)
+        registry_snapshot = _tree_snapshot(ROOT / "registry")
         with tempfile.TemporaryDirectory(prefix="semantic-refinement-output-") as raw:
             output = Path(raw) / "report.json"
             sentinel = "operator-owned prior report\n"
@@ -198,6 +209,10 @@ class ExplicitRefinementJourneyTest(unittest.TestCase):
             for fragment in expected:
                 self.assertIn(fragment, result.stderr)
             self.assertEqual(sentinel, output.read_text(encoding="utf-8"))
+            self.assertEqual(
+                input_snapshot, tuple(_path_snapshot(path) for path in inputs)
+            )
+            self.assertEqual(registry_snapshot, _tree_snapshot(ROOT / "registry"))
             return result.stderr
 
     def test_exact_stack_and_ordered_map_reports_preserve_distinct_changes(self) -> None:
@@ -896,8 +911,6 @@ class ExplicitRefinementJourneyTest(unittest.TestCase):
 
         with tempfile.TemporaryDirectory(prefix="semantic-refinement-pure-") as raw:
             output = Path(raw) / "report.json"
-            stdout = io.StringIO()
-            stderr = io.StringIO()
             arguments = [
                 "refinement",
                 "inspect",
@@ -937,13 +950,38 @@ class ExplicitRefinementJourneyTest(unittest.TestCase):
                     side_effect=forbidden,
                 ),
                 mock.patch("subprocess.Popen", side_effect=forbidden),
-                redirect_stdout(stdout),
-                redirect_stderr(stderr),
             ):
-                status = refinement_command.main(arguments)
+                stdout = io.StringIO()
+                stderr = io.StringIO()
+                with redirect_stdout(stdout), redirect_stderr(stderr):
+                    status = refinement_command.main(arguments)
+
+                invalid_proposal = Path(raw) / "invalid.prefine"
+                invalid_proposal.write_bytes(b"\xff")
+                failure_output = Path(raw) / "prior.json"
+                failure_output.write_text("prior\n", encoding="utf-8")
+                failure_stdout = io.StringIO()
+                failure_stderr = io.StringIO()
+                failure_arguments = [
+                    "refinement",
+                    "inspect",
+                    str(invalid_proposal),
+                    "--predecessor",
+                    str(STACK_PREDECESSOR),
+                    "--successor",
+                    str(STACK_SUCCESSOR),
+                    "--output",
+                    str(failure_output),
+                ]
+                with redirect_stdout(failure_stdout), redirect_stderr(failure_stderr):
+                    failure_status = refinement_command.main(failure_arguments)
             self.assertEqual(0, status, stderr.getvalue())
             self.assertEqual("", stderr.getvalue())
             self.assertTrue(output.is_file())
+            self.assertEqual(1, failure_status)
+            self.assertEqual("", failure_stdout.getvalue())
+            self.assertIn("REFINEMENT_PROPOSAL_UTF8", failure_stderr.getvalue())
+            self.assertEqual("prior\n", failure_output.read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":
