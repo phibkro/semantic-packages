@@ -136,10 +136,24 @@ python3 scripts/check_repo.py
   values into canonical JSON and validates a finite dependency graph. The missing
   mechanics are an optional exact candidate schema, resource-binding link checks, and
   finite algebra inspection; a second parser or authoring IR remains unjustified.
-- 2026-07-22: R1 freezes fourteen focused controls: three substrate/oracle controls
-  pass, the absent `resource` command is the sole intentional failure, and ten
+- 2026-07-22: R1 initially froze fourteen focused controls: three substrate/oracle controls
+  passed, the absent `resource` command was the sole intentional failure, and ten
   production successors skip. The independent law oracle enumerates all 16 pairs and
   64 triples from the authored table rather than importing future checker code.
+- 2026-07-22: R-R1 BLOCK at exact clean `fcbef38`. The associativity mutation's
+  asserted smallest triple was false: changing `stack-retained * stack-retained` to
+  `ordered-map-retained` first fails at `(stack-retained, stack-retained,
+  ordered-map-retained)`, not the all-Stack triple. The alleged unimported-binding case
+  was only dangling because its target record was absent. The successor corrects both,
+  retains a loaded-but-unimported dependency, and expands schema, report, dynamic-fold,
+  normalized-alias, and acquisition sensitivity before R-R1 re-review. R2/R3 remain
+  blocked until that successor passes.
+- 2026-07-22: the strengthened R1 successor has sixteen controls: three substrate
+  controls pass, the same absent command is the sole intentional failure, and twelve
+  production successors skip. New controls make raw/schema/link phase precedence,
+  candidate shape, loaded-but-unimported bindings, full report content, dynamic fold
+  evaluation, normalized aliases, and discovery-free authority independently
+  observable.
 
 ## Maintenance, recovery, and reopen conditions
 

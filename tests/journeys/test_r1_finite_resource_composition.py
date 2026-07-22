@@ -206,15 +206,30 @@ class FiniteResourceJourneyTest(unittest.TestCase):
             )
             self.assertEqual(inputs, (source.read_bytes(), stack.read_bytes(), ordered_map.read_bytes()))
             report = _read_json(output)
+            authored = tomllib.loads(source.read_text(encoding="utf-8"))
+            algebra = authored["resources"][0]["algebra"]
+            imports = authored["imports"]
             self.assertEqual("resource-algebra-inspection-v1", report["kind"])
             self.assertEqual(
                 {"format": "pspec-toml-v1", "sha256": _sha256(source), "specification": {"kind": "specification", "id": "persistence-composition", "version": "0.1.0"}},
                 report["source"],
             )
-            self.assertEqual("retained-persistence", report["resource"]["id"])
-            self.assertEqual("finite-commutative-monoid-v1", report["algebra"]["kind"])
-            self.assertEqual(16, len(report["algebra"]["composition"]))
-            self.assertEqual(2, len(report["algebra"]["bindings"]))
+            self.assertEqual(imports, report["imports"])
+            self.assertEqual(
+                [
+                    {"specification": imports[0], "sha256": _sha256(stack)},
+                    {"specification": imports[1], "sha256": _sha256(ordered_map)},
+                ],
+                report["dependencies"],
+            )
+            self.assertEqual(
+                {
+                    "id": "retained-persistence",
+                    "rule": "Stack-retained and OrderedMap-retained persistence obligations compose independently into both-retained.",
+                },
+                report["resource"],
+            )
+            self.assertEqual(algebra, report["algebra"])
             self.assertEqual(
                 {
                     "carrierCount": 4,
@@ -229,6 +244,47 @@ class FiniteResourceJourneyTest(unittest.TestCase):
             self.assertEqual({"holds": True, "observationCount": 8}, report["observations"]["laws"]["unit"])
             self.assertEqual({"holds": True, "observationCount": 16}, report["observations"]["laws"]["commutativity"])
             self.assertEqual({"holds": True, "observationCount": 64}, report["observations"]["laws"]["associativity"])
+            self.assertEqual(
+                {
+                    "authored": {
+                        "start": "none",
+                        "elements": ["stack-retained", "ordered-map-retained"],
+                        "trace": [
+                            {"left": "none", "right": "stack-retained", "result": "stack-retained"},
+                            {"left": "stack-retained", "right": "ordered-map-retained", "result": "both-retained"},
+                        ],
+                        "result": "both-retained",
+                    },
+                    "reverse": {
+                        "start": "none",
+                        "elements": ["ordered-map-retained", "stack-retained"],
+                        "trace": [
+                            {"left": "none", "right": "ordered-map-retained", "result": "ordered-map-retained"},
+                            {"left": "ordered-map-retained", "right": "stack-retained", "result": "both-retained"},
+                        ],
+                        "result": "both-retained",
+                    },
+                },
+                report["folds"],
+            )
+            self.assertEqual(
+                [
+                    "Imported declaration meanings remain those of their exact authored Specifications.",
+                    "Finite enumeration is sufficient for this exact authored carrier and table.",
+                ],
+                report["assumptions"],
+            )
+            self.assertEqual(
+                [
+                    "Realization satisfaction",
+                    "Claim or Evidence transfer",
+                    "Semantic compatibility or refinement",
+                    "Runtime resource, ownership, quantity, or separation reasoning",
+                    "Resolver or consumer-decision authority",
+                    "Arbitrary-domain resource composition",
+                ],
+                report["exclusions"],
+            )
             self.assertEqual("finite-algebra-well-formed", report["algebraConclusion"])
             self.assertEqual("unestablished", report["satisfaction"])
 
@@ -245,20 +301,28 @@ class FiniteResourceJourneyTest(unittest.TestCase):
             )
 
             shutil.copyfile(SOURCE, source)
+            _replace(
+                source,
+                '  { kind = "specification", id = "stack", version = "0.1.0" },\n',
+                "",
+            )
+            self._assert_failed_preserving_output(
+                source,
+                stack,
+                ordered_map,
+                (
+                    "LINK_RESOURCE_BINDING_NOT_IMPORTED",
+                    "#/resources/0/algebra/bindings/0/declarationReference/specification",
+                ),
+            )
+
+            shutil.copyfile(SOURCE, source)
             _replace(source, 'declarationId = "persistence"', 'declarationId = "missing"')
             self._assert_failed_preserving_output(source, stack, ordered_map, ("LINK_DANGLING_DECLARATION", "#/resources/0/algebra/bindings/0/declarationReference/declarationId"))
 
             shutil.copyfile(SOURCE, source)
             _replace(source, 'declarationId = "persistence"', 'declarationId = "push"')
             self._assert_failed_preserving_output(source, stack, ordered_map, ("LINK_DECLARATION_KIND_MISMATCH", "found operation"))
-
-            shutil.copyfile(SOURCE, source)
-            _replace(
-                source,
-                'specification = { kind = "specification", id = "stack", version = "0.1.0" }, declarationId = "persistence"',
-                'specification = { kind = "specification", id = "not-imported", version = "0.1.0" }, declarationId = "persistence"',
-            )
-            self._assert_failed_preserving_output(source, stack, ordered_map, ("LINK_DANGLING_REFERENCE", "#/resources/0/algebra/bindings/0/declarationReference/specification"))
 
             shutil.copyfile(SOURCE, source)
             _replace(
@@ -287,6 +351,41 @@ class FiniteResourceJourneyTest(unittest.TestCase):
             )
             self._assert_failed_preserving_output(source, stack, ordered_map, ("RESOURCE_BINDING_DUPLICATE", "#/resources/0/algebra/bindings/1/declarationReference"))
 
+    def test_raw_schema_and_link_phases_precede_algebra_inspection(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="semantic-resource-phases-") as raw:
+            directory = Path(raw)
+            source, stack, ordered_map = _copy_inputs(directory)
+            _replace(source, 'id = "persistence-composition"', 'id = "persistence-composition"\nid = "duplicate"')
+            self._assert_failed_preserving_output(source, stack, ordered_map, ("AUTHOR_INVALID_TOML", "duplicate"))
+
+            shutil.copyfile(SOURCE, source)
+            _replace(source, 'kind = "finite-commutative-monoid-v1"', 'kind = "invented-algebra"')
+            self._assert_failed_preserving_output(source, stack, ordered_map, ("SCHEMA_RESOURCE_ALGEBRA_KIND", "#/resources/0/algebra/kind"))
+
+            shutil.copyfile(SOURCE, source)
+            _replace(source, 'id = "ordered-map", version = "0.1.0"', 'id = "missing-map", version = "0.1.0"', count=2)
+            self._assert_failed_preserving_output(source, stack, ordered_map, ("LINK_DANGLING_REFERENCE", "#/imports/1"))
+
+    def test_candidate_carrier_unit_and_required_algebra_fail_closed(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="semantic-resource-shape-") as raw:
+            directory = Path(raw)
+            source, stack, ordered_map = _copy_inputs(directory)
+            _replace(
+                source,
+                'carrier = ["none", "stack-retained", "ordered-map-retained", "both-retained"]',
+                'carrier = ["none", "stack-retained", "ordered-map-retained", "stack-retained"]',
+            )
+            self._assert_failed_preserving_output(source, stack, ordered_map, ("SCHEMA_UNIQUE_ITEMS", "#/resources/0/algebra/carrier"))
+
+            shutil.copyfile(SOURCE, source)
+            _replace(source, 'unit = "none"', 'unit = "outside"')
+            self._assert_failed_preserving_output(source, stack, ordered_map, ("RESOURCE_ALGEBRA_UNIT_ELEMENT", "#/resources/0/algebra/unit"))
+
+            shutil.copyfile(SOURCE, source)
+            text = source.read_text(encoding="utf-8")
+            source.write_text(text[: text.index("\n[resources.algebra]")] + "\n", encoding="utf-8")
+            self._assert_failed_preserving_output(source, stack, ordered_map, ("RESOURCE_ALGEBRA_REQUIRED", "#/resources/0/algebra"))
+
     def test_missing_duplicate_and_out_of_carrier_compositions_fail(self) -> None:
         with tempfile.TemporaryDirectory(prefix="semantic-resource-coverage-") as raw:
             directory = Path(raw)
@@ -301,22 +400,26 @@ class FiniteResourceJourneyTest(unittest.TestCase):
 
             shutil.copyfile(SOURCE, source)
             _replace(source, 'left = "none"\nright = "none"\nresult = "none"', 'left = "outside"\nright = "none"\nresult = "none"')
-            self._assert_failed_preserving_output(source, stack, ordered_map, ("RESOURCE_ALGEBRA_CLOSURE", "outside"))
+            self._assert_failed_preserving_output(source, stack, ordered_map, ("RESOURCE_ALGEBRA_CLOSURE", "#/resources/0/algebra/composition/0/left", "outside"))
+
+            shutil.copyfile(SOURCE, source)
+            _replace(source, 'left = "none"\nright = "none"\nresult = "none"', 'left = "none"\nright = "none"\nresult = "outside"')
+            self._assert_failed_preserving_output(source, stack, ordered_map, ("RESOURCE_ALGEBRA_CLOSURE", "#/resources/0/algebra/composition/0/result", "outside"))
 
     def test_unit_commutativity_and_associativity_have_stable_counterexamples(self) -> None:
         with tempfile.TemporaryDirectory(prefix="semantic-resource-laws-") as raw:
             directory = Path(raw)
             source, stack, ordered_map = _copy_inputs(directory)
             _replace(source, 'left = "none"\nright = "stack-retained"\nresult = "stack-retained"', 'left = "none"\nright = "stack-retained"\nresult = "both-retained"')
-            self._assert_failed_preserving_output(source, stack, ordered_map, ("RESOURCE_ALGEBRA_UNIT", "#/resources/0/algebra/composition/1", "left unit none with stack-retained produced both-retained"))
+            self._assert_failed_preserving_output(source, stack, ordered_map, ("RESOURCE_ALGEBRA_UNIT", "#/resources/0/algebra/composition", "left unit none with stack-retained produced both-retained"))
 
             shutil.copyfile(SOURCE, source)
             _replace(source, 'left = "stack-retained"\nright = "ordered-map-retained"\nresult = "both-retained"', 'left = "stack-retained"\nright = "ordered-map-retained"\nresult = "stack-retained"')
-            self._assert_failed_preserving_output(source, stack, ordered_map, ("RESOURCE_ALGEBRA_COMMUTATIVITY", "(stack-retained, ordered-map-retained)"))
+            self._assert_failed_preserving_output(source, stack, ordered_map, ("RESOURCE_ALGEBRA_COMMUTATIVITY", "#/resources/0/algebra/composition", "(stack-retained, ordered-map-retained)"))
 
             shutil.copyfile(SOURCE, source)
             _replace(source, 'left = "stack-retained"\nright = "stack-retained"\nresult = "stack-retained"', 'left = "stack-retained"\nright = "stack-retained"\nresult = "ordered-map-retained"')
-            self._assert_failed_preserving_output(source, stack, ordered_map, ("RESOURCE_ALGEBRA_ASSOCIATIVITY", "(stack-retained, stack-retained, stack-retained)"))
+            self._assert_failed_preserving_output(source, stack, ordered_map, ("RESOURCE_ALGEBRA_ASSOCIATIVITY", "#/resources/0/algebra/composition", "(stack-retained, stack-retained, ordered-map-retained)", "ordered-map-retained != both-retained"))
 
     def test_binding_elements_and_complete_forward_reverse_folds_are_exact(self) -> None:
         with tempfile.TemporaryDirectory(prefix="semantic-resource-fold-") as raw:
@@ -331,9 +434,37 @@ class FiniteResourceJourneyTest(unittest.TestCase):
             self.assertEqual(["ordered-map-retained", "stack-retained"], folds["reverse"]["elements"])
             self.assertEqual("both-retained", folds["authored"]["result"])
             self.assertEqual("both-retained", folds["reverse"]["result"])
-            self.assertEqual(2, len(folds["authored"]["trace"]))
-            self.assertEqual(2, len(folds["reverse"]["trace"]))
+            self.assertEqual(
+                [
+                    {"left": "none", "right": "stack-retained", "result": "stack-retained"},
+                    {"left": "stack-retained", "right": "ordered-map-retained", "result": "both-retained"},
+                ],
+                folds["authored"]["trace"],
+            )
+            self.assertEqual(
+                [
+                    {"left": "none", "right": "ordered-map-retained", "result": "ordered-map-retained"},
+                    {"left": "ordered-map-retained", "right": "stack-retained", "result": "both-retained"},
+                ],
+                folds["reverse"]["trace"],
+            )
 
+            _replace(source, 'element = "stack-retained"', 'element = "none"')
+            changed = _run_resource(source, stack, ordered_map, output)
+            self.assertEqual(0, changed.returncode, changed.stderr)
+            changed_folds = _read_json(output)["folds"]
+            self.assertEqual("ordered-map-retained", changed_folds["authored"]["result"])
+            self.assertEqual("ordered-map-retained", changed_folds["reverse"]["result"])
+            self.assertEqual(
+                [
+                    {"left": "none", "right": "none", "result": "none"},
+                    {"left": "none", "right": "ordered-map-retained", "result": "ordered-map-retained"},
+                ],
+                changed_folds["authored"]["trace"],
+            )
+            self.assertIn("fold=ordered-map-retained", changed.stdout)
+
+            shutil.copyfile(SOURCE, source)
             _replace(source, 'element = "stack-retained"', 'element = "outside"')
             self._assert_failed_preserving_output(source, stack, ordered_map, ("RESOURCE_BINDING_ELEMENT", "#/resources/0/algebra/bindings/0/element"))
 
@@ -361,6 +492,22 @@ class FiniteResourceJourneyTest(unittest.TestCase):
                     self.assertIn("output aliases input", result.stderr)
                     self.assertEqual(before, aliased.read_bytes())
 
+            symlink = directory / "source-alias.json"
+            symlink.symlink_to(source)
+            result = _run_resource(source, stack, ordered_map, symlink)
+            self.assertEqual(1, result.returncode)
+            self.assertIn("RESOURCE_OUTPUT_WRITE", result.stderr)
+            self.assertEqual(SOURCE.read_bytes(), source.read_bytes())
+            symlink.unlink()
+
+            nested = directory / "nested"
+            nested.mkdir()
+            normalized_alias = nested / ".." / source.name
+            result = _run_resource(source, stack, ordered_map, normalized_alias)
+            self.assertEqual(1, result.returncode)
+            self.assertIn("output aliases input", result.stderr)
+            self.assertEqual(SOURCE.read_bytes(), source.read_bytes())
+
             from semantic_packages.resource_algebra import run_resource_inspection
 
             output = directory / "report.json"
@@ -380,6 +527,10 @@ class FiniteResourceJourneyTest(unittest.TestCase):
             with (
                 mock.patch("pathlib.Path.glob", side_effect=AssertionError("glob authority")),
                 mock.patch("pathlib.Path.rglob", side_effect=AssertionError("rglob authority")),
+                mock.patch("pathlib.Path.iterdir", side_effect=AssertionError("directory authority")),
+                mock.patch("os.walk", side_effect=AssertionError("walk authority")),
+                mock.patch("os.listdir", side_effect=AssertionError("list authority")),
+                mock.patch("os.scandir", side_effect=AssertionError("scan authority")),
                 mock.patch("subprocess.Popen", side_effect=AssertionError("child execution")),
                 mock.patch("socket.socket", side_effect=AssertionError("network authority")),
             ):
