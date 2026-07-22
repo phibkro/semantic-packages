@@ -123,6 +123,7 @@ python3 scripts/check_repo.py
 - [x] V-R2S independent safety review (PASS at `570891f`)
 - [x] V3 durable documentation and maintenance
 - [x] V-G convergence, freeze, and one PR (draft PR #17)
+- [x] V-G1 hosted completed-path oracle successor
 
 ## Discoveries and changed assumptions
 
@@ -201,6 +202,11 @@ python3 scripts/check_repo.py
   `agent/human-authoring-journey`. The PR description is the report: both exact felt
   commands, safe failure/recovery, the real substrate, complete evidence, exclusions,
   review dispositions, and reopen triggers. ExecPlan 0007 is complete.
+- 2026-07-22: PR #17's repository contract failed at `78ecc5d` after the V-G plan move:
+  all active refinement controls passed, but the frozen census still required the old
+  `docs/exec-plans/active/0007...` path. V-G1 updates that durable-memory oracle to the
+  completed path and reruns the focused journey. No behavior, report, contract, or
+  product boundary changes.
 
 ## Result and remaining work
 

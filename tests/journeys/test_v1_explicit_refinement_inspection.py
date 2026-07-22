@@ -20,7 +20,7 @@ from unittest import mock
 
 ROOT = Path(__file__).resolve().parents[2]
 DESIGN_SPEC = ROOT / "design-specs/0002-explicit-refinement-inspection-journey.md"
-EXEC_PLAN = ROOT / "docs/exec-plans/active/0007-explicit-refinement-inspection.md"
+EXEC_PLAN = ROOT / "docs/exec-plans/completed/0007-explicit-refinement-inspection.md"
 STACK_PROPOSAL = ROOT / "refinements/stack-0.1.0-to-0.2.0.prefine"
 STACK_PREDECESSOR = ROOT / "registry/stack/theory/records/stack-spec.json"
 STACK_SUCCESSOR = ROOT / "registry/stack/successors/j5/theory/stack-spec.json"
