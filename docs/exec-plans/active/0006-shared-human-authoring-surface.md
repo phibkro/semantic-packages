@@ -92,6 +92,9 @@ A0 roadmap/source census
 4. A-R1 independently attempts to falsify the resulting problem statement.
 5. Only after A-G1 may A2 compare reversible authoring contracts. No parser code starts
    before A-G2.
+6. A2 retains canonical-record input as the executable conformance control, rejects
+   hidden-ID inference and an unneeded independent IR, and proposes one format-neutral
+   outcome boundary for A-R2 challenge.
 
 ## Quality gates and evidence required
 
@@ -113,13 +116,25 @@ elaboration from semantic checking, and confirm no solution is smuggled into the
 problem statement. Every later node adds its exact commands and negative observations
 before release.
 
+A2 adds:
+
+```text
+python3 -m unittest tests.research.test_shared_human_authoring_options -v
+```
+
+Expected A2 observation is six PASS results: two exact canonical controls are valid;
+missing root identity, duplicate/dangling local IDs (including dependent-edge
+cascades), and dangling profile members have exact paths; blank hosted text retains the
+observed coarse root diagnostic; and array
+reordering changes document equality without changing local addresses or graph validity.
+
 ## Progress checklist
 
 - [x] A0 roadmap and governing-source census
 - [x] A1 candidate two-domain boundary falsifier
 - [x] A-R1 independent boundary review
 - [x] A-G1 problem-contract gate
-- [ ] A2 authoring-contract option probe
+- [x] A2 authoring-contract option probe candidate
 - [ ] A-R2 independent option review
 - [ ] A-G2 contract choice or operator escalation
 - [ ] A3 red round-trip/ambiguity controls
@@ -160,6 +175,21 @@ before release.
   and falsifier only. It releases reversible A2 option research but grants no authority
   to choose syntax, parser, authoring IR, canonical migration, hosted logic, implicit
   defaults, or a materially different author workflow.
+- 2026-07-22: A2 candidate compares four routes. Direct canonical-record input is the
+  only executable two-domain control and remains temporary rather than a final human
+  surface. Hidden-ID inference is rejected. A separate authoring IR is rejected until
+  a second frontend or non-identity transformation demonstrates need. An explicit
+  lossless surface remains a candidate but cannot be selected before grammar and human
+  evidence. Six controls expose exact identity/reference diagnostics, one actionable-
+  diagnostic deficit for blank hosted text (`SCHEMA_INVALID` at `#`), and the distinction
+  between document array order and address semantics. The proposed A3 boundary accepts
+  explicit bytes/format/source identity and returns an exact canonical document or
+  ordered source-local diagnostics without owning a grammar. A-R2 must challenge this
+  comparison before A-G2 chooses any implementation contract.
+- 2026-07-22: The first A2 focused run retained one oracle BLOCK: renaming `push` to
+  duplicate `empty` produces both the expected duplicate-ID diagnostic and a truthful
+  dependent dangling `operationFamily` diagnostic. The successor oracle requires both
+  ordered results rather than suppressing the cascade; no checker behavior changes.
 
 ## Decision log
 
@@ -168,6 +198,8 @@ before release.
 | implement the illustrative `.pspec` grammar now | it cannot supply exact accepted Stack IDs without undocumented derivation, has no OrderedMap comparison, and cannot check hosted semantic strings | reject for A1; reopen only after an explicit contract passes exact two-domain round-trip and ambiguity controls |
 | treat canonical JSON as the final author surface | JSON already preserves exact records but human ergonomics have not been observed; ADR 0003 calls it temporary | retain as one A2 comparison option, not a decision |
 | choose one formal logic for semantic payloads | current accepted domains use plural observations/laws/resources and externally governed proof/conformance Evidence | prohibited absent a concrete scoped need; a hosted logic may be selected per aspect later |
+| add a syntax-neutral authoring IR now | only one executable input exists and the current transformation is identity; a second structural model would create drift before it enables composition | reject until a second frontend or non-identity transformation demonstrates the need |
+| preserve declaration-array order or canonicalize it | array positions do not address declarations, but record-document equality observes array order | require each adapter to preserve explicit source declaration order for exact output; do not infer semantic meaning from position; reopen if canonical record equality changes |
 
 ## Result and remaining work
 

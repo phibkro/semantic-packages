@@ -34,6 +34,10 @@ The A1 candidate freezes the two-domain authoring deficit: shared structural ide
 and references are explicit, while hosted semantic payloads remain unchecked; the
 illustrative Stack surface cannot round-trip without hidden rules and OrderedMap has no
 surface. No grammar or authoring representation is selected before independent review.
+The accepted A1 problem now feeds an A2 option candidate: canonical-record input is the
+executable control, hidden inference and an unneeded second IR are rejected, and one
+format-neutral document-or-diagnostics boundary is proposed for review without making
+JSON or a new surface the final author workflow.
 
 ## End-to-end product shape
 

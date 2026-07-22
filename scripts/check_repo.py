@@ -44,6 +44,7 @@ REQUIRED = [
     "docs/research/synthesis.md",
     "docs/research/ordered-map-probe.md",
     "docs/research/shared-human-authoring-surface.md",
+    "docs/research/shared-human-authoring-options.md",
     "docs/design/core-model.md",
     "docs/design/ordered-map-tracer.md",
     "docs/design/ordered-map-profile-choice.md",
