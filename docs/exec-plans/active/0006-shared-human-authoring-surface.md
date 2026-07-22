@@ -272,6 +272,21 @@ this same suite green without weakening or deleting an assertion.
   and proof lane; its sole failure is the declared absent A4 module and the same 17
   successor controls skip. A3 remains an intentionally red checkpoint and must not
   merge until A4 turns the same suite green without weakening an assertion.
+- 2026-07-22: A4 candidate `8caed67` turns all 19 frozen controls green. The complete
+  repository gate passes 240 actor journeys, 42 research probes, and every retained
+  record, loader, adapter, candidate, governance, report, Evidence, and proof lane.
+- 2026-07-22: The dispatched Sonnet 5 A-R4 route resolved the requested model at high
+  effort but STOPPED before product review: the strict child mounted the linked `/tmp`
+  worktree without its parent `/srv/.../.git` metadata, so it could not establish the
+  exact revision or clean state. This is tooling/provenance evidence only. A separately
+  framed internal reviewer was assigned explicitly.
+- 2026-07-22: A-R4 BLOCK at exact clean `8caed67`. Strict raw probes pass, but ordinary
+  dependency boundary values escape the promised all-or-none observation: `None` as
+  the container raises `TypeError`, non-dependency items raise `AttributeError`, and a
+  `MappingProxyType` document raises during `deepcopy` despite the public `Mapping`
+  annotation. The successor freezes container/item/label/document and recursive-value
+  failures, retains `Mapping`, and must convert them into deterministic diagnostics
+  before A-R4 can pass. No final surface or operator values decision is involved.
 
 ## Decision log
 

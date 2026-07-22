@@ -7,6 +7,7 @@ import json
 import unittest
 from copy import deepcopy
 from pathlib import Path
+from types import MappingProxyType
 
 from scripts import record_check
 
@@ -473,6 +474,92 @@ class SharedHumanAuthoringSuccessorContractTest(unittest.TestCase):
         first = observation.document
         first["id"] = "mutated-output"
         self.assertEqual("stack", observation.document["id"])
+
+    def test_malformed_dependency_api_values_fail_as_observations(self) -> None:
+        source = _canonical_bytes(_load(STACK_SPEC))
+        cases = (
+            (
+                None,
+                (
+                    "AUTHOR_DEPENDENCIES_TYPE",
+                    "author/source.json",
+                    "#/dependencies",
+                ),
+            ),
+            (
+                (None,),
+                (
+                    "AUTHOR_DEPENDENCY_TYPE",
+                    "author/source.json",
+                    "#/dependencies/0",
+                ),
+            ),
+            (
+                ({"source_label": "dep", "document": {}},),
+                (
+                    "AUTHOR_DEPENDENCY_TYPE",
+                    "author/source.json",
+                    "#/dependencies/0",
+                ),
+            ),
+            (
+                (authoring.AuthoringDependency(None, _load(STACK_PROFILE)),),
+                (
+                    "AUTHOR_DEPENDENCY_LABEL_TYPE",
+                    "author/source.json",
+                    "#/dependencies/0/sourceLabel",
+                ),
+            ),
+            (
+                (authoring.AuthoringDependency("dep", None),),
+                ("AUTHOR_DEPENDENCY_DOCUMENT_TYPE", "dep", "#"),
+            ),
+        )
+        for dependencies, expected in cases:
+            with self.subTest(expected=expected):
+                observation = authoring.author_specification(
+                    source,
+                    format_token=FORMAT,
+                    source_label="author/source.json",
+                    dependencies=dependencies,
+                )
+                self.assertFalse(observation.ok)
+                self.assertIsNone(observation.document)
+                self.assertEqual((expected,), tuple(_shape(d) for d in observation.diagnostics))
+
+    def test_mapping_context_snapshots_and_recursive_context_fails_closed(self) -> None:
+        source = _load(STACK_SPEC)
+        profile = _load(STACK_PROFILE)
+        mapped = authoring.AuthoringDependency(
+            "dependency/profile.json", MappingProxyType(profile)
+        )
+        observation = authoring.author_specification(
+            _canonical_bytes(source),
+            format_token=FORMAT,
+            source_label="author/source.json",
+            dependencies=(mapped,),
+        )
+        self.assertTrue(observation.ok)
+        self.assertEqual(source, observation.document)
+
+        recursive: dict = {}
+        recursive["self"] = recursive
+        failed = authoring.author_specification(
+            _canonical_bytes(source),
+            format_token=FORMAT,
+            source_label="author/source.json",
+            dependencies=(authoring.AuthoringDependency("dependency/cycle", recursive),),
+        )
+        self.assertFalse(failed.ok)
+        self.assertIsNone(failed.document)
+        self.assertEqual(
+            (("AUTHOR_DEPENDENCY_SNAPSHOT", "dependency/cycle", "#"),),
+            tuple(_shape(item) for item in failed.diagnostics),
+        )
+        self.assertEqual(
+            "dependency document must be a finite JSON value",
+            failed.diagnostics[0].message,
+        )
 
 
 class SharedHumanAuthoringRedTopologyTest(unittest.TestCase):

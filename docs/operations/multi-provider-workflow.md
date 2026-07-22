@@ -17,7 +17,7 @@ and record changed observations in the active ExecPlan.
 | Route | Current use | Boundary and status |
 |---|---|---|
 | Lead Codex and product collaboration agents | integration, bounded implementation, independent GPT-family concern/review nodes | Available through the agent product's collaboration controls and inherited sandbox. This is not permission to invoke a raw `codex` process. |
-| `agent-dispatch` boundary | enforced cross-provider children, read-only isolation, and every writable provider task | The strict boundary remains governing, but two new read-only consultations on 2026-07-19 failed before provider launch because both hard-coded worker slots reported occupied while no corresponding dispatcher process was observable. This is an unresolved availability defect, not a reason to weaken child or write isolation. |
+| `agent-dispatch` boundary | enforced cross-provider children, read-only isolation, and every writable provider task | The strict boundary remains governing. Two read-only consultations on 2026-07-19 failed before provider launch because both hard-coded worker slots reported occupied. On 2026-07-22 a Sonnet 5 child launched from a linked `/tmp` worktree but the strict sandbox omitted its parent `/srv/.../.git` directory, so Git provenance checks failed and the review correctly STOPPED. These are availability/provenance defects, not reasons to weaken child or write isolation. Use a self-contained checkout when Git provenance is required. |
 | Claude Sonnet 5 | routine implementation, structured analysis, bounded execution | Route verified using `agent-dispatch claude`; request exact `claude-sonnet-5` and high effort. Claude Code 2.1.212 was observed in Wave 3, while Wave 4 preflight reported 2.1.210; two Wave 3 write attempts and the bounded Wave 4 W4-H1C0 attempt stalled without edits, so re-probe version/model resolution, bound retries, and retain an internal fallback. |
 | Claude Fable 5 | complex reasoning, skepticism, convergence review | Route/version and one decisive Wave 3 review verified through Claude Code 2.1.212 using `agent-dispatch claude`; request exact `claude-fable-5` and high effort. Several later Wave 3/4 consultations exhausted turns or produced no verdict, so do not make availability a silent hard dependency. |
 | Delegated external Codex | possible cross-provider child work | The `agent-dispatch codex` entrypoint is advertised; execution is unverified. Probe the model, version, and task behavior before making it a plan dependency. Never invoke delegated `codex` directly. |
@@ -115,6 +115,12 @@ agent-dispatch claude -- \
   --permission-mode acceptEdits --tools Read,Grep,Glob,Edit,Write,Bash \
   --no-session-persistence --output-format json -p < "${node_brief_path}"
 ```
+
+Before dispatching from a linked worktree, run `git rev-parse --git-common-dir`. If its
+result is outside the directory the strict child will receive, prepare a self-contained
+disposable checkout at the exact revision and verify its clean state instead. A child
+that can read files but cannot independently establish the requested Git revision must
+STOP; file access alone is not provenance.
 
 The dispatcher currently permits two delegated workers and depth two
 (lead -> worker -> reviewer), then fails loudly. Every child enters pagu-box `strict`;
@@ -215,6 +221,10 @@ Reviewer provenance and convergence-gate result:
   session or split pane. Resume the named advisor in a dedicated tab at the correct PWD.
 - **Shared dirty worktree:** do not give an external writer a broad dirty checkout;
   use an isolated worktree and exclusive scope.
+- **Detached worktree metadata:** a linked worktree may point to parent Git metadata
+  outside the strict child's mounted paths. Use a self-contained exact checkout for
+  provenance-sensitive review; never ask the child to trust a claimed revision or
+  repair the mount.
 - **Socket confused deputy:** never forward the Herdr control plane into a strict
   child, and never mislabel a Herdr advisor that inherits it as sandboxed.
 - **Standing model authority:** do not accept work because it came from Fable, Sonnet,
