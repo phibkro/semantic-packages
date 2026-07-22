@@ -4,6 +4,10 @@
 
 1. Demonstrate consumer selection between genuinely differentiated deployment profiles
    while keeping performance/resource Evidence inapplicable outside its exact profile.
+   The retained [deployment-profile probe](../docs/research/deployment-profile-choice.md)
+   and [ExecPlan 0005](../docs/exec-plans/active/0005-deployment-profile-choice.md)
+   establish the exact-profile falsifier and successor route; implementation remains
+   active.
 2. Probe the shared human authoring surface revealed by Stack and OrderedMap before
    committing `.pspec` to elaboration rules or hidden defaults.
 3. Model explicit specification refinement and cross-version compatibility only from
