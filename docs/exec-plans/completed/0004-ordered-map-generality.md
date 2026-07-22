@@ -238,6 +238,7 @@ O0 priority + categorical-memory reconciliation
   -> O-R8-2 successor implementation review
   -> O-R4 independent end-to-end review
   -> O-G final locked local/hosted gate
+  -> O-G-F1 completed-plan path and successor-routing correction
 ```
 
 | Node | Owner, dependencies, and write boundary | Required evidence and downstream gate |
@@ -395,8 +396,9 @@ O0 priority + categorical-memory reconciliation
 | O-R8 successor implementation review | independent read-only reviewer; depends on O8 | BLOCK retained narrowly on durable plan truth: implementation, exact bytes/digests, 12 focused and 47 adjacent checks, failure phases, protected surfaces, and the complete repository gate pass, but the Result retains a stale pre-O8 absence sentence and does not bound the captured-text private seam |
 | O8-S1 lifecycle/private-seam truth correction | continuity owner; exclusive this plan; depends on O-R8 BLOCK | describe successor absence historically and record `_document_text + "\n"` as the deliberately bounded captured-byte seam: graph capture has already authenticated the record, the actor restores the snapshot's omitted terminal newline before exact O8 raw-byte comparison, and any `GraphRecord` serialization or newline-handling change must reopen O8-F1 and its raw-digest/failure-phase controls; change no implementation, artifact, digest, requirement, or protected byte |
 | O-R8-2 successor implementation review | same independent read-only reviewer; depends on O8-S1 | PASS: exact clean `6b15732` changes only this plan after the implementation review; stale successor absence is historical, the captured-byte seam and reopen trigger are durable, DAG/table/checklist/Result agree, and successor manifest `f5e8...faf3`, Specification `05bd...afd0`, policy `db78...e00d`, and protected implementation hashes remain unchanged; releases O-R4 |
-| O-R4 end-to-end review | independent read-only reviewer; depends on O-R8-2 PASS | all four actor outcomes, negative controls, known exclusions, Stack regression, and generality claim boundary |
-| O-G final gate | lead acceptance; depends on O-R4 PASS and locked local/hosted gates | full repository reproduction, retained failures, active-plan result, conventional PR metadata/history, and exact claim of two-domain—not universal—generality |
+| O-R4 end-to-end review | independent read-only reviewer; depends on O-R8-2 PASS | PASS at exact clean merged `9c28c852`: O5/O6f/O7/O8 actor controls pass 48/48, OrderedMap plan/runner/breaker/report/Evidence controls pass 62/62, Stack resolution/inspection/maintenance controls pass 40/40, cross-domain graph attacks select no foreign Evidence, and the complete 204-journey repository gate passes; all four actor roles, O8 recovery, retained exclusions, unchanged Stack behavior, and the Stack-plus-one-finite-OrderedMap claim boundary close without universalization |
+| O-G final gate | lead acceptance; depends on O-R4 PASS and locked local/hosted gates | PASS: exact candidate `6ee2618` reconciles plan/README/system-map/backlog memory, retains every failed review and exclusion, passes the complete local repository gate plus PR 9 hosted prospective metadata in 1m32s and repository contract in 3m56s, and carries two conventional commits with a complete conventional PR handoff; accepts exactly Stack-plus-one-finite-OrderedMap—not universal—generality and moves this plan to completed |
+| O-G-F1 completed-plan path and successor-routing correction | closeout owner; exclusive `scripts/check_repo.py`, active ExecPlan 0003 current routing, this completed plan, and orientation links; depends on O-G's completion transition | complete candidate: replace the structural checker's required active path with the completed path and route future H2 findings into an explicit successor rather than the closed plan; preserve every product/actor/artifact byte and require the complete exact-head local/hosted gate before autonomous merge |
 
 The continuity owner integrates shared surfaces. Before O-G2, all work is read-only or
 plan/document-local. Once implementation boundaries are known, parallel work is allowed
@@ -578,8 +580,9 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
 - [x] O-R8 successor implementation review — lifecycle/private-seam documentation BLOCK retained
 - [x] O8-S1 lifecycle/private-seam truth correction
 - [x] O-R8-2 successor implementation review passed; O-R4 released
-- [ ] O-R4 end-to-end review
-- [ ] O-G final gate
+- [x] O-R4 end-to-end review passed; O-G released
+- [x] O-G final gate passed; ExecPlan 0004 complete
+- [x] O-G-F1 completed-plan path and successor-routing correction
 
 ## Discoveries and changed assumptions
 
@@ -1434,8 +1437,31 @@ newline-handling change must reopen O8-F1 and its raw-digest/failure-phase contr
 O-R8 passed every implementation and repository check but retained a narrow durable-plan
 BLOCK; O8-S1 corrects that documentation only, and O-R8-2 passes at exact clean
 `6b15732` without changing implementation, artifacts, requirements, digests, or
-protected bytes. O8 maintenance is accepted. O-R4 end-to-end review is now the live
-edge; the final locked gate remains behind it.
+protected bytes. O8 maintenance is accepted. O-R4 then passes independently at exact
+clean merged `9c28c852f4946afc46c1eee2a231a38dde3d300c`: the four O5/O6f/O7/O8 actor
+surfaces, all theory/package author and consumer outcomes, exact maintenance recovery,
+48 focused actor controls, 62 OrderedMap campaign/breaker/report/Evidence controls, 40
+unchanged Stack resolution/inspection/maintenance controls, and the complete
+204-journey repository gate reproduce. A combined-graph falsifier selects no Stack
+Evidence for OrderedMap and no OrderedMap Evidence for Stack. Deletion, arbitrary
+serialization, higher-order transport, performance Evidence, concurrency, remote
+transport, discovery/acquisition, signatures, refinement, and human-usability
+acceptance remain explicit exclusions. The supported generality claim is exactly
+Stack plus one finite OrderedMap lifecycle—not a universal collection, logic,
+resolver, transport, quotient checker, or refinement framework. O-G final memory
+reconciliation then passes at exact candidate `6ee2618`: the complete local repository
+gate is green, PR 9 prospective metadata passes in 1m32s, and its repository contract
+passes in 3m56s. The two-commit prospective history and complete PR handoff satisfy the
+conventional squash-release boundary. O-G therefore accepts the exact two-domain claim
+and closes this plan. H2 remains deferred rather than passed; differentiated deployment
+profiles, human authoring, and explicit refinement remain successor backlog work.
+The completion move exposes one structural dependency without reopening the accepted
+product: `scripts/check_repo.py` still requires the old active plan path, and active
+ExecPlan 0003 still routes a future H2 result into that closed plan. O-G-F1 updates the
+required path and routes new observations into an explicit successor while changing no
+actor, implementation, schema, record, artifact, report, Evidence, contract, manifest,
+digest, or accepted requirement. The complete exact-head local and hosted gates remain
+the release condition for this completion-only correction.
 
 ## Stop and escalation conditions
 

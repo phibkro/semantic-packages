@@ -109,14 +109,15 @@ M0 stale-memory baseline
 | D1 operator deferral | user-owned priority decision; depends on H1-P1 | complete: H2 is recorded in the backlog with its protocol and remains unobserved; OrderedMap ExecPlan 0004 may start without claiming H-G |
 | H2 cold-human observation | operator-coordinated uninvolved human; depends on H1 | exact revision, environment, commands, answers, hesitation/failure points, assistance, duration, and exclusions; no repository write authority |
 | H-S2 observed-deficit successor | continuity owner; depends on H2 BLOCK | smallest change tied to an observed actor deficit, with red-first scenario and independent review; returns to H2 |
-| H-G journey gate | lead acceptance; depends on H2 PASS and locked local/hosted gates | all five questions answered accurately without hidden implementation knowledge; closes this journey and routes any observed implications into active ExecPlan 0004 |
+| H-G journey gate | lead acceptance; depends on H2 PASS and locked local/hosted gates | all five questions answered accurately without hidden implementation knowledge; closes this journey and routes any observed implications into an explicit successor to completed ExecPlan 0004 or the affected current design/backlog node |
 
 ## Quality gates and evidence required
 
 ### Memory reconciliation
 
 - at M-G, `docs/exec-plans/active/` contained only this live plan; D1 later permits the
-  explicitly linked OrderedMap plan to coexist while H2 remains deferred.
+  explicitly linked OrderedMap plan to coexist while H2 remains deferred; ExecPlan
+  0004 has since completed and this is again the sole active plan.
 - completed plans remain available under `docs/exec-plans/completed/` with their
   rejected reviews and exact evidence history intact.
 - README, system map, user journeys, backlog, and plan links agree that J1–J5, JG,
@@ -243,11 +244,12 @@ reviews and a final pass. H-S1 adds the smallest exact-input, graph-derived Stac
 renderer; H-R and H1-P1 pass, including the locked repository gate. H2 remains
 unobserved and requires an eligible uninvolved human at an exact public revision. D1
 defers that external observation to the backlog and releases OrderedMap research in
-ExecPlan 0004 without closing H-G.
+ExecPlan 0004 without closing H-G. ExecPlan 0004 subsequently completed the finite
+OrderedMap lifecycle without substituting for H2.
 
-OrderedMap generality is already active under D1. After H-G and the OrderedMap gate,
-the intended route remains deployment-profile choice, explicit refinement/evolution,
-cross-domain `.pspec` elaboration, and non-circular adapter-faithfulness Evidence.
+After H-G, the intended route remains deployment-profile choice, explicit
+refinement/evolution grounded in the two accepted domains, cross-domain `.pspec`
+elaboration, and non-circular adapter-faithfulness Evidence.
 Hosted acquisition, signatures, indexing, and richer UI remain later actor-driven
 routes rather than infrastructure goals.
 

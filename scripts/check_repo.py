@@ -54,7 +54,7 @@ REQUIRED = [
     "docs/operations/multi-provider-workflow.md",
     ".agent/PLANS.md",
     "docs/exec-plans/active/0003-cold-human-inspection.md",
-    "docs/exec-plans/active/0004-ordered-map-generality.md",
+    "docs/exec-plans/completed/0004-ordered-map-generality.md",
     "docs/exec-plans/completed/0001-tracer-bullet.md",
     "docs/exec-plans/completed/0002-actor-journeys.md",
     "semantic_packages/__init__.py",
