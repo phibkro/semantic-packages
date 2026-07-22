@@ -10,6 +10,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from typing import Any
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -26,6 +27,17 @@ HUMAN_OBSERVATION = ROOT / "reports/authoring/uninvolved-author-observation.json
 HUMAN_OBSERVATION_PROTOCOL = (
     ROOT / "docs/operations/explicit-pspec-author-observation.md"
 )
+HUMAN_OBSERVATION_AUTHORITY = (
+    ROOT / "docs/operations/explicit-pspec-author-observation-authority.json"
+)
+ASSISTANCE_CATEGORIES = {
+    "orientation",
+    "command-clarification",
+    "terminology",
+    "environment",
+    "recovery",
+    "other",
+}
 CLI_READY = importlib.util.find_spec("semantic_packages.__main__") is not None
 
 
@@ -56,6 +68,89 @@ def _run_author(
 
 def _read_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _observation_problems(authority_revision: str, observation: Any) -> set[str]:
+    problems: set[str] = set()
+    if type(observation) is not dict:
+        return {"observation-type"}
+    if set(observation) != {
+        "kind",
+        "revision",
+        "participant",
+        "tasks",
+        "blockingAmbiguities",
+    }:
+        problems.add("observation-keys")
+    if observation.get("kind") != "human-author-observation-v1":
+        problems.add("kind")
+    if observation.get("revision") != authority_revision:
+        problems.add("revision")
+
+    participant = observation.get("participant")
+    if type(participant) is not dict:
+        problems.add("participant-type")
+    else:
+        if set(participant) != {
+            "eligible",
+            "priorProjectInvolvement",
+            "reviewedObservation",
+        }:
+            problems.add("participant-keys")
+        if participant.get("eligible") is not True:
+            problems.add("participant-eligibility")
+        if participant.get("priorProjectInvolvement") != "none":
+            problems.add("participant-involvement")
+        if participant.get("reviewedObservation") is not True:
+            problems.add("participant-review")
+
+    tasks = observation.get("tasks")
+    if type(tasks) is not list:
+        problems.add("tasks-type")
+    else:
+        if len(tasks) != 2:
+            problems.add("tasks-length")
+        for index, expected_domain in enumerate(("stack", "ordered-map")):
+            if index >= len(tasks) or type(tasks[index]) is not dict:
+                problems.add(f"task-{index}-type")
+                continue
+            task = tasks[index]
+            if set(task) != {"domain", "result", "durationSeconds", "assistance"}:
+                problems.add(f"task-{index}-keys")
+            if task.get("domain") != expected_domain:
+                problems.add(f"task-{index}-domain")
+            if task.get("result") != "pass":
+                problems.add(f"task-{index}-result")
+            duration = task.get("durationSeconds")
+            if type(duration) is not int or duration <= 0:
+                problems.add(f"task-{index}-duration")
+            assistance = task.get("assistance")
+            if type(assistance) is not list:
+                problems.add(f"task-{index}-assistance-type")
+            else:
+                if any(
+                    type(item) is not str or item not in ASSISTANCE_CATEGORIES
+                    for item in assistance
+                ):
+                    problems.add(f"task-{index}-assistance-item")
+                if all(type(item) is str for item in assistance) and len(
+                    assistance
+                ) != len(set(assistance)):
+                    problems.add(f"task-{index}-assistance-duplicate")
+
+    ambiguities = observation.get("blockingAmbiguities")
+    if type(ambiguities) is not list:
+        problems.add("ambiguities-type")
+    else:
+        if any(type(item) is not str or not item.strip() for item in ambiguities):
+            problems.add("ambiguity-item")
+        if all(type(item) is str for item in ambiguities) and len(ambiguities) != len(
+            set(ambiguities)
+        ):
+            problems.add("ambiguity-duplicate")
+        if ambiguities:
+            problems.add("blocking-ambiguity")
+    return problems
 
 
 class ExplicitPSpecRedBaselineTest(unittest.TestCase):
@@ -363,24 +458,95 @@ class ExplicitPSpecAuthorJourneyTest(unittest.TestCase):
         self.assertIn("## Task 1 — Stack success, failure, and recovery", protocol)
         self.assertIn("## Task 2 — OrderedMap through the same contract", protocol)
         self.assertIn("The implementing agent must not impersonate", protocol)
+        authority = _read_json(HUMAN_OBSERVATION_AUTHORITY)
+        self.assertEqual(
+            {"kind", "revision", "protocol", "domains"}, set(authority)
+        )
+        self.assertEqual(
+            "human-author-observation-authority-v1", authority["kind"]
+        )
+        self.assertRegex(authority["revision"], r"^[0-9a-f]{40}$")
+        self.assertNotEqual("0" * 40, authority["revision"])
+        self.assertEqual(
+            "docs/operations/explicit-pspec-author-observation.md",
+            authority["protocol"],
+        )
+        self.assertEqual(["stack", "ordered-map"], authority["domains"])
         if not HUMAN_OBSERVATION.is_file():
             return
 
         observation = _read_json(HUMAN_OBSERVATION)
-        self.assertEqual("human-author-observation-v1", observation.get("kind"))
-        self.assertRegex(observation.get("revision", ""), r"^[0-9a-f]{40}$")
-        participant = observation.get("participant", {})
-        self.assertIs(participant.get("eligible"), True)
-        self.assertEqual("none", participant.get("priorProjectInvolvement"))
-        self.assertIs(participant.get("reviewedObservation"), True)
-        tasks = observation.get("tasks", [])
-        self.assertEqual(["stack", "ordered-map"], [task.get("domain") for task in tasks])
-        for task in tasks:
-            self.assertEqual("pass", task.get("result"))
-            self.assertIsInstance(task.get("durationSeconds"), int)
-            self.assertGreater(task["durationSeconds"], 0)
-            self.assertIsInstance(task.get("assistance"), list)
-        self.assertEqual([], observation.get("blockingAmbiguities"))
+        self.assertEqual(set(), _observation_problems(authority["revision"], observation))
+
+    def test_observation_validation_rejects_permissive_counterexample(self) -> None:
+        authority = _read_json(HUMAN_OBSERVATION_AUTHORITY)
+        valid = {
+            "kind": "human-author-observation-v1",
+            "revision": authority["revision"],
+            "participant": {
+                "eligible": True,
+                "priorProjectInvolvement": "none",
+                "reviewedObservation": True,
+            },
+            "tasks": [
+                {
+                    "domain": "stack",
+                    "result": "pass",
+                    "durationSeconds": 1,
+                    "assistance": [],
+                },
+                {
+                    "domain": "ordered-map",
+                    "result": "pass",
+                    "durationSeconds": 1,
+                    "assistance": ["orientation"],
+                },
+            ],
+            "blockingAmbiguities": [],
+        }
+        self.assertEqual(set(), _observation_problems(authority["revision"], valid))
+
+        counterexample = {
+            "kind": "human-author-observation-v1",
+            "revision": "0" * 40,
+            "participant": {
+                "eligible": True,
+                "priorProjectInvolvement": "none",
+                "reviewedObservation": True,
+                "extra": "ungoverned",
+            },
+            "tasks": [
+                {
+                    "domain": "stack",
+                    "result": "pass",
+                    "durationSeconds": True,
+                    "assistance": [{"answer": "arbitrary"}],
+                },
+                {
+                    "domain": "ordered-map",
+                    "result": "fail",
+                    "durationSeconds": 1,
+                    "assistance": ["unknown-category"],
+                },
+            ],
+            "blockingAmbiguities": ["", {"extra": "channel"}],
+            "extra": "ungoverned",
+        }
+        problems = _observation_problems(authority["revision"], counterexample)
+        self.assertTrue(
+            {
+                "observation-keys",
+                "revision",
+                "participant-keys",
+                "task-0-duration",
+                "task-0-assistance-item",
+                "task-1-result",
+                "task-1-assistance-item",
+                "ambiguity-item",
+                "blocking-ambiguity",
+            }
+            <= problems
+        )
 
 
 if __name__ == "__main__":

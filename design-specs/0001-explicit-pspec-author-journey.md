@@ -167,13 +167,14 @@ The feature is false if any of these observations occur:
 - An independent A-R5 review attacks the journey, diagnostics, protected boundaries,
   and generality claim; every material concern is incorporated, falsified, retained as
   risk with an owner/trigger, or escalated.
-- The eligible uninvolved-author protocol is public at the exact candidate revision.
-  When a participant run is coordinated, timing, assistance, blocking ambiguity, and
+- The eligible uninvolved-author protocol and exact candidate-revision authority are
+  public. The experienceable feature PR may open before a participant is available,
+  but ExecPlan convergence remains open. Timing, assistance, blocking ambiguity, and
   privacy-bounded observations are retained truthfully without relabeling usability as
-  semantic Evidence. The live observation is maintenance evidence and does not block
-  opening the already experienceable feature PR.
-- ExecPlan 0006 records A5, A-R5, A-G, and the explicit post-open A5-H scheduling
-  disposition before moving to completed.
+  semantic Evidence; a failure reopens the smallest affected successor.
+- ExecPlan 0006 records A5, A-R5, the post-open A5-H observation, and A-G before moving
+  to completed. The next design-spec may stack after this PR opens without implying
+  that A5-H or A-G passed or that this PR is merge-ready.
 - One pull request maps 1:1 to this design spec, opens only after the complete journey
   is experienceable, and uses its description as the operator report: felt feature,
   exact copy-paste experience steps, and one line explaining what is real underneath.
@@ -209,6 +210,7 @@ change, or an independently governed dependency acquisition workflow becomes nec
 - **2026-07-22, revision 2:** The operator's resume directive requires the complete,
   experienceable journey to open as one PR and the next design-spec to stack without
   waiting. The live uninvolved-author run therefore moves from a PR-opening gate to
-  explicit post-open maintenance observation. Its public protocol, truthful retention,
-  and reopen obligation remain; no participant result is invented and no executable
-  behavior or protected boundary changes. Not yet frozen for PR.
+  post-open convergence evidence: A-G and merge remain open until it is retained.
+  Its public protocol, exact candidate authority, truthful retention, and reopen
+  obligation remain; no participant result is invented and no executable behavior or
+  protected boundary changes. Not yet frozen for PR.

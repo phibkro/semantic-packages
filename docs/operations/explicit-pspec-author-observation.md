@@ -27,9 +27,26 @@ Record only task result, integer duration in seconds, assistance categories, blo
 ambiguities, exact revision, and participant review. Stop immediately if a command
 would disclose a credential or leave the repository and `/tmp`.
 
+Assistance entries are unique strings from this finite set:
+
+- `orientation`: locating a public instruction or file without interpreting it;
+- `command-clarification`: explaining command syntax already present in the README;
+- `terminology`: explaining a project term without supplying a task answer;
+- `environment`: resolving a local tool or checkout problem;
+- `recovery`: helping restore the disposable input after an observed failure;
+- `other`: disclosed help not covered above, accompanied by a blocking ambiguity if it
+  could have changed the result.
+
+Blocking ambiguities are unique nonempty summary strings. The report, participant, and
+task objects use exactly the keys shown below; extra fields are rejected rather than
+silently becoming an ungoverned data channel.
+
 ## Environment
 
-Use a clean public checkout at the exact candidate revision. Confirm:
+Use a clean public checkout at the exact candidate revision named by
+`docs/operations/explicit-pspec-author-observation-authority.json`. The observation
+`revision` must equal that authority exactly; a different commit is a different
+observation campaign and requires an explicit authority revision first. Confirm:
 
 ```sh
 git status --short
@@ -99,5 +116,7 @@ Retain the participant-reviewed result at
 ```
 
 Durations above are shape examples, not observations to copy. Failed or assisted
-outcomes retain their truthful values and are never edited into a pass. The participant
-reviews the final record before it becomes gate input.
+outcomes retain their truthful values and are never edited into a pass. Task `result`
+is exactly `pass` or `fail`; a retained `fail` or blocking ambiguity reopens the gate.
+Durations are positive JSON integers, not Booleans. The participant reviews the final
+record before it becomes gate input.
