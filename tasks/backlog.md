@@ -34,7 +34,6 @@
   counterexample demonstrates that the coarse diagnostic is insufficient.
 - Add generated indexes or richer orientation tooling only when multiple plans or
   derived views create measurable drift.
-- Add a user-defined resource algebra.
 
 ## Completed tracer substrate
 
@@ -63,6 +62,10 @@
   optional, forbidden, and unspecified reported-event variants; forbidden concern
   locality and execution-error nonauthority remain explicit. This closes the authored
   test item without claiming arbitrary erasure, noninterference, purity, or Evidence.
+- Design-spec 0004 and ExecPlan 0009 implement one user-defined finite resource
+  composition in PSpec. Exact Stack and OrderedMap persistence declarations bind to
+  distinct authored elements; exhaustive laws and two folds are inspectable while
+  satisfaction and arbitrary resource-algebra generality remain unestablished.
 - Stack remains the regression substrate. A later semantic package must join it rather
   than erase the only accepted comparison point.
 

@@ -53,7 +53,7 @@ def inspect_resource_algebra(
     source_hash: str,
     resource_id: str,
 ) -> tuple[dict[str, Any] | None, ResourceProblem | None]:
-    """Inspect one already-authored candidate without granting satisfaction authority."""
+    """Inspect one schema/link-valid authored candidate without satisfaction authority."""
     resources = [item for item in document.get("resources", []) if item.get("id") == resource_id]
     if not resources:
         return None, _problem(

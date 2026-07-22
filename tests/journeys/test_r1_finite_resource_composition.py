@@ -201,6 +201,19 @@ class FiniteResourceJourneyTest(unittest.TestCase):
         self.assertEqual(snapshots, (source.read_bytes(), stack.read_bytes(), ordered_map.read_bytes()))
         return result
 
+    def test_required_arguments_exit_two_without_output(self) -> None:
+        result = subprocess.run(
+            [sys.executable, "-m", "semantic_packages", "resource", "inspect"],
+            cwd=ROOT,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=False,
+        )
+        self.assertEqual(2, result.returncode)
+        self.assertEqual("", result.stdout)
+        self.assertIn("the following arguments are required", result.stderr)
+
     def test_exact_felt_journey_and_complete_report(self) -> None:
         with tempfile.TemporaryDirectory(prefix="semantic-resource-happy-") as raw:
             directory = Path(raw)

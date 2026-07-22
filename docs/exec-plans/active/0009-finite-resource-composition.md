@@ -119,8 +119,8 @@ python3 scripts/check_repo.py
 - [x] R-R1 independent contract/oracle review
 - [x] R2 optional schema/link surface and retained PSpec
 - [x] R3 finite-law inspector, fold report, and atomic command
-- [ ] R-R2 independent implementation review
-- [ ] R4 durable documentation and maintenance
+- [x] R-R2 independent implementation review
+- [x] R4 durable documentation and maintenance
 - [ ] R-G convergence, freeze, and one PR
 
 ## Discoveries and changed assumptions
@@ -186,6 +186,27 @@ python3 scripts/check_repo.py
   exhaustively checks the authored table, derives both folds, and publishes atomically.
   A 42-test authoring/refinement/effect regression set passes, and the exact felt
   command produces `fold=both-retained` with satisfaction `unestablished`.
+- 2026-07-22: the first Fable R-R2 launch is invalid evidence and was terminated. The
+  installed dispatcher inherited `HERDR_ENV=1` and forwarded the Herdr control socket,
+  workspace/tab/pane variables, and configuration bind into the child, contradicting
+  this repository's stricter runbook. A second launch explicitly stripped every
+  `HERDR_*` control variable. Its plan-mode pass established exact clean provenance and
+  found no code-reading blocker but stopped because Claude Code 2.1.210 exposed no
+  plan-exit tool; its no-persistence session could not resume. These are retained route
+  observations, not product review evidence.
+- 2026-07-22: R-R2 PASS at exact self-contained clean `26d0e24`. A fresh strict
+  read-only dispatch resolved requested `claude-fable-5` at high effort with Haiku 4.5
+  auxiliary use and completed 38 turns in execution mode. It independently traced the
+  optional schema, exact bindings, 8/16/64 law enumeration, folds, atomicity, aliases,
+  no-discovery surface, closed report, and four-record correction without finding a
+  material falsifier. The child environment denied Python/Nix execution, so its static
+  PASS is explicitly conditional on lead-run executable gates. Its minor required-
+  argument control is incorporated; direct inspector calls remain documented as
+  requiring schema/link-valid input.
+- 2026-07-22: R4 makes the exact four-dependency command and report boundary durable in
+  README, resource semantics, system map, actor journey A8, and backlog. The multi-
+  provider runbook now records the observed Herdr-forwarding mismatch, the explicit
+  unset mitigation, and the Fable execution-mode/probe limitations.
 
 ## Maintenance, recovery, and reopen conditions
 

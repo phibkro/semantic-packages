@@ -12,6 +12,8 @@ changing them. ExecPlan 0005 adds two exact deployment envelopes while preventin
 Evidence from crossing profile boundaries by resemblance. They are not personas or a
 promise of hosted infrastructure. Design-spec 0003 adds one package-author/Evidence-
 reviewer observation over the existing two runners without turning it into Evidence.
+Design-spec 0004 adds one theory-author composition inspection without turning
+algebraic well-formedness into resource satisfaction or a universal resource model.
 
 For this tracer, a **registry** is one curated finite local source set of immutable,
 exact-version records. To **publish** or **register** is to add records to that set and
@@ -86,6 +88,20 @@ preserves prior output on any drift. It performs no registry-driven execution an
 creates no Claim, Evidence, resolver decision, purity statement, or general effect
 semantics. The executable contract is
 [design-spec 0003](../../design-specs/0003-bounded-effect-separation-observation.md).
+
+### A8 — theory author inspects finite resource composition
+
+The theory author writes one explicit resource-local algebra in PSpec, imports exact
+Stack and OrderedMap Specifications, and binds their distinct `persistence`
+declarations to authored carrier elements. Acceptance requires an exact finite context,
+complete ordered table, independently enumerable closure/totality/unit/commutativity/
+associativity observations, complete authored and reverse folds, deterministic
+counterexamples, immutable inputs, and atomic report publication. Equal local IDs have
+no binding authority. The result establishes only finite algebraic well-formedness;
+Realization satisfaction, Claim/Evidence transfer, compatibility, refinement,
+ownership/separation/quantity semantics, resolver decisions, and arbitrary-domain
+resource composition remain absent. The executable contract is
+[design-spec 0004](../../design-specs/0004-finite-resource-composition-inspection.md).
 
 ### J0 — vocabulary and local boundary
 

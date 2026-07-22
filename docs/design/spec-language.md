@@ -147,6 +147,18 @@ non-identity transformation demonstrates the need.
   algebra, handler semantics, contextual noninterference theorem, or accepted Evidence.
 - Resource properties are user-definable abstractions with declared observations,
   composition rules, and a falsification method.
+- Design-spec 0004's first executable composition is an optional resource-local
+  `finite-commutative-monoid-v1`: an author supplies a finite carrier, unit, every
+  ordered composition row, and exact bindings to resource declarations in imported
+  Specifications. The inspector checks closure, totality, unit, commutativity, and
+  associativity by finite enumeration and derives explicit folds. This candidate is
+  neither a default for resources nor a claim that total commutative monoids fit every
+  domain.
+- A structurally valid resource algebra establishes no Realization satisfaction or
+  Evidence transfer. Declaration bindings are authored semantic mappings; they do not
+  identify equal local IDs across Specifications, compose runtime resources, prove
+  persistence, or create compatibility, refinement, resolver, ownership, separation,
+  quantitative, graded, or consumer authority.
 - Performance claims are profile-relative and name a cost measure, workload model,
   and measurement or proof method.
 - Claims do not carry their own assurance. Acceptance is computed from applicable
@@ -182,9 +194,10 @@ The Stack tracer fixes the following meaning without prescribing a representatio
   the claim remains visibly unsupported.
 
 These obligations authorize canonical record design. `specs/stack.pspec` and
-`specs/ordered-map.pspec` are now complete PSpec v1 candidate inputs whose outputs equal
-the accepted records; their final author-experience acceptance still depends on the
-uninvolved-author and A-R5 gates.
+`specs/ordered-map.pspec` are complete PSpec v1 candidate inputs whose outputs equal the
+accepted records; `specs/persistence-composition.pspec` imports both without changing
+them and exercises the optional finite algebra. The predecessor domains' final general
+author-experience acceptance still depends on the uninvolved-author gate.
 
 ### Initial conformance and performance profile
 
