@@ -87,13 +87,22 @@ This syntax is provisional. The initial parser may use JSON/YAML internally whil
 
 [ADR 0016](../decisions/0016-representation-neutral-authoring-boundary.md) accepts a
 surface-neutral boundary for ExecPlan 0006. Explicit source bytes, one exact format
-token, and an opaque diagnostic label produce either one exact canonical Specification
-document or ordered source-local diagnostics. The label has no identity or content
-authority; all root/local IDs and references remain explicit. Raw duplicate members,
-invalid encoding/syntax, and unsupported formats fail before record validation. Hosted
-semantic payloads remain unchecked text.
+token, an opaque diagnostic label, and the explicit finite dependency context clarified
+by [ADR 0017](../decisions/0017-explicit-authoring-dependency-context.md) produce either
+one exact canonical Specification document or ordered source-local diagnostics. The
+labels have no identity or content authority; all root/local IDs and references remain
+explicit. The boundary performs no filesystem, manifest, registry, network, version,
+or profile discovery. Raw duplicate members, invalid encoding/syntax, and unsupported
+formats fail before record validation. Hosted semantic payloads remain unchecked text.
 
 `canonical-spec-json-v1` is the first conformance control, not the final human surface.
+`semantic_packages.authoring.author_specification` now implements that exact token:
+strict raw decoding, source/dependency schema phases, graph-relative link checking,
+all-or-none observations, and detached exact output. Its dependency context is
+caller-supplied and finite; it performs no acquisition or selection. The generic record
+checker retains its historical coarse fallback, while this author-facing boundary
+refines the accepted blank-law counterexample to its exact source pointer.
+
 The lifecycle cannot close without a non-control surface adapter and eligible
 uninvolved-author observation across Stack and OrderedMap. A separate authoring IR
 remains unjustified until a second useful frontend or non-identity transformation
@@ -156,7 +165,8 @@ The Stack tracer fixes the following meaning without prescribing a representatio
   the claim remains visibly unsupported.
 
 These obligations authorize canonical record design, but `specs/stack.pspec` remains
-an illustrative authoring fixture until a parser defines its elaboration.
+an illustrative authoring fixture until an accepted non-control adapter defines its
+elaboration.
 
 ### Initial conformance and performance profile
 

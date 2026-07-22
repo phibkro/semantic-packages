@@ -78,8 +78,8 @@ A0 roadmap/source census
 | A-G1 problem gate | lead; plan-only disposition | retained review packet and full gate; releases A2 or successor A1; values choice remains unauthorized |
 | A2 option probe | future owner; research notes/fixtures only; integrates into lead-owned option matrix | exact round-trip/ambiguity/diagnostic/recovery comparison; A-R2; escalate materially different author experiences without decisive evidence |
 | A-R2 / A-G2 | independent reviewer then lead; review writes none, lead integrates plan/ADR proposal | option attacks and dispositions; choose smallest reversible contract or stop for operator; no parser release without PASS |
-| A3 red contract | future test owner; exclusive authoring-contract fixtures/tests | Stack + OrderedMap exact-output; opaque-label nonauthority; invalid bytes/duplicate members/unsupported format; ambiguous/missing/wrong-kind ID/reference; hosted-payload and deterministic-diagnostic controls; independent contract review; A4 |
-| A4 minimal elaborator | future implementation owner; exclusive new authoring module plus approved dependency metadata | frozen A3 controls, no canonical predecessor changes, focused/full gates; independent implementation review A-R4; toolchain/migration concern escalates |
+| A3 red contract | lead/test owner; exclusive authoring-contract fixtures/tests and proposed dependency-context ADR | Stack + OrderedMap exact-output relative to an explicit finite context; opaque-label nonauthority; invalid bytes/duplicate members/unsupported format; ambiguous/missing/wrong-kind ID/reference; hosted-payload and deterministic-diagnostic controls; independent contract review; A4 |
+| A4 minimal elaborator | lead/implementation owner; exclusive new authoring module plus approved dependency metadata | frozen A3 controls, no canonical predecessor changes, focused/full gates; independent implementation review A-R4; toolchain/migration concern escalates |
 | A-R4 | uninvolved read-only reviewer | parser containment, deterministic output/diagnostics, hidden-default and semantic-overclaim attacks; A5 or successor |
 | A5 journey/maintenance | lead/integrator; author command/docs, user-journey controls, check integration, plan | exact two-domain author tasks, regression/sensitivity, recovery, limitations, one non-control human-facing adapter, and required operator-coordinated eligible uninvolved-author observation; A-R5 |
 | A-R5 / A-G | uninvolved reviewer then lead; no reviewer writes, lead owns completion move | full lifecycle, negative controls, docs, full local/hosted gates, conventional squash handoff; operator owns unresolved product-direction fork |
@@ -132,6 +132,30 @@ duplicate members; invalid UTF-8/JSON remain host exceptions; existing diagnosti
 replay deterministically; and array
 reordering changes document equality without changing local addresses or graph validity.
 
+A3 adds an intentionally red predecessor gate:
+
+```text
+python3 -m unittest tests.journeys.test_a3_shared_human_authoring_contract -v
+```
+
+Before A4 exists, the successor topology must be 19 tests: one exact-input and
+dependency-gap control PASS, one intentional failure naming only the absent
+`semantic_packages.authoring` module, and seventeen successor controls SKIP. The frozen
+successor contract requires exact Stack and OrderedMap documents relative to explicit
+finite profile contexts; no-default format and dependency inputs; provenance-only
+labels; format/UTF-8/JSON/duplicate-member precedence; all-or-none outcomes; exact
+identity/local-reference/hosted-text diagnostics; order preservation; deterministic
+replay; schema/link phase barriers; used and validated dependency contents; wrong-kind
+source rejection; stable raw detail; and isolated input/output snapshots. A4 must turn
+this same suite green without weakening or deleting an assertion.
+
+A4 and its review successors retain every A3 assertion and expand the same command to
+22 green controls. The additions require total dependency-container/item/label/document
+diagnostics, finite `Mapping` snapshots without pickle semantics, recursive-value
+rejection, and containment of ordinary traversal exceptions without masking
+`BaseException` process control. The complete A4 gate must report 243 actor journeys
+and preserve every predecessor summary.
+
 ## Progress checklist
 
 - [x] A0 roadmap and governing-source census
@@ -141,9 +165,9 @@ reordering changes document equality without changing local addresses or graph v
 - [x] A2 authoring-contract option probe
 - [x] A-R2 independent option review
 - [x] A-G2 contract choice or operator escalation
-- [ ] A3 red round-trip/ambiguity controls
-- [ ] A4 minimal elaborator
-- [ ] A-R4 implementation review
+- [x] A3 red round-trip/ambiguity controls
+- [x] A4 minimal elaborator
+- [x] A-R4 implementation review
 - [ ] A5 actor journey, documentation, and maintenance
 - [ ] A-R5 end-to-end review
 - [ ] A-G final convergence
@@ -217,6 +241,72 @@ reordering changes document equality without changing local addresses or graph v
   explicit identity, source-order preservation without position semantics, and no
   independent IR. This releases A3 red controls. It does not select final surface
   grammar or author workflow; unresolved later surface values still escalate.
+- 2026-07-22: A3 candidate exposes one omitted mechanical input in ADR 0016: both
+  retained Specifications reference separate profile records and each produces two
+  exact dangling-reference diagnostics in isolation. Proposed ADR 0017 makes the
+  dependency context finite, explicit, required, and discovery-free; record labels
+  remain provenance-only and success is link-valid relative to that exact context.
+  The focused predecessor has the required 17-test topology: one PASS, one intentional
+  missing-module failure, and fifteen SKIP. This is a contract correction, not a choice
+  of syntax, workflow, registry, or acquisition authority. Independent A3 review must
+  attack the context and red oracles before A4 is released.
+- 2026-07-22: The dispatcher-requested Fable 5 A-R3 attempt returned no output during
+  its bounded interval and was terminated. This is retained as provider unavailability,
+  not review evidence. A separately framed internal reviewer was assigned as the
+  explicit fallback.
+- 2026-07-22: A-R3 BLOCK at `12974b8`. The reviewer reproduced the 1 PASS / 1 FAIL /
+  15 SKIP topology and showed that an empty module cannot pass vacuously, but found the
+  dependency contents, validation phase, labels, input order, and duplicate addresses
+  under-specified. A4 could have treated any nonempty tuple as permission to ignore its
+  records. The suite also omitted a schema-valid wrong source kind, missing local
+  identity/reference fields, opaque nonempty hosted-text preservation, and stable raw
+  detail. The A3 successor adds those exact controls and reconciles ADR 0017's ordering;
+  no syntax, workflow, registry, acquisition, or other operator values choice is made.
+- 2026-07-22: A-R3 successor BLOCK at `3635e6c`. The prior gaps close and the revised
+  1 PASS / 1 FAIL / 17 SKIP topology cannot pass through an empty or dependency-blind
+  module, but the wrong-context and duplicate-address oracles did not also require an
+  all-or-none failure. Invalid dependency checks asserted only path order and a code
+  set, allowing truthful codes at false root pointers. The next successor requires
+  `ok == false`, no document, and exact ordered `(code, path, pointer)` tuples. No
+  product-direction decision is involved.
+- 2026-07-22: A-R3 final PASS at exact clean commit `49a9923`. The reviewer reproduces
+  the final 1 PASS / 1 intentional FAIL / 17 SKIP topology and confirms that mixed
+  document-plus-diagnostic outcomes and false root pointers now fail. Exact dependency
+  schema diagnostics follow caller input order, while wrong context, invalid context,
+  and duplicate addresses all require `ok == false` and no document. ADR 0017 is
+  accepted for A4. The complete repository gate runs all 240 actor journeys and every
+  retained record, loader, adapter, candidate, research, governance, report, Evidence,
+  and proof lane; its sole failure is the declared absent A4 module and the same 17
+  successor controls skip. A3 remains an intentionally red checkpoint and must not
+  merge until A4 turns the same suite green without weakening an assertion.
+- 2026-07-22: A4 candidate `8caed67` turns all 19 frozen controls green. The complete
+  repository gate passes 240 actor journeys, 42 research probes, and every retained
+  record, loader, adapter, candidate, governance, report, Evidence, and proof lane.
+- 2026-07-22: The dispatched Sonnet 5 A-R4 route resolved the requested model at high
+  effort but STOPPED before product review: the strict child mounted the linked `/tmp`
+  worktree without its parent `/srv/.../.git` metadata, so it could not establish the
+  exact revision or clean state. This is tooling/provenance evidence only. A separately
+  framed internal reviewer was assigned explicitly.
+- 2026-07-22: A-R4 BLOCK at exact clean `8caed67`. Strict raw probes pass, but ordinary
+  dependency boundary values escape the promised all-or-none observation: `None` as
+  the container raises `TypeError`, non-dependency items raise `AttributeError`, and a
+  `MappingProxyType` document raises during `deepcopy` despite the public `Mapping`
+  annotation. The successor freezes container/item/label/document and recursive-value
+  failures, retains `Mapping`, and must convert them into deterministic diagnostics
+  before A-R4 can pass. No final surface or operator values decision is involved.
+- 2026-07-22: A-R4 successor BLOCK at exact clean `5c3dee2`. All prior counterexamples
+  close, 21 focused controls and the complete 242-journey repository gate pass, and
+  mapping proxies, nested proxies, `UserDict`, and recursive context behave correctly.
+  One conforming custom `Mapping` whose iterator raises `RuntimeError` still escapes
+  because snapshot containment catches selected exception types. The next successor
+  freezes throwing top-level/nested JSON containers and contains ordinary `Exception`,
+  while leaving process-control exceptions untouched. No direction choice is involved.
+- 2026-07-22: A-R4 final PASS at exact clean `3d85683`. All 22 focused controls and the
+  complete 243-journey repository gate pass. Independent replay confirms throwing
+  top-level `Mapping` and nested-list traversal return identical all-or-none
+  `AUTHOR_DEPENDENCY_SNAPSHOT` diagnostics, while `KeyboardInterrupt` and `SystemExit`
+  remain unmasked. No residual hidden discovery/default, Mapping, hosted-semantics,
+  independent-IR, or semantic-overclaim concern remains within A4. This releases A5.
 
 ## Decision log
 
@@ -228,15 +318,18 @@ reordering changes document equality without changing local addresses or graph v
 | add a syntax-neutral authoring IR now | only one executable input exists and the current transformation is identity; a second structural model would create drift before it enables composition | reject until a second frontend or non-identity transformation demonstrates the need |
 | preserve declaration-array order or canonicalize it | array positions do not address declarations, but record-document equality observes array order | require each adapter to preserve explicit source declaration order for exact output; do not infer semantic meaning from position; reopen if canonical record equality changes |
 | accept the format-neutral boundary or escalate now | A-R2 confirms the contract closes authority/diagnostic/JSON-inertia gaps, remains reversible, and leaves final surface experience open | accept ADR 0016 and release A3; no operator decision exists until evidence cannot distinguish materially different surface workflows |
+| validate external references without ambient discovery | both retained Specifications are invalid as isolated graphs because their profile references resolve only with separate dependency records | propose an explicit finite caller-supplied dependency context in ADR 0017; A3 review must pass before A4 may implement it |
 
 ## Result and remaining work
 
-A0, A1, A-R1, and A-G1 are complete. The project now has an executable, independently
+A0 through A4/A-R4 are complete. The project now has an executable, independently
 reviewed two-domain statement of the authoring deficit without committing to final
 surface syntax. A2/A-R2/A-G2 accept the representation-neutral boundary and release A3
-red controls. Parser implementation, grammar, independent authoring IR, canonical
-format migration, semantic type checking, non-control surface, and human usability
-remain unimplemented and unaccepted.
+red controls; A-R3 accepts the exact red contract; and A4 implements its strict
+canonical-JSON control with an explicit finite dependency context. Final grammar,
+independent authoring IR, canonical format migration, semantic type checking,
+non-control surface, author command, and human usability remain unimplemented or
+unaccepted. A5 is the next released node.
 
 ## Stop and escalation conditions
 
