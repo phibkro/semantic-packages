@@ -2,12 +2,9 @@
 
 ## Now
 
-1. Complete hosted convergence for [ExecPlan 0005](../docs/exec-plans/active/0005-deployment-profile-choice.md),
-   whose local actor now selects between genuinely differentiated deployment profiles
-   while keeping nonmatching Evidence inapplicable.
-2. Probe the shared human authoring surface revealed by Stack and OrderedMap before
+1. Probe the shared human authoring surface revealed by Stack and OrderedMap before
    committing `.pspec` to elaboration rules or hidden defaults.
-3. Model explicit specification refinement and cross-version compatibility only from
+2. Model explicit specification refinement and cross-version compatibility only from
    a concrete two-domain migration or composition falsifier.
 
 ## Deferred operator observation
@@ -43,10 +40,11 @@
   authority, both consumer views, a selective breaker, and an append-only zero-candidate
   successor with nonautomatic predecessor recovery. Its accepted claim is two-domain
   reuse only, not universal generality.
-- ExecPlan 0005 has locally completed the exact deployment-profile tracer: fresh
+- [ExecPlan 0005](../docs/exec-plans/completed/0005-deployment-profile-choice.md)
+  completed the exact deployment-profile tracer: fresh
   native-process and Deno-sandbox campaigns, profile-bound Evidence, one append-only
   69-member authority, two explainable exact choices, complete non-transfer ledgers,
-  and unchanged Stack/O6--O8 regressions. Hosted convergence remains before closure.
+  unchanged Stack/O6--O8 regressions, and exact-head local and hosted convergence.
 - Stack remains the regression substrate. A later semantic package must join it rather
   than erase the only accepted comparison point.
 

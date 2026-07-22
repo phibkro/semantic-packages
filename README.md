@@ -13,7 +13,7 @@ The project explores a shared specification language that:
 
 ## Current phase
 
-**Two-domain tracer accepted → exact differentiated-profile choice at convergence.**
+**Exact differentiated-profile choice accepted → shared human authoring probe.**
 
 The accepted Stack tracer publishes one nontrivial specification, binds proof and
 conformance Evidence, registers two independent Realizations, resolves them under an
@@ -47,7 +47,7 @@ inapplicable rather than transferring assurance.
 - [`docs/design/tracer-bullet.md`](docs/design/tracer-bullet.md): first vertical slice.
 - [`docs/exec-plans/active/0003-cold-human-inspection.md`](docs/exec-plans/active/0003-cold-human-inspection.md): executable inspection surface and deferred uninvolved-human gate.
 - [`docs/exec-plans/completed/0004-ordered-map-generality.md`](docs/exec-plans/completed/0004-ordered-map-generality.md): completed OrderedMap second-domain research, implementation, maintenance, and convergence history.
-- [`docs/exec-plans/active/0005-deployment-profile-choice.md`](docs/exec-plans/active/0005-deployment-profile-choice.md): exact differentiated-profile Evidence, authority, actor, and convergence history.
+- [`docs/exec-plans/completed/0005-deployment-profile-choice.md`](docs/exec-plans/completed/0005-deployment-profile-choice.md): completed differentiated-profile research, Evidence, authority, actor, maintenance, and convergence history.
 - [`docs/exec-plans/completed/0001-tracer-bullet.md`](docs/exec-plans/completed/0001-tracer-bullet.md): completed design, record, proof, adapter, independent-Realization, and Evidence history.
 - [`docs/exec-plans/completed/0002-actor-journeys.md`](docs/exec-plans/completed/0002-actor-journeys.md): completed actor registry, resolver, projection, maintenance, release, and workflow-governance history.
 - [`tasks/backlog.md`](tasks/backlog.md): ordered research and engineering backlog.
@@ -156,6 +156,8 @@ Then open the repository in Codex, an IDE extension, or another coding agent. Th
 
 ## Status
 
-This repository is an executable research prototype with complete bounded local Stack
-and finite OrderedMap lifecycles. It is not yet a stable standard, an arbitrary-domain
-semantic-package ecosystem, or a hosted production registry.
+This repository is an executable research prototype with complete bounded local Stack,
+finite OrderedMap, and exact differentiated-profile lifecycles. The next authored node
+probes their shared human authoring surface before selecting elaboration rules. This is
+not yet a stable standard, an arbitrary-domain semantic-package ecosystem, or a hosted
+production registry.

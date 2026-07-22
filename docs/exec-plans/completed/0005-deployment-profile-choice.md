@@ -260,6 +260,33 @@ P0 roadmap selection
   lanes, and 49 proof groups. The documented zero-execution actor demo and every
   prospective commit in `origin/master..2e663a9` also pass. Hosted exact-head checks
   remain the sole final P-G edge before the plan may move to completed.
+- 2026-07-22: Hosted P-G preclosure PASS at exact head
+  `66d4424ad391b429ae05ba3a40471169e7cd3b43` in quality-gates run 90. Prospective
+  metadata accepted the Conventional Commit range and complete PR handoff; the locked
+  toolchain and complete repository contract also passed. This releases the completion
+  move. The completion-only successor must rerun both hosted jobs at its own exact head
+  before ready state and squash merge.
+
+## Result and remaining work
+
+P0 through P-G establish exactly two deployment choices over the accepted finite
+OrderedMap meaning. A native-process consumer selects Rust `0.2.0`; a Deno-sandbox
+consumer selects TypeScript `0.2.0`. Both decisions derive from one authenticated
+69-member append-only graph, dispose every required law/resource/effect concern,
+retain complete 7/21 selected/inapplicable Claim and Evidence ledgers, leave optional
+performance unsupported, and keep the non-direct child-process boundary outside
+semantic acceptance. Old profile-bound Evidence never transfers by resemblance.
+
+The predecessor 33-member and O8 35-member authorities, O8 zero-candidate result and
+nonautomatic recovery, all Stack actors, and `resolve_stack` remain unchanged. The
+accepted claim is exact profile choice over Stack plus finite OrderedMap—not profile
+refinement, Evidence migration, version compatibility, runtime interoperability,
+performance superiority, a generic resolver, or arbitrary-domain generality. Private
+resolver-helper coupling and actor-authenticated provenance hashes remain maintenance
+observations. Actual uninvolved-human inspection remains deferred in ExecPlan 0003.
+The next authored product node is a probe of the shared human authoring surface exposed
+by Stack and OrderedMap; it must discover a concrete falsifier before committing syntax
+or hidden elaboration defaults.
 
 ## Verification
 

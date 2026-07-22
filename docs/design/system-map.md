@@ -20,14 +20,15 @@ the active ExecPlan.
 | accepted actor-journey and governance successor history | [completed ExecPlan 0002](../exec-plans/completed/0002-actor-journeys.md) |
 | deferred uninvolved-human inspection journey | [active ExecPlan 0003](../exec-plans/active/0003-cold-human-inspection.md) |
 | accepted OrderedMap second-domain route | [completed ExecPlan 0004](../exec-plans/completed/0004-ordered-map-generality.md) |
-| differentiated deployment-profile route | [active ExecPlan 0005](../exec-plans/active/0005-deployment-profile-choice.md) |
+| accepted differentiated deployment-profile route | [completed ExecPlan 0005](../exec-plans/completed/0005-deployment-profile-choice.md) |
 
-Current route: ExecPlan 0004 is closed at two-domain reuse. ExecPlan 0005 has produced
+Current route: ExecPlan 0004 is closed at two-domain reuse. ExecPlan 0005 produced
 fresh exact-profile Evidence and an authenticated 69-member authority for differentiated
 native-process and Deno-sandbox choices. Its actor selects Rust only for the native
 profile and TypeScript only for the Deno profile while retaining 21 nonmatching Claims
-and 21 nonmatching Evidence records as inapplicable in each decision. P5 convergence
-and hosted acceptance remain before plan closure.
+and 21 nonmatching Evidence records as inapplicable in each decision. Its lifecycle is
+closed. The next authored route probes the shared human authoring surface before any
+`.pspec` elaboration or hidden default is selected.
 
 ## End-to-end product shape
 
