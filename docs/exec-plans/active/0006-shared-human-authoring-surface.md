@@ -138,15 +138,16 @@ A3 adds an intentionally red predecessor gate:
 python3 -m unittest tests.journeys.test_a3_shared_human_authoring_contract -v
 ```
 
-Before A4 exists, the reviewed topology must be 17 tests: one exact-input and
+Before A4 exists, the successor topology must be 19 tests: one exact-input and
 dependency-gap control PASS, one intentional failure naming only the absent
-`semantic_packages.authoring` module, and fifteen successor controls SKIP. The frozen
+`semantic_packages.authoring` module, and seventeen successor controls SKIP. The frozen
 successor contract requires exact Stack and OrderedMap documents relative to explicit
 finite profile contexts; no-default format and dependency inputs; provenance-only
 labels; format/UTF-8/JSON/duplicate-member precedence; all-or-none outcomes; exact
 identity/local-reference/hosted-text diagnostics; order preservation; deterministic
-replay; and isolated input/output snapshots. A4 must turn this same suite green without
-weakening or deleting an assertion.
+replay; schema/link phase barriers; used and validated dependency contents; wrong-kind
+source rejection; stable raw detail; and isolated input/output snapshots. A4 must turn
+this same suite green without weakening or deleting an assertion.
 
 ## Progress checklist
 
@@ -242,6 +243,18 @@ weakening or deleting an assertion.
   missing-module failure, and fifteen SKIP. This is a contract correction, not a choice
   of syntax, workflow, registry, or acquisition authority. Independent A3 review must
   attack the context and red oracles before A4 is released.
+- 2026-07-22: The dispatcher-requested Fable 5 A-R3 attempt returned no output during
+  its bounded interval and was terminated. This is retained as provider unavailability,
+  not review evidence. A separately framed internal reviewer was assigned as the
+  explicit fallback.
+- 2026-07-22: A-R3 BLOCK at `12974b8`. The reviewer reproduced the 1 PASS / 1 FAIL /
+  15 SKIP topology and showed that an empty module cannot pass vacuously, but found the
+  dependency contents, validation phase, labels, input order, and duplicate addresses
+  under-specified. A4 could have treated any nonempty tuple as permission to ignore its
+  records. The suite also omitted a schema-valid wrong source kind, missing local
+  identity/reference fields, opaque nonempty hosted-text preservation, and stable raw
+  detail. The A3 successor adds those exact controls and reconciles ADR 0017's ordering;
+  no syntax, workflow, registry, acquisition, or other operator values choice is made.
 
 ## Decision log
 

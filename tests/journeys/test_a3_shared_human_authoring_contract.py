@@ -99,6 +99,10 @@ class SharedHumanAuthoringSuccessorContractTest(unittest.TestCase):
         )
         self.assertEqual(
             inspect.Parameter.empty,
+            signature.parameters["source_label"].default,
+        )
+        self.assertEqual(
+            inspect.Parameter.empty,
             signature.parameters["dependencies"].default,
         )
         self.assertEqual(FORMAT, authoring.CANONICAL_SPEC_JSON_V1)
@@ -132,6 +136,123 @@ class SharedHumanAuthoringSuccessorContractTest(unittest.TestCase):
                     "#/performancePropositions/0/workload/profile",
                 ),
             ),
+            tuple(_shape(item) for item in observation.diagnostics),
+        )
+
+    def test_dependency_context_is_validated_ordered_and_nonauthoritative(self) -> None:
+        source = _load(STACK_SPEC)
+        correct = _dependency(STACK_PROFILE, "z/stack-profile.json")
+        irrelevant = _dependency(ORDERED_MAP_PROFILE, "a/ordered-map-profile.json")
+
+        for dependencies in ((correct, irrelevant), (irrelevant, correct)):
+            with self.subTest(order=tuple(item.source_label for item in dependencies)):
+                observation = authoring.author_specification(
+                    _canonical_bytes(source),
+                    format_token=FORMAT,
+                    source_label="author/source.json",
+                    dependencies=dependencies,
+                )
+                self.assertTrue(observation.ok)
+                self.assertEqual(source, observation.document)
+
+        renamed = authoring.AuthoringDependency(
+            source_label="renamed/context.json",
+            document=_load(STACK_PROFILE),
+        )
+        observation = authoring.author_specification(
+            _canonical_bytes(source),
+            format_token=FORMAT,
+            source_label="author/source.json",
+            dependencies=(renamed,),
+        )
+        self.assertTrue(observation.ok)
+        self.assertEqual(source, observation.document)
+
+        wrong_context = authoring.author_specification(
+            _canonical_bytes(source),
+            format_token=FORMAT,
+            source_label="author/source.json",
+            dependencies=(irrelevant,),
+        )
+        self.assertEqual(
+            (
+                (
+                    "LINK_DANGLING_REFERENCE",
+                    "author/source.json",
+                    "#/performancePropositions/0/costMeasure/profile",
+                ),
+                (
+                    "LINK_DANGLING_REFERENCE",
+                    "author/source.json",
+                    "#/performancePropositions/0/workload/profile",
+                ),
+            ),
+            tuple(_shape(item) for item in wrong_context.diagnostics),
+        )
+
+        missing_version = _load(STACK_PROFILE)
+        del missing_version["version"]
+        missing_id = _load(ORDERED_MAP_PROFILE)
+        del missing_id["id"]
+        first = authoring.AuthoringDependency("z/first.json", missing_version)
+        second = authoring.AuthoringDependency("a/second.json", missing_id)
+        for dependencies, expected_paths in (
+            ((first, second), ("z/first.json", "a/second.json")),
+            ((second, first), ("a/second.json", "z/first.json")),
+        ):
+            with self.subTest(invalid_order=expected_paths):
+                invalid = authoring.author_specification(
+                    _canonical_bytes(source),
+                    format_token=FORMAT,
+                    source_label="author/source.json",
+                    dependencies=dependencies,
+                )
+                self.assertIsNone(invalid.document)
+                self.assertEqual(
+                    expected_paths,
+                    tuple(item.path for item in invalid.diagnostics),
+                )
+                self.assertEqual(
+                    {"SCHEMA_MISSING_FIELD"},
+                    {item.code for item in invalid.diagnostics},
+                )
+                self.assertNotIn(
+                    "LINK_DANGLING_REFERENCE",
+                    {item.code for item in invalid.diagnostics},
+                )
+
+        duplicate = authoring.author_specification(
+            _canonical_bytes(source),
+            format_token=FORMAT,
+            source_label="author/source.json",
+            dependencies=(
+                correct,
+                authoring.AuthoringDependency(
+                    "duplicate/stack-profile.json", _load(STACK_PROFILE)
+                ),
+            ),
+        )
+        self.assertEqual(
+            (
+                (
+                    "LINK_DUPLICATE_ADDRESS",
+                    "duplicate/stack-profile.json",
+                    "#",
+                ),
+            ),
+            tuple(_shape(item) for item in duplicate.diagnostics),
+        )
+
+    def test_schema_valid_non_specification_source_is_rejected(self) -> None:
+        observation = authoring.author_specification(
+            _canonical_bytes(_load(STACK_PROFILE)),
+            format_token=FORMAT,
+            source_label="author/source.json",
+            dependencies=(),
+        )
+        self.assertIsNone(observation.document)
+        self.assertEqual(
+            (("AUTHOR_EXPECTED_SPECIFICATION", "author/source.json", "#/kind"),),
             tuple(_shape(item) for item in observation.diagnostics),
         )
 
@@ -188,6 +309,7 @@ class SharedHumanAuthoringSuccessorContractTest(unittest.TestCase):
             (("AUTHOR_INVALID_UTF8", "author/source", "#"),),
             tuple(_shape(item) for item in observation.diagnostics),
         )
+        self.assertEqual("invalid UTF-8 at byte 0", observation.diagnostics[0].message)
 
     def test_malformed_json_fails_before_record_validation(self) -> None:
         observation = authoring.author_specification(
@@ -200,6 +322,10 @@ class SharedHumanAuthoringSuccessorContractTest(unittest.TestCase):
         self.assertEqual(
             (("AUTHOR_INVALID_JSON", "author/source", "#"),),
             tuple(_shape(item) for item in observation.diagnostics),
+        )
+        self.assertEqual(
+            "invalid JSON at line 1 column 24 (character 23)",
+            observation.diagnostics[0].message,
         )
 
     def test_duplicate_object_member_fails_before_schema_validation(self) -> None:
@@ -214,6 +340,9 @@ class SharedHumanAuthoringSuccessorContractTest(unittest.TestCase):
             (("AUTHOR_DUPLICATE_MEMBER", "author/source", "#"),),
             tuple(_shape(item) for item in observation.diagnostics),
         )
+        self.assertEqual(
+            "duplicate object member: id", observation.diagnostics[0].message
+        )
 
     def test_missing_and_unknown_root_identity_are_exact(self) -> None:
         missing = _load(STACK_SPEC)
@@ -227,6 +356,23 @@ class SharedHumanAuthoringSuccessorContractTest(unittest.TestCase):
         self.assertEqual(
             (("SCHEMA_UNKNOWN_KIND", "#"),),
             tuple((d.code, d.pointer) for d in _author(unknown).diagnostics),
+        )
+
+        missing_local_id = _load(STACK_SPEC)
+        del missing_local_id["operations"][0]["id"]
+        self.assertEqual(
+            (("SCHEMA_MISSING_FIELD", "#/operations/0/id"),),
+            tuple((d.code, d.pointer) for d in _author(missing_local_id).diagnostics),
+        )
+
+        missing_local_reference = _load(STACK_SPEC)
+        del missing_local_reference["equivalences"][0]["carrier"]
+        self.assertEqual(
+            (("SCHEMA_MISSING_FIELD", "#/equivalences/0/carrier"),),
+            tuple(
+                (d.code, d.pointer)
+                for d in _author(missing_local_reference).diagnostics
+            ),
         )
 
     def test_duplicate_dangling_and_wrong_kind_local_references_are_exact(self) -> None:
@@ -266,6 +412,13 @@ class SharedHumanAuthoringSuccessorContractTest(unittest.TestCase):
             (("SCHEMA_NONEMPTY_STRING", "#/laws/0/statement"),),
             tuple((d.code, d.pointer) for d in observation.diagnostics),
         )
+
+        opaque = _load(STACK_SPEC)
+        opaque_text = "forall x: hosted tokens remain opaque {{not interpreted}}"
+        opaque["laws"][0]["statement"] = opaque_text
+        preserved = _author(opaque)
+        self.assertTrue(preserved.ok)
+        self.assertEqual(opaque_text, preserved.document["laws"][0]["statement"])
 
     def test_explicit_declaration_order_is_preserved_but_not_addressing(self) -> None:
         source = _load(ORDERED_MAP_SPEC)

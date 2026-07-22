@@ -37,12 +37,18 @@ source bytes + exact format token + opaque source label
   exact supplied context.
 - Source and dependency labels locate diagnostics only. They cannot alter document
   identity, content, ordering, references, selection, or authority.
-- Dependency input order controls deterministic diagnostic traversal only; it creates
-  no canonical record identity or semantic priority. Duplicate canonical addresses
-  remain graph errors.
+- Dependency input order controls deterministic dependency-schema diagnostic traversal
+  only; it creates no canonical record identity or semantic priority. Source-record
+  diagnostics precede dependency-schema diagnostics, and any schema failure suppresses
+  link conclusions. Once every record is schema-valid, link diagnostics retain the
+  existing `(path, pointer, code)` order. Duplicate canonical addresses remain graph
+  errors attributed to the later duplicate in dependency input order.
 - The returned document is the authored Specification only. Dependency records are
   context, not inferred output, copied declarations, imports, or Evidence.
 - The all-or-none result and raw-phase precedence from ADR 0016 remain unchanged.
+- Raw failures retain the source label and root pointer plus stable actionable detail:
+  a byte offset for invalid UTF-8, line/column/character for malformed JSON, and the
+  repeated key for a duplicate member.
 
 ## Consequences
 
