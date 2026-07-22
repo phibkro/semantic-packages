@@ -121,7 +121,7 @@ python3 scripts/check_repo.py
 - [x] R3 finite-law inspector, fold report, and atomic command
 - [x] R-R2 independent implementation review
 - [x] R4 durable documentation and maintenance
-- [ ] R-G convergence, freeze, and one PR
+- [x] R-G convergence, freeze, and one PR
 
 ## Discoveries and changed assumptions
 
@@ -215,6 +215,14 @@ python3 scripts/check_repo.py
   refinement plus exact imported-resource binding checks into the new inspector. The
   canonical Specification schema change remains intentional and updates the research
   probe's frozen schema digest; no accepted report or predecessor domain byte changes.
+- 2026-07-22: R-G PASS at exact clean `d171fe8`. The complete repository gate reports
+  24 valid, 20 schema-invalid, 38 link-invalid, and 3 link-valid record fixtures; 18
+  loader groups; 50 adapter tests; 59 candidate tests; 302 actor journeys; 42 research
+  tests; 20 governance tests; every Wave 4, OrderedMap, and profile-choice report and
+  Evidence freshness group; and 49 proof groups green. Design-spec 0004 revision 4 is
+  frozen without changing its observable contract. The completed plan archives all
+  three R-R1 BLOCK successors, the R-R1 and R-R2 PASS evidence, the protected-byte
+  correction, known exclusions, and reopen conditions for the one stacked PR.
 
 ## Maintenance, recovery, and reopen conditions
 

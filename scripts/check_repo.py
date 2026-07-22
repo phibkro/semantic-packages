@@ -67,7 +67,7 @@ REQUIRED = [
     "docs/exec-plans/active/0006-shared-human-authoring-surface.md",
     "docs/exec-plans/completed/0007-explicit-refinement-inspection.md",
     "docs/exec-plans/completed/0008-bounded-effect-separation.md",
-    "docs/exec-plans/active/0009-finite-resource-composition.md",
+    "docs/exec-plans/completed/0009-finite-resource-composition.md",
     "docs/exec-plans/completed/0005-deployment-profile-choice.md",
     "docs/exec-plans/completed/0004-ordered-map-generality.md",
     "docs/exec-plans/completed/0001-tracer-bullet.md",

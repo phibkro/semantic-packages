@@ -17,7 +17,7 @@ from unittest import mock
 
 ROOT = Path(__file__).resolve().parents[2]
 DESIGN_SPEC = ROOT / "design-specs/0004-finite-resource-composition-inspection.md"
-EXEC_PLAN = ROOT / "docs/exec-plans/active/0009-finite-resource-composition.md"
+EXEC_PLAN = ROOT / "docs/exec-plans/completed/0009-finite-resource-composition.md"
 SOURCE = ROOT / "specs/persistence-composition.pspec"
 STACK_PSPEC = ROOT / "specs/stack.pspec"
 ORDERED_MAP_PSPEC = ROOT / "specs/ordered-map.pspec"

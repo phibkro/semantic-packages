@@ -2,10 +2,10 @@
 
 ## Contract status
 
-Active draft for one stacked feature and one future pull request, based on ready PR #18
-at `7b2f883f434155efd324f0bc92ae80e0514467d1`. This contract freezes only when its
-complete experienceable PR opens. Revisions must record the observation that required
-them; implementation convenience cannot turn this finite candidate into the project's
+Frozen for one complete stacked feature pull request, based on ready PR #18 at
+`7b2f883f434155efd324f0bc92ae80e0514467d1`. Any later change to observable behavior
+requires an explicit numbered revision and reopens the affected falsifiers;
+implementation convenience cannot turn this finite candidate into the project's
 canonical resource logic.
 
 ## Felt user journey
@@ -253,3 +253,9 @@ silently encoding any of those in hosted `rule` text or candidate-specific defau
   therefore live at the new inspector boundary while the shared checker remains byte-
   identical. The optional canonical schema and every observable command, diagnostic,
   law, fold, and authority rule remain unchanged. Not frozen for PR.
+- **2026-07-22, revision 4 (frozen):** Independent R-R2 passed at exact implementation
+  head `26d0e24`; the protected-predecessor successor restored the shared record checker
+  byte-for-byte; and the complete clean gate passed at `d171fe8` with 302 actor-journey
+  checks plus every record, loader, adapter, candidate, research, governance, Evidence,
+  profile, and proof group green. The observable contract is unchanged from revision 3
+  and is frozen for the one experienceable stacked PR.
