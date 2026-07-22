@@ -293,7 +293,7 @@ python3 scripts/check_repo.py
 ```
 
 The gate includes record/link fixtures, 18 loader groups, 50 adapter/campaign tests,
-59 cross-language candidate/Evidence-binding controls, 285 actor journeys, 42 research
+59 cross-language candidate/Evidence-binding controls, 302 actor journeys, 42 research
 probes, 20 governance tests, two fresh Stack reports/eight records, two fresh base
 OrderedMap reports plus one selective breaker, the exact base and profile-choice
 2/14/14 candidate censuses, two fresh profile-bound reports, and the 49-group proof

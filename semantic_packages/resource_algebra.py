@@ -6,6 +6,7 @@ import hashlib
 import json
 import os
 import tempfile
+import tomllib
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Mapping, Sequence
@@ -44,6 +45,106 @@ def _binding_key(binding: Mapping[str, Any]) -> tuple[str, str, str, str]:
         specification["version"],
         reference["declarationId"],
     )
+
+
+def _refine_candidate_schema_diagnostics(
+    source_bytes: bytes,
+    source_path: Path,
+    diagnostics: Sequence[record_check.Diagnostic],
+) -> tuple[record_check.Diagnostic, ...]:
+    """Refine only candidate-local schema failures without changing the shared checker."""
+    if not diagnostics or not all(item.code.startswith("SCHEMA_") for item in diagnostics):
+        return tuple(diagnostics)
+    try:
+        document = tomllib.loads(source_bytes.decode("utf-8"))
+    except (UnicodeError, ValueError, tomllib.TOMLDecodeError):
+        return tuple(diagnostics)
+    resources = document.get("resources", []) if isinstance(document, dict) else []
+    if not isinstance(resources, list):
+        return tuple(diagnostics)
+    for index, resource in enumerate(resources):
+        if not isinstance(resource, dict):
+            continue
+        algebra = resource.get("algebra")
+        if not isinstance(algebra, dict):
+            continue
+        base = f"#/resources/{index}/algebra"
+        if algebra.get("kind") != "finite-commutative-monoid-v1":
+            return (
+                record_check.Diagnostic(
+                    "SCHEMA_RESOURCE_ALGEBRA_KIND",
+                    os.fspath(source_path),
+                    f"{base}/kind",
+                    "resource algebra kind must be finite-commutative-monoid-v1",
+                ),
+            )
+        carrier = algebra.get("carrier")
+        if isinstance(carrier, list) and len(carrier) != len(
+            {json.dumps(item, ensure_ascii=False, sort_keys=True) for item in carrier}
+        ):
+            return (
+                record_check.Diagnostic(
+                    "SCHEMA_UNIQUE_ITEMS",
+                    os.fspath(source_path),
+                    f"{base}/carrier",
+                    "resource algebra carrier elements must be unique",
+                ),
+            )
+    return tuple(diagnostics)
+
+
+def _binding_link_diagnostics(
+    document: Mapping[str, Any],
+    dependency_documents: Sequence[Mapping[str, Any]],
+    source_path: Path,
+) -> tuple[record_check.Diagnostic, ...]:
+    """Check candidate-local exact imported resource bindings after generic links pass."""
+    records: dict[str, dict[str, Any]] = {"@source": dict(document)}
+    for index, dependency in enumerate(dependency_documents):
+        records[f"@dependency/{index:06d}"] = dict(dependency)
+    graph = record_check.Graph(records)
+    imported = {record_check.address_of(ref) for ref in document.get("imports", [])}
+    diagnostics: list[record_check.Diagnostic] = []
+    for resource_index, resource in enumerate(document.get("resources", [])):
+        algebra = resource.get("algebra")
+        if not isinstance(algebra, dict):
+            continue
+        for binding_index, binding in enumerate(algebra.get("bindings", [])):
+            reference = binding["declarationReference"]
+            specification = reference["specification"]
+            base = (
+                f"#/resources/{resource_index}/algebra/bindings/{binding_index}"
+                "/declarationReference"
+            )
+            errors, target = graph.resolve(
+                specification,
+                os.fspath(source_path),
+                f"{base}/specification",
+            )
+            diagnostics.extend(errors)
+            if errors or target is None:
+                continue
+            if record_check.address_of(specification) not in imported:
+                diagnostics.append(
+                    record_check.Diagnostic(
+                        "LINK_RESOURCE_BINDING_NOT_IMPORTED",
+                        os.fspath(source_path),
+                        f"{base}/specification",
+                        f"requested {record_check.fmt_tuple(specification)} as an exact import of "
+                        f"{record_check.fmt_tuple(dict(document))}",
+                    )
+                )
+            error = record_check._resolve_local_declaration(
+                target,
+                reference["declarationId"],
+                os.fspath(source_path),
+                f"{base}/declarationId",
+                "resource",
+            )
+            if error is not None:
+                diagnostics.append(error)
+    diagnostics.sort(key=record_check.Diagnostic.sort_key)
+    return tuple(diagnostics)
 
 
 def inspect_resource_algebra(
@@ -339,10 +440,21 @@ def run_resource_inspection(
         dependencies=tuple(dependencies),
     )
     if not observation.ok:
-        _print_diagnostics(observation.diagnostics)
+        _print_diagnostics(
+            _refine_candidate_schema_diagnostics(
+                source_bytes, source_path, observation.diagnostics
+            )
+        )
         return 1
     document = observation.document
     assert document is not None
+
+    binding_diagnostics = _binding_link_diagnostics(
+        document, dependency_documents, source_path
+    )
+    if binding_diagnostics:
+        _print_diagnostics(binding_diagnostics)
+        return 1
 
     report, problem = inspect_resource_algebra(
         document,

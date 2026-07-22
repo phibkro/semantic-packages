@@ -321,101 +321,13 @@ _EQUIVALENCE_ALLOWED = ["id", "carrier", "definition"]
 _LAW_REQUIRED = ["id", "statement"]
 _LAW_ALLOWED = ["id", "statement"]
 _RESOURCE_REQUIRED = ["id", "rule"]
-_RESOURCE_ALLOWED = ["id", "rule", "algebra"]
-_RESOURCE_ALGEBRA_REQUIRED = ["kind", "carrier", "unit", "composition", "bindings"]
-_RESOURCE_ALGEBRA_ALLOWED = _RESOURCE_ALGEBRA_REQUIRED
-_RESOURCE_COMPOSITION_REQUIRED = ["left", "right", "result"]
-_RESOURCE_COMPOSITION_ALLOWED = _RESOURCE_COMPOSITION_REQUIRED
-_RESOURCE_BINDING_REQUIRED = ["declarationReference", "element"]
-_RESOURCE_BINDING_ALLOWED = _RESOURCE_BINDING_REQUIRED
+_RESOURCE_ALLOWED = ["id", "rule"]
 _EFFECT_REQUIRED = ["id", "default"]
 _EFFECT_ALLOWED = ["id", "forbidden", "required", "permitted", "optional", "default"]
 _EFFECT_DISPOSITIONS = ["forbidden", "required", "permitted", "optional", "unspecified"]
 
 _PERF_PROP_REQUIRED = ["id", "operationFamily", "workload", "costMeasure", "predicate", "permittedEvidenceMethods"]
 _PERF_PROP_ALLOWED = _PERF_PROP_REQUIRED
-
-
-def _classify_local_token(value: Any, pointer: str) -> tuple[str, str] | None:
-    if not isinstance(value, str):
-        return ("SCHEMA_TYPE_MISMATCH", pointer)
-    if not value:
-        return ("SCHEMA_NONEMPTY_STRING", pointer)
-    return None
-
-
-def _classify_resource(instance: Any, base_pointer: str) -> tuple[str, str] | None:
-    result = _classify_plain_object(instance, base_pointer, _RESOURCE_REQUIRED, _RESOURCE_ALLOWED)
-    if result or not isinstance(instance, dict) or "algebra" not in instance:
-        return result
-    algebra_pointer = join_ptr(base_pointer, "algebra")
-    algebra = instance["algebra"]
-    result = _classify_plain_object(
-        algebra, algebra_pointer, _RESOURCE_ALGEBRA_REQUIRED, _RESOURCE_ALGEBRA_ALLOWED
-    )
-    if result:
-        return result
-    if algebra.get("kind") != "finite-commutative-monoid-v1":
-        return ("SCHEMA_RESOURCE_ALGEBRA_KIND", join_ptr(algebra_pointer, "kind"))
-    carrier = algebra.get("carrier")
-    carrier_pointer = join_ptr(algebra_pointer, "carrier")
-    if not isinstance(carrier, list):
-        return ("SCHEMA_TYPE_MISMATCH", carrier_pointer)
-    if not carrier:
-        return ("SCHEMA_INVALID", carrier_pointer)
-    for index, token in enumerate(carrier):
-        result = _classify_local_token(token, join_ptr(carrier_pointer, index))
-        if result:
-            return result
-    if len({json.dumps(item, sort_keys=True) for item in carrier}) != len(carrier):
-        return ("SCHEMA_UNIQUE_ITEMS", carrier_pointer)
-    result = _classify_local_token(algebra.get("unit"), join_ptr(algebra_pointer, "unit"))
-    if result:
-        return result
-
-    def classify_row(item: Any, pointer: str) -> tuple[str, str] | None:
-        row_result = _classify_plain_object(
-            item, pointer, _RESOURCE_COMPOSITION_REQUIRED, _RESOURCE_COMPOSITION_ALLOWED
-        )
-        if row_result:
-            return row_result
-        for field in _RESOURCE_COMPOSITION_REQUIRED:
-            row_result = _classify_local_token(item.get(field), join_ptr(pointer, field))
-            if row_result:
-                return row_result
-        return None
-
-    composition = algebra.get("composition")
-    result = _classify_object_array(
-        composition, join_ptr(algebra_pointer, "composition"), classify_row
-    )
-    if result:
-        return result
-    if not composition:
-        return ("SCHEMA_INVALID", join_ptr(algebra_pointer, "composition"))
-
-    def classify_binding(item: Any, pointer: str) -> tuple[str, str] | None:
-        binding_result = _classify_plain_object(
-            item, pointer, _RESOURCE_BINDING_REQUIRED, _RESOURCE_BINDING_ALLOWED
-        )
-        if binding_result:
-            return binding_result
-        binding_result = _classify_declaration_reference(
-            item.get("declarationReference"), join_ptr(pointer, "declarationReference")
-        )
-        if binding_result:
-            return binding_result
-        return _classify_local_token(item.get("element"), join_ptr(pointer, "element"))
-
-    bindings = algebra.get("bindings")
-    result = _classify_object_array(
-        bindings, join_ptr(algebra_pointer, "bindings"), classify_binding
-    )
-    if result:
-        return result
-    if not bindings:
-        return ("SCHEMA_INVALID", join_ptr(algebra_pointer, "bindings"))
-    return None
 
 
 def _classify_performance_proposition(instance: Any, base_pointer: str) -> tuple[str, str] | None:
@@ -498,7 +410,7 @@ def classify_specification(instance: dict) -> tuple[str, str] | None:
             return ("SCHEMA_UNKNOWN_FIELD", ptr("effects", "default"))
     result = _classify_object_array(
         instance.get("resources"), ptr("resources"),
-        _classify_resource,
+        lambda item, p: _classify_plain_object(item, p, _RESOURCE_REQUIRED, _RESOURCE_ALLOWED),
     )
     if result:
         return result
@@ -948,55 +860,6 @@ def _check_specification(graph: Graph, path: str, spec: dict) -> list[Diagnostic
         error = _resolve_local_declaration(spec, carrier_id, path, ptr("equivalences", index, "carrier"), "carrier")
         if error:
             diagnostics.append(error)
-
-    imported_addresses = {address_of(ref) for ref in spec.get("imports", [])}
-    for resource_index, resource in enumerate(spec.get("resources", [])):
-        algebra = resource.get("algebra")
-        if not isinstance(algebra, dict):
-            continue
-        for binding_index, binding in enumerate(algebra.get("bindings", [])):
-            declaration_reference = binding.get("declarationReference")
-            if not isinstance(declaration_reference, dict):
-                continue
-            specification_reference = declaration_reference.get("specification")
-            if not isinstance(specification_reference, dict):
-                continue
-            base_pointer = ptr(
-                "resources",
-                resource_index,
-                "algebra",
-                "bindings",
-                binding_index,
-                "declarationReference",
-            )
-            specification_pointer = join_ptr(base_pointer, "specification")
-            errors, target = graph.resolve(
-                specification_reference, path, specification_pointer
-            )
-            diagnostics.extend(errors)
-            if errors or target is None:
-                continue
-            if address_of(specification_reference) not in imported_addresses:
-                diagnostics.append(
-                    Diagnostic(
-                        "LINK_RESOURCE_BINDING_NOT_IMPORTED",
-                        path,
-                        specification_pointer,
-                        f"requested {fmt_tuple(specification_reference)} as an exact import of {fmt_tuple(spec)}",
-                    )
-                )
-            declaration_id = declaration_reference.get("declarationId")
-            if declaration_id is None:
-                continue
-            error = _resolve_local_declaration(
-                target,
-                declaration_id,
-                path,
-                join_ptr(base_pointer, "declarationId"),
-                "resource",
-            )
-            if error:
-                diagnostics.append(error)
 
     for prop_index, item in enumerate(spec.get("performancePropositions", [])):
         for member_index, operation_id in enumerate(item.get("operationFamily", [])):

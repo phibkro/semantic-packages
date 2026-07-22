@@ -247,3 +247,9 @@ silently encoding any of those in hosted `rule` text or candidate-specific defau
   command now names both profiles explicitly rather than weakening graph validation or
   discovering transitive context. Resource bindings still target only the two exact
   imported Specifications. Not frozen for PR.
+- **2026-07-22, revision 3:** The first complete gate showed that extending the shared
+  record checker would stale accepted OrderedMap reports that bind its exact raw bytes.
+  Candidate-specific schema diagnostic refinement and imported-resource binding checks
+  therefore live at the new inspector boundary while the shared checker remains byte-
+  identical. The optional canonical schema and every observable command, diagnostic,
+  law, fold, and authority rule remain unchanged. Not frozen for PR.

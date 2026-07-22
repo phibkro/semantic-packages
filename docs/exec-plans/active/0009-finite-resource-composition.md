@@ -207,6 +207,14 @@ python3 scripts/check_repo.py
   README, resource semantics, system map, actor journey A8, and backlog. The multi-
   provider runbook now records the observed Herdr-forwarding mismatch, the explicit
   unset mitigation, and the Fable execution-mode/probe limitations.
+- 2026-07-22: the first complete R-G gate BLOCKed predecessor freshness because R2 had
+  extended the shared `scripts/record_check.py`; its raw digest is embedded in accepted
+  OrderedMap campaign and profile-choice reports. Regenerating those reports would
+  violate the protected predecessor boundary. The successor restores the shared checker
+  byte-for-byte (`721c5900...`) and moves candidate-specific schema diagnostic
+  refinement plus exact imported-resource binding checks into the new inspector. The
+  canonical Specification schema change remains intentional and updates the research
+  probe's frozen schema digest; no accepted report or predecessor domain byte changes.
 
 ## Maintenance, recovery, and reopen conditions
 
