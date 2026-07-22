@@ -199,6 +199,34 @@ P0 roadmap selection
   records and no Realization, Claim, report, plan, profile, source, runner, or report-
   helper drift. The focused 30-record Evidence gate and diff check pass. P3b is complete
   and P4 exact authority/resolution/inspection is released.
+- 2026-07-22: P4 candidate authenticates literal raw manifest digest
+  `d6be0eec8439e02434a4f39a021a3c0abcc20f98ff10a02c3749359c1b78f8c7`,
+  verifies the parsed authority against that captured document before loading records,
+  and replays the exact 69-member/ten-source graph once. Its pure resolver closes over
+  two exact policy/profile/package triples, renders exact 7/21 Claim and Evidence
+  ledgers, rejects selector/profile/candidate/performance/census generalization, keeps
+  every Evidence result/review/mechanism axis visible, and renders the non-direct
+  child-process boundary separately. All seventeen P2b controls, both P3 gates, and
+  diff check pass. The green transition changes the P2b phase preconditions to require
+  the report/manifest exactly when their reviewed modules exist and corrects the
+  previously dormant O8 actor call to its actual `inspect_ordered_map_maintenance`
+  name; no behavioral oracle is removed or weakened.
+- 2026-07-22: P-R4 first review BLOCK. The pure resolver rejected unexpected members
+  but permitted a missing inapplicable predecessor Evidence record, returning two
+  acceptable 7/20-ledger decisions; it also permitted an exact policy with empty
+  concerns/prohibitions, yielding vacuous acceptance. Actor authentication did not
+  excuse those exported detached-replay gaps.
+- 2026-07-22: The P4 successor requires the exact complete 69-address set and each
+  policy's exact four ordered concern obligations plus sole effect prohibition before
+  any decision. Controls now remove one selected and one inapplicable member and empty
+  each obligation field; all cases return diagnostics and no decisions. Coherent
+  cross-profile non-transfer remains demonstrated on the intact graph.
+- 2026-07-22: P-R4 successor review PASS. The reviewer reproduced both former attacks
+  failing before decisions, the intact two acceptable 7/21 decisions, all seventeen
+  journey controls, both P3 gates, and a clean diff. No further material trust-boundary,
+  data-flow, or claim-scope gap remains. Private-helper coupling and reliance on
+  authenticated member hashes for provenance fields remain nonblocking maintenance
+  observations. P5 is released.
 
 ## Verification
 

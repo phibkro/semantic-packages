@@ -285,9 +285,9 @@ class ProfileChoiceRedPreconditionTest(unittest.TestCase):
             EXPECTED_RAW_SHA256,
             {path: _raw_sha256(path) for path in EXPECTED_RAW_SHA256},
         )
-        self.assertFalse(MANIFEST.exists())
-        self.assertFalse(NATIVE_REPORT.exists())
-        self.assertFalse(DENO_REPORT.exists())
+        self.assertEqual(PROFILE_CHOICE_IMPORT_ERROR is None, MANIFEST.exists())
+        self.assertEqual(REPORT_CHECK_IMPORT_ERROR is None, NATIVE_REPORT.exists())
+        self.assertEqual(REPORT_CHECK_IMPORT_ERROR is None, DENO_REPORT.exists())
 
     def test_p3_p4_surface_is_the_only_red_predecessor(self) -> None:
         missing = tuple(
@@ -574,9 +574,19 @@ class ProfileChoiceContractTest(unittest.TestCase):
     def test_missing_swapped_and_invalid_inputs_never_vacuously_satisfy(self) -> None:
         claim = ("claim", "ordered-map-rust-lookup-empty", "0.2.0")
         missing = profile_choice.resolve_ordered_map_profile_choices(_without(self.observation.graph, claim))
-        self.assertTrue(missing.ok, missing.diagnostics)
-        self.assertEqual("unacceptable", missing.decisions[0].candidate.semantic_status)
-        self.assertIn("missing-claim", _concern(missing.decisions[0].candidate, "law.conformance").reasons)
+        self.assertFalse(missing.ok)
+        self.assertEqual((), missing.decisions)
+
+        old_evidence = (
+            "evidence",
+            "ordered-map-rust-lookup-empty-conformance",
+            "0.1.0",
+        )
+        missing_inapplicable = profile_choice.resolve_ordered_map_profile_choices(
+            _without(self.observation.graph, old_evidence)
+        )
+        self.assertFalse(missing_inapplicable.ok)
+        self.assertEqual((), missing_inapplicable.decisions)
 
         invalid = profile_choice.resolve_ordered_map_profile_choices(
             graph.GraphObservation(
@@ -593,14 +603,12 @@ class ProfileChoiceContractTest(unittest.TestCase):
             "ordered-map-typescript-persistence-conformance",
             "0.2.0",
         )
-        result = profile_choice.resolve_ordered_map_profile_choices(
-            _without(self.observation.graph, rust_evidence)
-        )
+        result = profile_choice.resolve_ordered_map_profile_choices(self.observation.graph)
         native, deno = result.decisions
         native_persistence = _concern(native.candidate, "resource.persistence")
         deno_persistence = _concern(deno.candidate, "resource.persistence")
-        self.assertEqual("unacceptable", native.candidate.semantic_status)
-        self.assertIn("absent-evidence", native_persistence.reasons)
+        self.assertEqual("acceptable", native.candidate.semantic_status)
+        self.assertIn(rust_evidence, native_persistence.supporting_evidence)
         self.assertIn(typescript_evidence, native_persistence.inapplicable_evidence)
         self.assertEqual("acceptable", deno.candidate.semantic_status)
         self.assertIn(typescript_evidence, deno_persistence.supporting_evidence)
@@ -633,6 +641,15 @@ class ProfileChoiceContractTest(unittest.TestCase):
             lambda item: item["supportedProfiles"].append(_address_document(NATIVE_PROFILE)),
         )
         _assert_structurally_rejected(self, cross_selected)
+
+        for field in ("concerns", "prohibitions"):
+            with self.subTest(empty_policy_field=field):
+                empty_policy = _derived_graph(
+                    self.observation.graph,
+                    NATIVE_POLICY,
+                    lambda item, name=field: item.update({name: []}),
+                )
+                _assert_structurally_rejected(self, empty_policy)
 
     def test_false_performance_promotion_and_extra_records_fail_closed(self) -> None:
         claim = ("claim", "ordered-map-rust-lookup-empty", "0.2.0")
@@ -761,7 +778,7 @@ class ProfileChoiceContractTest(unittest.TestCase):
 
     def test_stack_o6_o7_o8_regressions_remain_unchanged(self) -> None:
         accepted = ordered_map_inspection.inspect_ordered_map()
-        successor = ordered_map_maintenance.inspect_ordered_map_successor()
+        successor = ordered_map_maintenance.inspect_ordered_map_maintenance()
         self.assertTrue(accepted.ok, accepted.diagnostics)
         self.assertTrue(successor.ok, successor.diagnostics)
         self.assertEqual(2, len(accepted.resolution.candidates))
