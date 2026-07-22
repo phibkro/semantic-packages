@@ -79,7 +79,7 @@ A0 roadmap/source census
 | A2 option probe | future owner; research notes/fixtures only; integrates into lead-owned option matrix | exact round-trip/ambiguity/diagnostic/recovery comparison; A-R2; escalate materially different author experiences without decisive evidence |
 | A-R2 / A-G2 | independent reviewer then lead; review writes none, lead integrates plan/ADR proposal | option attacks and dispositions; choose smallest reversible contract or stop for operator; no parser release without PASS |
 | A3 red contract | lead/test owner; exclusive authoring-contract fixtures/tests and proposed dependency-context ADR | Stack + OrderedMap exact-output relative to an explicit finite context; opaque-label nonauthority; invalid bytes/duplicate members/unsupported format; ambiguous/missing/wrong-kind ID/reference; hosted-payload and deterministic-diagnostic controls; independent contract review; A4 |
-| A4 minimal elaborator | future implementation owner; exclusive new authoring module plus approved dependency metadata | frozen A3 controls, no canonical predecessor changes, focused/full gates; independent implementation review A-R4; toolchain/migration concern escalates |
+| A4 minimal elaborator | lead/implementation owner; exclusive new authoring module plus approved dependency metadata | frozen A3 controls, no canonical predecessor changes, focused/full gates; independent implementation review A-R4; toolchain/migration concern escalates |
 | A-R4 | uninvolved read-only reviewer | parser containment, deterministic output/diagnostics, hidden-default and semantic-overclaim attacks; A5 or successor |
 | A5 journey/maintenance | lead/integrator; author command/docs, user-journey controls, check integration, plan | exact two-domain author tasks, regression/sensitivity, recovery, limitations, one non-control human-facing adapter, and required operator-coordinated eligible uninvolved-author observation; A-R5 |
 | A-R5 / A-G | uninvolved reviewer then lead; no reviewer writes, lead owns completion move | full lifecycle, negative controls, docs, full local/hosted gates, conventional squash handoff; operator owns unresolved product-direction fork |
@@ -149,6 +149,13 @@ replay; schema/link phase barriers; used and validated dependency contents; wron
 source rejection; stable raw detail; and isolated input/output snapshots. A4 must turn
 this same suite green without weakening or deleting an assertion.
 
+A4 and its review successors retain every A3 assertion and expand the same command to
+22 green controls. The additions require total dependency-container/item/label/document
+diagnostics, finite `Mapping` snapshots without pickle semantics, recursive-value
+rejection, and containment of ordinary traversal exceptions without masking
+`BaseException` process control. The complete A4 gate must report 243 actor journeys
+and preserve every predecessor summary.
+
 ## Progress checklist
 
 - [x] A0 roadmap and governing-source census
@@ -159,8 +166,8 @@ this same suite green without weakening or deleting an assertion.
 - [x] A-R2 independent option review
 - [x] A-G2 contract choice or operator escalation
 - [x] A3 red round-trip/ambiguity controls
-- [ ] A4 minimal elaborator
-- [ ] A-R4 implementation review
+- [x] A4 minimal elaborator
+- [x] A-R4 implementation review
 - [ ] A5 actor journey, documentation, and maintenance
 - [ ] A-R5 end-to-end review
 - [ ] A-G final convergence
@@ -294,6 +301,12 @@ this same suite green without weakening or deleting an assertion.
   because snapshot containment catches selected exception types. The next successor
   freezes throwing top-level/nested JSON containers and contains ordinary `Exception`,
   while leaving process-control exceptions untouched. No direction choice is involved.
+- 2026-07-22: A-R4 final PASS at exact clean `3d85683`. All 22 focused controls and the
+  complete 243-journey repository gate pass. Independent replay confirms throwing
+  top-level `Mapping` and nested-list traversal return identical all-or-none
+  `AUTHOR_DEPENDENCY_SNAPSHOT` diagnostics, while `KeyboardInterrupt` and `SystemExit`
+  remain unmasked. No residual hidden discovery/default, Mapping, hosted-semantics,
+  independent-IR, or semantic-overclaim concern remains within A4. This releases A5.
 
 ## Decision log
 
@@ -309,12 +322,14 @@ this same suite green without weakening or deleting an assertion.
 
 ## Result and remaining work
 
-A0 through A3 are complete. The project now has an executable, independently
+A0 through A4/A-R4 are complete. The project now has an executable, independently
 reviewed two-domain statement of the authoring deficit without committing to final
 surface syntax. A2/A-R2/A-G2 accept the representation-neutral boundary and release A3
-red controls; A-R3 accepts the exact red contract and releases A4. Parser implementation,
-grammar, independent authoring IR, canonical format migration, semantic type checking,
-non-control surface, and human usability remain unimplemented and unaccepted.
+red controls; A-R3 accepts the exact red contract; and A4 implements its strict
+canonical-JSON control with an explicit finite dependency context. Final grammar,
+independent authoring IR, canonical format migration, semantic type checking,
+non-control surface, author command, and human usability remain unimplemented or
+unaccepted. A5 is the next released node.
 
 ## Stop and escalation conditions
 

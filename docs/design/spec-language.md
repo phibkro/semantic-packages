@@ -96,6 +96,13 @@ or profile discovery. Raw duplicate members, invalid encoding/syntax, and unsupp
 formats fail before record validation. Hosted semantic payloads remain unchecked text.
 
 `canonical-spec-json-v1` is the first conformance control, not the final human surface.
+`semantic_packages.authoring.author_specification` now implements that exact token:
+strict raw decoding, source/dependency schema phases, graph-relative link checking,
+all-or-none observations, and detached exact output. Its dependency context is
+caller-supplied and finite; it performs no acquisition or selection. The generic record
+checker retains its historical coarse fallback, while this author-facing boundary
+refines the accepted blank-law counterexample to its exact source pointer.
+
 The lifecycle cannot close without a non-control surface adapter and eligible
 uninvolved-author observation across Stack and OrderedMap. A separate authoring IR
 remains unjustified until a second useful frontend or non-identity transformation
@@ -158,7 +165,8 @@ The Stack tracer fixes the following meaning without prescribing a representatio
   the claim remains visibly unsupported.
 
 These obligations authorize canonical record design, but `specs/stack.pspec` remains
-an illustrative authoring fixture until a parser defines its elaboration.
+an illustrative authoring fixture until an accepted non-control adapter defines its
+elaboration.
 
 ### Initial conformance and performance profile
 

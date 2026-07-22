@@ -34,14 +34,14 @@ The A1 candidate freezes the two-domain authoring deficit: shared structural ide
 and references are explicit, while hosted semantic payloads remain unchecked; the
 illustrative Stack surface cannot round-trip without hidden rules and OrderedMap has no
 surface. No grammar or authoring representation is selected before independent review.
-The accepted A1 problem and A2 comparison now feed an A-G2-accepted format-neutral
-document-or-diagnostics boundary. Canonical JSON is only its first control; hidden
-inference and an unneeded second IR are rejected, while a non-control human-facing
-adapter and author observation remain mandatory before final convergence. A3 freezes
-that boundary red without selecting final syntax. Because both retained Specifications
-reference separate profile records, A3 also requires a finite caller-supplied dependency
-context; the elaborator performs no ambient discovery and succeeds only relative to
-that exact context.
+The accepted A1 problem and A2 comparison feed an A-G2-accepted format-neutral
+document-or-diagnostics boundary. A3 freezes its exact two-domain contract, and A4 now
+implements the `canonical-spec-json-v1` control with strict raw phases, total
+diagnostics, detached output, and a finite caller-supplied dependency context. It
+performs no ambient discovery and succeeds only relative to that exact context.
+Canonical JSON remains a control rather than the final human surface; hidden inference
+and an unneeded second IR are rejected, while A5 still owes a non-control human-facing
+adapter, author command, and eligible uninvolved-author observation.
 
 ## End-to-end product shape
 

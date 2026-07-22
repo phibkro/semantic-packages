@@ -13,7 +13,7 @@ The project explores a shared specification language that:
 
 ## Current phase
 
-**Exact differentiated-profile choice accepted → shared human authoring probe.**
+**Shared authoring control implemented → non-control author journey.**
 
 The accepted Stack tracer publishes one nontrivial specification, binds proof and
 conformance Evidence, registers two independent Realizations, resolves them under an
@@ -28,6 +28,11 @@ observation or arbitrary-domain generality passed. Its exact-profile successor n
 selects Rust for a native-process envelope and TypeScript for a Deno-sandbox envelope
 from one append-only graph, retaining every nonmatching Claim and Evidence record as
 inapplicable rather than transferring assurance.
+The shared authoring boundary now round-trips the exact Stack and OrderedMap
+Specification documents from strict canonical JSON, validates explicit finite profile
+contexts, and returns deterministic all-or-none diagnostics without hidden identity,
+defaults, acquisition, or hosted-text interpretation. This is the conformance control,
+not the final human-facing surface.
 
 ## Repository map
 
@@ -157,7 +162,8 @@ Then open the repository in Codex, an IDE extension, or another coding agent. Th
 ## Status
 
 This repository is an executable research prototype with complete bounded local Stack,
-finite OrderedMap, and exact differentiated-profile lifecycles. The next authored node
-probes their shared human authoring surface before selecting elaboration rules. This is
-not yet a stable standard, an arbitrary-domain semantic-package ecosystem, or a hosted
+finite OrderedMap, and exact differentiated-profile lifecycles, plus an independently
+reviewed two-domain authoring control. The next authored node adds a non-control surface
+and exact author journey without selecting hidden IDs or a universal logic. This is not
+yet a stable standard, an arbitrary-domain semantic-package ecosystem, or a hosted
 production registry.
