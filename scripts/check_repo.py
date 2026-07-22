@@ -65,6 +65,7 @@ REQUIRED = [
     "docs/exec-plans/completed/0001-tracer-bullet.md",
     "docs/exec-plans/completed/0002-actor-journeys.md",
     "semantic_packages/__init__.py",
+    "semantic_packages/authoring.py",
     "semantic_packages/graph.py",
     "semantic_packages/maintenance.py",
     "semantic_packages/publication.py",

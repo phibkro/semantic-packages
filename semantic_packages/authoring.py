@@ -1,0 +1,259 @@
+"""Representation-neutral authoring of one canonical Specification document.
+
+The first adapter accepts strict JSON as a conformance control.  It performs no
+filesystem, manifest, registry, network, version, profile, or identity discovery.
+External references are checked only against the finite dependency records supplied
+by the caller.
+"""
+
+from __future__ import annotations
+
+import json
+from copy import deepcopy
+from dataclasses import dataclass
+from typing import Any, Mapping
+
+from scripts import record_check
+
+
+CANONICAL_SPEC_JSON_V1 = "canonical-spec-json-v1"
+
+
+@dataclass(frozen=True)
+class AuthoringDependency:
+    """One caller-supplied canonical context record and diagnostic label."""
+
+    source_label: str
+    document: Mapping[str, Any]
+
+
+@dataclass(frozen=True)
+class AuthoringObservation:
+    """All-or-none authoring result with a detached document snapshot."""
+
+    _document_text: str | None
+    diagnostics: tuple[record_check.Diagnostic, ...]
+
+    def __post_init__(self) -> None:
+        if self._document_text is None and not self.diagnostics:
+            raise ValueError("failed authoring observation requires diagnostics")
+        if self._document_text is not None and self.diagnostics:
+            raise ValueError("successful authoring observation cannot carry diagnostics")
+
+    @property
+    def ok(self) -> bool:
+        return self._document_text is not None
+
+    @property
+    def document(self) -> dict[str, Any] | None:
+        if self._document_text is None:
+            return None
+        return json.loads(self._document_text)
+
+
+class _DuplicateMember(ValueError):
+    def __init__(self, member: str) -> None:
+        super().__init__(member)
+        self.member = member
+
+
+class _NonStandardConstant(ValueError):
+    def __init__(self, token: str) -> None:
+        super().__init__(token)
+        self.token = token
+
+
+def _diagnostic(
+    code: str,
+    path: str,
+    pointer: str = "#",
+    message: str | None = None,
+) -> record_check.Diagnostic:
+    return record_check.Diagnostic(code, path, pointer, message)
+
+
+def _failure(
+    diagnostics: list[record_check.Diagnostic] | tuple[record_check.Diagnostic, ...],
+) -> AuthoringObservation:
+    return AuthoringObservation(None, tuple(diagnostics))
+
+
+def _success(document: dict[str, Any]) -> AuthoringObservation:
+    snapshot = json.dumps(document, ensure_ascii=False, separators=(",", ":"))
+    return AuthoringObservation(snapshot, ())
+
+
+def _object_without_duplicates(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+    result: dict[str, Any] = {}
+    for key, value in pairs:
+        if key in result:
+            raise _DuplicateMember(key)
+        result[key] = value
+    return result
+
+
+def _reject_nonstandard_constant(token: str) -> None:
+    raise _NonStandardConstant(token)
+
+
+def _decode_source(
+    source: bytes,
+    source_label: str,
+) -> tuple[Any | None, list[record_check.Diagnostic]]:
+    if not isinstance(source, bytes):
+        return None, [
+            _diagnostic(
+                "AUTHOR_SOURCE_TYPE",
+                source_label,
+                message="source must be bytes",
+            )
+        ]
+    try:
+        text = source.decode("utf-8")
+    except UnicodeDecodeError as error:
+        return None, [
+            _diagnostic(
+                "AUTHOR_INVALID_UTF8",
+                source_label,
+                message=f"invalid UTF-8 at byte {error.start}",
+            )
+        ]
+
+    try:
+        document = json.loads(
+            text,
+            object_pairs_hook=_object_without_duplicates,
+            parse_constant=_reject_nonstandard_constant,
+        )
+    except _DuplicateMember as error:
+        return None, [
+            _diagnostic(
+                "AUTHOR_DUPLICATE_MEMBER",
+                source_label,
+                message=f"duplicate object member: {error.member}",
+            )
+        ]
+    except _NonStandardConstant as error:
+        return None, [
+            _diagnostic(
+                "AUTHOR_INVALID_JSON",
+                source_label,
+                message=f"non-standard JSON constant: {error.token}",
+            )
+        ]
+    except json.JSONDecodeError as error:
+        return None, [
+            _diagnostic(
+                "AUTHOR_INVALID_JSON",
+                source_label,
+                message=(
+                    f"invalid JSON at line {error.lineno} column {error.colno} "
+                    f"(character {error.pos})"
+                ),
+            )
+        ]
+    return document, []
+
+
+def _remap_diagnostics(
+    diagnostics: list[record_check.Diagnostic],
+    labels: dict[str, str],
+) -> list[record_check.Diagnostic]:
+    remapped = [
+        record_check.Diagnostic(
+            diagnostic.code,
+            labels[diagnostic.path],
+            diagnostic.pointer,
+            diagnostic.message,
+        )
+        for diagnostic in diagnostics
+    ]
+    remapped.sort(key=record_check.Diagnostic.sort_key)
+    return remapped
+
+
+def _validate_authored_source(
+    schemas: record_check.SchemaRegistry,
+    source_label: str,
+    document: Any,
+) -> record_check.Diagnostic | None:
+    diagnostic = record_check.validate_record(schemas, source_label, document)
+    if (
+        diagnostic is not None
+        and diagnostic.code == "SCHEMA_INVALID"
+        and isinstance(document, dict)
+        and isinstance(document.get("laws"), list)
+    ):
+        for index, law in enumerate(document["laws"]):
+            if isinstance(law, dict) and law.get("statement") == "":
+                return _diagnostic(
+                    "SCHEMA_NONEMPTY_STRING",
+                    source_label,
+                    f"#/laws/{index}/statement",
+                )
+    return diagnostic
+
+
+def author_specification(
+    source: bytes,
+    format_token: str,
+    source_label: str,
+    dependencies: tuple[AuthoringDependency, ...],
+) -> AuthoringObservation:
+    """Decode and validate one Specification relative to explicit dependencies.
+
+    Phases are strict: format dispatch, raw decode, source/dependency schema checks,
+    then isolated graph links.  Any failure returns diagnostics and no document.
+    """
+
+    if format_token != CANONICAL_SPEC_JSON_V1:
+        return _failure(
+            [_diagnostic("AUTHOR_FORMAT_UNSUPPORTED", source_label)]
+        )
+
+    document, raw_diagnostics = _decode_source(source, source_label)
+    if raw_diagnostics:
+        return _failure(raw_diagnostics)
+
+    schemas = record_check.SchemaRegistry()
+    source_diagnostic = _validate_authored_source(schemas, source_label, document)
+    if source_diagnostic is not None:
+        return _failure([source_diagnostic])
+    assert isinstance(document, dict), "schema-valid record is an object"
+    if document["kind"] != "specification":
+        return _failure(
+            [_diagnostic("AUTHOR_EXPECTED_SPECIFICATION", source_label, "#/kind")]
+        )
+
+    dependency_snapshots: list[tuple[str, dict[str, Any]]] = []
+    dependency_schema_diagnostics: list[record_check.Diagnostic] = []
+    for dependency in dependencies:
+        dependency_document = deepcopy(dependency.document)
+        diagnostic = record_check.validate_record(
+            schemas,
+            dependency.source_label,
+            dependency_document,
+        )
+        if diagnostic is not None:
+            dependency_schema_diagnostics.append(diagnostic)
+            continue
+        assert isinstance(
+            dependency_document, dict
+        ), "schema-valid dependency is an object"
+        dependency_snapshots.append(
+            (dependency.source_label, dependency_document)
+        )
+    if dependency_schema_diagnostics:
+        return _failure(dependency_schema_diagnostics)
+
+    records: dict[str, dict[str, Any]] = {"@source/000000": document}
+    labels = {"@source/000000": source_label}
+    for index, (label, dependency_document) in enumerate(dependency_snapshots):
+        internal_path = f"@dependency/{index:06d}"
+        records[internal_path] = dependency_document
+        labels[internal_path] = label
+
+    link_diagnostics = record_check.check_graph(records)
+    if link_diagnostics:
+        return _failure(_remap_diagnostics(link_diagnostics, labels))
+    return _success(document)
