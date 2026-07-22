@@ -8,6 +8,7 @@ outside adapter-reported invocation events.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import sys
@@ -43,6 +44,39 @@ _ORDERED_MAP_PLAN_SHA256 = (
 )
 _ASSUMPTIONS = ("adapter-faithfulness", "adapter-event-completeness")
 _EXCLUSIONS = ("adapter-external-effects", "realization-steps")
+_PROJECTION_SHA256 = {
+    "stack": (
+        "fe57b959a04840767112f9963c9587c74e4a7bf8ad5fcb923ce5b2d85bf6af8a",
+        "74ba5130525995263889ec3e3c8f59bccb6cc21f4164aee452e1a7878528fa4b",
+    ),
+    "ordered-map": (
+        "33c51b19a11fda2086a72d465b3ff7cd1df62bfecb3d6664aecbf2fbcf6b3b48",
+        "498363d24c4a81834238d5a9efae18f0faafeca394ccc7859ecac4b9ec042d12",
+    ),
+}
+_LEDGER_SHA256 = {
+    "stack": (
+        "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "53941bd7a53b09d60ab142e43e2244de00fe6d6ed0da044242297d7fc7a38abe",
+        "2a589fc440ac72c225ea0b6b7793a0919d88b51f0d921099f4c6321022e32675",
+        "8736efed677dbef68c3e89770c63c1b811aec11ff0aaf89a3e273edab23b0d9e",
+        "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    ),
+    "ordered-map": (
+        "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "3808991f4e71676006a8585c86d8d0ea462749dab0e7f1ce4befe2ecb0ffbd3e",
+        "be76489a71aef9e60da5a1261dc0a6f14a003f9ef180f784b9eae34441ed5148",
+        "e586200bc51149b0c915c1cfa1358e35f98330125f1a630516cd2905d70d0f8e",
+        "22b965b4d6a3436e0b42a460b3cdc14ab9b886a0b1a8fee167beb9921f2b9730",
+    ),
+}
+_ORDERED_MAP_EFFECT_SURFACE_SHA256 = (
+    "c1c1a60f0456218aae8d6ad0c4dd032caf24ff4d4a6f22479d9ac447b3b007e3",
+    "c1c1a60f0456218aae8d6ad0c4dd032caf24ff4d4a6f22479d9ac447b3b007e3",
+    "57a7f669667c9803af5534349ebda6860c667e9b648c92b1ace5c0326159f401",
+    "c1c1a60f0456218aae8d6ad0c4dd032caf24ff4d4a6f22479d9ac447b3b007e3",
+    "cd33da8df12f16b207f95dd25045963925d1f3f61d07169877d202ae3bdb42e2",
+)
 
 
 @dataclass(frozen=True)
@@ -56,6 +90,16 @@ class ObservationProblem(Exception):
 
 def _problem(code: str, message: str) -> None:
     raise ObservationProblem(code, message)
+
+
+def _canonical_sha256(value: Any) -> str:
+    rendered = json.dumps(
+        value,
+        ensure_ascii=False,
+        separators=(",", ":"),
+        sort_keys=True,
+    ).encode("utf-8")
+    return hashlib.sha256(rendered).hexdigest()
 
 
 def _stack_projection(report: Any) -> dict[str, Any]:
@@ -158,6 +202,7 @@ def _validate_ledger(
     domain: str,
     role: str,
     ledger: list[dict[str, Any]],
+    role_index: int,
 ) -> None:
     if role == "quiet":
         expected_count = 0
@@ -198,6 +243,29 @@ def _validate_ledger(
             "empty",
         ):
             _problem("EVENT_LEDGER", "ordered-map adapter-error event ledger moved")
+    if _canonical_sha256(ledger) != _LEDGER_SHA256[domain][role_index]:
+        _problem("EVENT_LEDGER", f"{domain} {label} changed exact attribution")
+
+
+def _ordered_map_effect_surface(report: Any) -> dict[str, Any]:
+    return {
+        "global": [
+            _ordered_map_declaration(item)
+            for item in report.declarations
+            if item.declaration_id == "ordered-map-effects"
+        ],
+        "cases": [
+            {
+                "case": case.case_id,
+                "effects": [
+                    _ordered_map_declaration(item)
+                    for item in case.declarations
+                    if item.declaration_id == "ordered-map-effects"
+                ],
+            }
+            for case in report.cases
+        ],
+    }
 
 
 def _challenged_non_effect(report: Any, domain: str) -> bool:
@@ -263,13 +331,21 @@ def _domain_observation(
     for index, (role, mode, report) in enumerate(zip(_ROLES, modes, reports)):
         _validate_common(report, domain, expected_plan)
         ledger = ledger_for(report)
-        _validate_ledger(domain, role, ledger)
+        _validate_ledger(domain, role, ledger, index)
         effect = _effect_outcome(report, declaration_attribute, effect_id)
 
         if role == "forbidden" and _challenged_non_effect(report, domain):
             _problem("CONCERN_SPILLOVER", f"{domain} forbidden concern spillover")
         if role != "adapter-error" and index > 0 and projections[index] != projections[0]:
             _problem("SEMANTIC_DRIFT", f"{domain} semantic projection drift in {role}")
+        expected_projection = _PROJECTION_SHA256[domain][
+            1 if role == "adapter-error" else 0
+        ]
+        if _canonical_sha256(projections[index]) != expected_projection:
+            _problem(
+                "PROJECTION_BINDING",
+                f"{domain} semantic projection binding changed in {role}",
+            )
         if role != "adapter-error" and effect.result != expected_effect_results[index]:
             _problem(
                 "EFFECT_RESULT",
@@ -299,6 +375,13 @@ def _domain_observation(
                 _problem("ERROR_AUTHORITY", f"{domain} adapter-error became authoritative")
         elif report.causes or effect.causes:
             _problem("UNEXPECTED_CAUSE", f"{domain} {role} carries a challenge cause")
+        if domain == "ordered-map" and _canonical_sha256(
+            _ordered_map_effect_surface(report)
+        ) != _ORDERED_MAP_EFFECT_SURFACE_SHA256[index]:
+            _problem(
+                "EFFECT_SURFACE",
+                f"ordered-map {role} effect surface changed",
+            )
 
         observations.append(
             {
@@ -412,14 +495,11 @@ def _aliases_governed_input(output: Path, root: Path) -> bool:
     )
     if any(_is_within(output, protected) for protected in protected_roots):
         return True
-    protected_files = (
-        root / "design-specs/0003-bounded-effect-separation-observation.md",
-        root / "docs/exec-plans/active/0008-bounded-effect-separation.md",
+    return any(
+        _same_file(output, candidate)
+        for candidate in root.rglob("*")
+        if candidate.is_file()
     )
-    candidates = list(protected_files)
-    for protected in protected_roots:
-        candidates.extend(path for path in protected.rglob("*") if path.is_file())
-    return any(_same_file(output, candidate) for candidate in candidates)
 
 
 def _write_atomically(output: Path, document: dict[str, Any]) -> None:

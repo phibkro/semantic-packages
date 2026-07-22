@@ -124,7 +124,7 @@ python3 scripts/check_repo.py
 - [x] E1 red command/report journey and controls
 - [x] E-R1 independent contract/projection review
 - [x] E2 effect-separation observation and command
-- [ ] E-R2 independent implementation review
+- [x] E-R2 independent implementation review
 - [ ] E3 durable documentation and maintenance
 - [ ] E-G convergence, freeze, and one PR
 
@@ -180,6 +180,24 @@ python3 scripts/check_repo.py
   mismatch before the complete-campaign aggregate, while adapter errors retain
   execution-status precedence. The focused suite passes 11 active controls with the
   intentional red predecessor skipped.
+- 2026-07-22: E-R2 BLOCKed equality without completeness and ordered events without
+  exact attribution. Five consistently stripped Stack reports could compare equal, and
+  OrderedMap could retain event names/counts while changing case and operation. The E2
+  successor now exact-binds canonical complete/error projection values, all ten native
+  ledgers, and OrderedMap's nested effect surface; explicit mutations cover stripped
+  projections, moved invocation attribution, and hidden nested error authority. E-R2
+  must re-review this successor before E3.
+- 2026-07-22: E-R2 also demonstrated that a completed ExecPlan hardlink fell outside
+  the initial protected-directory alias census. Output now rejects identity with every
+  existing repository file, while direct paths within the fixture/contract/spec/registry
+  and accepted-report roots remain rejected even before they exist. The completed-plan
+  hardlink joins the executable alias controls.
+- 2026-07-22: E-R2 PASSed the successor with 12 active focused controls and one
+  predecessor skip. Independent replay confirmed that stripped or altered projections,
+  moved event attribution, both nested-effect authority mutations, and a completed-plan
+  hardlink all fail closed. Canonical bindings retain list order and key/value shape;
+  the reviewer found no uncovered published surface or executable bypass. E3 is
+  released.
 
 ## Result and remaining work
 
@@ -188,7 +206,7 @@ skips because the exact command exists. The reviewed successor controls cover th
 complete report, immutable projections, classification and concern locality, error
 asymmetry, exact execution authority, output safety, determinism, and bounded language.
 No accepted Effect relation, new Evidence, resolver behavior, or whole-process
-conclusion is manufactured. E-R2 is next.
+conclusion is manufactured. E-R2 is complete and E3 is released.
 
 ## Stop and escalation conditions
 

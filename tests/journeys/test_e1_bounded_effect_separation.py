@@ -628,6 +628,80 @@ class BoundedEffectJourneyTest(unittest.TestCase):
             stack, tuple(challenged_optional), "optional effect result"
         )
 
+        nested_cases = list(ordered_map[4].cases)
+        nested_declarations = list(nested_cases[0].declarations)
+        nested_effect = next(
+            index
+            for index, item in enumerate(nested_declarations)
+            if item.declaration_id == "ordered-map-effects"
+        )
+        nested_declarations[nested_effect] = replace(
+            nested_declarations[nested_effect],
+            result="challenges",
+            causes=("TEST_NESTED_AUTHORITY",),
+        )
+        nested_cases[0] = replace(
+            nested_cases[0], declarations=tuple(nested_declarations)
+        )
+        nested_authority = list(ordered_map)
+        nested_authority[4] = replace(
+            ordered_map[4], cases=tuple(nested_cases)
+        )
+        self._assert_rejected(
+            stack, tuple(nested_authority), "effect surface changed"
+        )
+
+        forbidden_cases = list(ordered_map[2].cases)
+        forbidden_declarations = list(forbidden_cases[0].declarations)
+        forbidden_effect = next(
+            index
+            for index, item in enumerate(forbidden_declarations)
+            if item.declaration_id == "ordered-map-effects"
+        )
+        forbidden_declarations[forbidden_effect] = replace(
+            forbidden_declarations[forbidden_effect], result="supports", causes=()
+        )
+        forbidden_cases[0] = replace(
+            forbidden_cases[0], declarations=tuple(forbidden_declarations)
+        )
+        hidden_forbidden = list(ordered_map)
+        hidden_forbidden[2] = replace(
+            ordered_map[2], cases=tuple(forbidden_cases)
+        )
+        self._assert_rejected(
+            stack, tuple(hidden_forbidden), "effect surface changed"
+        )
+
+    def test_exact_projection_census_and_event_attribution_fail_closed(self) -> None:
+        stack, ordered_map = self._exact_reports()
+        stripped_stack = tuple(
+            replace(
+                report,
+                observations=(),
+                declaration_outcomes=tuple(
+                    item
+                    for item in report.declaration_outcomes
+                    if item.declaration_id == "stack-effects"
+                ),
+            )
+            for report in stack
+        )
+        self._assert_rejected(
+            stripped_stack, ordered_map, "semantic projection binding changed"
+        )
+
+        moved_events = list(ordered_map[1].events)
+        moved_events[0] = replace(
+            moved_events[0], case_id="invented-case", operation="invented-operation"
+        )
+        moved_ordered_map = list(ordered_map)
+        moved_ordered_map[1] = replace(
+            ordered_map[1], events=tuple(moved_events)
+        )
+        self._assert_rejected(
+            stack, tuple(moved_ordered_map), "event ledger changed exact attribution"
+        )
+
     def test_exact_execution_authority_and_domain_ownership_are_visible(self) -> None:
         stack, ordered_map = self._exact_reports()
         report = self._build_with_reports(stack, ordered_map)
@@ -657,6 +731,7 @@ class BoundedEffectJourneyTest(unittest.TestCase):
                 ROOT / "specs/stack.pspec",
                 ROOT / "registry/stack/theory/records/stack-spec.json",
                 ROOT / "reports/ordered-map/rust-campaign-report.json",
+                ROOT / "docs/exec-plans/completed/0004-ordered-map-generality.md",
             )
             for index, governed in enumerate(governed_inputs):
                 with self.subTest(governed=governed.relative_to(ROOT)):
