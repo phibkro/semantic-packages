@@ -21,7 +21,9 @@ turning its scoped status into a permanent format decision. The governing source
 the constitution, `ARCHITECTURE.md`, `docs/design/core-model.md`,
 `docs/design/spec-language.md`, the two accepted canonical Specification records,
 `schemas/spec.schema.json`, and the
-[A1 research probe](../../research/shared-human-authoring-surface.md).
+[A1 research probe](../../research/shared-human-authoring-surface.md). The accepted A2
+boundary is recorded in
+[ADR 0016](../../decisions/0016-representation-neutral-authoring-boundary.md).
 
 ExecPlan 0003 remains independently active for cold-human inspection. Its participant
 observation is not authoring Evidence and this plan does not relabel it.
@@ -76,10 +78,10 @@ A0 roadmap/source census
 | A-G1 problem gate | lead; plan-only disposition | retained review packet and full gate; releases A2 or successor A1; values choice remains unauthorized |
 | A2 option probe | future owner; research notes/fixtures only; integrates into lead-owned option matrix | exact round-trip/ambiguity/diagnostic/recovery comparison; A-R2; escalate materially different author experiences without decisive evidence |
 | A-R2 / A-G2 | independent reviewer then lead; review writes none, lead integrates plan/ADR proposal | option attacks and dispositions; choose smallest reversible contract or stop for operator; no parser release without PASS |
-| A3 red contract | future test owner; exclusive authoring-contract fixtures/tests | Stack + OrderedMap exact-output, ambiguous/missing ID/reference, unsupported-payload, deterministic-diagnostic controls; independent contract review; A4 |
+| A3 red contract | future test owner; exclusive authoring-contract fixtures/tests | Stack + OrderedMap exact-output; opaque-label nonauthority; invalid bytes/duplicate members/unsupported format; ambiguous/missing/wrong-kind ID/reference; hosted-payload and deterministic-diagnostic controls; independent contract review; A4 |
 | A4 minimal elaborator | future implementation owner; exclusive new authoring module plus approved dependency metadata | frozen A3 controls, no canonical predecessor changes, focused/full gates; independent implementation review A-R4; toolchain/migration concern escalates |
 | A-R4 | uninvolved read-only reviewer | parser containment, deterministic output/diagnostics, hidden-default and semantic-overclaim attacks; A5 or successor |
-| A5 journey/maintenance | lead/integrator; author command/docs, user-journey controls, check integration, plan | exact two-domain author tasks, regression/sensitivity, recovery, limitations, optional eligible human observation; A-R5 |
+| A5 journey/maintenance | lead/integrator; author command/docs, user-journey controls, check integration, plan | exact two-domain author tasks, regression/sensitivity, recovery, limitations, one non-control human-facing adapter, and required operator-coordinated eligible uninvolved-author observation; A-R5 |
 | A-R5 / A-G | uninvolved reviewer then lead; no reviewer writes, lead owns completion move | full lifecycle, negative controls, docs, full local/hosted gates, conventional squash handoff; operator owns unresolved product-direction fork |
 
 ## Implementation steps in dependency order
@@ -92,6 +94,9 @@ A0 roadmap/source census
 4. A-R1 independently attempts to falsify the resulting problem statement.
 5. Only after A-G1 may A2 compare reversible authoring contracts. No parser code starts
    before A-G2.
+6. A2 retains canonical-record input as the executable conformance control, rejects
+   hidden-ID inference and an unneeded independent IR, and proposes one format-neutral
+   outcome boundary for A-R2 challenge.
 
 ## Quality gates and evidence required
 
@@ -113,15 +118,29 @@ elaboration from semantic checking, and confirm no solution is smuggled into the
 problem statement. Every later node adds its exact commands and negative observations
 before release.
 
+A2 adds:
+
+```text
+python3 -m unittest tests.research.test_shared_human_authoring_options -v
+```
+
+Expected A2 observation is ten PASS results: two exact canonical controls are valid;
+missing root identity, duplicate/dangling local IDs (including dependent-edge
+cascades), unknown/wrong-kind inputs, and dangling profile members have exact paths;
+blank hosted text retains the observed coarse root diagnostic; ordinary JSON collapses
+duplicate members; invalid UTF-8/JSON remain host exceptions; existing diagnostics
+replay deterministically; and array
+reordering changes document equality without changing local addresses or graph validity.
+
 ## Progress checklist
 
 - [x] A0 roadmap and governing-source census
 - [x] A1 candidate two-domain boundary falsifier
 - [x] A-R1 independent boundary review
 - [x] A-G1 problem-contract gate
-- [ ] A2 authoring-contract option probe
-- [ ] A-R2 independent option review
-- [ ] A-G2 contract choice or operator escalation
+- [x] A2 authoring-contract option probe
+- [x] A-R2 independent option review
+- [x] A-G2 contract choice or operator escalation
 - [ ] A3 red round-trip/ambiguity controls
 - [ ] A4 minimal elaborator
 - [ ] A-R4 implementation review
@@ -160,6 +179,44 @@ before release.
   and falsifier only. It releases reversible A2 option research but grants no authority
   to choose syntax, parser, authoring IR, canonical migration, hosted logic, implicit
   defaults, or a materially different author workflow.
+- 2026-07-22: A2 candidate compares four routes. Direct canonical-record input is the
+  only executable two-domain control and remains temporary rather than a final human
+  surface. Hidden-ID inference is rejected. A separate authoring IR is rejected until
+  a second frontend or non-identity transformation demonstrates need. An explicit
+  lossless surface remains a candidate but cannot be selected before grammar and human
+  evidence. Six controls expose exact identity/reference diagnostics, one actionable-
+  diagnostic deficit for blank hosted text (`SCHEMA_INVALID` at `#`), and the distinction
+  between document array order and address semantics. The proposed A3 boundary accepts
+  explicit bytes/format/source identity and returns an exact canonical document or
+  ordered source-local diagnostics without owning a grammar. A-R2 must challenge this
+  comparison before A-G2 chooses any implementation contract.
+- 2026-07-22: The first A2 focused run retained one oracle BLOCK: renaming `push` to
+  duplicate `empty` produces both the expected duplicate-ID diagnostic and a truthful
+  dependent dangling `operationFamily` diagnostic. The successor oracle requires both
+  ordered results rather than suppressing the cascade; no checker behavior changes.
+- 2026-07-22: A-R2 BLOCK. The candidate left `source identity` undefined, allowing a
+  reading where provenance could fill or override canonical identity; it omitted raw
+  duplicate-member, invalid-byte/JSON, wrong-kind, and deterministic replay controls;
+  and the plan could close with JSON alone while human observation was optional. The
+  successor renames this input to an opaque diagnostic label with a nonauthority
+  metamorphic obligation, expands A2/A3 raw and semantic diagnostics, and requires a
+  non-control human-facing adapter plus eligible uninvolved-author observation before
+  final convergence. The coarse blank-payload diagnostic may remain a red A3
+  predecessor; it does not block option research by itself. No operator values call has
+  yet been reached.
+- 2026-07-22: A-R2 successor PASS at exact commit `48333d2`. Ten focused controls and
+  the full 42-research/221-journey repository gate pass. The reviewer confirms opaque
+  labels have no authority, raw ambiguity and diagnostic deficits are sufficient A3
+  predecessors, JSON cannot close the lifecycle, the IR rejection remains justified,
+  and blank hosted text may remain an explicit red A3 case. Remaining A3 details are
+  exact format dispatch, raw-parse precedence, all-or-none outcome/location shape, and
+  deterministic source-to-array mapping. No operator values call exists at this gate.
+- 2026-07-22: A-G2 PASS. ADR 0016 accepts the reviewed representation-neutral boundary
+  with exact `canonical-spec-json-v1` control dispatch, provenance-only labels,
+  all-or-none document/diagnostic outcomes, raw rejection before record validation,
+  explicit identity, source-order preservation without position semantics, and no
+  independent IR. This releases A3 red controls. It does not select final surface
+  grammar or author workflow; unresolved later surface values still escalate.
 
 ## Decision log
 
@@ -168,14 +225,18 @@ before release.
 | implement the illustrative `.pspec` grammar now | it cannot supply exact accepted Stack IDs without undocumented derivation, has no OrderedMap comparison, and cannot check hosted semantic strings | reject for A1; reopen only after an explicit contract passes exact two-domain round-trip and ambiguity controls |
 | treat canonical JSON as the final author surface | JSON already preserves exact records but human ergonomics have not been observed; ADR 0003 calls it temporary | retain as one A2 comparison option, not a decision |
 | choose one formal logic for semantic payloads | current accepted domains use plural observations/laws/resources and externally governed proof/conformance Evidence | prohibited absent a concrete scoped need; a hosted logic may be selected per aspect later |
+| add a syntax-neutral authoring IR now | only one executable input exists and the current transformation is identity; a second structural model would create drift before it enables composition | reject until a second frontend or non-identity transformation demonstrates the need |
+| preserve declaration-array order or canonicalize it | array positions do not address declarations, but record-document equality observes array order | require each adapter to preserve explicit source declaration order for exact output; do not infer semantic meaning from position; reopen if canonical record equality changes |
+| accept the format-neutral boundary or escalate now | A-R2 confirms the contract closes authority/diagnostic/JSON-inertia gaps, remains reversible, and leaves final surface experience open | accept ADR 0016 and release A3; no operator decision exists until evidence cannot distinguish materially different surface workflows |
 
 ## Result and remaining work
 
 A0, A1, A-R1, and A-G1 are complete. The project now has an executable, independently
-reviewed two-domain statement of the authoring deficit without committing to its
-solution. A2 option research is released. Parser, grammar, authoring IR, canonical
-format migration, semantic type checking, declaration-array ordering semantics, and
-human usability remain unimplemented and unaccepted.
+reviewed two-domain statement of the authoring deficit without committing to final
+surface syntax. A2/A-R2/A-G2 accept the representation-neutral boundary and release A3
+red controls. Parser implementation, grammar, independent authoring IR, canonical
+format migration, semantic type checking, non-control surface, and human usability
+remain unimplemented and unaccepted.
 
 ## Stop and escalation conditions
 

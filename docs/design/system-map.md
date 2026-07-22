@@ -34,6 +34,11 @@ The A1 candidate freezes the two-domain authoring deficit: shared structural ide
 and references are explicit, while hosted semantic payloads remain unchecked; the
 illustrative Stack surface cannot round-trip without hidden rules and OrderedMap has no
 surface. No grammar or authoring representation is selected before independent review.
+The accepted A1 problem and A2 comparison now feed an A-G2-accepted format-neutral
+document-or-diagnostics boundary. Canonical JSON is only its first control; hidden
+inference and an unneeded second IR are rejected, while a non-control human-facing
+adapter and author observation remain mandatory before final convergence. A3 freezes
+that boundary red without selecting final syntax.
 
 ## End-to-end product shape
 
