@@ -37,6 +37,11 @@
 - ExecPlan 0002 completed finite publication/registration, the honest product graph,
   package resolution, theory projection, exact successor failure/recovery, protected
   hosted release, checkout runtime maintenance, and the multi-provider workflow.
+- ExecPlan 0004 completed the finite OrderedMap second-domain tracer: authored meaning,
+  two independently represented packages, report-to-Evidence binding, exact product
+  authority, both consumer views, a selective breaker, and an append-only zero-candidate
+  successor with nonautomatic predecessor recovery. Its accepted claim is two-domain
+  reuse only, not universal generality.
 - Stack remains the regression substrate. A later semantic package must join it rather
   than erase the only accepted comparison point.
 

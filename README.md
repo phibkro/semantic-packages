@@ -43,7 +43,7 @@ observation or arbitrary-domain generality passed.
 - [`docs/operations/multi-provider-workflow.md`](docs/operations/multi-provider-workflow.md): agent route status, model-diverse delegation, security boundaries, and provenance.
 - [`docs/design/tracer-bullet.md`](docs/design/tracer-bullet.md): first vertical slice.
 - [`docs/exec-plans/active/0003-cold-human-inspection.md`](docs/exec-plans/active/0003-cold-human-inspection.md): executable inspection surface and deferred uninvolved-human gate.
-- [`docs/exec-plans/active/0004-ordered-map-generality.md`](docs/exec-plans/active/0004-ordered-map-generality.md): final convergence and closeout for the accepted second-domain route.
+- [`docs/exec-plans/completed/0004-ordered-map-generality.md`](docs/exec-plans/completed/0004-ordered-map-generality.md): completed OrderedMap second-domain research, implementation, maintenance, and convergence history.
 - [`docs/exec-plans/completed/0001-tracer-bullet.md`](docs/exec-plans/completed/0001-tracer-bullet.md): completed design, record, proof, adapter, independent-Realization, and Evidence history.
 - [`docs/exec-plans/completed/0002-actor-journeys.md`](docs/exec-plans/completed/0002-actor-journeys.md): completed actor registry, resolver, projection, maintenance, release, and workflow-governance history.
 - [`tasks/backlog.md`](tasks/backlog.md): ordered research and engineering backlog.

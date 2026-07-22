@@ -19,7 +19,7 @@ the active ExecPlan.
 | Waves 1–4 node history, failures, evidence, and counts | [completed ExecPlan 0001](../exec-plans/completed/0001-tracer-bullet.md) |
 | accepted actor-journey and governance successor history | [completed ExecPlan 0002](../exec-plans/completed/0002-actor-journeys.md) |
 | deferred uninvolved-human inspection journey | [active ExecPlan 0003](../exec-plans/active/0003-cold-human-inspection.md) |
-| OrderedMap second-domain route and final closeout | [active ExecPlan 0004](../exec-plans/active/0004-ordered-map-generality.md) |
+| accepted OrderedMap second-domain route | [completed ExecPlan 0004](../exec-plans/completed/0004-ordered-map-generality.md) |
 
 ## End-to-end product shape
 
