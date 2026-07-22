@@ -209,6 +209,23 @@ class FiniteResourceJourneyTest(unittest.TestCase):
             authored = tomllib.loads(source.read_text(encoding="utf-8"))
             algebra = authored["resources"][0]["algebra"]
             imports = authored["imports"]
+            self.assertEqual(
+                {
+                    "kind",
+                    "source",
+                    "imports",
+                    "dependencies",
+                    "resource",
+                    "algebra",
+                    "observations",
+                    "folds",
+                    "assumptions",
+                    "exclusions",
+                    "algebraConclusion",
+                    "satisfaction",
+                },
+                set(report),
+            )
             self.assertEqual("resource-algebra-inspection-v1", report["kind"])
             self.assertEqual(
                 {"format": "pspec-toml-v1", "sha256": _sha256(source), "specification": {"kind": "specification", "id": "persistence-composition", "version": "0.1.0"}},
@@ -232,18 +249,22 @@ class FiniteResourceJourneyTest(unittest.TestCase):
             self.assertEqual(algebra, report["algebra"])
             self.assertEqual(
                 {
-                    "carrierCount": 4,
-                    "compositionCount": 16,
-                    "expectedPairCount": 16,
-                    "closed": True,
-                    "total": True,
-                    "duplicatePairs": 0,
+                    "structure": {
+                        "carrierCount": 4,
+                        "compositionCount": 16,
+                        "expectedPairCount": 16,
+                        "closed": True,
+                        "total": True,
+                        "duplicatePairs": 0,
+                    },
+                    "laws": {
+                        "unit": {"holds": True, "observationCount": 8},
+                        "commutativity": {"holds": True, "observationCount": 16},
+                        "associativity": {"holds": True, "observationCount": 64},
+                    },
                 },
-                report["observations"]["structure"],
+                report["observations"],
             )
-            self.assertEqual({"holds": True, "observationCount": 8}, report["observations"]["laws"]["unit"])
-            self.assertEqual({"holds": True, "observationCount": 16}, report["observations"]["laws"]["commutativity"])
-            self.assertEqual({"holds": True, "observationCount": 64}, report["observations"]["laws"]["associativity"])
             self.assertEqual(
                 {
                     "authored": {
@@ -356,15 +377,23 @@ class FiniteResourceJourneyTest(unittest.TestCase):
             directory = Path(raw)
             source, stack, ordered_map = _copy_inputs(directory)
             _replace(source, 'id = "persistence-composition"', 'id = "persistence-composition"\nid = "duplicate"')
-            self._assert_failed_preserving_output(source, stack, ordered_map, ("AUTHOR_INVALID_TOML", "duplicate"))
+            _replace(source, 'unit = "none"', 'unit = "outside"')
+            raw_failure = self._assert_failed_preserving_output(source, stack, ordered_map, ("AUTHOR_INVALID_TOML", "duplicate"))
+            self.assertNotIn("SCHEMA_", raw_failure.stderr)
+            self.assertNotIn("LINK_", raw_failure.stderr)
+            self.assertNotIn("RESOURCE_ALGEBRA_", raw_failure.stderr)
 
             shutil.copyfile(SOURCE, source)
             _replace(source, 'kind = "finite-commutative-monoid-v1"', 'kind = "invented-algebra"')
-            self._assert_failed_preserving_output(source, stack, ordered_map, ("SCHEMA_RESOURCE_ALGEBRA_KIND", "#/resources/0/algebra/kind"))
+            _replace(source, 'unit = "none"', 'unit = "outside"')
+            schema = self._assert_failed_preserving_output(source, stack, ordered_map, ("SCHEMA_RESOURCE_ALGEBRA_KIND", "#/resources/0/algebra/kind"))
+            self.assertNotIn("RESOURCE_ALGEBRA_", schema.stderr)
 
             shutil.copyfile(SOURCE, source)
             _replace(source, 'id = "ordered-map", version = "0.1.0"', 'id = "missing-map", version = "0.1.0"', count=2)
-            self._assert_failed_preserving_output(source, stack, ordered_map, ("LINK_DANGLING_REFERENCE", "#/imports/1"))
+            _replace(source, 'unit = "none"', 'unit = "outside"')
+            link = self._assert_failed_preserving_output(source, stack, ordered_map, ("LINK_DANGLING_REFERENCE", "#/imports/1"))
+            self.assertNotIn("RESOURCE_ALGEBRA_", link.stderr)
 
     def test_candidate_carrier_unit_and_required_algebra_fail_closed(self) -> None:
         with tempfile.TemporaryDirectory(prefix="semantic-resource-shape-") as raw:
@@ -455,12 +484,21 @@ class FiniteResourceJourneyTest(unittest.TestCase):
             changed_folds = _read_json(output)["folds"]
             self.assertEqual("ordered-map-retained", changed_folds["authored"]["result"])
             self.assertEqual("ordered-map-retained", changed_folds["reverse"]["result"])
+            self.assertEqual(["none", "ordered-map-retained"], changed_folds["authored"]["elements"])
+            self.assertEqual(["ordered-map-retained", "none"], changed_folds["reverse"]["elements"])
             self.assertEqual(
                 [
                     {"left": "none", "right": "none", "result": "none"},
                     {"left": "none", "right": "ordered-map-retained", "result": "ordered-map-retained"},
                 ],
                 changed_folds["authored"]["trace"],
+            )
+            self.assertEqual(
+                [
+                    {"left": "none", "right": "ordered-map-retained", "result": "ordered-map-retained"},
+                    {"left": "ordered-map-retained", "right": "none", "result": "ordered-map-retained"},
+                ],
+                changed_folds["reverse"]["trace"],
             )
             self.assertIn("fold=ordered-map-retained", changed.stdout)
 

@@ -154,6 +154,13 @@ python3 scripts/check_repo.py
   candidate shape, loaded-but-unimported bindings, full report content, dynamic fold
   evaluation, normalized aliases, and discovery-free authority independently
   observable.
+- 2026-07-22: R-R1 successor BLOCK at exact clean `95e5ec8`. The corrected
+  associativity and loaded-but-unimported controls are sound, but exact success fields
+  did not exclude extra authoritative report fields; single-phase failures did not
+  prove raw/schema/link precedence over algebra inspection; and the dynamic reverse
+  fold did not assert its exact changed sequence and transitions. The next successor
+  requires an exact closed report/observation shape, compound schema/link plus algebra
+  failures with no algebra diagnostic, and both exact dynamic fold traces.
 
 ## Maintenance, recovery, and reopen conditions
 
