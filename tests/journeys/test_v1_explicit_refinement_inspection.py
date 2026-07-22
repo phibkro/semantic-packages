@@ -835,6 +835,8 @@ class ExplicitRefinementJourneyTest(unittest.TestCase):
             self.assertEqual("unestablished", report["semanticRefinement"])
 
     def test_required_paths_no_discovery_and_output_failures_are_contained(self) -> None:
+        proposal_snapshot = _path_snapshot(STACK_PROPOSAL)
+        registry_snapshot = _tree_snapshot(ROOT / "registry")
         result = subprocess.run(
             [sys.executable, "-m", "semantic_packages", "refinement", "inspect", str(STACK_PROPOSAL)],
             cwd=ROOT,
@@ -846,6 +848,8 @@ class ExplicitRefinementJourneyTest(unittest.TestCase):
         self.assertEqual(2, result.returncode)
         self.assertIn("--predecessor", result.stderr)
         self.assertNotIn("Traceback", result.stderr)
+        self.assertEqual(proposal_snapshot, _path_snapshot(STACK_PROPOSAL))
+        self.assertEqual(registry_snapshot, _tree_snapshot(ROOT / "registry"))
 
         with tempfile.TemporaryDirectory(prefix="semantic-refinement-no-discovery-") as raw:
             directory = Path(raw)
@@ -859,12 +863,19 @@ class ExplicitRefinementJourneyTest(unittest.TestCase):
                 STACK_SUCCESSOR,
                 ("REFINEMENT_SPEC_READ", str(missing)),
             )
+            inputs = (proposal, STACK_PREDECESSOR, STACK_SUCCESSOR)
+            input_snapshot = tuple(_path_snapshot(path) for path in inputs)
+            registry_snapshot = _tree_snapshot(ROOT / "registry")
             result = _run_refinement(
                 proposal, STACK_PREDECESSOR, STACK_SUCCESSOR, directory
             )
             self.assertEqual(1, result.returncode)
             self.assertIn("REFINEMENT_OUTPUT_WRITE", result.stderr)
             self.assertNotIn("Traceback", result.stderr)
+            self.assertEqual(
+                input_snapshot, tuple(_path_snapshot(path) for path in inputs)
+            )
+            self.assertEqual(registry_snapshot, _tree_snapshot(ROOT / "registry"))
 
     def test_report_contains_no_resolution_or_evidence_migration_surface(self) -> None:
         with tempfile.TemporaryDirectory(prefix="semantic-refinement-boundary-") as raw:
@@ -960,6 +971,15 @@ class ExplicitRefinementJourneyTest(unittest.TestCase):
                 invalid_proposal.write_bytes(b"\xff")
                 failure_output = Path(raw) / "prior.json"
                 failure_output.write_text("prior\n", encoding="utf-8")
+                failure_inputs = (
+                    invalid_proposal,
+                    STACK_PREDECESSOR,
+                    STACK_SUCCESSOR,
+                )
+                failure_input_snapshot = tuple(
+                    _path_snapshot(path) for path in failure_inputs
+                )
+                failure_registry_snapshot = _tree_snapshot(ROOT / "registry")
                 failure_stdout = io.StringIO()
                 failure_stderr = io.StringIO()
                 failure_arguments = [
@@ -982,6 +1002,13 @@ class ExplicitRefinementJourneyTest(unittest.TestCase):
             self.assertEqual("", failure_stdout.getvalue())
             self.assertIn("REFINEMENT_PROPOSAL_UTF8", failure_stderr.getvalue())
             self.assertEqual("prior\n", failure_output.read_text(encoding="utf-8"))
+            self.assertEqual(
+                failure_input_snapshot,
+                tuple(_path_snapshot(path) for path in failure_inputs),
+            )
+            self.assertEqual(
+                failure_registry_snapshot, _tree_snapshot(ROOT / "registry")
+            )
 
 
 if __name__ == "__main__":
