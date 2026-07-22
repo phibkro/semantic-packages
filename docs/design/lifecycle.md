@@ -212,6 +212,21 @@ A gate is executable when practical and records its command, inputs, expected
 observation, and result. Failing a gate may change the implementation or produce a
 governed requirement proposal; it may not silently weaken the acceptance condition.
 
+### Pull-request and merge convergence
+
+Pull requests and local integration are both permitted delivery paths. An agent may
+mark a pull request ready and merge it autonomously once the bounded behavior is
+verified, every required local and hosted check is green at the exact head, material
+review concerns are disposed, recovery is recorded, and repository protection rules
+permit the operation. No separate operator-review gate is required. Use the
+repository's squash-only merge convention and a Conventional Commit title/body so the
+pull request remains the detailed development handoff while mainline stays linear.
+
+Merge is a delivery event, not permission to overstate lifecycle convergence. Any
+unfinished macro review, learning, observation, or maintenance node remains live on a
+successor branch or plan after merge. Mission, protected intent, consequential scope
+changes, and hard-to-reverse foundations still require the user authority named above.
+
 ## Scaled change profiles
 
 Every change retains an observable goal, baseline or explicit reason one is not
