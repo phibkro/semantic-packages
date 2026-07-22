@@ -72,6 +72,8 @@ A0 roadmap/source census
   -> A5-D explicit PSpec journey design-spec
   -> A5-T red end-to-end journey controls
   -> A5-I complete author command, adapter, examples, and docs
+  -> A5-RI pre-human implementation review
+  -> A5-I1 parser conversion-limit containment
   -> A5-H eligible uninvolved-author observation
   -> A-R5 independent end-to-end review
   -> A-G final convergence
@@ -91,6 +93,7 @@ A0 roadmap/source census
 | A5-D journey contract | lead/product integrator; `design-specs/0001-explicit-pspec-author-journey.md` only | felt journey, Goal/Values/Constraints, eleven falsifiers, DoD, exclusions, and recovery; A5-T; revise explicitly on contradictory observation |
 | A5-T red journey | lead/test owner; `specs/*.pspec` and A5 journey controls | two lossless TOML-shaped inputs equal accepted records, one intentional absent-command failure and eight successor skips; A5-I; contract mismatch returns to A5-D |
 | A5-I author experience | lead/implementation owner; authoring adapter/command, examples, README, check integration, and plan | exact commands, two-domain output equality, raw/schema/link diagnostics, no discovery, atomic output, regressions; A5-H; protected-boundary concern stops work |
+| A5-RI / A5-I1 | uninvolved read-only reviewer then lead; reviewer writes none, lead owns parser-limit controls and containment successor | ordinary huge-number PSpec/dependency inputs produce diagnostics, never tracebacks or output mutation; A5-H; process-control exceptions remain unmasked |
 | A5-H human observation | operator coordinates an eligible uninvolved author; lead owns privacy-bounded observation template and integration | both retained tasks, exact revision, duration, assistance, blocking ambiguity, participant review; A-R5; failed task creates an explicit A5-D or A5-I successor |
 | A-R5 / A-G | uninvolved reviewer then lead; no reviewer writes, lead owns completion move | full lifecycle, negative controls, docs, full local/hosted gates, conventional squash handoff; operator owns unresolved product-direction fork |
 
@@ -195,6 +198,8 @@ not omit any predecessor suite.
 - [x] A5-D explicit PSpec journey design-spec
 - [x] A5-T red end-to-end journey controls
 - [x] A5-I author command, adapter, examples, documentation, and maintenance
+- [x] A5-RI pre-human implementation review (BLOCK retained)
+- [ ] A5-I1 parser conversion-limit containment successor
 - [ ] A5-H eligible uninvolved-author observation
 - [ ] A-R5 end-to-end review
 - [ ] A-G final convergence
@@ -355,6 +360,13 @@ not omit any predecessor suite.
   it also observed one TypeScript Deno report mismatch whose immediate isolated replay
   passed both fresh profile reports, so final convergence must rerun the complete gate
   rather than treating the transient as resolved product Evidence. A5-H is released.
+- 2026-07-22: A5-RI BLOCK at exact clean `3718370`. An uninvolved read-only reviewer
+  reproduced two ordinary numeric-conversion `ValueError` escapes: a valid TOML source
+  and a dependency JSON document containing a 5,000-digit integer both print Python
+  tracebacks instead of stable diagnostics. Exact examples and A1/A3 regressions pass,
+  and the missing human observation remains a distinct truthful gate. A5-I1 freezes
+  both values with sentinel output and must map them to `AUTHOR_INVALID_TOML` and
+  `AUTHOR_DEPENDENCY_JSON` without masking process-control exceptions before A5-H.
 
 ## Decision log
 

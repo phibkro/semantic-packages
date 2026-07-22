@@ -268,6 +268,33 @@ class ExplicitPSpecAuthorJourneyTest(unittest.TestCase):
             )
             self.assertNotIn("SCHEMA_", stderr)
 
+    def test_parser_numeric_conversion_limits_are_contained(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="semantic-pspec-numeric-limit-") as raw:
+            directory = Path(raw)
+            huge_integer = "9" * 5000
+            source = self._mutated_stack(
+                directory,
+                'version = "0.1.0"',
+                f'version = "0.1.0"\nhuge = {huge_integer}',
+            )
+            self._assert_failed_without_output_change(
+                source,
+                ("AUTHOR_INVALID_TOML", "numeric conversion exceeds parser limit"),
+                (),
+            )
+
+            dependency = directory / "huge.json"
+            dependency.write_text(f'{{"huge":{huge_integer}}}', encoding="utf-8")
+            self._assert_failed_without_output_change(
+                STACK_SOURCE,
+                (
+                    "AUTHOR_DEPENDENCY_JSON",
+                    str(dependency),
+                    "numeric conversion exceeds parser limit",
+                ),
+                (dependency,),
+            )
+
     def test_declaration_order_and_hosted_text_are_preserved(self) -> None:
         with tempfile.TemporaryDirectory(prefix="semantic-pspec-opaque-") as raw:
             directory = Path(raw)
