@@ -173,8 +173,8 @@ sandbox assurance, and cannot perform writes or ratify a gate.
 | L3 graph integrity | schema, duplicates, dangling/wrong-kind references, coherent scope | executable |
 | L4 local loading | deterministic finite source-set discovery and exact import edges | executable |
 | L5 semantic Evidence | one named-law proof with exact model/tool/input provenance | executable and deliberately bounded |
-| L6 realization execution | opaque-handle child adapter and event observation | executable under separate Stack and OrderedMap NDJSON protocols |
-| L7 independent conformance | exact harness-owned campaigns against Rust/TypeScript and breakers | executable for both domains without shared transition or oracle code |
+| L6 realization execution | opaque-handle child adapter and event observation | executable under separate Stack and OrderedMap NDJSON protocols; one exact probe retains both event surfaces without making either normative |
+| L7 independent conformance | exact harness-owned campaigns against Rust/TypeScript and breakers | executable for both domains without shared transition or oracle code; bounded non-effect projection equality is observable across four complete event variants |
 | L8 Evidence binding | declaration-scoped Claims and exact-bound review/provenance fields | executable as eight accepted Stack records, 14 accepted base OrderedMap records, and 14 accepted exact-profile OrderedMap records; assurance remains policy-relative |
 | L9 product registry | curated honest source sets distinct from fixture history | executable for exact Stack 24/31-record snapshots and OrderedMap 33/35/69-record snapshots |
 | L10 resolution | policy/profile-relative semantic selection and interoperation explanation | executable for exact Stack, OrderedMap maintenance, and two differentiated-profile queries; semantic status stays separate from directional boundaries |
@@ -263,12 +263,23 @@ unchanged mappings plus two additions. The report order is proposal authority an
 conclusion remains `unestablished`. This is reusable structural mechanics across two
 examples, not an accepted semantic refinement edge or arbitrary-domain generality.
 
+### Bounded effect-separation observation
+
+Design-spec 0003 and ExecPlan 0008 compose the existing exact Stack and OrderedMap
+runners without changing their plans, fixtures, reports, or authority. Five retained
+variants per domain keep native semantic projections, ordered adapter-event ledgers,
+effect outcomes, and execution errors distinct. Optional, forbidden, and unspecified
+complete projections equal the quiet projection; only each exact effect declaration
+challenges for forbidden `io.read`. Error partials remain visible and nonauthoritative.
+The probe publishes one atomic deterministic report, not Evidence or a resolver input.
+Its conclusion is bounded to adapter-reported invocation events and two exact campaigns.
+
 ## Actor data flows
 
 | Actor | Data-plane path | Current edge |
 |---|---|---|
 | theory author | semantic source -> canonical Specification/Claim -> exact-version proposal -> structural inspection -> graph checks -> proof or other Evidence | explicit Stack and OrderedMap PSpec-to-canonical author command and two-domain refinement inspection are experienceable; automated checks pass, while uninvolved-author acceptance, hosted publication, semantic refinement, and semantic checking remain absent |
-| package author | Realization/adapter -> explicit build -> campaign -> report -> reviewed declaration Evidence -> graph | executable for independently represented Rust and TypeScript packages in both domains |
+| package author | Realization/adapter -> explicit build -> campaign -> bounded effect-separation observation -> report -> reviewed declaration Evidence -> graph | executable for independently represented Rust and TypeScript packages in both domains; the cross-domain probe is inspectable but creates no Evidence |
 | package consumer | Specification + policy + profile -> Evidence selection -> semantic result -> boundary mechanism | executable exact Stack and OrderedMap queries, including two differentiated-profile choices with complete non-transfer ledgers, version-scoped recovery, and separate directional child-process boundaries |
 | theory consumer | exact Specification -> declarations/imports -> Claims/Evidence/unknowns -> derived view | executable Stack and OrderedMap projections; realization-scoped Evidence never becomes Specification assurance |
 
@@ -278,7 +289,7 @@ examples, not an accepted semantic refinement edge or arbitrary-domain generalit
 |---|---|---|
 | record files -> graph | strict schemas, deterministic loading, exact link checking, phase barriers | assumes a quiescent local filesystem; no signatures or hosted provenance |
 | proof source -> Evidence | exact manifest/input/tool binding and Lean kernel execution | semantic translation into Lean remains reviewed; checker and pinned kernel join the TCB |
-| Realization -> observation | untrusted child, exact framing, harness-owned expectations | adapter faithfulness and reported-event completeness remain assumptions |
+| Realization -> observation | untrusted child, exact framing, harness-owned expectations, exact domain-owned projection/ledger binding | adapter faithfulness and reported-event completeness remain assumptions; external effects and arbitrary contexts remain excluded |
 | report -> Evidence | fresh reproduction and exact Claim/Realization/source/tool/report/review binding | tracer-specific acceptance checker; no general resolver or cryptographic reviewer identity |
 | registry metadata -> execution | build and child argument vectors are explicit gate inputs | no registry-driven build, discovery, or execution edge exists by design |
 | canonical graph -> projection | projections must derive from one explicitly selected snapshot | both consumer views and maintenance comparison are graph-only and non-executing; no hosted browser/UI boundary yet |
@@ -336,6 +347,8 @@ steps.
 
 - local source-set validity is not product publication, assurance, or resolution;
 - bounded conformance is not universal verification or adapter faithfulness;
+- bounded projection equality under four retained event variants is not whole-process
+  purity, arbitrary effect erasure, semantic equivalence, or contextual noninterference;
 - shared adapter protocol conformance is not cross-language interoperability;
 - accepted Evidence is mechanism-, profile-, version-, and policy-relative;
 - exact profile choice does not imply profile refinement, Evidence migration, runtime

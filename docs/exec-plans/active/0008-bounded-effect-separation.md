@@ -125,7 +125,7 @@ python3 scripts/check_repo.py
 - [x] E-R1 independent contract/projection review
 - [x] E2 effect-separation observation and command
 - [x] E-R2 independent implementation review
-- [ ] E3 durable documentation and maintenance
+- [x] E3 durable documentation and maintenance
 - [ ] E-G convergence, freeze, and one PR
 
 ## Discoveries and changed assumptions
@@ -198,6 +198,12 @@ python3 scripts/check_repo.py
   hardlink all fail closed. Canonical bindings retain list order and key/value shape;
   the reviewer found no uncovered published surface or executable bypass. E3 is
   released.
+- 2026-07-22: E3 makes the exact command, output, safe governed-input failure, and
+  real-underneath boundary experienceable from README; adds the bounded observation to
+  effect semantics, system layers/trust/reopen boundaries, and the actor journeys;
+  moves the authored backlog item to completed; and makes the contract, plan, module,
+  and script required repository memory. Maintenance reopens on any design-spec trigger
+  or exact campaign/projection/ledger fingerprint change.
 
 ## Result and remaining work
 
@@ -206,7 +212,7 @@ skips because the exact command exists. The reviewed successor controls cover th
 complete report, immutable projections, classification and concern locality, error
 asymmetry, exact execution authority, output safety, determinism, and bounded language.
 No accepted Effect relation, new Evidence, resolver behavior, or whole-process
-conclusion is manufactured. E-R2 is complete and E3 is released.
+conclusion is manufactured. E3 is complete; E-G convergence remains.
 
 ## Stop and escalation conditions
 

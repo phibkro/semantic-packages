@@ -10,7 +10,8 @@ uninvolved-human observation remains deferred. ExecPlan 0004 demonstrated that t
 contracts survive a structurally different OrderedMap domain without retroactively
 changing them. ExecPlan 0005 adds two exact deployment envelopes while preventing
 Evidence from crossing profile boundaries by resemblance. They are not personas or a
-promise of hosted infrastructure.
+promise of hosted infrastructure. Design-spec 0003 adds one package-author/Evidence-
+reviewer observation over the existing two runners without turning it into Evidence.
 
 For this tracer, a **registry** is one curated finite local source set of immutable,
 exact-version records. To **publish** or **register** is to add records to that set and
@@ -72,6 +73,19 @@ semantic refinement remains unestablished. Stack demonstrates one changed effect
 document; OrderedMap demonstrates two additions. Neither example creates lineage,
 compatibility, resolver authority, migration, or Evidence transfer. The executable
 contract is [design-spec 0002](../../design-specs/0002-explicit-refinement-inspection-journey.md).
+
+### A7 — package author or Evidence reviewer observes bounded effect separation
+
+The actor runs one exact command over five retained Stack and five retained OrderedMap
+fixture modes. Acceptance requires every native non-effect case/declaration outcome and
+ordered adapter-event entry to remain visible; optional, forbidden, and unspecified
+complete projections equal quiet; forbidden events challenge only the exact effect
+declaration; and adapter errors remain nonauthoritative with their asymmetric partial
+ledgers intact. The report binds exact plans and fixtures, publishes atomically, and
+preserves prior output on any drift. It performs no registry-driven execution and
+creates no Claim, Evidence, resolver decision, purity statement, or general effect
+semantics. The executable contract is
+[design-spec 0003](../../design-specs/0003-bounded-effect-separation-observation.md).
 
 ### J0 — vocabulary and local boundary
 

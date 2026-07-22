@@ -138,6 +138,13 @@ non-identity transformation demonstrates the need.
   boundary are an explicit exclusion, not proof of their absence.
 - An effect contract states the disposition of unlisted observed event classes; it
   never acquires an implicit permissive or pure-by-default meaning.
+- Design-spec 0003's cross-domain probe compares an exact non-effect campaign projection
+  while retaining the original event ledger. Equality across quiet, optional,
+  forbidden, and unspecified Stack and OrderedMap fixtures observes separation only
+  inside those bounded campaigns. Adapter-error partials remain visible but are not
+  compared. The `adapter-event-completeness` assumption and `adapter-external-effects`
+  exclusion therefore survive unchanged; this is neither a purity claim nor an effect
+  algebra, handler semantics, contextual noninterference theorem, or accepted Evidence.
 - Resource properties are user-definable abstractions with declared observations,
   composition rules, and a falsification method.
 - Performance claims are profile-relative and name a cost measure, workload model,
