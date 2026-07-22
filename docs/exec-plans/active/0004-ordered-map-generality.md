@@ -390,11 +390,11 @@ O0 priority + categorical-memory reconciliation
 | O-R8-P2 corrected successor red-control review | same independent read-only reviewer; depends on O8-P-S1 | BLOCK retained narrowly: causality, digest phase, drift classes, immutability, and prior controls close, but successor policy profile binding and predecessor Specification removal lack symmetric subcases |
 | O8-P-S2 selector/removal symmetry correction | continuity owner; exclusive O8 controls and this plan; depends on O-R8-P2 BLOCK | complete candidate: changed successor profile binding requires the exact policy-selector-mismatch diagnostic and removed accepted Specification requires predecessor drift with no partial result; topology remains 1-pass/1-failure/10-skip with all earlier controls intact |
 | O-R8-P3 final successor red-control review | same independent read-only reviewer; depends on O8-P-S2 | PASS: exact clean `02cc4a3` reproduces protected hashes, three successor-oracle digests, and 1-pass/1-failure/10-skip topology; both selector/removal residuals and the complete prior causality/drift/digest/immutability boundary close, releasing O8 implementation |
-| O8 maintenance | continuity owner; exclusive OrderedMap successor records/manifest, OrderedMap-local maintenance actor, affected design/plan, and controls; depends on O-R8-P3 PASS | complete candidate pending O-R8-2: exact compact Specification `05bd...afd0`, policy `db78...e00d`, and pinned append-only 35-member manifest `f5e8...faf3` drive one zero-argument actor; canonical resolution yields zero candidates, theory yields 20 unclaimed declarations, 14 predecessor Evidence records remain history, two exact predecessor candidates remain recoverable but unselected, a detached successor candidate is discovered and rejected, and all 12 focused plus 47 adjacent checks pass without changing accepted O6/O7/Stack bytes |
+| O8 maintenance | continuity owner; exclusive OrderedMap successor records/manifest, OrderedMap-local maintenance actor, affected design/plan, and controls; depends on O-R8-P3 PASS | accepted by O-R8-2: exact compact Specification `05bd...afd0`, policy `db78...e00d`, and pinned append-only 35-member manifest `f5e8...faf3` drive one zero-argument actor; canonical resolution yields zero candidates, theory yields 20 unclaimed declarations, 14 predecessor Evidence records remain history, two exact predecessor candidates remain recoverable but unselected, a detached successor candidate is discovered and rejected, and all 12 focused plus 47 adjacent checks and the complete repository gate pass without changing accepted O6/O7/Stack bytes |
 | O8-F1 captured-text/raw-phase correction | continuity owner; exclusive OrderedMap maintenance actor/control and this plan; depends on the first O8 green attempt | restore the finite-source snapshot's intentionally omitted terminal newline before verifying exact successor raw-record digests, and scope the invalid-successor graph trap to the successor authority so the required predecessor replay remains observable; change no artifact, digest, or requirement |
 | O-R8 successor implementation review | independent read-only reviewer; depends on O8 | BLOCK retained narrowly on durable plan truth: implementation, exact bytes/digests, 12 focused and 47 adjacent checks, failure phases, protected surfaces, and the complete repository gate pass, but the Result retains a stale pre-O8 absence sentence and does not bound the captured-text private seam |
 | O8-S1 lifecycle/private-seam truth correction | continuity owner; exclusive this plan; depends on O-R8 BLOCK | describe successor absence historically and record `_document_text + "\n"` as the deliberately bounded captured-byte seam: graph capture has already authenticated the record, the actor restores the snapshot's omitted terminal newline before exact O8 raw-byte comparison, and any `GraphRecord` serialization or newline-handling change must reopen O8-F1 and its raw-digest/failure-phase controls; change no implementation, artifact, digest, requirement, or protected byte |
-| O-R8-2 successor implementation review | same independent read-only reviewer; depends on O8-S1 | verify the documentation-only correction, exact diff boundary, lifecycle agreement, and retained private-seam reopen trigger before releasing the end-to-end convergence review |
+| O-R8-2 successor implementation review | same independent read-only reviewer; depends on O8-S1 | PASS: exact clean `6b15732` changes only this plan after the implementation review; stale successor absence is historical, the captured-byte seam and reopen trigger are durable, DAG/table/checklist/Result agree, and successor manifest `f5e8...faf3`, Specification `05bd...afd0`, policy `db78...e00d`, and protected implementation hashes remain unchanged; releases O-R4 |
 | O-R4 end-to-end review | independent read-only reviewer; depends on O-R8-2 PASS | all four actor outcomes, negative controls, known exclusions, Stack regression, and generality claim boundary |
 | O-G final gate | lead acceptance; depends on O-R4 PASS and locked local/hosted gates | full repository reproduction, retained failures, active-plan result, conventional PR metadata/history, and exact claim of two-domain—not universal—generality |
 
@@ -574,10 +574,10 @@ only for non-overlapping domain-owned files; one integrator owns every shared mo
 - [x] O8-P-S2 selector/removal symmetry correction
 - [x] O-R8-P3 final successor red-control review passed; O8 released
 - [x] O8-F1 captured-text/raw-phase correction
-- [x] O8 maintenance complete; review pending
+- [x] O8 maintenance accepted
 - [x] O-R8 successor implementation review — lifecycle/private-seam documentation BLOCK retained
 - [x] O8-S1 lifecycle/private-seam truth correction
-- [ ] O-R8-2 successor implementation review
+- [x] O-R8-2 successor implementation review passed; O-R4 released
 - [ ] O-R4 end-to-end review
 - [ ] O-G final gate
 
@@ -1432,8 +1432,10 @@ authenticated the record, the actor restores the finite snapshot's omitted termi
 newline before exact O8 raw-byte comparison, and any `GraphRecord` serialization or
 newline-handling change must reopen O8-F1 and its raw-digest/failure-phase controls.
 O-R8 passed every implementation and repository check but retained a narrow durable-plan
-BLOCK; O8-S1 corrects that documentation only, and O-R8-2 successor review is now the
-live edge. The final end-to-end gates remain behind it.
+BLOCK; O8-S1 corrects that documentation only, and O-R8-2 passes at exact clean
+`6b15732` without changing implementation, artifacts, requirements, digests, or
+protected bytes. O8 maintenance is accepted. O-R4 end-to-end review is now the live
+edge; the final locked gate remains behind it.
 
 ## Stop and escalation conditions
 
