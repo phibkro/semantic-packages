@@ -43,6 +43,8 @@ stack is rebased after upstream disposition.
 V0 exact two-domain census and design-spec 0002
   -> V1 red complete proposals and journey controls
   -> V-R1 independent contract/control review
+  -> V1-S1 oracle-sensitivity successor
+  -> V-R1S independent successor review
   -> V2 proposal decoder, validator, inspector, report, and CLI
   -> V-R2 independent implementation review
   -> V3 README/design/system-map/backlog maintenance
@@ -54,6 +56,7 @@ V0 exact two-domain census and design-spec 0002
 | V0 contract | lead; design-spec 0002 only | exact 10/1 Stack and 18/2 OrderedMap census, raw digests, felt commands, falsifiers; V1; stop on source contradiction |
 | V1 red journey | lead/test owner; `refinements/*.prefine`, V1 journey tests, this plan | TOML parses, complete explicit dispositions, intentional absent refinement command, successor controls; V-R1; stop if proposal cannot represent both examples |
 | V-R1 | uninvolved read-only reviewer | attack completeness, nonauthority, digest binding, phase order, no overclaim, and red topology; V2 or explicit successor |
+| V1-S1 / V-R1S | lead/test owner then uninvolved reviewer; proposal fixtures remain unchanged | same/cross-family swaps, overlaps/duplicates, positive removal, both-side binding, opaque versions, reorder relations, phase barriers, side-effect snapshot; V2 or successor |
 | V2 implementation | lead; new refinement modules/CLI plus exact report serialization | both exact reports, all falsifiers, atomic output, unchanged predecessor actors; V-R2; stop on canonical-model or resolver expansion |
 | V-R2 | uninvolved read-only reviewer | counterexamples for mappings, parsing, ordering, hosted opacity, no Evidence migration, generality boundary; V3 or successor |
 | V3 maintenance | lead; README and durable project memory | exact experience/failure/recovery, changed capability map, backlog disposition, known exclusions; V-G |
@@ -93,7 +96,9 @@ python3 scripts/check_repo.py
 
 - [x] V0 exact census and design-spec 0002 active draft
 - [x] V1 red complete proposals and journey controls
-- [ ] V-R1 independent contract/control review
+- [x] V-R1 independent contract/control review (BLOCK retained)
+- [x] V1-S1 oracle-sensitivity successor
+- [ ] V-R1S independent successor review
 - [ ] V2 inspector and CLI
 - [ ] V-R2 independent implementation review
 - [ ] V3 durable documentation and maintenance
@@ -116,12 +121,27 @@ python3 scripts/check_repo.py
   naming only the absent `refinement` command, and nine successor controls SKIP. Those
   controls cover both exact reports and all eleven falsifiers through grouped negative
   matrices. V-R1 must attack completeness and oracle sensitivity before V2 begins.
+- 2026-07-22: V-R1 BLOCK at exact clean `395be5a`. The red topology is sensitive to an
+  empty implementation, but it does not distinguish explicit mappings from same-ID
+  inference: a complete same-family target swap should produce Stack 8/3 but is absent.
+  Existing cross-family swaps, mapping/removal and mapping/addition overlaps, duplicate
+  additions/removals, and positive removal behavior are untested. Binding favors the
+  successor; opaque version success, exact report provenance, full reordered relations,
+  phase suppression, and Claim/Evidence/registry/resolver side-effect snapshots are
+  also missing. V1-S1 freezes all nine concern groups before V2 may begin.
+- 2026-07-22: V1-S1 expands the focused predecessor to 16 tests: one exact-census
+  PASS, the same one intentional absent-command FAIL, and fourteen successor controls
+  SKIP. Complete same-family swaps now require Stack 8/3; an existing cross-family swap
+  must fail; overlap/duplicate matrices and a positive removal-plus-addition case close
+  disposition authority. Both source bindings, reverse-looking opaque versions, exact
+  report provenance/mapping pairs, full reorder relations, parse/schema phase barriers,
+  and registry/resolver/process side-effect oracles are frozen for V-R1S.
 
 ## Result and remaining work
 
-V0 and V1 are complete. V-R1 is the next released node. No inspector, report, accepted
-refinement relation, compatibility conclusion, Evidence transfer, or resolver change
-exists yet; the red predecessor is intentional.
+V0/V1, the first V-R1, and V1-S1 are complete with the BLOCK retained. V-R1S is the
+next released node. No inspector, report, accepted refinement relation, compatibility
+conclusion, Evidence transfer, or resolver change exists yet; V2 remains held.
 
 ## Stop and escalation conditions
 

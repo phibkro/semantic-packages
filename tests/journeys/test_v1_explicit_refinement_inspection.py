@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import importlib.util
+import io
 import json
 import shutil
 import subprocess
@@ -11,7 +12,9 @@ import sys
 import tempfile
 import tomllib
 import unittest
+from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
+from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -62,6 +65,14 @@ def _declarations(document: dict) -> dict[tuple[str, str], dict]:
 
 def _proposal_ref(value: dict) -> tuple[str, str]:
     return value["family"], value["localId"]
+
+
+def _tree_snapshot(root: Path) -> tuple[tuple[str, str], ...]:
+    return tuple(
+        (path.relative_to(root).as_posix(), _raw_sha256(path))
+        for path in sorted(root.rglob("*"))
+        if path.is_file()
+    )
 
 
 def _run_refinement(
@@ -198,6 +209,7 @@ class ExplicitRefinementJourneyTest(unittest.TestCase):
                     STACK_PREDECESSOR,
                     STACK_SUCCESSOR,
                     "stack-0.1.0-to-0.2.0",
+                    "stack",
                     (10, 1, 0, 0),
                     [],
                 ),
@@ -206,6 +218,7 @@ class ExplicitRefinementJourneyTest(unittest.TestCase):
                     ORDERED_PREDECESSOR,
                     ORDERED_SUCCESSOR,
                     "ordered-map-0.1.0-to-0.2.0",
+                    "ordered-map",
                     (18, 0, 2, 0),
                     [
                         {"family": "observations", "localId": "size"},
@@ -213,7 +226,15 @@ class ExplicitRefinementJourneyTest(unittest.TestCase):
                     ],
                 ),
             )
-            for proposal, predecessor, successor, proposal_id, counts, additions in cases:
+            for (
+                proposal,
+                predecessor,
+                successor,
+                proposal_id,
+                specification_id,
+                counts,
+                additions,
+            ) in cases:
                 with self.subTest(proposal=proposal.name):
                     output = directory / f"{proposal.stem}.json"
                     result = _run_refinement(proposal, predecessor, successor, output)
@@ -223,6 +244,33 @@ class ExplicitRefinementJourneyTest(unittest.TestCase):
                     self.assertEqual("refinement-inspection-v1", report["kind"])
                     self.assertEqual(
                         {"id": proposal_id, "version": "0.1.0"}, report["proposal"]
+                    )
+                    self.assertEqual(
+                        {
+                            "kind": "specification",
+                            "id": specification_id,
+                            "version": "0.1.0",
+                            "rawSha256": _raw_sha256(predecessor),
+                        },
+                        report["predecessor"],
+                    )
+                    self.assertEqual(
+                        {
+                            "kind": "specification",
+                            "id": specification_id,
+                            "version": "0.2.0",
+                            "rawSha256": _raw_sha256(successor),
+                        },
+                        report["successor"],
+                    )
+                    authored = tomllib.loads(proposal.read_text(encoding="utf-8"))
+                    self.assertEqual(
+                        [item["predecessor"] for item in authored["mappings"]],
+                        [item["predecessor"] for item in report["mappings"]],
+                    )
+                    self.assertEqual(
+                        [item["successor"] for item in authored["mappings"]],
+                        [item["successor"] for item in report["mappings"]],
                     )
                     relations = [item["documentRelation"] for item in report["mappings"]]
                     self.assertEqual(unchanged, relations.count("document-unchanged"))
@@ -265,6 +313,96 @@ class ExplicitRefinementJourneyTest(unittest.TestCase):
                 ("REFINEMENT_SPEC_ADDRESS", "#/successor"),
             )
 
+    def test_complete_same_family_swap_governs_instead_of_matching_ids(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="semantic-refinement-explicit-map-") as raw:
+            directory = Path(raw)
+            proposal = self._proposal_copy(directory)
+            empty_mapping = (
+                '[[mappings]]\npredecessor = { family = "operations", localId = "empty" }\n'
+                'successor = { family = "operations", localId = "empty" }'
+            )
+            push_mapping = (
+                '[[mappings]]\npredecessor = { family = "operations", localId = "push" }\n'
+                'successor = { family = "operations", localId = "push" }'
+            )
+            swapped = (
+                '[[mappings]]\npredecessor = { family = "operations", localId = "empty" }\n'
+                'successor = { family = "operations", localId = "push" }'
+            )
+            swapped_push = (
+                '[[mappings]]\npredecessor = { family = "operations", localId = "push" }\n'
+                'successor = { family = "operations", localId = "empty" }'
+            )
+            text = proposal.read_text(encoding="utf-8")
+            self.assertIn(empty_mapping, text)
+            self.assertIn(push_mapping, text)
+            proposal.write_text(
+                text.replace(empty_mapping, swapped, 1).replace(
+                    push_mapping, swapped_push, 1
+                ),
+                encoding="utf-8",
+            )
+            output = directory / "report.json"
+            result = _run_refinement(
+                proposal, STACK_PREDECESSOR, STACK_SUCCESSOR, output
+            )
+            self.assertEqual(0, result.returncode, result.stderr)
+            report = _read_json(output)
+            relations = [item["documentRelation"] for item in report["mappings"]]
+            self.assertEqual(8, relations.count("document-unchanged"))
+            self.assertEqual(3, relations.count("document-changed"))
+            self.assertEqual(
+                [
+                    {"family": "operations", "localId": "push"},
+                    {"family": "operations", "localId": "empty"},
+                ],
+                [report["mappings"][1]["successor"], report["mappings"][2]["successor"]],
+            )
+
+    def test_opaque_reverse_looking_versions_succeed_when_explicit(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="semantic-refinement-opaque-version-") as raw:
+            directory = Path(raw)
+            predecessor_document = _read_json(STACK_PREDECESSOR)
+            successor_document = _read_json(STACK_SUCCESSOR)
+            predecessor_document["version"] = "later-looking-999"
+            successor_document["version"] = "earlier-looking-001"
+            predecessor = directory / "predecessor.json"
+            successor = directory / "successor.json"
+            predecessor.write_text(
+                json.dumps(predecessor_document, ensure_ascii=False, separators=(",", ":"))
+                + "\n",
+                encoding="utf-8",
+            )
+            successor.write_text(
+                json.dumps(successor_document, ensure_ascii=False, separators=(",", ":"))
+                + "\n",
+                encoding="utf-8",
+            )
+            proposal = self._proposal_copy(directory)
+            text = proposal.read_text(encoding="utf-8")
+            text = text.replace(
+                '[predecessor]\nkind = "specification"\nid = "stack"\nversion = "0.1.0"\n'
+                f'rawSha256 = "{_raw_sha256(STACK_PREDECESSOR)}"',
+                '[predecessor]\nkind = "specification"\nid = "stack"\n'
+                f'version = "later-looking-999"\nrawSha256 = "{_raw_sha256(predecessor)}"',
+                1,
+            )
+            text = text.replace(
+                '[successor]\nkind = "specification"\nid = "stack"\nversion = "0.2.0"\n'
+                f'rawSha256 = "{_raw_sha256(STACK_SUCCESSOR)}"',
+                '[successor]\nkind = "specification"\nid = "stack"\n'
+                f'version = "earlier-looking-001"\nrawSha256 = "{_raw_sha256(successor)}"',
+                1,
+            )
+            proposal.write_text(text, encoding="utf-8")
+            output = directory / "report.json"
+            result = _run_refinement(proposal, predecessor, successor, output)
+            self.assertEqual(0, result.returncode, result.stderr)
+            report = _read_json(output)
+            self.assertEqual("later-looking-999", report["predecessor"]["version"])
+            self.assertEqual("earlier-looking-001", report["successor"]["version"])
+            self.assertEqual("unestablished", report["semanticRefinement"])
+
     def test_incomplete_duplicate_dangling_and_wrong_family_dispositions_fail(self) -> None:
         with tempfile.TemporaryDirectory(prefix="semantic-refinement-coverage-") as raw:
             directory = Path(raw)
@@ -298,9 +436,138 @@ class ExplicitRefinementJourneyTest(unittest.TestCase):
                         (code, str(proposal)),
                     )
 
+    def test_existing_cross_family_swap_and_disposition_overlaps_fail(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="semantic-refinement-overlap-") as raw:
+            directory = Path(raw)
+            stack = STACK_PROPOSAL.read_text(encoding="utf-8")
+            operation = (
+                '[[mappings]]\npredecessor = { family = "operations", localId = "empty" }\n'
+                'successor = { family = "operations", localId = "empty" }'
+            )
+            law = (
+                '[[mappings]]\npredecessor = { family = "laws", localId = "pop-empty" }\n'
+                'successor = { family = "laws", localId = "pop-empty" }'
+            )
+            cross_operation = (
+                '[[mappings]]\npredecessor = { family = "operations", localId = "empty" }\n'
+                'successor = { family = "laws", localId = "pop-empty" }'
+            )
+            cross_law = (
+                '[[mappings]]\npredecessor = { family = "laws", localId = "pop-empty" }\n'
+                'successor = { family = "operations", localId = "empty" }'
+            )
+            cross_family = directory / "cross-family.prefine"
+            cross_family.write_text(
+                stack.replace(operation, cross_operation, 1).replace(law, cross_law, 1),
+                encoding="utf-8",
+            )
+            self._assert_failed_without_output_change(
+                cross_family,
+                STACK_PREDECESSOR,
+                STACK_SUCCESSOR,
+                ("REFINEMENT_FAMILY", str(cross_family)),
+            )
+
+            valid_removed = stack.replace(operation + "\n\n", "", 1)
+            valid_removed += (
+                '\n[[removals]]\npredecessor = { family = "operations", localId = "empty" }\n'
+                '\n[[additions]]\nsuccessor = { family = "operations", localId = "empty" }\n'
+            )
+
+            cases = (
+                (
+                    "mapped-and-removed.prefine",
+                    stack
+                    + '\n[[removals]]\npredecessor = { family = "carriers", localId = "Stack" }\n',
+                    "REFINEMENT_OVERLAP",
+                ),
+                (
+                    "mapped-and-added.prefine",
+                    stack
+                    + '\n[[additions]]\nsuccessor = { family = "carriers", localId = "Stack" }\n',
+                    "REFINEMENT_OVERLAP",
+                ),
+                (
+                    "duplicate-addition.prefine",
+                    ORDERED_PROPOSAL.read_text(encoding="utf-8")
+                    + '\n[[additions]]\nsuccessor = { family = "observations", localId = "size" }\n',
+                    "REFINEMENT_DUPLICATE",
+                ),
+                (
+                    "duplicate-removal.prefine",
+                    valid_removed
+                    + '\n[[removals]]\npredecessor = { family = "operations", localId = "empty" }\n',
+                    "REFINEMENT_DUPLICATE",
+                ),
+            )
+            for name, text, code in cases:
+                with self.subTest(name=name):
+                    proposal = directory / name
+                    proposal.write_text(text, encoding="utf-8")
+                    predecessor = (
+                        ORDERED_PREDECESSOR
+                        if name == "duplicate-addition.prefine"
+                        else STACK_PREDECESSOR
+                    )
+                    successor = (
+                        ORDERED_SUCCESSOR
+                        if name == "duplicate-addition.prefine"
+                        else STACK_SUCCESSOR
+                    )
+                    self._assert_failed_without_output_change(
+                        proposal, predecessor, successor, (code, str(proposal))
+                    )
+
+    def test_explicit_removal_and_addition_override_matching_id_inference(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="semantic-refinement-removal-") as raw:
+            directory = Path(raw)
+            proposal = self._proposal_copy(directory)
+            mapping = (
+                '[[mappings]]\npredecessor = { family = "operations", localId = "empty" }\n'
+                'successor = { family = "operations", localId = "empty" }\n\n'
+            )
+            text = proposal.read_text(encoding="utf-8")
+            self.assertIn(mapping, text)
+            proposal.write_text(
+                text.replace(mapping, "", 1)
+                + '\n[[removals]]\npredecessor = { family = "operations", localId = "empty" }\n'
+                + '\n[[additions]]\nsuccessor = { family = "operations", localId = "empty" }\n',
+                encoding="utf-8",
+            )
+            output = directory / "report.json"
+            result = _run_refinement(
+                proposal, STACK_PREDECESSOR, STACK_SUCCESSOR, output
+            )
+            self.assertEqual(0, result.returncode, result.stderr)
+            report = _read_json(output)
+            relations = [item["documentRelation"] for item in report["mappings"]]
+            self.assertEqual(9, relations.count("document-unchanged"))
+            self.assertEqual(1, relations.count("document-changed"))
+            self.assertEqual(
+                [{"family": "operations", "localId": "empty"}],
+                report["removals"],
+            )
+            self.assertEqual(
+                [{"family": "operations", "localId": "empty"}],
+                report["additions"],
+            )
+
     def test_exact_addresses_digests_and_campaign_bytes_are_bound(self) -> None:
         with tempfile.TemporaryDirectory(prefix="semantic-refinement-binding-") as raw:
             directory = Path(raw)
+            predecessor_drift = directory / "stack-predecessor.json"
+            predecessor_drift.write_bytes(STACK_PREDECESSOR.read_bytes() + b"\n")
+            self._assert_failed_without_output_change(
+                STACK_PROPOSAL,
+                predecessor_drift,
+                STACK_SUCCESSOR,
+                (
+                    "REFINEMENT_SPEC_DIGEST",
+                    str(predecessor_drift),
+                    "#/predecessor/rawSha256",
+                ),
+            )
+
             drifted = directory / "stack-successor.json"
             drifted.write_bytes(STACK_SUCCESSOR.read_bytes() + b"\n")
             self._assert_failed_without_output_change(
@@ -319,54 +586,149 @@ class ExplicitRefinementJourneyTest(unittest.TestCase):
                 ("REFINEMENT_SPEC_DIGEST", "#/successor/rawSha256"),
             )
 
+            predecessor_digest = directory / "predecessor-digest.prefine"
+            shutil.copyfile(STACK_PROPOSAL, predecessor_digest)
+            self._replace(predecessor_digest, "dd083a71", "ed083a71")
+            self._assert_failed_without_output_change(
+                predecessor_digest,
+                STACK_PREDECESSOR,
+                STACK_SUCCESSOR,
+                ("REFINEMENT_SPEC_DIGEST", "#/predecessor/rawSha256"),
+            )
+
+            address_mutations = (
+                (
+                    '[predecessor]\nkind = "specification"',
+                    '[predecessor]\nkind = "claim"',
+                ),
+                (
+                    '[predecessor]\nkind = "specification"\nid = "stack"',
+                    '[predecessor]\nkind = "specification"\nid = "other"',
+                ),
+                (
+                    '[predecessor]\nkind = "specification"\nid = "stack"\nversion = "0.1.0"',
+                    '[predecessor]\nkind = "specification"\nid = "stack"\nversion = "opaque"',
+                ),
+            )
+            for index, (old, new) in enumerate(address_mutations):
+                with self.subTest(address=index):
+                    mutated = directory / f"predecessor-address-{index}.prefine"
+                    shutil.copyfile(STACK_PROPOSAL, mutated)
+                    self._replace(mutated, old, new)
+                    self._assert_failed_without_output_change(
+                        mutated,
+                        STACK_PREDECESSOR,
+                        STACK_SUCCESSOR,
+                        ("REFINEMENT_SPEC_ADDRESS", "#/predecessor"),
+                    )
+
     def test_raw_parse_schema_and_numeric_limits_are_contained_by_phase(self) -> None:
         with tempfile.TemporaryDirectory(prefix="semantic-refinement-raw-") as raw:
             directory = Path(raw)
             invalid_utf8 = directory / "invalid.prefine"
             invalid_utf8.write_bytes(b"\xff")
-            self._assert_failed_without_output_change(
+            stderr = self._assert_failed_without_output_change(
                 invalid_utf8,
                 STACK_PREDECESSOR,
                 STACK_SUCCESSOR,
                 ("REFINEMENT_PROPOSAL_UTF8", str(invalid_utf8)),
             )
+            self.assertNotIn("REFINEMENT_SPEC_", stderr)
+            self.assertNotIn("REFINEMENT_COVERAGE", stderr)
 
             huge = directory / "huge.prefine"
             huge.write_text(f"huge = {'9' * 5000}\n", encoding="utf-8")
-            self._assert_failed_without_output_change(
+            stderr = self._assert_failed_without_output_change(
                 huge,
                 STACK_PREDECESSOR,
                 STACK_SUCCESSOR,
                 ("REFINEMENT_PROPOSAL_TOML", "numeric conversion exceeds parser limit"),
             )
+            self.assertNotIn("REFINEMENT_SPEC_", stderr)
+            self.assertNotIn("REFINEMENT_COVERAGE", stderr)
+
+            duplicate_toml = directory / "duplicate.prefine"
+            duplicate_toml.write_text('kind = "x"\nkind = "y"\n', encoding="utf-8")
+            stderr = self._assert_failed_without_output_change(
+                duplicate_toml,
+                STACK_PREDECESSOR,
+                STACK_SUCCESSOR,
+                ("REFINEMENT_PROPOSAL_TOML", "duplicate TOML key"),
+            )
+            self.assertNotIn("REFINEMENT_SPEC_", stderr)
+            self.assertNotIn("REFINEMENT_COVERAGE", stderr)
+
+            invalid_spec_utf8 = directory / "invalid-spec.json"
+            invalid_spec_utf8.write_bytes(b"\xff")
+            stderr = self._assert_failed_without_output_change(
+                STACK_PROPOSAL,
+                invalid_spec_utf8,
+                STACK_SUCCESSOR,
+                ("REFINEMENT_SPEC_UTF8", str(invalid_spec_utf8)),
+            )
+            self.assertNotIn("SCHEMA_", stderr)
+            self.assertNotIn("REFINEMENT_SPEC_DIGEST", stderr)
+            self.assertNotIn("REFINEMENT_COVERAGE", stderr)
+
+            huge_json = directory / "huge.json"
+            huge_json.write_text(
+                '{"kind":"specification","id":"stack","version":'
+                + "9" * 5000
+                + ',"laws":[{"id":"x","statement":"x"}]}',
+                encoding="utf-8",
+            )
+            stderr = self._assert_failed_without_output_change(
+                STACK_PROPOSAL,
+                huge_json,
+                STACK_SUCCESSOR,
+                ("REFINEMENT_SPEC_JSON", "numeric conversion exceeds parser limit"),
+            )
+            self.assertNotIn("SCHEMA_", stderr)
+            self.assertNotIn("REFINEMENT_SPEC_DIGEST", stderr)
+            self.assertNotIn("REFINEMENT_COVERAGE", stderr)
 
             duplicate_json = directory / "duplicate.json"
             duplicate_json.write_text(
                 '{"kind":"specification","kind":"specification","id":"stack","version":"0.1.0","laws":[{"id":"x","statement":"x"}]}',
                 encoding="utf-8",
             )
-            self._assert_failed_without_output_change(
+            stderr = self._assert_failed_without_output_change(
                 STACK_PROPOSAL,
                 duplicate_json,
                 STACK_SUCCESSOR,
                 ("REFINEMENT_SPEC_JSON", "duplicate object member kind"),
             )
+            self.assertNotIn("SCHEMA_", stderr)
+            self.assertNotIn("REFINEMENT_SPEC_DIGEST", stderr)
+            self.assertNotIn("REFINEMENT_COVERAGE", stderr)
 
             invalid_schema = directory / "invalid-schema.json"
             invalid_schema.write_text(
                 '{"kind":"specification","id":"stack","version":"0.1.0"}',
                 encoding="utf-8",
             )
-            self._assert_failed_without_output_change(
+            stderr = self._assert_failed_without_output_change(
                 STACK_PROPOSAL,
                 invalid_schema,
                 STACK_SUCCESSOR,
                 ("SCHEMA_", str(invalid_schema)),
             )
+            self.assertNotIn("REFINEMENT_SPEC_ADDRESS", stderr)
+            self.assertNotIn("REFINEMENT_SPEC_DIGEST", stderr)
+            self.assertNotIn("REFINEMENT_COVERAGE", stderr)
 
     def test_reordering_documents_does_not_reorder_or_create_mappings(self) -> None:
         with tempfile.TemporaryDirectory(prefix="semantic-refinement-order-") as raw:
             directory = Path(raw)
+            baseline_output = directory / "baseline.json"
+            baseline_result = _run_refinement(
+                STACK_PROPOSAL,
+                STACK_PREDECESSOR,
+                STACK_SUCCESSOR,
+                baseline_output,
+            )
+            self.assertEqual(0, baseline_result.returncode, baseline_result.stderr)
+            baseline = _read_json(baseline_output)
             predecessor_document = _read_json(STACK_PREDECESSOR)
             predecessor_document["laws"].reverse()
             predecessor = directory / "reordered.json"
@@ -384,10 +746,11 @@ class ExplicitRefinementJourneyTest(unittest.TestCase):
             result = _run_refinement(proposal, predecessor, STACK_SUCCESSOR, output)
             self.assertEqual(0, result.returncode, result.stderr)
             report = _read_json(output)
-            authored = tomllib.loads(proposal.read_text(encoding="utf-8"))["mappings"]
+            self.assertEqual(baseline["mappings"], report["mappings"])
+            self.assertEqual(baseline["additions"], report["additions"])
+            self.assertEqual(baseline["removals"], report["removals"])
             self.assertEqual(
-                [item["predecessor"] for item in authored],
-                [item["predecessor"] for item in report["mappings"]],
+                baseline["semanticRefinement"], report["semanticRefinement"]
             )
 
     def test_hosted_changes_are_structural_not_semantic_verdicts(self) -> None:
@@ -455,11 +818,13 @@ class ExplicitRefinementJourneyTest(unittest.TestCase):
 
     def test_report_contains_no_resolution_or_evidence_migration_surface(self) -> None:
         with tempfile.TemporaryDirectory(prefix="semantic-refinement-boundary-") as raw:
+            before = _tree_snapshot(ROOT / "registry")
             output = Path(raw) / "report.json"
             result = _run_refinement(
                 ORDERED_PROPOSAL, ORDERED_PREDECESSOR, ORDERED_SUCCESSOR, output
             )
             self.assertEqual(0, result.returncode, result.stderr)
+            self.assertEqual(before, _tree_snapshot(ROOT / "registry"))
             report = _read_json(output)
             self.assertEqual(
                 {
@@ -485,6 +850,42 @@ class ExplicitRefinementJourneyTest(unittest.TestCase):
                 "migration",
             ):
                 self.assertNotIn(forbidden, serialized)
+
+    def test_in_process_inspection_never_calls_resolver_or_process_boundary(self) -> None:
+        from semantic_packages import refinement_command, resolver
+
+        with tempfile.TemporaryDirectory(prefix="semantic-refinement-pure-") as raw:
+            output = Path(raw) / "report.json"
+            stdout = io.StringIO()
+            stderr = io.StringIO()
+            arguments = [
+                "refinement",
+                "inspect",
+                str(STACK_PROPOSAL),
+                "--predecessor",
+                str(STACK_PREDECESSOR),
+                "--successor",
+                str(STACK_SUCCESSOR),
+                "--output",
+                str(output),
+            ]
+            forbidden = AssertionError("refinement inspection crossed a forbidden boundary")
+            with (
+                mock.patch.object(resolver, "resolve_exact", side_effect=forbidden),
+                mock.patch.object(
+                    refinement_command,
+                    "resolve_exact",
+                    create=True,
+                    side_effect=forbidden,
+                ),
+                mock.patch("subprocess.Popen", side_effect=forbidden),
+                redirect_stdout(stdout),
+                redirect_stderr(stderr),
+            ):
+                status = refinement_command.main(arguments)
+            self.assertEqual(0, status, stderr.getvalue())
+            self.assertEqual("", stderr.getvalue())
+            self.assertTrue(output.is_file())
 
 
 if __name__ == "__main__":
