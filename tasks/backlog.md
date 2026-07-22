@@ -3,7 +3,10 @@
 ## Now
 
 1. Probe the shared human authoring surface revealed by Stack and OrderedMap before
-   committing `.pspec` to elaboration rules or hidden defaults.
+   committing `.pspec` to elaboration rules or hidden defaults. The
+   [A1 boundary probe](../docs/research/shared-human-authoring-surface.md) and
+   [ExecPlan 0006](../docs/exec-plans/active/0006-shared-human-authoring-surface.md)
+   freeze the first falsifier; independent problem-contract review remains next.
 2. Model explicit specification refinement and cross-version compatibility only from
    a concrete two-domain migration or composition falsifier.
 
