@@ -91,21 +91,22 @@ class ExplicitPSpecAuthorJourneyTest(unittest.TestCase):
         expected: tuple[str, ...],
         dependencies: tuple[Path, ...] = (STACK_PROFILE,),
     ) -> str:
-        output = source.parent / "out.json"
-        sentinel = "operator-owned prior output\n"
-        output.write_text(sentinel, encoding="utf-8")
-        result = _run_author(source, output, dependencies)
-        self.assertEqual(1, result.returncode)
-        self.assertEqual("", result.stdout)
-        self.assertNotIn("Traceback", result.stderr)
-        self.assertTrue(
-            all(": " in line for line in result.stderr.splitlines()),
-            result.stderr,
-        )
-        for fragment in expected:
-            self.assertIn(fragment, result.stderr)
-        self.assertEqual(sentinel, output.read_text(encoding="utf-8"))
-        return result.stderr
+        with tempfile.TemporaryDirectory(prefix="semantic-pspec-sentinel-") as raw:
+            output = Path(raw) / "out.json"
+            sentinel = "operator-owned prior output\n"
+            output.write_text(sentinel, encoding="utf-8")
+            result = _run_author(source, output, dependencies)
+            self.assertEqual(1, result.returncode)
+            self.assertEqual("", result.stdout)
+            self.assertNotIn("Traceback", result.stderr)
+            self.assertTrue(
+                all(": " in line for line in result.stderr.splitlines()),
+                result.stderr,
+            )
+            for fragment in expected:
+                self.assertIn(fragment, result.stderr)
+            self.assertEqual(sentinel, output.read_text(encoding="utf-8"))
+            return result.stderr
 
     def test_complete_stack_and_ordered_map_examples_author_exact_records(self) -> None:
         with tempfile.TemporaryDirectory(prefix="semantic-pspec-exact-") as raw:
