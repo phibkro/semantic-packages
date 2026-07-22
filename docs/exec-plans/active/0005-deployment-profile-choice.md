@@ -172,6 +172,22 @@ P0 roadmap selection
   runner, complete harness, plan/profile/source/Specification/toolchain bindings, and
   worker-returned plan digest. Old runner, checker, and reports remain byte-unchanged.
   P3b report-to-Evidence derivation is released.
+- 2026-07-22: P3b candidate deterministically derives two Realization, fourteen Claim,
+  and fourteen Evidence records from the P-R3a-accepted reports. Every package record
+  uses version `0.2.0` and exactly one new profile; declaration outcomes, report/plan/
+  profile/runner/harness/source digests, command/toolchain/outcome digests, and adapter
+  identity remain exact. No performance Claim exists. Evidence `result` is derived
+  from the report declaration, while `reviewState` remains `pending` and provenance
+  says P-R3b is pending. P-R3b must review these bytes before the lead may promote only
+  review state/lineage to `accepted`; P4 remains blocked meanwhile.
+- 2026-07-22: P-R3b pending-candidate review PASS. The reviewer independently
+  recomputed the exact 30-record path/address/declaration/profile/provenance census,
+  reproduced both new and predecessor report suites, confirmed schema/link validity,
+  and found no hidden performance, interoperability, refinement, or generality claim.
+  The only permitted successor changes are `reviewState: pending` to `accepted` and a
+  truthful fixed P-R3a/P-R3b acceptance lineage in all fourteen Evidence records;
+  Realizations, Claims, every other Evidence field, reports, and report helpers must
+  remain byte-identical until the successor review.
 
 ## Verification
 
