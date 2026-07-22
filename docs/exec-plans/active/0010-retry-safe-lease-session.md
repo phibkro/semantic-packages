@@ -145,8 +145,8 @@ nix develop --command python3 -m semantic_packages protocol inspect \
 ## Progress checklist
 
 - [x] I0 design-spec 0005 user need/scenarios/falsifiers frozen
-- [ ] I0 substrate census and red-oracle inventory
-- [ ] I1 refute-first controls
+- [x] I0 substrate census and red-oracle inventory
+- [x] I1 refute-first controls
 - [ ] I-R1 independent contract/oracle review
 - [ ] I2 semantic artifacts
 - [ ] I3 candidates and campaign
@@ -168,6 +168,30 @@ nix develop --command python3 -m semantic_packages protocol inspect \
 - 2026-07-23: an explicit environment `expire` input preserves observable terminal
   behavior while keeping wall-clock scheduling out of scope. A real-time deadline claim
   would be a different feature and Evidence profile.
+- 2026-07-23: I0 finds the optional Specification schema and PSpec nested-value
+  transport are the only shared semantic surfaces that need extension. Existing
+  Realization, Claim, Evidence, profile, policy, and registry-manifest schemas already
+  admit a new concern/mechanism and exact package graph without a new record kind.
+  Claims can address one retained protocol-conformance law while the new protocol block
+  supplies its executable finite observation, avoiding a change to the byte-bound
+  shared declaration linker.
+- 2026-07-23: OrderedMap campaign/product/resolution modules are intentionally
+  domain-bound and embedded in accepted report provenance. I0 rejects editing or
+  generalizing them. Lease-session gets a local runner, resolver/report boundary, and
+  command dispatch; it reuses only canonical record schemas, graph capture, theory
+  projection, atomic publication patterns, and the explicit process adapter shape.
+- 2026-07-23: two independently represented Python child adapters are sufficient to
+  falsify state-machine representation coupling in this domain: one table-driven and
+  one object/branch-driven, plus a separate resurrection breaker. Language diversity
+  is not the semantic claim and is deferred; process isolation, source independence,
+  complete traces, and exact provenance remain required.
+- 2026-07-23: I1 freezes fourteen journey tests. Three pre-code controls pass for the
+  contract/plan, exact predecessor bytes, and independent six-scenario/three-candidate
+  oracle; the absent lease-session module is the sole intentional failure; ten
+  production controls skip. The successor must turn the same suite green without
+  weakening report closure, trace completeness, exact retry/conflict/token/terminal
+  observations, breaker location, representation independence, Evidence/projection/
+  boundary separation, structural fail-closure, output safety, or nonauthority.
 
 ## Decision log
 
