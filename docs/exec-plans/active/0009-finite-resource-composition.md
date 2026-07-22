@@ -115,7 +115,7 @@ python3 scripts/check_repo.py
 ## Progress checklist
 
 - [x] R0 design-spec 0004 and exact substrate census
-- [ ] R1 red author/inspect journey and controls
+- [x] R1 red author/inspect journey and controls
 - [ ] R-R1 independent contract/oracle review
 - [ ] R2 optional schema/link surface and retained PSpec
 - [ ] R3 finite-law inspector, fold report, and atomic command
@@ -136,6 +136,10 @@ python3 scripts/check_repo.py
   values into canonical JSON and validates a finite dependency graph. The missing
   mechanics are an optional exact candidate schema, resource-binding link checks, and
   finite algebra inspection; a second parser or authoring IR remains unjustified.
+- 2026-07-22: R1 freezes fourteen focused controls: three substrate/oracle controls
+  pass, the absent `resource` command is the sole intentional failure, and ten
+  production successors skip. The independent law oracle enumerates all 16 pairs and
+  64 triples from the authored table rather than importing future checker code.
 
 ## Maintenance, recovery, and reopen conditions
 
