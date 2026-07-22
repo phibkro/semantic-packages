@@ -122,7 +122,7 @@ python3 scripts/check_repo.py
 
 - [x] E0 design-spec 0003 revision 2 and exact five-mode census
 - [x] E1 red command/report journey and controls
-- [ ] E-R1 independent contract/projection review
+- [x] E-R1 independent contract/projection review
 - [ ] E2 effect-separation observation and command
 - [ ] E-R2 independent implementation review
 - [ ] E3 durable documentation and maintenance
@@ -147,16 +147,40 @@ python3 scripts/check_repo.py
 - 2026-07-22: E1's first executable census rejected an assumed round Stack event
   multiplicity. Each complete eventful Stack campaign retains exactly 177 invocation
   events; OrderedMap retains 30. The oracle now derives from the exact runners and the
-  red topology is two passing substrate controls, one intentional absent-probe failure,
-  and seven skipped successor controls.
+  initial red topology was two passing substrate controls, one intentional absent-probe
+  failure, and seven skipped successor controls.
+- 2026-07-22: E-R1 initially BLOCKed three false-positive paths: empty domain-shaped
+  projections could satisfy key/equality checks, count-only ledgers could lose ordered
+  event detail, and displayed fixture metadata could disagree with actual execution.
+  E1 now independently serializes and compares every native non-effect outcome and
+  event, asserts all ten exact runner calls in order, and rejects auxiliary file,
+  process, or network authority during mocked evaluation. The review remains open
+  until the reviewer attacks the strengthened successor.
+- 2026-07-22: the remaining E-R1 counterexamples required symmetric OrderedMap drift,
+  spillover, permitted-event, and error mutations; an invented Stack error event;
+  both wildcard boundaries; injected publication interruption; and positive exact
+  report shapes rather than phrase-only overclaim filtering. Those successors are now
+  part of E1, and the reviewer must re-evaluate them before E2.
+- 2026-07-22: E-R1's final authority attack showed that blocking only the common
+  `Path`, subprocess, and convenience-network entry points did not exclude alternate
+  host APIs, and one fixture hardlink did not represent every protected input class.
+  Mocked evaluation now rejects direct open/glob/iteration, shell and subprocess
+  variants, and raw sockets; alias controls sample both adapters plus an exact plan,
+  Specification, registry record, and accepted report.
+- 2026-07-22: E-R1 PASSed the strengthened E1 topology: two substrate controls pass,
+  the absent probe is the sole intentional failure, and nine successor controls skip.
+  The reviewer found no remaining concrete bypass across complete native projections,
+  full ordered ledgers, symmetric mutations, exact execution authority, governed
+  aliases, atomic failure, wildcard boundaries, report shape, or bounded language.
 
 ## Result and remaining work
 
-E0 and E1 are complete. The red predecessor names only the absent probe after live
-runner census; successor controls cover the complete report, immutable projections,
-classification and concern locality, error asymmetry, exact execution authority,
-output safety, determinism, and bounded language. No probe, accepted Effect relation,
-new Evidence, resolver behavior, or whole-process conclusion exists. E-R1 is next.
+E0, E1, and E-R1 are complete. The red predecessor names only the absent probe after
+live runner census; the strengthened successor controls cover the complete report,
+immutable projections, classification and concern locality, error asymmetry, exact
+execution authority, output safety, determinism, and bounded language. No probe,
+accepted Effect relation, new Evidence, resolver behavior, or whole-process conclusion
+exists. E2 is released.
 
 ## Stop and escalation conditions
 

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import importlib.util
+import builtins
 import json
 import os
 import subprocess
@@ -82,6 +83,82 @@ def _tree_snapshot(root: Path) -> tuple[tuple[str, bytes], ...]:
     )
 
 
+def _stack_projection(report) -> dict:
+    return {
+        "observations": [
+            {
+                "caseId": item.case_id,
+                "declarationId": item.declaration_id,
+                "result": item.result,
+                "expectedTopFirst": list(item.expected_top_first),
+                "observedTopFirst": list(item.observed_top_first),
+                "causes": list(item.causes),
+            }
+            for item in report.observations
+        ],
+        "declarations": [
+            {
+                "declarationId": item.declaration_id,
+                "result": item.result,
+                "causes": list(item.causes),
+            }
+            for item in report.declaration_outcomes
+            if item.declaration_id != "stack-effects"
+        ],
+    }
+
+
+def _ordered_map_declaration(item) -> dict:
+    return {
+        "declarationId": item.declaration_id,
+        "observationCount": item.observation_count,
+        "result": item.result,
+        "causes": list(item.causes),
+    }
+
+
+def _ordered_map_projection(report) -> dict:
+    return {
+        "cases": [
+            {
+                "caseId": case.case_id,
+                "requestCount": case.request_count,
+                "declarations": [
+                    _ordered_map_declaration(item)
+                    for item in case.declarations
+                    if item.declaration_id != "ordered-map-effects"
+                ],
+            }
+            for case in report.cases
+        ],
+        "declarations": [
+            _ordered_map_declaration(item)
+            for item in report.declarations
+            if item.declaration_id != "ordered-map-effects"
+        ],
+    }
+
+
+def _stack_ledger(report) -> list[dict]:
+    return [
+        {"event": event, "disposition": disposition}
+        for event, disposition in report.events
+    ]
+
+
+def _ordered_map_ledger(report) -> list[dict]:
+    return [
+        {
+            "seq": item.seq,
+            "caseId": item.case_id,
+            "operation": item.operation,
+            "event": item.event,
+            "disposition": item.disposition,
+        }
+        for item in report.events
+    ]
+
+
 class BoundedEffectRedBaselineTest(unittest.TestCase):
     def test_contract_plan_and_exact_substrate_are_present(self) -> None:
         self.assertTrue(DESIGN_SPEC.is_file())
@@ -144,6 +221,24 @@ class BoundedEffectRedBaselineTest(unittest.TestCase):
             any(item.result == "challenges" for item in ordered_map[4].declarations)
         )
 
+        ordered_map_boundary = _run_ordered_map("nonmatching-io-boundary")
+        self.assertEqual("supports", ordered_map_boundary.result)
+        self.assertEqual(
+            (("io", "unspecified"), ("io.", "unspecified")),
+            tuple(
+                (item.event, item.disposition)
+                for item in ordered_map_boundary.events[:2]
+            ),
+        )
+        ordered_map_descendant = _run_ordered_map("long-forbidden-event")
+        self.assertEqual("challenges", ordered_map_descendant.result)
+        self.assertTrue(
+            all(
+                item.event == "io.read.deep" and item.disposition == "forbidden"
+                for item in ordered_map_descendant.events
+            )
+        )
+
     def test_red_predecessor_names_only_the_absent_probe(self) -> None:
         if EFFECT_READY:
             self.skipTest("bounded effect-separation probe is implemented")
@@ -168,14 +263,116 @@ class BoundedEffectJourneyTest(unittest.TestCase):
         from semantic_packages import effect_separation
 
         with (
-            mock.patch.object(effect_separation, "run_stack_conformance", side_effect=stack),
+            mock.patch.object(
+                effect_separation,
+                "run_stack_conformance",
+                side_effect=stack,
+            ) as stack_runner,
             mock.patch.object(
                 effect_separation,
                 "run_ordered_map_conformance",
                 side_effect=ordered_map,
+            ) as ordered_map_runner,
+            mock.patch(
+                "socket.create_connection",
+                side_effect=AssertionError("network authority is forbidden"),
+            ),
+            mock.patch(
+                "urllib.request.urlopen",
+                side_effect=AssertionError("network authority is forbidden"),
+            ),
+            mock.patch(
+                "subprocess.Popen",
+                side_effect=AssertionError("only the two exact runners may execute"),
+            ),
+            mock.patch(
+                "subprocess.run",
+                side_effect=AssertionError("only the two exact runners may execute"),
+            ),
+            mock.patch(
+                "subprocess.call",
+                side_effect=AssertionError("only the two exact runners may execute"),
+            ),
+            mock.patch(
+                "subprocess.check_call",
+                side_effect=AssertionError("only the two exact runners may execute"),
+            ),
+            mock.patch(
+                "subprocess.check_output",
+                side_effect=AssertionError("only the two exact runners may execute"),
+            ),
+            mock.patch.object(
+                os,
+                "system",
+                side_effect=AssertionError("only the two exact runners may execute"),
+            ),
+            mock.patch.object(
+                os,
+                "open",
+                side_effect=AssertionError("evaluation may not discover registry inputs"),
+            ),
+            mock.patch.object(
+                os,
+                "popen",
+                side_effect=AssertionError("only the two exact runners may execute"),
+            ),
+            mock.patch(
+                "socket.socket",
+                side_effect=AssertionError("network authority is forbidden"),
+            ),
+            mock.patch.object(
+                builtins,
+                "open",
+                side_effect=AssertionError("evaluation may not discover registry inputs"),
+            ),
+            mock.patch.object(
+                Path,
+                "read_bytes",
+                side_effect=AssertionError("evaluation may not discover registry inputs"),
+            ),
+            mock.patch.object(
+                Path,
+                "read_text",
+                side_effect=AssertionError("evaluation may not discover registry inputs"),
+            ),
+            mock.patch.object(
+                Path,
+                "glob",
+                side_effect=AssertionError("evaluation may not discover registry inputs"),
+            ),
+            mock.patch.object(
+                Path,
+                "rglob",
+                side_effect=AssertionError("evaluation may not discover registry inputs"),
+            ),
+            mock.patch.object(
+                Path,
+                "iterdir",
+                side_effect=AssertionError("evaluation may not discover registry inputs"),
             ),
         ):
-            return effect_separation.build_observation(ROOT)
+            report = effect_separation.build_observation(ROOT)
+
+        self.assertEqual(5, stack_runner.call_count)
+        self.assertEqual(5, ordered_map_runner.call_count)
+        self.assertEqual(
+            [
+                mock.call(
+                    (sys.executable, str(STACK_FIXTURE), mode),
+                    plan=default_stack_conformance_plan(),
+                )
+                for mode in STACK_MODES
+            ],
+            stack_runner.call_args_list,
+        )
+        self.assertEqual(
+            [
+                mock.call((sys.executable, str(ORDERED_MAP_FIXTURE), mode))
+                for mode in ORDERED_MAP_MODES
+            ],
+            ordered_map_runner.call_args_list,
+        )
+        return report
 
     def _assert_rejected(self, stack, ordered_map, expected: str) -> None:
         from semantic_packages import effect_separation
@@ -242,8 +439,14 @@ class BoundedEffectJourneyTest(unittest.TestCase):
             },
             report["summary"],
         )
-        self.assertIn("adapter-event-completeness", report["assumptions"])
-        self.assertIn("adapter-external-effects", report["exclusions"])
+        self.assertEqual(
+            ["adapter-faithfulness", "adapter-event-completeness"],
+            report["assumptions"],
+        )
+        self.assertEqual(
+            ["adapter-external-effects", "realization-steps"],
+            report["exclusions"],
+        )
         self.assertEqual(governed, tuple(
             _tree_snapshot(ROOT / relative)
             for relative in ("fixtures", "contracts", "specs", "registry", "reports")
@@ -258,6 +461,16 @@ class BoundedEffectJourneyTest(unittest.TestCase):
             (report["domains"][0], STACK_MODES, "stack-effects"),
             (report["domains"][1], ORDERED_MAP_MODES, "ordered-map-effects"),
         ):
+            self.assertEqual(
+                (
+                    "domain",
+                    "effectDeclaration",
+                    "fixture",
+                    "planSha256",
+                    "observations",
+                ),
+                tuple(domain),
+            )
             observations = domain["observations"]
             self.assertEqual(ROLES, tuple(item["role"] for item in observations))
             self.assertEqual(modes, tuple(item["adapterMode"] for item in observations))
@@ -270,17 +483,59 @@ class BoundedEffectJourneyTest(unittest.TestCase):
             self.assertTrue(all(item["semanticProjection"] == baseline for item in observations[1:4]))
             self.assertNotEqual(baseline, observations[4]["semanticProjection"])
             self.assertEqual("non-authoritative", observations[4]["effectAuthority"])
+            for observation in observations:
+                self.assertEqual(
+                    (
+                        "role",
+                        "adapterMode",
+                        "campaignResult",
+                        "campaignCauses",
+                        "effectResult",
+                        "effectCauses",
+                        "effectAuthority",
+                        "eventLedger",
+                        "semanticProjection",
+                        "projectionComparison",
+                    ),
+                    tuple(observation),
+                )
 
         stack_observations = report["domains"][0]["observations"]
         ordered_observations = report["domains"][1]["observations"]
-        self.assertEqual([], stack_observations[0]["eventLedger"])
-        self.assertEqual([], stack_observations[4]["eventLedger"])
-        self.assertEqual(177, len(stack_observations[1]["eventLedger"]))
-        self.assertEqual(30, len(ordered_observations[1]["eventLedger"]))
         self.assertEqual(
-            [{"seq": 0, "caseId": "lookup-empty", "operation": "empty", "event": "io.read", "disposition": "forbidden"}],
-            ordered_observations[4]["eventLedger"],
+            [_stack_ledger(item) for item in stack],
+            [item["eventLedger"] for item in stack_observations],
         )
+        self.assertEqual(
+            [_ordered_map_ledger(item) for item in ordered_map],
+            [item["eventLedger"] for item in ordered_observations],
+        )
+        self.assertEqual(
+            [_stack_projection(item) for item in stack],
+            [item["semanticProjection"] for item in stack_observations],
+        )
+        self.assertEqual(
+            [_ordered_map_projection(item) for item in ordered_map],
+            [item["semanticProjection"] for item in ordered_observations],
+        )
+
+        for observations, native, effect_id in (
+            (stack_observations, stack, "stack-effects"),
+            (ordered_observations, ordered_map, "ordered-map-effects"),
+        ):
+            for observed, source in zip(observations, native):
+                declarations = (
+                    source.declaration_outcomes
+                    if hasattr(source, "declaration_outcomes")
+                    else source.declarations
+                )
+                effect = next(
+                    item for item in declarations if item.declaration_id == effect_id
+                )
+                self.assertEqual(source.result, observed["campaignResult"])
+                self.assertEqual(list(source.causes), observed["campaignCauses"])
+                self.assertEqual(effect.result, observed["effectResult"])
+                self.assertEqual(list(effect.causes), observed["effectCauses"])
 
     def test_semantic_drift_and_forbidden_concern_spillover_fail_closed(self) -> None:
         stack, ordered_map = self._exact_reports()
@@ -313,6 +568,66 @@ class BoundedEffectJourneyTest(unittest.TestCase):
         reclassified_error[4] = replace(stack[4], result="supports", causes=())
         self._assert_rejected(tuple(reclassified_error), ordered_map, "adapter-error result")
 
+        invented_stack_event = list(stack)
+        invented_stack_event[4] = replace(
+            stack[4], events=(("io.read", "forbidden"),)
+        )
+        self._assert_rejected(
+            tuple(invented_stack_event), ordered_map, "adapter-error event ledger"
+        )
+
+        reclassified_ordered_error = list(ordered_map)
+        reclassified_ordered_error[4] = replace(
+            ordered_map[4], result="supports", causes=()
+        )
+        self._assert_rejected(
+            stack, tuple(reclassified_ordered_error), "adapter-error result"
+        )
+
+    def test_ordered_map_drift_spillover_and_permitted_challenges_fail_closed(self) -> None:
+        stack, ordered_map = self._exact_reports()
+        changed_declarations = list(ordered_map[1].declarations)
+        changed_declarations[0] = replace(
+            changed_declarations[0], result="challenges", causes=("TEST_DRIFT",)
+        )
+        drifted = list(ordered_map)
+        drifted[1] = replace(
+            ordered_map[1], declarations=tuple(changed_declarations)
+        )
+        self._assert_rejected(stack, tuple(drifted), "semantic projection drift")
+
+        spill_declarations = list(ordered_map[2].declarations)
+        spill_declarations[0] = replace(
+            spill_declarations[0], result="challenges", causes=("TEST_SPILL",)
+        )
+        spilled = list(ordered_map)
+        spilled[2] = replace(
+            ordered_map[2], declarations=tuple(spill_declarations)
+        )
+        self._assert_rejected(stack, tuple(spilled), "concern spillover")
+
+        optional_declarations = list(ordered_map[1].declarations)
+        effect_index = next(
+            index
+            for index, item in enumerate(optional_declarations)
+            if item.declaration_id == "ordered-map-effects"
+        )
+        optional_declarations[effect_index] = replace(
+            optional_declarations[effect_index],
+            result="challenges",
+            causes=("TEST_OPTIONAL",),
+        )
+        challenged_optional = list(ordered_map)
+        challenged_optional[1] = replace(
+            ordered_map[1],
+            result="challenges",
+            causes=("TEST_OPTIONAL",),
+            declarations=tuple(optional_declarations),
+        )
+        self._assert_rejected(
+            stack, tuple(challenged_optional), "optional effect result"
+        )
+
     def test_exact_execution_authority_and_domain_ownership_are_visible(self) -> None:
         stack, ordered_map = self._exact_reports()
         report = self._build_with_reports(stack, ordered_map)
@@ -334,14 +649,26 @@ class BoundedEffectJourneyTest(unittest.TestCase):
 
     def test_output_alias_required_argument_and_determinism_controls(self) -> None:
         with tempfile.TemporaryDirectory(prefix="semantic-effect-alias-") as raw:
-            alias = Path(raw) / "fixture-alias.py"
-            os.link(STACK_FIXTURE, alias)
-            before = STACK_FIXTURE.read_bytes()
-            result = _run_probe(alias)
-            self.assertEqual(1, result.returncode)
-            self.assertEqual("", result.stdout)
-            self.assertIn("OUTPUT_INPUT_ALIAS", result.stderr)
-            self.assertEqual(before, STACK_FIXTURE.read_bytes())
+            directory = Path(raw)
+            governed_inputs = (
+                STACK_FIXTURE,
+                ORDERED_MAP_FIXTURE,
+                ROOT / "contracts/ordered-map/conformance-plan.json",
+                ROOT / "specs/stack.pspec",
+                ROOT / "registry/stack/theory/records/stack-spec.json",
+                ROOT / "reports/ordered-map/rust-campaign-report.json",
+            )
+            for index, governed in enumerate(governed_inputs):
+                with self.subTest(governed=governed.relative_to(ROOT)):
+                    alias = directory / f"governed-alias-{index}"
+                    os.link(governed, alias)
+                    before = governed.read_bytes()
+                    result = _run_probe(alias)
+                    self.assertEqual(1, result.returncode)
+                    self.assertEqual("", result.stdout)
+                    self.assertIn("OUTPUT_INPUT_ALIAS", result.stderr)
+                    self.assertEqual(before, governed.read_bytes())
+                    alias.unlink()
 
             missing = subprocess.run(
                 [sys.executable, str(SCRIPT)],
@@ -353,11 +680,31 @@ class BoundedEffectJourneyTest(unittest.TestCase):
             )
             self.assertEqual(2, missing.returncode)
 
-            first = Path(raw) / "first.json"
-            second = Path(raw) / "second.json"
+            first = directory / "first.json"
+            second = directory / "second.json"
             self.assertEqual(0, _run_probe(first).returncode)
             self.assertEqual(0, _run_probe(second).returncode)
             self.assertEqual(first.read_bytes(), second.read_bytes())
+
+    def test_atomic_publication_failure_preserves_prior_output(self) -> None:
+        from semantic_packages import effect_separation
+
+        with tempfile.TemporaryDirectory(prefix="semantic-effect-atomic-") as raw:
+            output = Path(raw) / "report.json"
+            sentinel = b"operator-owned prior observation\n"
+            output.write_bytes(sentinel)
+            diagnostics = []
+            with mock.patch.object(
+                effect_separation.os,
+                "replace",
+                side_effect=OSError("injected publication interruption"),
+            ):
+                result = effect_separation.run(
+                    output, root=ROOT, diagnostics=diagnostics.append
+                )
+            self.assertEqual(1, result)
+            self.assertEqual(sentinel, output.read_bytes())
+            self.assertTrue(any("OUTPUT_WRITE" in item for item in diagnostics))
 
     def test_report_language_preserves_bounded_nonauthority(self) -> None:
         with tempfile.TemporaryDirectory(prefix="semantic-effect-language-") as raw:
