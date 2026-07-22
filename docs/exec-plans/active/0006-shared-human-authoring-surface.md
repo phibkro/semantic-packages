@@ -375,6 +375,11 @@ not omit any predecessor suite.
   independent successor review observed a clean tree before and after. It also
   confirmed `KeyboardInterrupt` and `SystemExit` remain unmasked, all 27 A1/A3
   regressions pass, and only the truthful A5-H observation gate remains red.
+- 2026-07-22: the complete clean repository gate at `f753b8d` ran all retained
+  checks and failed only the explicit A5-H observation assertion: of 254 actor tests,
+  252 passed, one retired predecessor skipped, and only A5-H failed; no generated
+  repository state remained. This is release evidence for the external observation,
+  not permission to waive it.
 
 ## Decision log
 
