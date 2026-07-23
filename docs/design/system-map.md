@@ -23,6 +23,7 @@ the active ExecPlan.
 | accepted differentiated deployment-profile route | [completed ExecPlan 0005](../exec-plans/completed/0005-deployment-profile-choice.md) |
 | active shared human-authoring route | [active ExecPlan 0006](../exec-plans/active/0006-shared-human-authoring-surface.md) |
 | completed explicit refinement-inspection route | [completed ExecPlan 0007](../exec-plans/completed/0007-explicit-refinement-inspection.md) |
+| completed interaction-protocol route | [completed ExecPlan 0010](../exec-plans/completed/0010-retry-safe-lease-session.md) |
 
 Current route: ExecPlan 0004 is closed at two-domain reuse. ExecPlan 0005 produced
 fresh exact-profile Evidence and an authenticated 69-member authority for differentiated
@@ -168,7 +169,7 @@ sandbox assurance, and cannot perform writes or ratify a gate.
 | Layer | Responsibility | State |
 |---|---|---|
 | L0 protected intent | mission, principles, non-goals, consumer authority | accepted governance; human authority |
-| L1 semantic model | operations, observations, laws, effects, resources, profiles | bounded Stack and finite OrderedMap boundaries accepted |
+| L1 semantic model | operations, observations, laws, protocols, effects, resources, profiles | bounded Stack, finite OrderedMap, and one finite lease-session protocol accepted |
 | L2 canonical records | six immutable exact-version record kinds and typed references | executable |
 | L3 graph integrity | schema, duplicates, dangling/wrong-kind references, coherent scope | executable |
 | L4 local loading | deterministic finite source-set discovery and exact import edges | executable |
@@ -290,13 +291,28 @@ consumer decision, runtime-resource composition, ownership/separation result, or
 arbitrary-domain resource foundation. Existing Stack and OrderedMap source, records,
 runners, Evidence, and product decisions remain unchanged.
 
+### Retry-safe lease-session interaction protocol
+
+Design-spec 0005 and ExecPlan 0010 add an optional finite labelled-transition shape and
+one exact nine-record package graph. A campaign starts an isolated child process for
+each of six scenarios against table-oriented, object-oriented, and resurrection-breaker
+candidates. Complete traces retain every input, output, before/after state, and opaque
+identity. Two accepted Evidence records satisfy the exact required concern; the breaker
+is challenged at late completion after expiry. Semantic decisions and directional
+NDJSON process boundaries are separate report fields.
+
+The conclusion is only `bounded-protocol-package-observed`. Explicit campaign expiry is
+not a timer claim, and the package establishes no liveness, concurrency, partition,
+crash-recovery, token-security, exhaustive-trace, refinement, composition, session-type,
+or arbitrary-domain result.
+
 ## Actor data flows
 
 | Actor | Data-plane path | Current edge |
 |---|---|---|
 | theory author | semantic source -> canonical Specification/Claim -> exact-version proposal -> resource composition -> structural inspection -> graph checks -> proof or other Evidence | explicit Stack and OrderedMap PSpec authoring, two-domain refinement inspection, and one finite cross-domain resource composition are experienceable; automated checks pass, while uninvolved-author acceptance, hosted publication, semantic refinement, resource satisfaction, and hosted semantic checking remain absent |
 | package author | Realization/adapter -> explicit build -> campaign -> bounded effect-separation observation -> report -> reviewed declaration Evidence -> graph | executable for independently represented Rust and TypeScript packages in both domains; the cross-domain probe is inspectable but creates no Evidence |
-| package consumer | Specification + policy + profile -> Evidence selection -> semantic result -> boundary mechanism | executable exact Stack and OrderedMap queries, including two differentiated-profile choices with complete non-transfer ledgers, version-scoped recovery, and separate directional child-process boundaries |
+| package consumer | Specification + policy + profile -> Evidence selection -> semantic result -> boundary mechanism | executable exact Stack and OrderedMap queries plus one bounded lease-session package query; Evidence decisions remain separate from directional child-process boundaries |
 | theory consumer | exact Specification -> declarations/imports -> Claims/Evidence/unknowns -> derived view | executable Stack and OrderedMap projections; realization-scoped Evidence never becomes Specification assurance |
 
 ## Trust boundaries

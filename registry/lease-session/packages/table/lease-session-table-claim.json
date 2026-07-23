@@ -1,0 +1,11 @@
+{
+  "kind": "claim", "id": "lease-session-table-protocol-conformance", "version": "0.1.0",
+  "subject": {"kind": "realization", "id": "lease-session-table", "version": "0.1.0"},
+  "governingSpecification": {"kind": "specification", "id": "lease-session", "version": "0.1.0"},
+  "proposition": {"specification": {"kind": "specification", "id": "lease-session", "version": "0.1.0"}, "declarationId": "protocol-conformance"},
+  "concern": "protocol.conformance", "scope": "lease-session-table through its exact NDJSON adapter under the local-process profile.",
+  "assumptions": ["The adapter faithfully exposes the named realization."],
+  "exclusions": ["No behavior outside the exact six-scenario campaign is asserted."],
+  "applicableProfiles": [{"kind": "realizationProfile", "id": "lease-session-local-process", "version": "0.1.0"}],
+  "state": "active"
+}

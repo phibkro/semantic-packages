@@ -13,7 +13,7 @@ The project explores a shared specification language that:
 
 ## Current phase
 
-**Finite authored resource composition experienceable; satisfaction unestablished.**
+**Retry-safe interaction-protocol package experienceable; satisfaction policy-relative.**
 
 The accepted Stack tracer publishes one nontrivial specification, binds proof and
 conformance Evidence, registers two independent Realizations, resolves them under an
@@ -53,6 +53,13 @@ derived folds. The report keeps algebraic well-formedness separate from Realizat
 satisfaction, Claim/Evidence transfer, compatibility, refinement, resolver authority,
 and arbitrary resource semantics.
 
+The third semantic domain is now a retry-safe lease session. One exact command runs six
+ordered scenarios against two independently represented child-process Realizations and
+a resurrection breaker, binds accepted finite-campaign Evidence under an exact policy
+and profile, and reports directional deployment boundaries separately. Explicit expiry
+is a campaign input: wall-clock timing, liveness, concurrency, crash recovery, token
+security, exhaustive traces, and general protocol semantics remain excluded.
+
 ## Repository map
 
 - [`AGENTS.md`](AGENTS.md): durable instructions and map for coding agents.
@@ -73,6 +80,8 @@ and arbitrary resource semantics.
 - [`design-specs/0002-explicit-refinement-inspection-journey.md`](design-specs/0002-explicit-refinement-inspection-journey.md): observable contract and falsifiers for exact proposal-local cross-version inspection.
 - [`design-specs/0003-bounded-effect-separation-observation.md`](design-specs/0003-bounded-effect-separation-observation.md): observable contract and falsifiers for the exact two-domain effect-separation probe.
 - [`design-specs/0004-finite-resource-composition-inspection.md`](design-specs/0004-finite-resource-composition-inspection.md): observable contract and falsifiers for the finite authored resource-composition journey.
+- [`design-specs/0005-retry-safe-lease-session-package.md`](design-specs/0005-retry-safe-lease-session-package.md): frozen user need, ordered observations, falsifiers, and exclusions for the interaction-protocol package.
+- [`docs/exec-plans/completed/0010-retry-safe-lease-session.md`](docs/exec-plans/completed/0010-retry-safe-lease-session.md): retained red-control reviews, implementation, evidence, maintenance, and convergence for that package.
 - [`docs/exec-plans/completed/0009-finite-resource-composition.md`](docs/exec-plans/completed/0009-finite-resource-composition.md): completed red controls, independent reviews, finite inspection implementation, maintenance, and convergence evidence for that journey.
 - [`docs/exec-plans/completed/0008-bounded-effect-separation.md`](docs/exec-plans/completed/0008-bounded-effect-separation.md): completed red controls, independent reviews, implementation, maintenance, and convergence evidence for that probe.
 - [`docs/exec-plans/completed/0007-explicit-refinement-inspection.md`](docs/exec-plans/completed/0007-explicit-refinement-inspection.md): completed refinement journey, independent review, and convergence evidence.
@@ -280,6 +289,32 @@ semantic elements, not runtime resources or Evidence results. A well-formed tabl
 not establish persistence satisfaction, compatibility, refinement, ownership,
 separation, quantities, resolver acceptance, or a universal resource logic.
 
+### Inspect the retry-safe lease-session package
+
+```sh
+nix develop --command python3 -m semantic_packages protocol inspect \
+  registry/lease-session/manifest.json \
+  --output /tmp/lease-session-inspection.json
+```
+
+Expected summary:
+
+```text
+inspected lease-session 0.1.0: 2 registered realizations accepted, 1 breaker challenged across 18 trace cases; boundary=directional; satisfaction=policy-relative -> /tmp/lease-session-inspection.json
+```
+
+The closed report retains every ordered input, output, before-state, after-state, opaque
+identity, Evidence disposition, and directional child-process boundary. It establishes
+only the six finite scenarios under the pinned profile and policy. To observe safe
+failure, use `registry/lease-session/manifest.json` as `--output`; the command reports
+`PROTOCOL_OUTPUT_ALIAS` and leaves the manifest unchanged.
+
+What is real underneath: the command authenticates nine exact local records and one
+campaign plan, starts a fresh child process for each scenario/candidate pair, compares
+complete traces with a harness-owned oracle, and publishes atomically. It does not
+prove every trace, infer transport compatibility from semantic acceptance, or claim
+wall-clock, distributed-systems, or token-security properties.
+
 ### Verify the repository
 
 Run the repository quality gate:
@@ -385,9 +420,9 @@ Then open the repository in Codex, an IDE extension, or another coding agent. Th
 ## Status
 
 This repository is an executable research prototype with complete bounded local Stack,
-finite OrderedMap, and exact differentiated-profile lifecycles, plus an independently
-reviewed two-domain authoring control, explicit refinement inspection, and bounded
-effect-separation observation. The automated author journey is green; uninvolved-author
+finite OrderedMap, exact differentiated-profile lifecycles, and one finite lease-session
+interaction-protocol package, plus an independently reviewed two-domain authoring
+control, explicit refinement inspection, and bounded effect-separation observation. The automated author journey is green; uninvolved-author
 observation and final review remain required before ExecPlan 0006 closes. This is not
 yet a stable standard, a proof of noninterference, an arbitrary-domain semantic-package
 ecosystem, or a hosted production registry.

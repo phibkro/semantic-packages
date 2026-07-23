@@ -159,6 +159,16 @@ non-identity transformation demonstrates the need.
   identify equal local IDs across Specifications, compose runtime resources, prove
   persistence, or create compatibility, refinement, resolver, ownership, separation,
   quantitative, graded, or consumer authority.
+- Protocol declarations describe observable states, input/output labels, transitions,
+  terminal states, and identity observations rather than implementation control flow.
+- Design-spec 0005's first executable protocol candidate is one optional finite labelled
+  transition system. Its six scenarios observe complete ordered traces and opaque-value
+  equality; each scenario starts an isolated child process. Passing is bounded campaign
+  Evidence, not an exhaustive simulation theorem, liveness result, timer guarantee, or
+  universal protocol calculus.
+- Protocol semantic validation follows raw, schema, and exact-link validation. Omission
+  remains valid; duplicate or dangling labels, duplicate transition keys, an initial
+  terminal state, and unreachable declared states fail with source-relative diagnostics.
 - Performance claims are profile-relative and name a cost measure, workload model,
   and measurement or proof method.
 - Claims do not carry their own assurance. Acceptance is computed from applicable
@@ -196,7 +206,9 @@ The Stack tracer fixes the following meaning without prescribing a representatio
 These obligations authorize canonical record design. `specs/stack.pspec` and
 `specs/ordered-map.pspec` are complete PSpec v1 candidate inputs whose outputs equal the
 accepted records; `specs/persistence-composition.pspec` imports both without changing
-them and exercises the optional finite algebra. The predecessor domains' final general
+them and exercises the optional finite algebra. `specs/lease-session.pspec` adds the
+optional bounded protocol shape without making it a default for protocol-free records.
+The predecessor domains' final general
 author-experience acceptance still depends on the uninvolved-author gate.
 
 ### Initial conformance and performance profile

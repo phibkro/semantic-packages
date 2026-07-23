@@ -1,0 +1,48 @@
+{
+  "kind": "lease-session-campaign-plan-v1",
+  "specification": {"kind": "specification", "id": "lease-session", "version": "0.1.0"},
+  "protocol": "lease-session-runner-ndjson-v1",
+  "candidates": [
+    {
+      "id": "lease-session-table",
+      "registered": true,
+      "representation": "table-oriented mutable record",
+      "entrypoint": "implementations/lease-session/table/adapter.py",
+      "sha256": "e467000d68fbb8981107612ba0de98eb555dc21cd233559ac6f42abd91e39138"
+    },
+    {
+      "id": "lease-session-object",
+      "registered": true,
+      "representation": "object-oriented branch state",
+      "entrypoint": "implementations/lease-session/object/adapter.py",
+      "sha256": "9877efd1c25eed2a9024e26bb9c23c7aecef46e69df48dca1488253419895635"
+    },
+    {
+      "id": "lease-session-resurrection-breaker",
+      "registered": false,
+      "representation": "negative branch-state fixture",
+      "entrypoint": "fixtures/candidates/lease-session/resurrection_breaker.py",
+      "sha256": "8d278df9c6208d8ea394affff884c23a12322b316a976396ad87c9e2ffbf43ca"
+    }
+  ],
+  "scenarios": [
+    {"id": "acquire", "inputs": [{"op": "acquire", "client": "A", "request": "r1"}]},
+    {"id": "retry-stability", "inputs": [{"op": "acquire", "client": "A", "request": "r1"}, {"op": "acquire", "client": "A", "request": "r1"}]},
+    {"id": "exclusive-holder", "inputs": [{"op": "acquire", "client": "A", "request": "r1"}, {"op": "acquire", "client": "B", "request": "r2"}]},
+    {"id": "wrong-holder-rejection", "inputs": [{"op": "acquire", "client": "A", "request": "r1"}, {"op": "complete", "token": "wrong"}]},
+    {"id": "completion-closure", "inputs": [{"op": "acquire", "client": "A", "request": "r1"}, {"op": "complete", "token": "t1"}, {"op": "acquire", "client": "B", "request": "r2"}, {"op": "renew", "token": "t1"}, {"op": "expire"}, {"op": "complete", "token": "t1"}]},
+    {"id": "expiry-closure", "inputs": [{"op": "acquire", "client": "A", "request": "r1"}, {"op": "expire"}, {"op": "complete", "token": "t1"}, {"op": "acquire", "client": "B", "request": "r2"}, {"op": "renew", "token": "t1"}, {"op": "expire"}]}
+  ],
+  "assumptions": [
+    "Each child adapter faithfully exposes its named realization.",
+    "The runner observes every response inside the NDJSON child-process boundary."
+  ],
+  "exclusions": [
+    "No wall-clock timers, scheduling fairness, progress, or liveness claim.",
+    "No concurrency, network partition, process crash, durable recovery, or lease-transfer claim.",
+    "No token entropy, authenticity, authorization, or other security claim.",
+    "No exhaustive-trace or adapter-faithfulness conclusion from the finite campaign.",
+    "No protocol refinement, composition, session-type, or arbitrary-domain generality claim.",
+    "Opaque identities are observed only by equality in the retained scenarios."
+  ]
+}

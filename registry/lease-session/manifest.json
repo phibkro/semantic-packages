@@ -1,0 +1,20 @@
+{
+  "formatVersion": 1,
+  "sources": [
+    {"id": "lease-session-theory", "root": "theory", "roles": ["theory-authored", "dependency"]},
+    {"id": "lease-session-table", "root": "packages/table", "roles": ["package-authored"]},
+    {"id": "lease-session-object", "root": "packages/object", "roles": ["package-authored"]},
+    {"id": "lease-session-consumer", "root": "consumer", "roles": ["package-consumer-authored"]}
+  ],
+  "members": [
+    {"source": "lease-session-theory", "address": {"kind": "realizationProfile", "id": "lease-session-local-process", "version": "0.1.0"}, "sha256": "34bfcf18810f5ed88384a841e99ec59d0ed9d5a41457453eb621f3817c299f6b", "role": "dependency"},
+    {"source": "lease-session-theory", "address": {"kind": "specification", "id": "lease-session", "version": "0.1.0"}, "sha256": "a23bee2e901f49efff9c43be3e804014c6971673ea0220505b3e81379d3d4821", "role": "theory-authored"},
+    {"source": "lease-session-table", "address": {"kind": "realization", "id": "lease-session-table", "version": "0.1.0"}, "sha256": "b90a4ccde061b739ddd0c2f15f5ccde61302010878c8b4607e1319ae8830caf0", "role": "package-authored"},
+    {"source": "lease-session-table", "address": {"kind": "claim", "id": "lease-session-table-protocol-conformance", "version": "0.1.0"}, "sha256": "ba2516e6a2a68e63cf1510935b00a18e1976b3769b9c594dbf1de2da5e4bb030", "role": "package-authored"},
+    {"source": "lease-session-table", "address": {"kind": "evidence", "id": "lease-session-table-protocol-campaign", "version": "0.1.0"}, "sha256": "4a3304f6cb9bfd731eb6e6ca55b65b21e67ef2f6687ee0f96bbd99ffff67ffcb", "role": "package-authored"},
+    {"source": "lease-session-object", "address": {"kind": "realization", "id": "lease-session-object", "version": "0.1.0"}, "sha256": "7d047032f653d2f987cc891a609b86b3122c6d94e2d2bcc957ef46605d2a676a", "role": "package-authored"},
+    {"source": "lease-session-object", "address": {"kind": "claim", "id": "lease-session-object-protocol-conformance", "version": "0.1.0"}, "sha256": "247db5d9944b8d6db5323e131369b2136ce4afff43103013b72b56ed969b1a05", "role": "package-authored"},
+    {"source": "lease-session-object", "address": {"kind": "evidence", "id": "lease-session-object-protocol-campaign", "version": "0.1.0"}, "sha256": "442f2c9bbc761e42c50221985c1a6a9c2f5c558d7e71a3679b1e50866423f8a0", "role": "package-authored"},
+    {"source": "lease-session-consumer", "address": {"kind": "consumerPolicy", "id": "lease-session-bounded-policy", "version": "0.1.0"}, "sha256": "429803c8c259b303843f6a9e210458721f73d33a257a532833babc4581acc539", "role": "package-consumer-authored"}
+  ]
+}

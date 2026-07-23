@@ -1,0 +1,7 @@
+{
+  "kind": "consumerPolicy", "id": "lease-session-bounded-policy", "version": "0.1.0",
+  "specification": {"kind": "specification", "id": "lease-session", "version": "0.1.0"},
+  "profile": {"kind": "realizationProfile", "id": "lease-session-local-process", "version": "0.1.0"},
+  "concerns": [{"concern": "protocol.conformance", "priority": "required", "acceptedMechanisms": ["bounded-protocol-campaign"], "minimumAssurance": "one-accepted-applicable-support-no-selected-challenge"}],
+  "prohibitions": []
+}

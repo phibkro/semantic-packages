@@ -14,6 +14,8 @@ promise of hosted infrastructure. Design-spec 0003 adds one package-author/Evide
 reviewer observation over the existing two runners without turning it into Evidence.
 Design-spec 0004 adds one theory-author composition inspection without turning
 algebraic well-formedness into resource satisfaction or a universal resource model.
+Design-spec 0005 adds the third semantic domain: one bounded interaction protocol whose
+complete finite traces, Evidence decisions, and deployment boundaries remain distinct.
 
 For this tracer, a **registry** is one curated finite local source set of immutable,
 exact-version records. To **publish** or **register** is to add records to that set and
@@ -102,6 +104,18 @@ Realization satisfaction, Claim/Evidence transfer, compatibility, refinement,
 ownership/separation/quantity semantics, resolver decisions, and arbitrary-domain
 resource composition remain absent. The executable contract is
 [design-spec 0004](../../design-specs/0004-finite-resource-composition-inspection.md).
+
+### A9 — package consumer inspects a retry-safe lease session
+
+The package consumer names one exact nine-record manifest and runs six ordered scenarios
+against two registered Realizations and one resurrection breaker. Acceptance requires
+fresh isolated sessions, exact retry identity, holder exclusivity, wrong-token rejection,
+completion and expiry closure, complete traces, policy-relative Evidence, theory/package
+projection separation, and directional child-process boundaries. The campaign supplies
+`expire` explicitly and establishes no wall-clock, liveness, concurrency, crash,
+partition, token-security, exhaustive-trace, refinement, composition, or universal
+protocol claim. The executable contract is
+[design-spec 0005](../../design-specs/0005-retry-safe-lease-session-package.md).
 
 ### J0 — vocabulary and local boundary
 

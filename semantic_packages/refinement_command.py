@@ -17,6 +17,7 @@ from scripts import record_check
 from .author_command import run_author
 from .refinement import ProposalProblem, inspect_proposal, validate_proposal_shape
 from .resource_algebra import run_resource_inspection
+from .lease_session import run_protocol_inspection
 
 
 class _DuplicateMember(ValueError):
@@ -271,6 +272,14 @@ def build_parser() -> argparse.ArgumentParser:
     )
     resource_inspect.add_argument("--resource", required=True, help="exact local resource declaration ID")
     resource_inspect.add_argument("--output", required=True, type=Path, help="inspection report output path")
+
+    protocol = commands.add_parser("protocol", help="inspect one bounded interaction-protocol package")
+    protocol_commands = protocol.add_subparsers(dest="protocol_command", required=True)
+    protocol_inspect = protocol_commands.add_parser(
+        "inspect", help="reproduce and inspect one exact finite protocol package"
+    )
+    protocol_inspect.add_argument("manifest", type=Path, help="exact finite registry manifest")
+    protocol_inspect.add_argument("--output", required=True, type=Path, help="inspection report output path")
     return parser
 
 
@@ -288,5 +297,7 @@ def main(arguments: Sequence[str] | None = None) -> int:
             options.resource,
             options.output,
         )
+    if options.command == "protocol" and options.protocol_command == "inspect":
+        return run_protocol_inspection(options.manifest, options.output)
     parser.error("unsupported command")
     return 2

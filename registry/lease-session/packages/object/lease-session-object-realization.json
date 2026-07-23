@@ -1,0 +1,11 @@
+{
+  "kind": "realization",
+  "id": "lease-session-object",
+  "version": "0.1.0",
+  "specification": {"kind": "specification", "id": "lease-session", "version": "0.1.0"},
+  "adapter": {"id": "lease-session-object-ndjson-adapter", "version": "0.1.0", "protocol": "lease-session-runner-ndjson-v1", "entrypoint": "implementations/lease-session/object/adapter.py", "assumptions": ["The adapter faithfully exposes the object-state realization.", "Responses are complete inside the child-process boundary."]},
+  "implementation": {"language": "Python", "languageVersion": "3.14", "target": "local child process", "runtime": "Python interpreter", "interfaceMechanism": "NDJSON over stdin/stdout", "buildSystem": "source-only", "buildInstructions": "No build step; use the pinned Nix Python.", "executionInstructions": "Launch one fresh adapter process per scenario."},
+  "capabilities": ["lease.acquire", "lease.renew", "lease.complete", "lease.expire", "lease.observe"],
+  "limitations": ["Evidence covers only the exact six-scenario campaign.", "No wall-clock, concurrency, network, crash, token-security, or exhaustive-trace claim."],
+  "supportedProfiles": [{"kind": "realizationProfile", "id": "lease-session-local-process", "version": "0.1.0"}]
+}

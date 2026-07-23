@@ -1,0 +1,11 @@
+{
+  "kind": "realizationProfile",
+  "id": "lease-session-local-process",
+  "version": "0.1.0",
+  "platform": "local process with Python 3",
+  "hostCapabilities": ["python3", "stdin", "stdout", "process-isolation"],
+  "scale": "one fresh process per one of six finite scenarios",
+  "concurrency": "sequential messages in one candidate session",
+  "trust": "repository-pinned source and bounded NDJSON adapter",
+  "portability": "Python 3 JSON process boundary"
+}
