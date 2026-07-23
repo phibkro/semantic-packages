@@ -13,7 +13,7 @@ The project explores a shared specification language that:
 
 ## Current phase
 
-**Explicit exact-version refinement inspection experienceable; semantic verdict held.**
+**Bounded two-domain effect separation experienceable; no noninterference claim.**
 
 The accepted Stack tracer publishes one nontrivial specification, binds proof and
 conformance Evidence, registers two independent Realizations, resolves them under an
@@ -40,6 +40,12 @@ proposal between exact Stack or OrderedMap Specification versions. The report pr
 authored declaration mappings and structural changes while fixing semantic refinement
 at `unestablished`; it creates no compatibility decision, resolver edge, migration, or
 Evidence transfer.
+Above those exact runners, a package author or Evidence reviewer can now run one
+Stack-plus-OrderedMap observation. Optional, forbidden, and unspecified reported events
+retain their complete ledgers while the exact non-effect campaign projections remain
+unchanged; adapter errors stay nonauthoritative. This is a deterministic observation of
+the adapter-invocation boundary, not whole-process purity, arbitrary effect erasure,
+semantic equivalence, accepted Evidence, or arbitrary-domain generality.
 
 ## Repository map
 
@@ -59,6 +65,8 @@ Evidence transfer.
 - [`docs/design/tracer-bullet.md`](docs/design/tracer-bullet.md): first vertical slice.
 - [`design-specs/0001-explicit-pspec-author-journey.md`](design-specs/0001-explicit-pspec-author-journey.md): observable contract and falsifiers for the complete PSpec author experience.
 - [`design-specs/0002-explicit-refinement-inspection-journey.md`](design-specs/0002-explicit-refinement-inspection-journey.md): observable contract and falsifiers for exact proposal-local cross-version inspection.
+- [`design-specs/0003-bounded-effect-separation-observation.md`](design-specs/0003-bounded-effect-separation-observation.md): observable contract and falsifiers for the exact two-domain effect-separation probe.
+- [`docs/exec-plans/completed/0008-bounded-effect-separation.md`](docs/exec-plans/completed/0008-bounded-effect-separation.md): completed red controls, independent reviews, implementation, maintenance, and convergence evidence for that probe.
 - [`docs/exec-plans/completed/0007-explicit-refinement-inspection.md`](docs/exec-plans/completed/0007-explicit-refinement-inspection.md): completed refinement journey, independent review, and convergence evidence.
 - [`docs/exec-plans/active/0003-cold-human-inspection.md`](docs/exec-plans/active/0003-cold-human-inspection.md): executable inspection surface and deferred uninvolved-human gate.
 - [`docs/exec-plans/completed/0004-ordered-map-generality.md`](docs/exec-plans/completed/0004-ordered-map-generality.md): completed OrderedMap second-domain research, implementation, maintenance, and convergence history.
@@ -185,6 +193,46 @@ raw digests, and atomically writes a structural report. Equal documents are not 
 as semantic equivalence; no versions are discovered, no artifacts execute, and no
 Claim or Evidence moves between versions.
 
+### Observe bounded semantic/effect separation
+
+Run the exact retained Stack and OrderedMap campaigns in quiet, optional, forbidden,
+unspecified, and adapter-error modes:
+
+```sh
+nix develop --command python3 scripts/effect_separation_probe.py \
+  --output /tmp/effect-separation.json
+```
+
+Expected summary:
+
+```text
+observed bounded effect separation: 2 domains, 10 observations, 0 semantic drifts, 2 effect challenges, 2 execution errors -> /tmp/effect-separation.json
+```
+
+The JSON report preserves every native non-effect case/declaration outcome and complete
+ordered event ledger. Optional and unspecified events do not challenge the effect
+declaration; forbidden `io.read` challenges only that declaration and the campaign
+aggregate. Stack's error truthfully retains no event, while OrderedMap retains the one
+`io.read` observed before its error; neither receives a projection comparison.
+
+To experience fail-closed recovery without changing an accepted input, request a
+governed Specification as the output:
+
+```sh
+nix develop --command python3 scripts/effect_separation_probe.py \
+  --output specs/stack.pspec
+```
+
+The command exits `1`, leaves `specs/stack.pspec` unchanged, and reports
+`OUTPUT_INPUT_ALIAS`. Semantic drift, ledger drift, concern spillover, or an incomplete
+exact campaign likewise preserves any prior output rather than publishing a partial
+report.
+
+What is real underneath: the probe invokes only two repository fixture adapters through
+their existing exact runners and compares immutable, domain-owned projections. It does
+not discover or execute registry metadata, observe effects outside adapter reports,
+create Claim/Evidence records, select policy, or establish a general effect calculus.
+
 ### Verify the repository
 
 Run the repository quality gate:
@@ -198,7 +246,7 @@ python3 scripts/check_repo.py
 ```
 
 The gate includes record/link fixtures, 18 loader groups, 50 adapter/campaign tests,
-59 cross-language candidate/Evidence-binding controls, 253 actor journeys, 42 research
+59 cross-language candidate/Evidence-binding controls, 285 actor journeys, 42 research
 probes, 20 governance tests, two fresh Stack reports/eight records, two fresh base
 OrderedMap reports plus one selective breaker, the exact base and profile-choice
 2/14/14 candidate censuses, two fresh profile-bound reports, and the 49-group proof
@@ -291,7 +339,8 @@ Then open the repository in Codex, an IDE extension, or another coding agent. Th
 
 This repository is an executable research prototype with complete bounded local Stack,
 finite OrderedMap, and exact differentiated-profile lifecycles, plus an independently
-reviewed two-domain authoring control and an experienceable explicit PSpec candidate.
-The automated author journey is green; uninvolved-author observation and final review
-remain required before ExecPlan 0006 closes. This is not yet a stable standard, an
-arbitrary-domain semantic-package ecosystem, or a hosted production registry.
+reviewed two-domain authoring control, explicit refinement inspection, and bounded
+effect-separation observation. The automated author journey is green; uninvolved-author
+observation and final review remain required before ExecPlan 0006 closes. This is not
+yet a stable standard, a proof of noninterference, an arbitrary-domain semantic-package
+ecosystem, or a hosted production registry.

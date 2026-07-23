@@ -34,7 +34,6 @@
   counterexample demonstrates that the coarse diagnostic is insufficient.
 - Add generated indexes or richer orientation tooling only when multiple plans or
   derived views create measurable drift.
-- Add effect classification and erasure/noninterference tests.
 - Add a user-defined resource algebra.
 
 ## Completed tracer substrate
@@ -59,6 +58,11 @@
   for Stack's changed effect and OrderedMap's additive successor. Every declaration is
   explicitly disposed and both reports leave semantic refinement unestablished; this
   is two-example mechanics, not accepted lineage or compatibility.
+- Design-spec 0003 and ExecPlan 0008 implement one bounded Stack/OrderedMap
+  effect-separation observation. Exact native projections stay equal across quiet,
+  optional, forbidden, and unspecified reported-event variants; forbidden concern
+  locality and execution-error nonauthority remain explicit. This closes the authored
+  test item without claiming arbitrary erasure, noninterference, purity, or Evidence.
 - Stack remains the regression substrate. A later semantic package must join it rather
   than erase the only accepted comparison point.
 
