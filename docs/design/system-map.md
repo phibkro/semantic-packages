@@ -22,6 +22,7 @@ the active ExecPlan.
 | accepted OrderedMap second-domain route | [completed ExecPlan 0004](../exec-plans/completed/0004-ordered-map-generality.md) |
 | accepted differentiated deployment-profile route | [completed ExecPlan 0005](../exec-plans/completed/0005-deployment-profile-choice.md) |
 | active shared human-authoring route | [active ExecPlan 0006](../exec-plans/active/0006-shared-human-authoring-surface.md) |
+| completed explicit refinement-inspection route | [completed ExecPlan 0007](../exec-plans/completed/0007-explicit-refinement-inspection.md) |
 
 Current route: ExecPlan 0004 is closed at two-domain reuse. ExecPlan 0005 produced
 fresh exact-profile Evidence and an authenticated 69-member authority for differentiated
@@ -44,6 +45,10 @@ and an unneeded second IR are rejected. Design-spec 0001 now drives a TOML-shape
 lossless `pspec-toml-v1` adapter and explicit atomic author command across both domains.
 Automated A5 controls pass; eligible uninvolved-author observation, A-R5, and A-G remain
 open.
+Stacked above that open gate, design-spec 0002 and ExecPlan 0007 now make one explicit
+cross-version proposal inspectable across both exact successor shapes. The surface
+reports only authored structural dispositions and keeps semantic refinement
+unestablished; it adds no canonical relation, resolver behavior, or Evidence transfer.
 
 ## End-to-end product shape
 
@@ -52,6 +57,8 @@ flowchart LR
     TA[Theory author] --> S[Specification]
     S --> C[Claims]
     S --> P[Proof checking]
+    S --> Q[Explicit exact-version proposal]
+    Q --> I[Structural inspection; verdict unestablished]
 
     PA[Package author] --> R[Realization + adapter]
     R --> T[Conformance campaign]
@@ -71,6 +78,7 @@ flowchart LR
     G --> X[Package resolver]
     X --> O[Selection + explanation]
     B --> V[Meaning + evidence view]
+    I --> M
 
     O --> M[Observe and maintain]
     V --> M
@@ -171,7 +179,7 @@ sandbox assurance, and cannot perform writes or ratify a gate.
 | L9 product registry | curated honest source sets distinct from fixture history | executable for exact Stack 24/31-record snapshots and OrderedMap 33/35/69-record snapshots |
 | L10 resolution | policy/profile-relative semantic selection and interoperation explanation | executable for exact Stack, OrderedMap maintenance, and two differentiated-profile queries; semantic status stays separate from directional boundaries |
 | L11 projections | theory and package consumer views derived from the graph | both bounded consumer views are graph-only and executable in both domains |
-| L12 maintenance | exact successors, staleness, withdrawal, failure recovery | executable for bounded Stack and OrderedMap snapshots; OrderedMap `0.2.0` has zero candidates and exact nonautomatic `0.1.0` recovery; no lineage, migration, automatic selection, or freshness engine |
+| L12 maintenance and evolution inspection | exact successors, explicit structural dispositions, staleness, withdrawal, failure recovery | executable for bounded Stack and OrderedMap snapshots; proposal-local cross-version reports remain unestablished, and OrderedMap `0.2.0` retains zero candidates plus exact nonautomatic `0.1.0` recovery; no accepted lineage, compatibility, migration, automatic selection, or freshness engine |
 
 ## Tracer increments
 
@@ -245,11 +253,21 @@ selected and 21 inapplicable Claims plus the same Evidence ledger; optional perf
 remains unsupported. The directional child-process boundary is reported separately
 and does not grant semantic acceptance.
 
+### Exact-version refinement inspection
+
+Design-spec 0002 and ExecPlan 0007 add one reversible maintenance precursor above the
+two accepted successor pairs. An explicit proposal binds both exact Specification raw
+digests and disposes every declaration as mapped, added, or removed. Stack reports ten
+unchanged mappings plus one changed effect contract; OrderedMap reports eighteen
+unchanged mappings plus two additions. The report order is proposal authority and the
+conclusion remains `unestablished`. This is reusable structural mechanics across two
+examples, not an accepted semantic refinement edge or arbitrary-domain generality.
+
 ## Actor data flows
 
 | Actor | Data-plane path | Current edge |
 |---|---|---|
-| theory author | semantic source -> canonical Specification/Claim -> graph checks -> proof or other Evidence | explicit Stack and OrderedMap PSpec-to-canonical author command experienceable; automated checks pass, while uninvolved-author acceptance, hosted publication, and semantic checking remain absent |
+| theory author | semantic source -> canonical Specification/Claim -> exact-version proposal -> structural inspection -> graph checks -> proof or other Evidence | explicit Stack and OrderedMap PSpec-to-canonical author command and two-domain refinement inspection are experienceable; automated checks pass, while uninvolved-author acceptance, hosted publication, semantic refinement, and semantic checking remain absent |
 | package author | Realization/adapter -> explicit build -> campaign -> report -> reviewed declaration Evidence -> graph | executable for independently represented Rust and TypeScript packages in both domains |
 | package consumer | Specification + policy + profile -> Evidence selection -> semantic result -> boundary mechanism | executable exact Stack and OrderedMap queries, including two differentiated-profile choices with complete non-transfer ledgers, version-scoped recovery, and separate directional child-process boundaries |
 | theory consumer | exact Specification -> declarations/imports -> Claims/Evidence/unknowns -> derived view | executable Stack and OrderedMap projections; realization-scoped Evidence never becomes Specification assurance |
@@ -325,10 +343,12 @@ steps.
 - descriptive Realization entrypoints cannot become automatic execution instructions;
 - unsupported performance propositions remain visible through current resolvers and
   graph projections; a hosted browser remains absent;
-- `.pspec` remains illustrative until elaboration is executable;
+- `.pspec` elaboration is executable only through design-spec 0001's explicit finite
+  dependency context; hosted semantics and publication remain outside that boundary;
 - exact-version staleness and same-snapshot recovery are executable for the bounded
   Stack and OrderedMap successors; time freshness, lineage, automatic migration, and
-  compatibility-relative supersession remain absent;
+  compatibility-relative supersession remain absent; proposal-local structural
+  inspection does not close any of those gaps;
 - the local repository gate alone is not a release gate; hosted CI now provisions every
   pinned Python, Lean, Rust/linker, and Deno dependency and must remain green alongside
   protected squash policy and fresh-checkout evidence.

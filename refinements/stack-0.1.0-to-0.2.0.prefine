@@ -1,0 +1,59 @@
+kind = "refinement-proposal"
+id = "stack-0.1.0-to-0.2.0"
+version = "0.1.0"
+
+[predecessor]
+kind = "specification"
+id = "stack"
+version = "0.1.0"
+rawSha256 = "dd083a71a4631cc44be051a16b8e20ff0cee7199e46d3823322665d1fdeec6c1"
+
+[successor]
+kind = "specification"
+id = "stack"
+version = "0.2.0"
+rawSha256 = "070a9c7aff764ad6acbbd7b3deb8e32026164c12db85936cc0f2627927035aa8"
+
+[[mappings]]
+predecessor = { family = "carriers", localId = "Stack" }
+successor = { family = "carriers", localId = "Stack" }
+
+[[mappings]]
+predecessor = { family = "operations", localId = "empty" }
+successor = { family = "operations", localId = "empty" }
+
+[[mappings]]
+predecessor = { family = "operations", localId = "push" }
+successor = { family = "operations", localId = "push" }
+
+[[mappings]]
+predecessor = { family = "observations", localId = "pop" }
+successor = { family = "observations", localId = "pop" }
+
+[[mappings]]
+predecessor = { family = "derivedObservations", localId = "elements" }
+successor = { family = "derivedObservations", localId = "elements" }
+
+[[mappings]]
+predecessor = { family = "equivalences", localId = "stack-equivalence" }
+successor = { family = "equivalences", localId = "stack-equivalence" }
+
+[[mappings]]
+predecessor = { family = "laws", localId = "pop-empty" }
+successor = { family = "laws", localId = "pop-empty" }
+
+[[mappings]]
+predecessor = { family = "laws", localId = "pop-push" }
+successor = { family = "laws", localId = "pop-push" }
+
+[[mappings]]
+predecessor = { family = "effects", localId = "stack-effects" }
+successor = { family = "effects", localId = "stack-effects" }
+
+[[mappings]]
+predecessor = { family = "resources", localId = "persistence" }
+successor = { family = "resources", localId = "persistence" }
+
+[[mappings]]
+predecessor = { family = "performancePropositions", localId = "push-amortized-constant" }
+successor = { family = "performancePropositions", localId = "push-amortized-constant" }

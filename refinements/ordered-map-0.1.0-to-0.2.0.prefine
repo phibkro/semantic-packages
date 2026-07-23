@@ -1,0 +1,93 @@
+kind = "refinement-proposal"
+id = "ordered-map-0.1.0-to-0.2.0"
+version = "0.1.0"
+
+[predecessor]
+kind = "specification"
+id = "ordered-map"
+version = "0.1.0"
+rawSha256 = "6049d371603cbdac0e722685f1fd25c7369872f7d963ae2e4f4bae90cce7fd7f"
+
+[successor]
+kind = "specification"
+id = "ordered-map"
+version = "0.2.0"
+rawSha256 = "05bd1dee68216834a81e9095425905a3fb5a5c93530bbe2479c07ef1a6a3afd0"
+
+[[mappings]]
+predecessor = { family = "carriers", localId = "Key" }
+successor = { family = "carriers", localId = "Key" }
+
+[[mappings]]
+predecessor = { family = "carriers", localId = "Value" }
+successor = { family = "carriers", localId = "Value" }
+
+[[mappings]]
+predecessor = { family = "carriers", localId = "OrderedMap" }
+successor = { family = "carriers", localId = "OrderedMap" }
+
+[[mappings]]
+predecessor = { family = "operations", localId = "empty" }
+successor = { family = "operations", localId = "empty" }
+
+[[mappings]]
+predecessor = { family = "operations", localId = "put" }
+successor = { family = "operations", localId = "put" }
+
+[[mappings]]
+predecessor = { family = "observations", localId = "lookup" }
+successor = { family = "observations", localId = "lookup" }
+
+[[mappings]]
+predecessor = { family = "observations", localId = "entries" }
+successor = { family = "observations", localId = "entries" }
+
+[[mappings]]
+predecessor = { family = "equivalences", localId = "key-equivalence" }
+successor = { family = "equivalences", localId = "key-equivalence" }
+
+[[mappings]]
+predecessor = { family = "equivalences", localId = "value-equivalence" }
+successor = { family = "equivalences", localId = "value-equivalence" }
+
+[[mappings]]
+predecessor = { family = "equivalences", localId = "ordered-map-equivalence" }
+successor = { family = "equivalences", localId = "ordered-map-equivalence" }
+
+[[mappings]]
+predecessor = { family = "laws", localId = "lookup-empty" }
+successor = { family = "laws", localId = "lookup-empty" }
+
+[[mappings]]
+predecessor = { family = "laws", localId = "lookup-put-same" }
+successor = { family = "laws", localId = "lookup-put-same" }
+
+[[mappings]]
+predecessor = { family = "laws", localId = "lookup-put-other" }
+successor = { family = "laws", localId = "lookup-put-other" }
+
+[[mappings]]
+predecessor = { family = "laws", localId = "put-existing-position" }
+successor = { family = "laws", localId = "put-existing-position" }
+
+[[mappings]]
+predecessor = { family = "laws", localId = "put-new-appends" }
+successor = { family = "laws", localId = "put-new-appends" }
+
+[[mappings]]
+predecessor = { family = "effects", localId = "ordered-map-effects" }
+successor = { family = "effects", localId = "ordered-map-effects" }
+
+[[mappings]]
+predecessor = { family = "resources", localId = "persistence" }
+successor = { family = "resources", localId = "persistence" }
+
+[[mappings]]
+predecessor = { family = "performancePropositions", localId = "put-amortized-constant" }
+successor = { family = "performancePropositions", localId = "put-amortized-constant" }
+
+[[additions]]
+successor = { family = "observations", localId = "size" }
+
+[[additions]]
+successor = { family = "laws", localId = "size-put" }

@@ -2,19 +2,13 @@
 
 ## Now
 
-1. Probe the shared human authoring surface revealed by Stack and OrderedMap before
-   committing `.pspec` to elaboration rules or hidden defaults. The
-   [A1 boundary probe](../docs/research/shared-human-authoring-surface.md) and
-   [ExecPlan 0006](../docs/exec-plans/active/0006-shared-human-authoring-surface.md)
-   freeze the accepted problem contract. The
-   [A2 option comparison](../docs/research/shared-human-authoring-options.md) and
-   [ADR 0016](../docs/decisions/0016-representation-neutral-authoring-boundary.md)
-   release the format-neutral A3 red contract. The candidate
-   [explicit dependency context](../docs/decisions/0017-explicit-authoring-dependency-context.md)
-   closes the observed external-reference input gap without ambient discovery; no
-   final syntax or author workflow has been selected.
-2. Model explicit specification refinement and cross-version compatibility only from
-   a concrete two-domain migration or composition falsifier.
+1. Complete the retained eligible uninvolved-author observation for design-spec 0001;
+   automated PSpec authoring is experienceable but its human acceptance gate remains
+   open.
+2. Keep semantic refinement and cross-version compatibility unestablished until a
+   concrete Claim/Evidence or consumer-decision need follows the now-executable explicit
+   Stack/OrderedMap structural proposal. Do not promote proposal-local mappings into a
+   canonical relation or resolver edge by convenience.
 
 ## Deferred operator observation
 
@@ -61,6 +55,10 @@
   native-process and Deno-sandbox campaigns, profile-bound Evidence, one append-only
   69-member authority, two explainable exact choices, complete non-transfer ledgers,
   unchanged Stack/O6--O8 regressions, and exact-head local and hosted convergence.
+- Design-spec 0002 and ExecPlan 0007 implement proposal-local exact-version inspection
+  for Stack's changed effect and OrderedMap's additive successor. Every declaration is
+  explicitly disposed and both reports leave semantic refinement unestablished; this
+  is two-example mechanics, not accepted lineage or compatibility.
 - Stack remains the regression substrate. A later semantic package must join it rather
   than erase the only accepted comparison point.
 

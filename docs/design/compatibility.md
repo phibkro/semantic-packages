@@ -15,6 +15,18 @@ Semantic compatibility is always relative to a specification version, required c
 set, consumer policy, and applicable profile. `implements` is a declared candidate
 edge; acceptable evidence is required before the resolver reports satisfaction.
 
+## Proposal-local structural inspection
+
+Before any semantic relation is accepted, a maintainer may explicitly dispose every
+declaration between two caller-supplied exact Specification files. A refinement
+inspection proposal binds both raw files and records mappings, additions, and removals.
+The inspector reports only document equality or difference for those authored pairs;
+matching local IDs, version spelling, paths, and declaration order have no relation
+authority. Its fixed `unestablished` conclusion is neither a semantic graph edge nor a
+resolver input, and it transfers no Claim or Evidence. Stack and OrderedMap currently
+exercise this reversible proposal-local surface; they do not establish a general
+refinement calculus or cross-version compatibility policy.
+
 ## Realization graph
 
 Edges express practical composition mechanisms and costs:
