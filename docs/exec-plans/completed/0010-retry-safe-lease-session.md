@@ -165,14 +165,14 @@ nix develop --command python3 -m semantic_packages protocol inspect \
 - [x] I1-S2 authority, phase, independence, and closure successor
 - [x] I-R1c successor contract/oracle review — BLOCK retained
 - [x] I1-S3 exact execution, membership, authoring, alias, Evidence, and report successor
-- [ ] I-R1d final contract/oracle review
-- [ ] I2 semantic artifacts
-- [ ] I3 candidates and campaign
-- [ ] I-R2 implementation review
-- [ ] I4 product graph, Evidence, projections, and command
-- [ ] I-R3 end-to-end review
-- [ ] I5 maintenance reconciliation
-- [ ] I-G convergence, freeze, and one PR
+- [x] I-R1d final contract/oracle review
+- [x] I2 semantic artifacts
+- [x] I3 candidates and campaign
+- [x] I-R2 implementation review
+- [x] I4 product graph, Evidence, projections, and command
+- [x] I-R3 end-to-end review
+- [x] I5 maintenance reconciliation
+- [x] I-G convergence, freeze, and one PR
 
 ## Discoveries and changed assumptions
 
@@ -247,9 +247,29 @@ nix develop --command python3 -m semantic_packages protocol inspect \
   protocol semantics only after raw/schema/link authoring phases; challenges lexical,
   symbolic, and inode aliases; distinguishes missing, error, and inconclusive Evidence;
   and closes every candidate representation/source/result, scenario result, Evidence
-  identity, and six-part exclusion list. The focused journey is green with seventeen
-  active passes and one historical predecessor skip; I-R1d must still challenge the
-  exact committed successor before semantic artifacts are accepted.
+  identity, and six-part exclusion list.
+- 2026-07-23: I-R1d replayed all retained oracle attacks against exact control head
+  `ee1dbff` and passed. The complete expected traces are test-owned, not candidate- or
+  report-derived; each prior BLOCK remains an active regression rather than prose-only
+  disposition.
+- 2026-07-23: I2--I4 add one optional protocol declaration shape, exact PSpec and
+  canonical Specification, profile/policy, two Claims and Evidence records, three
+  isolated adapters, campaign plan, nine-member manifest, graph resolver/report, and
+  CLI. Existing protocol-free Specifications remain valid and selected predecessor
+  bytes remain exact.
+- 2026-07-23: I-R2/I-R3 independently audited the inherited implementation rather than
+  authoring it. Full-trace comparison rejects final-state shortcuts, every scenario
+  starts a fresh two-argument child process, the breaker first diverges only at expiry
+  step 2, output aliases cover resolved paths/symlinks/inodes, valid negative Evidence
+  axes reject while malformed scope remains a graph error, and theory/package and
+  semantic/deployment authority remain separate. No material concern remained after
+  the focused mutation controls and complete gate.
+- 2026-07-23: I-G passed the felt command, 18-test focused journey (17 active and one
+  historical predecessor skip), `git diff --check`, and the complete Nix-backed
+  repository gate: 24 valid, 20 schema-invalid, 38 link-invalid, 3 link-valid records;
+  18 loader groups; 50 adapter tests; 59 candidate tests; 320 actor journeys; 42
+  research tests; 20 governance tests; all report/Evidence freshness checks; and 49
+  proof groups.
 
 ## Decision log
 
@@ -266,10 +286,12 @@ nix develop --command python3 -m semantic_packages protocol inspect \
 
 ## Result and remaining work
 
-The pre-implementation contract is frozen. I1-S3 is the current red-control successor;
-I-R1d is the live convergence gate before the provisional semantic artifacts and
-implementation may be accepted. The numerical-kernel journey is authorized but cannot
-begin until the interaction-protocol PR opens.
+Design-spec 0005 revision 2 is frozen with no change to its pre-code user need or
+falsifiers. The exact command reproduces two accepted registered Realizations and one
+challenged resurrection breaker across eighteen complete traces, while policy-relative
+semantic decisions remain separate from directional deployment boundaries. Focused and
+complete gates pass. This plan is complete and releases the separately specified
+approximate-numerical-kernel journey only after this branch's PR opens.
 
 ## Stop and escalation conditions
 

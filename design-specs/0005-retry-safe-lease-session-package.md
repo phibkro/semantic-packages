@@ -2,13 +2,13 @@
 
 ## Contract status
 
-Pre-implementation contract for one interaction-protocol tracer bullet and one stacked
-pull request. Revision 1 freezes the user need, observable journey, values, falsifiers,
-and Definition of Done on 2026-07-23 before production code. Those surfaces may change
-only through an explicit numbered revision that records the observation requiring it
-and reopens affected red controls. Representation, algorithms, module boundaries,
-languages, and other implementation mechanisms remain free below that line. The full
-contract freezes for PR only after review and complete convergence.
+Frozen contract for one interaction-protocol tracer bullet and one stacked pull
+request. Revision 1 froze the user need, observable journey, values, falsifiers, and
+Definition of Done on 2026-07-23 before production code. Revision 2 records complete
+convergence without changing those surfaces. Future changes require an explicit
+numbered revision that records the reopening observation. Representation, algorithms,
+module boundaries, languages, and other implementation mechanisms remain free below
+the contract line.
 
 This feature is stacked on the finite resource-composition journey at exact head
 `99fe79450b90e323d7f5f6c9df789045cc627063`. It is deliberately separate from the
@@ -251,3 +251,7 @@ session types, stronger adapter-faithfulness Evidence, or hosted acquisition.
   resurrection breaker, policy-relative consumer inspection, and fourteen falsifiers.
   Leaves every implementation mechanism open and makes the explicit expiry-input and
   finite-evidence limits part of the observable contract before code.
+- **2026-07-23, revision 2 (full contract frozen):** The exact felt command, eighteen
+  trace cases, breaker challenge, Claim/Evidence decisions, projection separation,
+  directional boundaries, focused suite, and complete repository gate passed. No user
+  need, falsifier, or exclusion changed during implementation.

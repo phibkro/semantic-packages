@@ -19,7 +19,7 @@ from unittest import mock
 
 ROOT = Path(__file__).resolve().parents[2]
 DESIGN_SPEC = ROOT / "design-specs/0005-retry-safe-lease-session-package.md"
-EXEC_PLAN = ROOT / "docs/exec-plans/active/0010-retry-safe-lease-session.md"
+EXEC_PLAN = ROOT / "docs/exec-plans/completed/0010-retry-safe-lease-session.md"
 MANIFEST = ROOT / "registry/lease-session/manifest.json"
 SOURCE = ROOT / "specs/lease-session.pspec"
 MODULE_READY = importlib.util.find_spec("semantic_packages.lease_session") is not None

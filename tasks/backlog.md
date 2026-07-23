@@ -28,6 +28,10 @@
 
 ## Next
 
+- Deliver the operator-approved approximate numerical kernel as a separate frozen
+  design-spec, implementation branch, and 1:1 PR. Start only from the opened
+  interaction-protocol PR; preserve tolerance/rounding observations, finite Evidence
+  limits, and representation independence before selecting a kernel implementation.
 - Define adapter-faithfulness Evidence only if a paper probe finds a non-circular
   observation mechanism outside the adapter being judged.
 - Promote fallback schema diagnostics into exact actionable oracles when a new
@@ -66,6 +70,11 @@
   composition in PSpec. Exact Stack and OrderedMap persistence declarations bind to
   distinct authored elements; exhaustive laws and two folds are inspectable while
   satisfaction and arbitrary resource-algebra generality remain unestablished.
+- Design-spec 0005 and ExecPlan 0010 implement one retry-safe lease-session package.
+  Two independent Realizations satisfy six exact finite traces, one resurrection
+  breaker is challenged, and policy-relative acceptance remains separate from each
+  directional deployment boundary. Timing, liveness, concurrency, crash recovery,
+  security, exhaustive verification, and general protocol semantics remain excluded.
 - Stack remains the regression substrate. A later semantic package must join it rather
   than erase the only accepted comparison point.
 
