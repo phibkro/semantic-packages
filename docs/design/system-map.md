@@ -24,6 +24,7 @@ the active ExecPlan.
 | active shared human-authoring route | [active ExecPlan 0006](../exec-plans/active/0006-shared-human-authoring-surface.md) |
 | completed explicit refinement-inspection route | [completed ExecPlan 0007](../exec-plans/completed/0007-explicit-refinement-inspection.md) |
 | completed interaction-protocol route | [completed ExecPlan 0010](../exec-plans/completed/0010-retry-safe-lease-session.md) |
+| completed approximate-numerical route | [completed ExecPlan 0011](../exec-plans/completed/0011-stable-norm2-numerical-kernel.md) |
 
 Current route: ExecPlan 0004 is closed at two-domain reuse. ExecPlan 0005 produced
 fresh exact-profile Evidence and an authenticated 69-member authority for differentiated
@@ -169,7 +170,7 @@ sandbox assurance, and cannot perform writes or ratify a gate.
 | Layer | Responsibility | State |
 |---|---|---|
 | L0 protected intent | mission, principles, non-goals, consumer authority | accepted governance; human authority |
-| L1 semantic model | operations, observations, laws, protocols, effects, resources, profiles | bounded Stack, finite OrderedMap, and one finite lease-session protocol accepted |
+| L1 semantic model | operations, observations, laws, protocols, approximate kernels, effects, resources, profiles | bounded Stack, finite OrderedMap, one lease protocol, and one stable-norm2 approximation accepted |
 | L2 canonical records | six immutable exact-version record kinds and typed references | executable |
 | L3 graph integrity | schema, duplicates, dangling/wrong-kind references, coherent scope | executable |
 | L4 local loading | deterministic finite source-set discovery and exact import edges | executable |
@@ -306,13 +307,26 @@ not a timer claim, and the package establishes no liveness, concurrency, partiti
 crash-recovery, token-security, exhaustive-trace, refinement, composition, session-type,
 or arbitrary-domain result.
 
+### Stable approximate numerical kernel
+
+Design-spec 0006 and ExecPlan 0011 add one optional bounded-approximation declaration
+and exact nine-record package graph. Twelve finite binary64 input pairs use canonical
+hex transport. A runner computes a 100-digit Decimal oracle outside three fresh child
+candidates and records rounded-oracle hex plus ULP distance under a fixed 2-ULP bound.
+Robust-primitive and explicit-scaled kernels support every case; naïve square/add/square-
+root is first challenged on a large finite-result case.
+
+The conclusion is only `bounded-approximate-kernel-observed`. It establishes no correct
+rounding, exhaustive input coverage, nonfinite or alternate-rounding semantics,
+hardware portability, real proof, performance, or arbitrary numerical generality.
+
 ## Actor data flows
 
 | Actor | Data-plane path | Current edge |
 |---|---|---|
 | theory author | semantic source -> canonical Specification/Claim -> exact-version proposal -> resource composition -> structural inspection -> graph checks -> proof or other Evidence | explicit Stack and OrderedMap PSpec authoring, two-domain refinement inspection, and one finite cross-domain resource composition are experienceable; automated checks pass, while uninvolved-author acceptance, hosted publication, semantic refinement, resource satisfaction, and hosted semantic checking remain absent |
 | package author | Realization/adapter -> explicit build -> campaign -> bounded effect-separation observation -> report -> reviewed declaration Evidence -> graph | executable for independently represented Rust and TypeScript packages in both domains; the cross-domain probe is inspectable but creates no Evidence |
-| package consumer | Specification + policy + profile -> Evidence selection -> semantic result -> boundary mechanism | executable exact Stack and OrderedMap queries plus one bounded lease-session package query; Evidence decisions remain separate from directional child-process boundaries |
+| package consumer | Specification + policy + profile -> Evidence selection -> semantic result -> boundary mechanism | executable exact Stack and OrderedMap queries plus bounded lease-session and stable-norm2 package queries; Evidence decisions remain separate from directional child-process boundaries |
 | theory consumer | exact Specification -> declarations/imports -> Claims/Evidence/unknowns -> derived view | executable Stack and OrderedMap projections; realization-scoped Evidence never becomes Specification assurance |
 
 ## Trust boundaries

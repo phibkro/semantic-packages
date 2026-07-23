@@ -18,7 +18,7 @@ from unittest import mock
 
 ROOT = Path(__file__).resolve().parents[2]
 DESIGN_SPEC = ROOT / "design-specs/0006-stable-norm2-numerical-kernel.md"
-EXEC_PLAN = ROOT / "docs/exec-plans/active/0011-stable-norm2-numerical-kernel.md"
+EXEC_PLAN = ROOT / "docs/exec-plans/completed/0011-stable-norm2-numerical-kernel.md"
 MANIFEST = ROOT / "registry/stable-norm2/manifest.json"
 SOURCE = ROOT / "specs/stable-norm2.pspec"
 MODULE_READY = importlib.util.find_spec("semantic_packages.numerical_kernel") is not None
@@ -67,7 +67,7 @@ class StableNorm2RedBaselineTest(unittest.TestCase):
         self.assertIn("## Observable numerical contract", contract)
         self.assertIn("at most **2 ULPs**", contract)
         self.assertEqual(14, sum(f"\n{index}. " in contract for index in range(1, 15)))
-        self.assertIn("No\nnumerical implementation or PR exists at this revision", plan)
+        self.assertIn("one stacked PR may open", plan)
 
     def test_campaign_and_predecessor_oracles_are_frozen(self) -> None:
         self.assertEqual(12, len(CASES))

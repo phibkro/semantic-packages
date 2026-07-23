@@ -119,15 +119,15 @@ Expected: `Repository checks passed.` with exit status zero.
 
 - [x] N0 user need, approximation relation, cases, falsifiers, and exclusions frozen
 - [x] N0 substrate census and domain-local boundary
-- [ ] N1 refute-first controls
-- [ ] N-R1 control review
-- [ ] N2 semantic artifacts
-- [ ] N3 candidates/campaign
-- [ ] N-R2 implementation/oracle review
-- [ ] N4 product graph/projections/command
-- [ ] N-R3 end-to-end review
-- [ ] N5 maintenance
-- [ ] N-G convergence and PR
+- [x] N1 refute-first controls
+- [x] N-R1 control review
+- [x] N2 semantic artifacts
+- [x] N3 candidates/campaign
+- [x] N-R2 implementation/oracle review
+- [x] N4 product graph/projections/command
+- [x] N-R3 end-to-end review
+- [x] N5 maintenance
+- [x] N-G convergence and PR
 
 ## Discoveries and changed assumptions
 
@@ -142,6 +142,29 @@ Expected: `Repository checks passed.` with exit status zero.
 - 2026-07-23: existing record kinds admit a numerical concern/mechanism. Only the
   optional Specification declaration needs schema/authoring extension; resolver and
   campaign semantics remain local to avoid changing accepted domain-specific modules.
+- 2026-07-23: N1 froze twelve exact hex pairs, candidate/source order, predecessor
+  digests, complete report observations, the first breaker divergence, Evidence axes,
+  execution multiset, alias safety, and exclusions before the module existed. The sole
+  intentional failure was the absent numerical package.
+- 2026-07-23: N-R1 retained the rounded-oracle versus real-value distinction and found
+  that the plan's threshold must agree with the Specification rather than merely be
+  internally usable. N2/N3 therefore bind oracle kind, decimal precision, profile, and
+  max ULPs across Specification and plan.
+- 2026-07-23: N-R2/N-R3 were local evidence-based adversarial passes because this plan
+  authorized no external repository disclosure. Reviewer independence comes from the
+  pre-code test-owned Decimal/bit oracle and candidate isolation, not model identity.
+  The passes attacked signed zero, negative/nonfinite/malformed outputs, first-failure
+  order, source/plan digests, profile and Evidence parameters, candidate process count,
+  discovery/network denial, aliasing, atomic failure, and finite-claim wording. No
+  material concern remained; external model review is not claimed.
+- 2026-07-23: the scaled kernel and host hypot kernel both match every rounded oracle in
+  the retained environment (0 ULP observed); the acceptance threshold remains 2 ULPs
+  as frozen and is not weakened to fit either implementation. The naïve breaker first
+  returns infinity at `large-equal`, then also exposes underflow on small cases.
+- 2026-07-23: N-G passed the exact felt command, 13-test focused journey (12 active and
+  one historical predecessor skip), `git diff --check`, and the complete Nix-backed
+  repository gate with 333 actor journeys and every predecessor record, loader,
+  adapter, candidate, research, governance, report/Evidence, and proof group.
 
 ## Decision log
 
@@ -156,8 +179,12 @@ Expected: `Repository checks passed.` with exit status zero.
 
 ## Result and remaining work
 
-The user need and all falsifiers are frozen before production code. N1 is next. No
-numerical implementation or PR exists at this revision.
+Design-spec 0006 revision 2 is frozen without changing its pre-code user need,
+approximation relation, cases, falsifiers, or exclusions. The command executes 36 fresh
+candidate cases, accepts both registered robust kernels, challenges the naïve breaker
+at exact case index 8, and keeps policy-relative numerical decisions separate from
+directional child-process boundaries. Focused, felt, and complete gates pass; the plan
+is complete and its one stacked PR may open.
 
 ## Stop and escalation conditions
 

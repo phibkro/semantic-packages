@@ -28,10 +28,6 @@
 
 ## Next
 
-- Deliver the operator-approved approximate numerical kernel as a separate frozen
-  design-spec, implementation branch, and 1:1 PR. Start only from the opened
-  interaction-protocol PR; preserve tolerance/rounding observations, finite Evidence
-  limits, and representation independence before selecting a kernel implementation.
 - Define adapter-faithfulness Evidence only if a paper probe finds a non-circular
   observation mechanism outside the adapter being judged.
 - Promote fallback schema diagnostics into exact actionable oracles when a new
@@ -75,6 +71,11 @@
   breaker is challenged, and policy-relative acceptance remains separate from each
   directional deployment boundary. Timing, liveness, concurrency, crash recovery,
   security, exhaustive verification, and general protocol semantics remain excluded.
+- Design-spec 0006 and ExecPlan 0011 implement one stable approximate `norm2` kernel.
+  Two robust Realizations satisfy twelve exact binary64 cases within 2 ULPs of a
+  100-digit oracle; a naïve overflow breaker is challenged. Correct rounding,
+  exhaustive coverage, nonfinite/alternate modes, proof, performance, and arbitrary
+  numerical semantics remain excluded.
 - Stack remains the regression substrate. A later semantic package must join it rather
   than erase the only accepted comparison point.
 

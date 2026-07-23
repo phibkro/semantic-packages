@@ -2,12 +2,13 @@
 
 ## Contract status
 
-Pre-implementation contract for semantic domain four and one stacked pull request.
-Revision 1 freezes the user need, observable approximation relation, campaign,
-falsifiers, Definition of Done, and exclusions on 2026-07-23 before production code.
-Any semantic change requires a numbered revision with the triggering observation and
-reopens affected controls. Algorithms, internal precision, branching, modules, and
-languages remain implementation choices. This feature starts from the opened
+Frozen contract for semantic domain four and one stacked pull request. Revision 1
+froze the user need, observable approximation relation, campaign, falsifiers,
+Definition of Done, and exclusions on 2026-07-23 before production code. Revision 2
+records complete convergence without changing those surfaces. Any future semantic
+change requires a numbered revision with the triggering observation and reopens
+affected controls. Algorithms, internal precision, branching, modules, and languages
+remain implementation choices. This feature starts from the opened
 interaction-protocol PR at exact head `9407be2` and has its own branch and PR.
 
 ## User need
@@ -217,3 +218,7 @@ conditioning analysis, or hosted acquisition.
   observations, a 100-digit independent oracle, 2-ULP relation, twelve finite cases,
   two independent kernels, one naïve overflow breaker, fourteen falsifiers, and all
   exclusions before production code.
+- **2026-07-23, revision 2 (full contract frozen):** The exact 36-case command, two
+  accepted decisions, exact overflow challenge, complete approximation observations,
+  Evidence/projection/boundary separation, focused journey, and repository gate passed.
+  No user need, approximation relation, case, threshold, falsifier, or exclusion changed.

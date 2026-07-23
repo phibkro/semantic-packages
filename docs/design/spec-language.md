@@ -169,6 +169,13 @@ non-identity transformation demonstrates the need.
 - Protocol semantic validation follows raw, schema, and exact-link validation. Omission
   remains valid; duplicate or dangling labels, duplicate transition keys, an initial
   terminal state, and unreachable declared states fail with source-relative diagnostics.
+- Approximate numerical declarations name a mathematical proposition, exact value
+  encoding, oracle, metric, threshold, finite-domain restriction, and profile. No host
+  language epsilon or candidate-selected tolerance is implicit.
+- Design-spec 0006's first numerical candidate observes exact finite binary64 inputs
+  through hexadecimal encoding and compares outputs to a 100-digit Decimal oracle
+  rounded to binary64 within 2 ULPs. Twelve cases are bounded Evidence, not correct
+  rounding, exhaustive coverage, a real proof, or a universal numerical semantics.
 - Performance claims are profile-relative and name a cost measure, workload model,
   and measurement or proof method.
 - Claims do not carry their own assurance. Acceptance is computed from applicable
@@ -208,7 +215,8 @@ These obligations authorize canonical record design. `specs/stack.pspec` and
 accepted records; `specs/persistence-composition.pspec` imports both without changing
 them and exercises the optional finite algebra. `specs/lease-session.pspec` adds the
 optional bounded protocol shape without making it a default for protocol-free records.
-The predecessor domains' final general
+`specs/stable-norm2.pspec` similarly adds one optional bounded approximation without
+changing equality in exact domains. The predecessor domains' final general
 author-experience acceptance still depends on the uninvolved-author gate.
 
 ### Initial conformance and performance profile
