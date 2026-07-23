@@ -17,9 +17,9 @@ and record changed observations in the active ExecPlan.
 | Route | Current use | Boundary and status |
 |---|---|---|
 | Lead Codex and product collaboration agents | integration, bounded implementation, independent GPT-family concern/review nodes | Available through the agent product's collaboration controls and inherited sandbox. This is not permission to invoke a raw `codex` process. |
-| `agent-dispatch` boundary | enforced cross-provider children, read-only isolation, and every writable provider task | The strict boundary remains governing. Two read-only consultations on 2026-07-19 failed before provider launch because both hard-coded worker slots reported occupied. On 2026-07-22 a Sonnet 5 child launched from a linked `/tmp` worktree but the strict sandbox omitted its parent `/srv/.../.git` directory, so Git provenance checks failed and the review correctly STOPPED. These are availability/provenance defects, not reasons to weaken child or write isolation. Use a self-contained checkout when Git provenance is required. |
+| `agent-dispatch` boundary | enforced cross-provider children, read-only isolation, and every writable provider task | The strict boundary remains governing. Two read-only consultations on 2026-07-19 failed before provider launch because both hard-coded worker slots reported occupied. On 2026-07-22 a Sonnet 5 child launched from a linked `/tmp` worktree but the strict sandbox omitted its parent `/srv/.../.git` directory, so Git provenance checks failed and the review correctly STOPPED. A later Fable review established provenance from a self-contained clone. The installed wrapper also conditionally forwards Herdr control variables when its parent has `HERDR_ENV=1`, contrary to this repository's stricter child boundary; until that wrapper is corrected, explicitly unset every `HERDR_*` control variable before dispatch and reject any launch evidence that still contains them. These are tooling/provenance defects, not reasons to weaken child or write isolation. |
 | Claude Sonnet 5 | routine implementation, structured analysis, bounded execution | Route verified using `agent-dispatch claude`; request exact `claude-sonnet-5` and high effort. Claude Code 2.1.212 was observed in Wave 3, while Wave 4 preflight reported 2.1.210; two Wave 3 write attempts and the bounded Wave 4 W4-H1C0 attempt stalled without edits, so re-probe version/model resolution, bound retries, and retain an internal fallback. |
-| Claude Fable 5 | complex reasoning, skepticism, convergence review | Route/version and one decisive Wave 3 review verified through Claude Code 2.1.212 using `agent-dispatch claude`; request exact `claude-fable-5` and high effort. Several later Wave 3/4 consultations exhausted turns or produced no verdict, so do not make availability a silent hard dependency. |
+| Claude Fable 5 | complex reasoning, skepticism, convergence review | Route/version and one decisive Wave 3 review verified through Claude Code 2.1.212 using `agent-dispatch claude`; request exact `claude-fable-5` and high effort. On 2026-07-22 Claude Code 2.1.210 resolved exact `claude-fable-5` plus Haiku 4.5 auxiliary use and completed a 38-turn static implementation review from a self-contained read-only clone. Plan mode first stopped because no `ExitPlanMode` tool was exposed; an execution-mode retry inside the same OS read-only boundary completed. Python/Nix probes were denied, so the PASS remained conditional on lead-run executable gates. Several other Wave 3/4 consultations exhausted turns or produced no verdict, so do not make availability a silent hard dependency. |
 | Delegated external Codex | possible cross-provider child work | The `agent-dispatch codex` entrypoint is advertised; execution is unverified. Probe the model, version, and task behavior before making it a plan dependency. Never invoke delegated `codex` directly. |
 | Herdr | lead-side panes, pane output, status, interaction, worktree organization, and explicitly authorized interactive consultation | Operator-led Fable 5 consultation was observed through Herdr on 2026-07-19 with Claude Code 2.1.210, high effort, plan mode, and an exact checkout PWD. This route is trusted and procedural, not sandboxed or OS-enforced read-only; it is not a delegated child. The Herdr control socket and `HERDR_*` environment never enter dispatcher children. |
 | OpenCode / Kimi | potential future diversity route | Not supported by the current dispatcher contract. Do not invoke directly; first add and review a bounded dispatcher/provider adapter. |
@@ -130,9 +130,13 @@ network-denied parent cannot launch a cloud child.
 Herdr may start or display the lead-side dispatcher process in a managed pane. The
 child remains observable through its PTY, but it must not receive the Herdr socket,
 configuration directory, or control environment. The lead-side pane may have
-`HERDR_ENV=1`; a delegated child must not. If a child sees any `HERDR_*` control
-variable, Herdr socket, or Herdr configuration path, stop the node and escalate it as
-a boundary regression. Do not widen access to test or recover control.
+`HERDR_ENV=1`; a delegated child must not. The installed dispatcher observed on
+2026-07-22 violates this stricter rule by forwarding the control plane conditionally.
+Until fixed, invoke it through `env -u HERDR_ENV -u HERDR_WORKSPACE_ID -u
+HERDR_TAB_ID -u HERDR_PANE_ID -u HERDR_SOCKET_PATH -u HERDR_CLIENT_SOCKET_PATH -u
+HERDR_SESSION agent-dispatch ...`, then inspect launch evidence. If any control variable,
+socket, or configuration bind remains, terminate the child and discard its result as
+review evidence. Do not widen access to test or recover control.
 
 ### Operator-led Herdr consultation
 

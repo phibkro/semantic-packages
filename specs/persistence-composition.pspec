@@ -1,0 +1,105 @@
+# PSpec v1: one finite resource-composition candidate with explicit bindings.
+kind = "specification"
+id = "persistence-composition"
+version = "0.1.0"
+imports = [
+  { kind = "specification", id = "stack", version = "0.1.0" },
+  { kind = "specification", id = "ordered-map", version = "0.1.0" },
+]
+
+[[resources]]
+id = "retained-persistence"
+rule = "Stack-retained and OrderedMap-retained persistence obligations compose independently into both-retained."
+
+[resources.algebra]
+kind = "finite-commutative-monoid-v1"
+carrier = ["none", "stack-retained", "ordered-map-retained", "both-retained"]
+unit = "none"
+
+[[resources.algebra.composition]]
+left = "none"
+right = "none"
+result = "none"
+
+[[resources.algebra.composition]]
+left = "none"
+right = "stack-retained"
+result = "stack-retained"
+
+[[resources.algebra.composition]]
+left = "none"
+right = "ordered-map-retained"
+result = "ordered-map-retained"
+
+[[resources.algebra.composition]]
+left = "none"
+right = "both-retained"
+result = "both-retained"
+
+[[resources.algebra.composition]]
+left = "stack-retained"
+right = "none"
+result = "stack-retained"
+
+[[resources.algebra.composition]]
+left = "stack-retained"
+right = "stack-retained"
+result = "stack-retained"
+
+[[resources.algebra.composition]]
+left = "stack-retained"
+right = "ordered-map-retained"
+result = "both-retained"
+
+[[resources.algebra.composition]]
+left = "stack-retained"
+right = "both-retained"
+result = "both-retained"
+
+[[resources.algebra.composition]]
+left = "ordered-map-retained"
+right = "none"
+result = "ordered-map-retained"
+
+[[resources.algebra.composition]]
+left = "ordered-map-retained"
+right = "stack-retained"
+result = "both-retained"
+
+[[resources.algebra.composition]]
+left = "ordered-map-retained"
+right = "ordered-map-retained"
+result = "ordered-map-retained"
+
+[[resources.algebra.composition]]
+left = "ordered-map-retained"
+right = "both-retained"
+result = "both-retained"
+
+[[resources.algebra.composition]]
+left = "both-retained"
+right = "none"
+result = "both-retained"
+
+[[resources.algebra.composition]]
+left = "both-retained"
+right = "stack-retained"
+result = "both-retained"
+
+[[resources.algebra.composition]]
+left = "both-retained"
+right = "ordered-map-retained"
+result = "both-retained"
+
+[[resources.algebra.composition]]
+left = "both-retained"
+right = "both-retained"
+result = "both-retained"
+
+[[resources.algebra.bindings]]
+declarationReference = { specification = { kind = "specification", id = "stack", version = "0.1.0" }, declarationId = "persistence" }
+element = "stack-retained"
+
+[[resources.algebra.bindings]]
+declarationReference = { specification = { kind = "specification", id = "ordered-map", version = "0.1.0" }, declarationId = "persistence" }
+element = "ordered-map-retained"

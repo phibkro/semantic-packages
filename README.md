@@ -13,7 +13,7 @@ The project explores a shared specification language that:
 
 ## Current phase
 
-**Bounded two-domain effect separation experienceable; no noninterference claim.**
+**Finite authored resource composition experienceable; satisfaction unestablished.**
 
 The accepted Stack tracer publishes one nontrivial specification, binds proof and
 conformance Evidence, registers two independent Realizations, resolves them under an
@@ -46,6 +46,12 @@ retain their complete ledgers while the exact non-effect campaign projections re
 unchanged; adapter errors stay nonauthoritative. This is a deterministic observation of
 the adapter-invocation boundary, not whole-process purity, arbitrary effect erasure,
 semantic equivalence, accepted Evidence, or arbitrary-domain generality.
+Above that observation, a theory author can now define one explicit finite resource
+composition in PSpec, bind its elements to the exact Stack and OrderedMap persistence
+declarations, and inspect closure, totality, unit, commutativity, associativity, and two
+derived folds. The report keeps algebraic well-formedness separate from Realization
+satisfaction, Claim/Evidence transfer, compatibility, refinement, resolver authority,
+and arbitrary resource semantics.
 
 ## Repository map
 
@@ -66,6 +72,8 @@ semantic equivalence, accepted Evidence, or arbitrary-domain generality.
 - [`design-specs/0001-explicit-pspec-author-journey.md`](design-specs/0001-explicit-pspec-author-journey.md): observable contract and falsifiers for the complete PSpec author experience.
 - [`design-specs/0002-explicit-refinement-inspection-journey.md`](design-specs/0002-explicit-refinement-inspection-journey.md): observable contract and falsifiers for exact proposal-local cross-version inspection.
 - [`design-specs/0003-bounded-effect-separation-observation.md`](design-specs/0003-bounded-effect-separation-observation.md): observable contract and falsifiers for the exact two-domain effect-separation probe.
+- [`design-specs/0004-finite-resource-composition-inspection.md`](design-specs/0004-finite-resource-composition-inspection.md): observable contract and falsifiers for the finite authored resource-composition journey.
+- [`docs/exec-plans/completed/0009-finite-resource-composition.md`](docs/exec-plans/completed/0009-finite-resource-composition.md): completed red controls, independent reviews, finite inspection implementation, maintenance, and convergence evidence for that journey.
 - [`docs/exec-plans/completed/0008-bounded-effect-separation.md`](docs/exec-plans/completed/0008-bounded-effect-separation.md): completed red controls, independent reviews, implementation, maintenance, and convergence evidence for that probe.
 - [`docs/exec-plans/completed/0007-explicit-refinement-inspection.md`](docs/exec-plans/completed/0007-explicit-refinement-inspection.md): completed refinement journey, independent review, and convergence evidence.
 - [`docs/exec-plans/active/0003-cold-human-inspection.md`](docs/exec-plans/active/0003-cold-human-inspection.md): executable inspection surface and deferred uninvolved-human gate.
@@ -233,6 +241,45 @@ their existing exact runners and compares immutable, domain-owned projections. I
 not discover or execute registry metadata, observe effects outside adapter reports,
 create Claim/Evidence records, select policy, or establish a general effect calculus.
 
+### Inspect finite authored resource composition
+
+Inspect the retained PSpec algebra against the two exact imported Specifications and
+the profiles required to make those Specifications link-valid:
+
+```sh
+nix develop --command python3 -m semantic_packages resource inspect \
+  specs/persistence-composition.pspec \
+  --dependency registry/stack/theory/records/stack-spec.json \
+  --dependency registry/stack/theory/dependencies/stack-profile.json \
+  --dependency registry/ordered-map/theory/records/ordered-map-spec.json \
+  --dependency registry/ordered-map/theory/dependencies/ordered-map-profile.json \
+  --resource retained-persistence \
+  --output /tmp/resource-composition.json
+```
+
+Expected summary:
+
+```text
+inspected resource algebra retained-persistence: 4 elements, 16 compositions, 2 bindings, fold=both-retained; satisfaction unestablished -> /tmp/resource-composition.json
+```
+
+The report preserves the complete authored carrier, all sixteen ordered composition
+rows, both exact declaration bindings, 8 unit/16 commutativity/64 associativity
+observations, and every transition in authored-order and reverse-order folds.
+
+To observe fail-closed law checking, copy the source and change the
+`stack-retained * stack-retained` result from `stack-retained` to
+`ordered-map-retained`; the command reports the smallest associativity counterexample
+and preserves any prior output. Output paths that alias any of the five explicit inputs
+also fail without changing an input.
+
+What is real underneath: the command reuses the all-or-none PSpec authoring boundary,
+resolves bindings only to resource declarations in exact imports, and exhaustively
+enumerates one authored `finite-commutative-monoid-v1` table. The fold composes authored
+semantic elements, not runtime resources or Evidence results. A well-formed table does
+not establish persistence satisfaction, compatibility, refinement, ownership,
+separation, quantities, resolver acceptance, or a universal resource logic.
+
 ### Verify the repository
 
 Run the repository quality gate:
@@ -246,7 +293,7 @@ python3 scripts/check_repo.py
 ```
 
 The gate includes record/link fixtures, 18 loader groups, 50 adapter/campaign tests,
-59 cross-language candidate/Evidence-binding controls, 285 actor journeys, 42 research
+59 cross-language candidate/Evidence-binding controls, 302 actor journeys, 42 research
 probes, 20 governance tests, two fresh Stack reports/eight records, two fresh base
 OrderedMap reports plus one selective breaker, the exact base and profile-choice
 2/14/14 candidate censuses, two fresh profile-bound reports, and the 49-group proof

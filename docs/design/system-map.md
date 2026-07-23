@@ -274,11 +274,27 @@ challenges for forbidden `io.read`. Error partials remain visible and nonauthori
 The probe publishes one atomic deterministic report, not Evidence or a resolver input.
 Its conclusion is bounded to adapter-reported invocation events and two exact campaigns.
 
+### Finite resource-composition inspection
+
+Design-spec 0004 and ExecPlan 0009 add one theory-author edge above the two retained
+Specifications. A new PSpec imports exact Stack and OrderedMap, defines a four-element
+resource-local carrier and all sixteen ordered composition rows, and binds the two
+distinct `persistence` declarations explicitly. Four caller-named context records keep
+both imported Specifications link-valid without discovery. The inspector checks
+closure, totality, unit, commutativity, and associativity, then publishes complete
+authored-order and reverse-order fold traces atomically.
+
+The report's conclusion is only `finite-algebra-well-formed`; satisfaction is fixed at
+`unestablished`. It creates no Claim, Evidence, compatibility, refinement, resolver or
+consumer decision, runtime-resource composition, ownership/separation result, or
+arbitrary-domain resource foundation. Existing Stack and OrderedMap source, records,
+runners, Evidence, and product decisions remain unchanged.
+
 ## Actor data flows
 
 | Actor | Data-plane path | Current edge |
 |---|---|---|
-| theory author | semantic source -> canonical Specification/Claim -> exact-version proposal -> structural inspection -> graph checks -> proof or other Evidence | explicit Stack and OrderedMap PSpec-to-canonical author command and two-domain refinement inspection are experienceable; automated checks pass, while uninvolved-author acceptance, hosted publication, semantic refinement, and semantic checking remain absent |
+| theory author | semantic source -> canonical Specification/Claim -> exact-version proposal -> resource composition -> structural inspection -> graph checks -> proof or other Evidence | explicit Stack and OrderedMap PSpec authoring, two-domain refinement inspection, and one finite cross-domain resource composition are experienceable; automated checks pass, while uninvolved-author acceptance, hosted publication, semantic refinement, resource satisfaction, and hosted semantic checking remain absent |
 | package author | Realization/adapter -> explicit build -> campaign -> bounded effect-separation observation -> report -> reviewed declaration Evidence -> graph | executable for independently represented Rust and TypeScript packages in both domains; the cross-domain probe is inspectable but creates no Evidence |
 | package consumer | Specification + policy + profile -> Evidence selection -> semantic result -> boundary mechanism | executable exact Stack and OrderedMap queries, including two differentiated-profile choices with complete non-transfer ledgers, version-scoped recovery, and separate directional child-process boundaries |
 | theory consumer | exact Specification -> declarations/imports -> Claims/Evidence/unknowns -> derived view | executable Stack and OrderedMap projections; realization-scoped Evidence never becomes Specification assurance |

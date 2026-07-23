@@ -16,6 +16,7 @@ from scripts import record_check
 
 from .author_command import run_author
 from .refinement import ProposalProblem, inspect_proposal, validate_proposal_shape
+from .resource_algebra import run_resource_inspection
 
 
 class _DuplicateMember(ValueError):
@@ -254,6 +255,22 @@ def build_parser() -> argparse.ArgumentParser:
     inspect.add_argument("--predecessor", required=True, type=Path, help="exact predecessor Specification path")
     inspect.add_argument("--successor", required=True, type=Path, help="exact successor Specification path")
     inspect.add_argument("--output", required=True, type=Path, help="inspection report output path")
+
+    resource = commands.add_parser("resource", help="inspect one bounded authored resource algebra")
+    resource_commands = resource.add_subparsers(dest="resource_command", required=True)
+    resource_inspect = resource_commands.add_parser(
+        "inspect", help="inspect one finite resource composition without a satisfaction verdict"
+    )
+    resource_inspect.add_argument("source", type=Path, help="explicit UTF-8 PSpec source path")
+    resource_inspect.add_argument(
+        "--dependency",
+        action="append",
+        default=[],
+        type=Path,
+        help="explicit canonical JSON dependency path; repeat to preserve input order",
+    )
+    resource_inspect.add_argument("--resource", required=True, help="exact local resource declaration ID")
+    resource_inspect.add_argument("--output", required=True, type=Path, help="inspection report output path")
     return parser
 
 
@@ -264,5 +281,12 @@ def main(arguments: Sequence[str] | None = None) -> int:
         return run_author(options.source, options.dependency, options.output)
     if options.command == "refinement" and options.refinement_command == "inspect":
         return run_inspection(options.proposal, options.predecessor, options.successor, options.output)
+    if options.command == "resource" and options.resource_command == "inspect":
+        return run_resource_inspection(
+            options.source,
+            tuple(options.dependency),
+            options.resource,
+            options.output,
+        )
     parser.error("unsupported command")
     return 2
