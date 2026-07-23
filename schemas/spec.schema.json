@@ -36,6 +36,10 @@
       "type": "array",
       "items": { "$ref": "#/$defs/lawDeclaration" }
     },
+    "protocols": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/protocolDeclaration" }
+    },
     "effects": { "$ref": "#/$defs/effectContract" },
     "resources": {
       "type": "array",
@@ -54,6 +58,7 @@
     { "required": ["derivedObservations"] },
     { "required": ["equivalences"] },
     { "required": ["laws"] },
+    { "required": ["protocols"] },
     { "required": ["effects"] },
     { "required": ["resources"] },
     { "required": ["performancePropositions"] }
@@ -102,6 +107,62 @@
       "properties": {
         "id": { "$ref": "common.schema.json#/$defs/localDeclarationId" },
         "statement": { "$ref": "common.schema.json#/$defs/nonEmptyString" }
+      },
+      "additionalProperties": false
+    },
+    "protocolDeclaration": {
+      "type": "object",
+      "required": [
+        "id", "kind", "states", "initialState", "terminalStates",
+        "inputs", "outputs", "transitions", "identityObservation"
+      ],
+      "properties": {
+        "id": { "$ref": "common.schema.json#/$defs/localDeclarationId" },
+        "kind": { "const": "finite-labelled-transition-system-v1" },
+        "states": {
+          "type": "array",
+          "items": { "$ref": "common.schema.json#/$defs/localDeclarationId" },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "initialState": { "$ref": "common.schema.json#/$defs/localDeclarationId" },
+        "terminalStates": {
+          "type": "array",
+          "items": { "$ref": "common.schema.json#/$defs/localDeclarationId" },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "inputs": {
+          "type": "array",
+          "items": { "$ref": "common.schema.json#/$defs/localDeclarationId" },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "outputs": {
+          "type": "array",
+          "items": { "$ref": "common.schema.json#/$defs/localDeclarationId" },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "transitions": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/protocolTransition" },
+          "minItems": 1
+        },
+        "identityObservation": {
+          "$ref": "common.schema.json#/$defs/nonEmptyString"
+        }
+      },
+      "additionalProperties": false
+    },
+    "protocolTransition": {
+      "type": "object",
+      "required": ["from", "input", "output", "to"],
+      "properties": {
+        "from": { "$ref": "common.schema.json#/$defs/localDeclarationId" },
+        "input": { "$ref": "common.schema.json#/$defs/localDeclarationId" },
+        "output": { "$ref": "common.schema.json#/$defs/localDeclarationId" },
+        "to": { "$ref": "common.schema.json#/$defs/localDeclarationId" }
       },
       "additionalProperties": false
     },

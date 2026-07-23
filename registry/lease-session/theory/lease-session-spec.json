@@ -1,0 +1,45 @@
+{
+  "kind": "specification",
+  "id": "lease-session",
+  "version": "0.1.0",
+  "carriers": [
+    {"id": "client-id", "description": "Opaque client identity observed only by equality."},
+    {"id": "request-id", "description": "Opaque acquisition request identity observed only by equality."},
+    {"id": "lease-token", "description": "Opaque lease token observed only by equality."}
+  ],
+  "operations": [
+    {"id": "acquire", "signature": "Session * ClientId * RequestId -> Session * AcquireOutput"},
+    {"id": "renew", "signature": "Session * LeaseToken -> Session * RenewOutput"},
+    {"id": "complete", "signature": "Session * LeaseToken -> Session * CompleteOutput"},
+    {"id": "expire", "signature": "Session -> Session * ExpiryOutput"}
+  ],
+  "observations": [
+    {"id": "session-state", "signature": "Session -> Available | Held(ClientId, RequestId, LeaseToken) | Completed | Expired"}
+  ],
+  "laws": [
+    {"id": "protocol-conformance", "statement": "The six retained acquire, retry, conflict, wrong-holder, completion-closure, and expiry-closure traces have the exact ordered observations defined by design-spec 0005."}
+  ],
+  "protocols": [
+    {
+      "id": "lease-session",
+      "kind": "finite-labelled-transition-system-v1",
+      "states": ["available", "held", "completed", "expired"],
+      "initialState": "available",
+      "terminalStates": ["completed", "expired"],
+      "inputs": ["acquire-new", "acquire-retry", "acquire-conflict", "renew-holder", "complete-holder", "complete-wrong", "expire", "post-terminal"],
+      "outputs": ["granted", "busy", "renewed", "completed", "denied", "expired", "terminal"],
+      "identityObservation": "Client, request, and lease-token values are opaque; only equality and their retention across an ordered trace are observed.",
+      "transitions": [
+        {"from": "available", "input": "acquire-new", "output": "granted", "to": "held"},
+        {"from": "held", "input": "acquire-retry", "output": "granted", "to": "held"},
+        {"from": "held", "input": "acquire-conflict", "output": "busy", "to": "held"},
+        {"from": "held", "input": "renew-holder", "output": "renewed", "to": "held"},
+        {"from": "held", "input": "complete-holder", "output": "completed", "to": "completed"},
+        {"from": "held", "input": "complete-wrong", "output": "denied", "to": "held"},
+        {"from": "held", "input": "expire", "output": "expired", "to": "expired"},
+        {"from": "completed", "input": "post-terminal", "output": "terminal", "to": "completed"},
+        {"from": "expired", "input": "post-terminal", "output": "terminal", "to": "expired"}
+      ]
+    }
+  ]
+}

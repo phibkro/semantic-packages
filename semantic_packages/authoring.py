@@ -491,4 +491,24 @@ def author_specification(
     link_diagnostics = record_check.check_graph(records)
     if link_diagnostics:
         return _failure(_remap_diagnostics(link_diagnostics, labels))
+
+    if "protocols" in document:
+        # Protocol well-formedness is a semantic authoring phase.  It follows raw,
+        # schema, and graph-link validation so callers always receive the same stable
+        # phase precedence as protocol-free Specifications.
+        from semantic_packages.lease_session import inspect_protocol_document
+
+        protocol_observation = inspect_protocol_document(document)
+        if not protocol_observation.ok:
+            return _failure(
+                [
+                    record_check.Diagnostic(
+                        diagnostic.code,
+                        source_label,
+                        diagnostic.pointer,
+                        diagnostic.message,
+                    )
+                    for diagnostic in protocol_observation.diagnostics
+                ]
+            )
     return _success(document)

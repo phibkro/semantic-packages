@@ -1,0 +1,15 @@
+{
+  "kind": "evidence", "id": "lease-session-object-protocol-campaign", "version": "0.1.0",
+  "claim": {"kind": "claim", "id": "lease-session-object-protocol-conformance", "version": "0.1.0"},
+  "specification": {"kind": "specification", "id": "lease-session", "version": "0.1.0"},
+  "scope": "realization", "realization": {"kind": "realization", "id": "lease-session-object", "version": "0.1.0"},
+  "adapter": {"id": "lease-session-object-ndjson-adapter", "version": "0.1.0"},
+  "mechanism": "bounded-protocol-campaign", "result": "supports", "reviewState": "accepted",
+  "method": "Six exact ordered lease-session scenarios through a fresh child process per scenario.",
+  "environment": {"python": "3.14", "runnerProtocol": "lease-session-runner-ndjson-v1"},
+  "freshness": {"producedAt": "2026-07-23T00:00:00Z"},
+  "assumptions": ["The adapter faithfully exposes the named realization.", "The runner observes every response inside its process boundary."],
+  "exclusions": ["No wall-clock timers, scheduling fairness, progress, or liveness claim.", "No concurrency, network partition, process crash, durable recovery, or lease-transfer claim.", "No token entropy, authenticity, authorization, or other security claim.", "No exhaustive-trace or adapter-faithfulness conclusion from the finite campaign.", "No protocol refinement, composition, session-type, or arbitrary-domain generality claim.", "Opaque identities are observed only by equality in the retained scenarios."],
+  "applicability": {"profiles": [{"kind": "realizationProfile", "id": "lease-session-local-process", "version": "0.1.0"}], "parameters": {"scenarioCount": 6, "freshProcessPerScenario": true}},
+  "provenance": {"plan": {"path": "contracts/lease-session/campaign-plan.json", "rawSha256": "2d1f47896b329c599f11097dbdf4989e724df8a8859864af3b706d8953a4228a"}, "source": {"path": "implementations/lease-session/object/adapter.py", "rawSha256": "9877efd1c25eed2a9024e26bb9c23c7aecef46e69df48dca1488253419895635"}, "scenarioOrder": ["acquire", "retry-stability", "exclusive-holder", "wrong-holder-rejection", "completion-closure", "expiry-closure"]}
+}
