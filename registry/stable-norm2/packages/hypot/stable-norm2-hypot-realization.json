@@ -1,0 +1,9 @@
+{
+  "kind": "realization", "id": "stable-norm2-hypot", "version": "0.1.0",
+  "specification": {"kind": "specification", "id": "stable-norm2", "version": "0.1.0"},
+  "adapter": {"id": "stable-norm2-hypot-adapter", "version": "0.1.0", "protocol": "hex-float-single-request-v1", "entrypoint": "implementations/stable-norm2/hypot/adapter.py", "assumptions": ["The adapter faithfully exposes the robust hypot realization."]},
+  "implementation": {"language": "Python", "languageVersion": "3.14", "target": "local child process", "runtime": "Python interpreter and host math library", "interfaceMechanism": "JSON line with hexadecimal binary64 values", "buildSystem": "source-only", "buildInstructions": "No build step; use pinned Nix Python.", "executionInstructions": "Launch one fresh adapter process per case."},
+  "capabilities": ["norm2.binary64"],
+  "limitations": ["Evidence covers only twelve exact finite pairs.", "No correct-rounding, alternate-mode, nonfinite, performance, or portability claim."],
+  "supportedProfiles": [{"kind": "realizationProfile", "id": "stable-norm2-binary64", "version": "0.1.0"}]
+}

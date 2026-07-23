@@ -1,0 +1,15 @@
+{
+  "kind": "evidence", "id": "stable-norm2-hypot-campaign", "version": "0.1.0",
+  "claim": {"kind": "claim", "id": "stable-norm2-hypot-approximation", "version": "0.1.0"},
+  "specification": {"kind": "specification", "id": "stable-norm2", "version": "0.1.0"},
+  "scope": "realization", "realization": {"kind": "realization", "id": "stable-norm2-hypot", "version": "0.1.0"},
+  "adapter": {"id": "stable-norm2-hypot-adapter", "version": "0.1.0"},
+  "mechanism": "bounded-numerical-campaign", "result": "supports", "reviewState": "accepted",
+  "method": "Twelve exact finite binary64 pairs checked against a 100-digit Decimal oracle with a 2-ULP threshold.",
+  "environment": {"python": "3.14", "runnerProtocol": "hex-float-single-request-v1"},
+  "freshness": {"producedAt": "2026-07-23T00:00:00Z"},
+  "assumptions": ["Decimal conversion and square root implement the stated oracle.", "The adapter faithfully exposes the realization."],
+  "exclusions": ["No exhaustive, correct-rounding, nonfinite, alternate-mode, performance, or arbitrary-numerics claim."],
+  "applicability": {"profiles": [{"kind": "realizationProfile", "id": "stable-norm2-binary64", "version": "0.1.0"}], "parameters": {"caseCount": 12, "maxUlps": 2, "oracleDecimalDigits": 100}},
+  "provenance": {"plan": {"path": "contracts/stable-norm2/campaign-plan.json", "rawSha256": "c92c4609030845d043e633c4f85437b8c8299ca63639bf8f8b0ad4d8a7da0dc6"}, "source": {"path": "implementations/stable-norm2/hypot/adapter.py", "rawSha256": "a3936a4ddb8e77248666858f2ba59bf3bfa5a77693d0cba31cf0b1fad41ec4cd"}, "caseOrder": ["zero", "x-unit", "y-unit", "three-four", "sign-invariance", "swapped", "unit-diagonal", "adjacent", "large-equal", "unbalanced", "small-equal", "subnormal-boundary"]}
+}

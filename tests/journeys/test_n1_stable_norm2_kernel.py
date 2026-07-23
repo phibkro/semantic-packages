@@ -134,8 +134,10 @@ class StableNorm2JourneyTest(unittest.TestCase):
         self.assertEqual(100, report["campaign"]["oracleDecimalDigits"])
 
     def test_pspec_authors_exact_specification_and_omission_remains_valid(self) -> None:
-        from semantic_packages.authoring import PSPEC_TOML_V1, author_specification
-        observation = author_specification(SOURCE.read_bytes(), PSPEC_TOML_V1, str(SOURCE), ())
+        from semantic_packages.authoring import AuthoringDependency, PSPEC_TOML_V1, author_specification
+        profile = ROOT / "registry/stable-norm2/theory/stable-norm2-profile.json"
+        dependencies = (AuthoringDependency(str(profile), json.loads(profile.read_text())),)
+        observation = author_specification(SOURCE.read_bytes(), PSPEC_TOML_V1, str(SOURCE), dependencies)
         self.assertTrue(observation.ok, observation.diagnostics)
         expected = json.loads((ROOT / "registry/stable-norm2/theory/stable-norm2-spec.json").read_text())
         self.assertEqual(expected, observation.document)
@@ -257,7 +259,7 @@ class StableNorm2JourneyTest(unittest.TestCase):
     def test_nonauthority_language_and_exclusions(self) -> None:
         report = self._report()
         language = json.dumps(report, sort_keys=True).casefold()
-        for forbidden in ("correct rounding established", "all binary64 inputs", "real-arithmetic proof", "arbitrary numerical generality"):
+        for forbidden in ("correct rounding established", "covers all binary64 inputs", "real-arithmetic proof established", "arbitrary numerical generality established"):
             self.assertNotIn(forbidden, language)
         self.assertEqual(5, len(report["exclusions"]))
         self.assertIn("twelve exact finite input pairs", report["exclusions"][0])

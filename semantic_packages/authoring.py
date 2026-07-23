@@ -511,4 +511,20 @@ def author_specification(
                     for diagnostic in protocol_observation.diagnostics
                 ]
             )
+    if "numericalKernels" in document:
+        from semantic_packages.numerical_kernel import inspect_numerical_document
+
+        numerical_observation = inspect_numerical_document(document)
+        if not numerical_observation.ok:
+            return _failure(
+                [
+                    record_check.Diagnostic(
+                        diagnostic.code,
+                        source_label,
+                        diagnostic.pointer,
+                        diagnostic.message,
+                    )
+                    for diagnostic in numerical_observation.diagnostics
+                ]
+            )
     return _success(document)

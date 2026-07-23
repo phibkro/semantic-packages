@@ -18,6 +18,7 @@ from .author_command import run_author
 from .refinement import ProposalProblem, inspect_proposal, validate_proposal_shape
 from .resource_algebra import run_resource_inspection
 from .lease_session import run_protocol_inspection
+from .numerical_kernel import run_numerical_inspection
 
 
 class _DuplicateMember(ValueError):
@@ -280,6 +281,14 @@ def build_parser() -> argparse.ArgumentParser:
     )
     protocol_inspect.add_argument("manifest", type=Path, help="exact finite registry manifest")
     protocol_inspect.add_argument("--output", required=True, type=Path, help="inspection report output path")
+
+    numerical = commands.add_parser("numerical", help="inspect one bounded approximate numerical package")
+    numerical_commands = numerical.add_subparsers(dest="numerical_command", required=True)
+    numerical_inspect = numerical_commands.add_parser(
+        "inspect", help="reproduce and inspect one exact approximate numerical package"
+    )
+    numerical_inspect.add_argument("manifest", type=Path, help="exact finite registry manifest")
+    numerical_inspect.add_argument("--output", required=True, type=Path, help="inspection report output path")
     return parser
 
 
@@ -299,5 +308,7 @@ def main(arguments: Sequence[str] | None = None) -> int:
         )
     if options.command == "protocol" and options.protocol_command == "inspect":
         return run_protocol_inspection(options.manifest, options.output)
+    if options.command == "numerical" and options.numerical_command == "inspect":
+        return run_numerical_inspection(options.manifest, options.output)
     parser.error("unsupported command")
     return 2

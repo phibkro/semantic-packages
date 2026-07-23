@@ -1,0 +1,20 @@
+{
+  "formatVersion": 1,
+  "sources": [
+    {"id": "stable-norm2-theory", "root": "theory", "roles": ["theory-authored", "dependency"]},
+    {"id": "stable-norm2-hypot", "root": "packages/hypot", "roles": ["package-authored"]},
+    {"id": "stable-norm2-scaled", "root": "packages/scaled", "roles": ["package-authored"]},
+    {"id": "stable-norm2-consumer", "root": "consumer", "roles": ["package-consumer-authored"]}
+  ],
+  "members": [
+    {"source": "stable-norm2-theory", "address": {"kind": "realizationProfile", "id": "stable-norm2-binary64", "version": "0.1.0"}, "sha256": "1f459047e896c59aeedd8504e8846aabab0c3841b638838a0d32b14798a76103", "role": "dependency"},
+    {"source": "stable-norm2-theory", "address": {"kind": "specification", "id": "stable-norm2", "version": "0.1.0"}, "sha256": "9104fe05670be87f9917a3de44bcd5905551fb7b5bd6863ea4837d67125cfbc9", "role": "theory-authored"},
+    {"source": "stable-norm2-hypot", "address": {"kind": "realization", "id": "stable-norm2-hypot", "version": "0.1.0"}, "sha256": "af3ccfbc140edf7f95fd5f1664bd7b3572222564ad1e9b6595ccdc13468101b8", "role": "package-authored"},
+    {"source": "stable-norm2-hypot", "address": {"kind": "claim", "id": "stable-norm2-hypot-approximation", "version": "0.1.0"}, "sha256": "d11903ea6c3d78192162be18fa476a3e190b452449dc5aab2de97353371f4b58", "role": "package-authored"},
+    {"source": "stable-norm2-hypot", "address": {"kind": "evidence", "id": "stable-norm2-hypot-campaign", "version": "0.1.0"}, "sha256": "0805b9133c643b306202bf08831ad9b859e06958d7edb947a45bc05d69eee8e6", "role": "package-authored"},
+    {"source": "stable-norm2-scaled", "address": {"kind": "realization", "id": "stable-norm2-scaled", "version": "0.1.0"}, "sha256": "e4d1c4e0e4ccbe16ee0e7bba8c900670aa5b5095fc86df89a9f1b4191327bc0a", "role": "package-authored"},
+    {"source": "stable-norm2-scaled", "address": {"kind": "claim", "id": "stable-norm2-scaled-approximation", "version": "0.1.0"}, "sha256": "1f131a408e9a561be4c35155963e470db3d81ef70a603bbd1ceedab6600d06e3", "role": "package-authored"},
+    {"source": "stable-norm2-scaled", "address": {"kind": "evidence", "id": "stable-norm2-scaled-campaign", "version": "0.1.0"}, "sha256": "3c3cc3db04e1d7156669a8d6e0fb2ad06372b356bc7abfd8995ebb78c42925cf", "role": "package-authored"},
+    {"source": "stable-norm2-consumer", "address": {"kind": "consumerPolicy", "id": "stable-norm2-policy", "version": "0.1.0"}, "sha256": "a1261d94d5db8c0596eb65ba92edc3ade3258912bf4c777b946868fcabe0f1ce", "role": "package-consumer-authored"}
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "kind": "claim", "id": "stable-norm2-scaled-approximation", "version": "0.1.0",
+  "subject": {"kind": "realization", "id": "stable-norm2-scaled", "version": "0.1.0"},
+  "governingSpecification": {"kind": "specification", "id": "stable-norm2", "version": "0.1.0"},
+  "proposition": {"specification": {"kind": "specification", "id": "stable-norm2", "version": "0.1.0"}, "declarationId": "approximate-norm2"},
+  "concern": "numerical.approximation", "scope": "stable-norm2-scaled under the exact binary64 campaign profile.",
+  "assumptions": ["The Decimal oracle and adapter faithfully expose their stated boundaries."],
+  "exclusions": ["No input outside the exact twelve-case campaign is asserted."],
+  "applicableProfiles": [{"kind": "realizationProfile", "id": "stable-norm2-binary64", "version": "0.1.0"}],
+  "state": "active"
+}
