@@ -1,0 +1,7 @@
+{
+  "kind": "consumerPolicy", "id": "stable-norm2-policy", "version": "0.1.0",
+  "specification": {"kind": "specification", "id": "stable-norm2", "version": "0.1.0"},
+  "profile": {"kind": "realizationProfile", "id": "stable-norm2-binary64", "version": "0.1.0"},
+  "concerns": [{"concern": "numerical.approximation", "priority": "required", "acceptedMechanisms": ["bounded-numerical-campaign"], "minimumAssurance": "one-accepted-applicable-support-no-selected-challenge"}],
+  "prohibitions": []
+}

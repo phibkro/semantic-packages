@@ -13,7 +13,7 @@ The project explores a shared specification language that:
 
 ## Current phase
 
-**Retry-safe interaction-protocol package experienceable; satisfaction policy-relative.**
+**Stable approximate numerical kernel experienceable; satisfaction policy-relative.**
 
 The accepted Stack tracer publishes one nontrivial specification, binds proof and
 conformance Evidence, registers two independent Realizations, resolves them under an
@@ -60,6 +60,13 @@ and profile, and reports directional deployment boundaries separately. Explicit 
 is a campaign input: wall-clock timing, liveness, concurrency, crash recovery, token
 security, exhaustive traces, and general protocol semantics remain excluded.
 
+The fourth domain is one stable approximate `norm2` kernel. Twelve exact finite binary64
+pairs are transported as hexadecimal values and checked by a 100-digit independent
+Decimal oracle under a 2-ULP relation. Two robust kernels pass; naïve square-add-square-
+root is challenged when its intermediate squares overflow although the real norm is
+representable. This is finite Evidence, not correct rounding, exhaustive binary64
+coverage, a real-analysis proof, or arbitrary numerical generality.
+
 ## Repository map
 
 - [`AGENTS.md`](AGENTS.md): durable instructions and map for coding agents.
@@ -81,6 +88,8 @@ security, exhaustive traces, and general protocol semantics remain excluded.
 - [`design-specs/0003-bounded-effect-separation-observation.md`](design-specs/0003-bounded-effect-separation-observation.md): observable contract and falsifiers for the exact two-domain effect-separation probe.
 - [`design-specs/0004-finite-resource-composition-inspection.md`](design-specs/0004-finite-resource-composition-inspection.md): observable contract and falsifiers for the finite authored resource-composition journey.
 - [`design-specs/0005-retry-safe-lease-session-package.md`](design-specs/0005-retry-safe-lease-session-package.md): frozen user need, ordered observations, falsifiers, and exclusions for the interaction-protocol package.
+- [`design-specs/0006-stable-norm2-numerical-kernel.md`](design-specs/0006-stable-norm2-numerical-kernel.md): frozen approximation relation, campaign, falsifiers, and exclusions for the stable numerical kernel.
+- [`docs/exec-plans/completed/0011-stable-norm2-numerical-kernel.md`](docs/exec-plans/completed/0011-stable-norm2-numerical-kernel.md): numerical controls, implementation, evidence, maintenance, and convergence.
 - [`docs/exec-plans/completed/0010-retry-safe-lease-session.md`](docs/exec-plans/completed/0010-retry-safe-lease-session.md): retained red-control reviews, implementation, evidence, maintenance, and convergence for that package.
 - [`docs/exec-plans/completed/0009-finite-resource-composition.md`](docs/exec-plans/completed/0009-finite-resource-composition.md): completed red controls, independent reviews, finite inspection implementation, maintenance, and convergence evidence for that journey.
 - [`docs/exec-plans/completed/0008-bounded-effect-separation.md`](docs/exec-plans/completed/0008-bounded-effect-separation.md): completed red controls, independent reviews, implementation, maintenance, and convergence evidence for that probe.
@@ -315,6 +324,30 @@ complete traces with a harness-owned oracle, and publishes atomically. It does n
 prove every trace, infer transport compatibility from semantic acceptance, or claim
 wall-clock, distributed-systems, or token-security properties.
 
+### Inspect the stable approximate norm kernel
+
+```sh
+nix develop --command python3 -m semantic_packages numerical inspect \
+  registry/stable-norm2/manifest.json \
+  --output /tmp/stable-norm2-inspection.json
+```
+
+Expected summary:
+
+```text
+inspected stable-norm2 0.1.0: 2 registered realizations accepted, 1 overflow breaker challenged across 36 cases; tolerance=2-ulp; satisfaction=policy-relative -> /tmp/stable-norm2-inspection.json
+```
+
+Every case retains exact hex inputs/output, rounded-oracle value, ULP distance,
+threshold, and result. Using the manifest as `--output` fails with
+`NUMERICAL_OUTPUT_ALIAS` and leaves it unchanged.
+
+What is real underneath: the command authenticates nine records and one plan, starts a
+fresh child for every candidate/case pair, computes a 100-digit Decimal oracle from the
+exact binary64 inputs, and applies the fixed 2-ULP relation. It does not establish
+correct rounding, all-input coverage, alternate rounding modes, nonfinite semantics,
+performance, or general numerical authority.
+
 ### Verify the repository
 
 Run the repository quality gate:
@@ -420,8 +453,8 @@ Then open the repository in Codex, an IDE extension, or another coding agent. Th
 ## Status
 
 This repository is an executable research prototype with complete bounded local Stack,
-finite OrderedMap, exact differentiated-profile lifecycles, and one finite lease-session
-interaction-protocol package, plus an independently reviewed two-domain authoring
+finite OrderedMap, exact differentiated-profile lifecycles, one finite lease-session
+interaction protocol, and one finite stable-norm2 approximate kernel, plus a two-domain authoring
 control, explicit refinement inspection, and bounded effect-separation observation. The automated author journey is green; uninvolved-author
 observation and final review remain required before ExecPlan 0006 closes. This is not
 yet a stable standard, a proof of noninterference, an arbitrary-domain semantic-package

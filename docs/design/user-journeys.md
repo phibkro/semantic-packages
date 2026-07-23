@@ -16,6 +16,8 @@ Design-spec 0004 adds one theory-author composition inspection without turning
 algebraic well-formedness into resource satisfaction or a universal resource model.
 Design-spec 0005 adds the third semantic domain: one bounded interaction protocol whose
 complete finite traces, Evidence decisions, and deployment boundaries remain distinct.
+Design-spec 0006 adds one approximate numerical kernel with an explicit profile-local
+metric, independent oracle, finite Evidence, and separate deployment boundaries.
 
 For this tracer, a **registry** is one curated finite local source set of immutable,
 exact-version records. To **publish** or **register** is to add records to that set and
@@ -116,6 +118,17 @@ projection separation, and directional child-process boundaries. The campaign su
 partition, token-security, exhaustive-trace, refinement, composition, or universal
 protocol claim. The executable contract is
 [design-spec 0005](../../design-specs/0005-retry-safe-lease-session-package.md).
+
+### A10 — package consumer inspects a stable approximate norm kernel
+
+The package consumer names one exact manifest and executes twelve hexadecimal binary64
+pairs against two registered robust kernels and one naïve overflow breaker. Acceptance
+requires a test-owned 100-digit Decimal oracle, complete input/output/oracle/ULP
+observations, a fixed 2-ULP threshold, fresh candidate processes, exact Evidence scope,
+and separate directional boundaries. The result establishes neither correct rounding
+nor exhaustive inputs, nonfinite/alternate-mode semantics, real proof, performance, or
+general numerical authority. The executable contract is
+[design-spec 0006](../../design-specs/0006-stable-norm2-numerical-kernel.md).
 
 ### J0 — vocabulary and local boundary
 

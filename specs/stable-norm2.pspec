@@ -1,0 +1,28 @@
+kind = "specification"
+id = "stable-norm2"
+version = "0.1.0"
+
+[[carriers]]
+id = "finite-binary64"
+description = "Finite IEEE 754 binary64 values transported by exact hexadecimal encoding."
+
+[[operations]]
+id = "norm2"
+signature = "FiniteBinary64 * FiniteBinary64 -> FiniteBinary64"
+
+[[laws]]
+id = "approximate-norm2"
+statement = "For each retained profile input, the nonnegative output approximates sqrt(x*x+y*y) within the profile's explicit ULP relation."
+
+[[numericalKernels]]
+id = "stable-norm2"
+kind = "bounded-approximation-v1"
+operation = "norm2"
+mathematicalProposition = "sqrt(x*x+y*y) over mathematical reals"
+inputEncoding = "binary64-hex-v1"
+finiteInputsOnly = true
+oracle = "exact-binary64-to-decimal-sqrt-v1"
+oracleDecimalDigits = 100
+metric = "binary64-ulp-distance-v1"
+maxUlps = 2
+profile = { kind = "realizationProfile", id = "stable-norm2-binary64", version = "0.1.0" }

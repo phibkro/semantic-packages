@@ -1,0 +1,11 @@
+{
+  "kind": "realizationProfile",
+  "id": "stable-norm2-binary64",
+  "version": "0.1.0",
+  "platform": "local process with finite IEEE 754 binary64 values",
+  "hostCapabilities": ["python3", "binary64", "stdin", "stdout", "process-isolation"],
+  "scale": "twelve exact finite input pairs with finite representable mathematical norms",
+  "concurrency": "one request in one fresh child process",
+  "trust": "repository-pinned source and 100-digit independent Decimal campaign oracle",
+  "portability": "canonical hexadecimal binary64 child-process boundary"
+}

@@ -40,6 +40,10 @@
       "type": "array",
       "items": { "$ref": "#/$defs/protocolDeclaration" }
     },
+    "numericalKernels": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/numericalKernelDeclaration" }
+    },
     "effects": { "$ref": "#/$defs/effectContract" },
     "resources": {
       "type": "array",
@@ -59,6 +63,7 @@
     { "required": ["equivalences"] },
     { "required": ["laws"] },
     { "required": ["protocols"] },
+    { "required": ["numericalKernels"] },
     { "required": ["effects"] },
     { "required": ["resources"] },
     { "required": ["performancePropositions"] }
@@ -163,6 +168,27 @@
         "input": { "$ref": "common.schema.json#/$defs/localDeclarationId" },
         "output": { "$ref": "common.schema.json#/$defs/localDeclarationId" },
         "to": { "$ref": "common.schema.json#/$defs/localDeclarationId" }
+      },
+      "additionalProperties": false
+    },
+    "numericalKernelDeclaration": {
+      "type": "object",
+      "required": [
+        "id", "kind", "operation", "mathematicalProposition", "inputEncoding",
+        "finiteInputsOnly", "oracle", "oracleDecimalDigits", "metric", "maxUlps", "profile"
+      ],
+      "properties": {
+        "id": { "$ref": "common.schema.json#/$defs/localDeclarationId" },
+        "kind": { "const": "bounded-approximation-v1" },
+        "operation": { "$ref": "common.schema.json#/$defs/localDeclarationId" },
+        "mathematicalProposition": { "$ref": "common.schema.json#/$defs/nonEmptyString" },
+        "inputEncoding": { "const": "binary64-hex-v1" },
+        "finiteInputsOnly": { "const": true },
+        "oracle": { "const": "exact-binary64-to-decimal-sqrt-v1" },
+        "oracleDecimalDigits": { "type": "integer", "minimum": 1 },
+        "metric": { "const": "binary64-ulp-distance-v1" },
+        "maxUlps": { "type": "integer", "minimum": 0 },
+        "profile": { "$ref": "common.schema.json#/$defs/realizationProfileReference" }
       },
       "additionalProperties": false
     },

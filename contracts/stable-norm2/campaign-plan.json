@@ -1,0 +1,38 @@
+{
+  "kind": "stable-norm2-campaign-plan-v1",
+  "specification": {"kind": "specification", "id": "stable-norm2", "version": "0.1.0"},
+  "profile": {"kind": "realizationProfile", "id": "stable-norm2-binary64", "version": "0.1.0"},
+  "protocol": "hex-float-single-request-v1",
+  "oracle": {"kind": "exact-binary64-to-decimal-sqrt-v1", "decimalDigits": 100, "maxUlps": 2},
+  "candidates": [
+    {"id": "stable-norm2-hypot", "registered": true, "representation": "host robust hypot primitive", "entrypoint": "implementations/stable-norm2/hypot/adapter.py", "sha256": "a3936a4ddb8e77248666858f2ba59bf3bfa5a77693d0cba31cf0b1fad41ec4cd"},
+    {"id": "stable-norm2-scaled", "registered": true, "representation": "explicit max-min ratio scaling", "entrypoint": "implementations/stable-norm2/scaled/adapter.py", "sha256": "6cd3fbbbada742f5e06e5e4e70f136296564dba8691baafc3402be097fcd4b72"},
+    {"id": "stable-norm2-naive-breaker", "registered": false, "representation": "naive square-add-sqrt negative fixture", "entrypoint": "fixtures/candidates/stable-norm2/naive_breaker.py", "sha256": "0bed42551cdac86e1251f3f9b661c46ca0b1847dbd22f5e3aeeb52572296194a"}
+  ],
+  "cases": [
+    {"id": "zero", "x": "0x0.0p+0", "y": "0x0.0p+0"},
+    {"id": "x-unit", "x": "0x1.0000000000000p+0", "y": "0x0.0p+0"},
+    {"id": "y-unit", "x": "0x0.0p+0", "y": "0x1.0000000000000p+0"},
+    {"id": "three-four", "x": "0x1.8000000000000p+1", "y": "0x1.0000000000000p+2"},
+    {"id": "sign-invariance", "x": "-0x1.8000000000000p+1", "y": "0x1.0000000000000p+2"},
+    {"id": "swapped", "x": "0x1.0000000000000p+2", "y": "0x1.8000000000000p+1"},
+    {"id": "unit-diagonal", "x": "0x1.0000000000000p+0", "y": "0x1.0000000000000p+0"},
+    {"id": "adjacent", "x": "0x1.0000000000001p+0", "y": "0x1.0000000000000p+0"},
+    {"id": "large-equal", "x": "0x1.1ccf385ebc8a0p+1023", "y": "0x1.1ccf385ebc8a0p+1023"},
+    {"id": "unbalanced", "x": "0x1.1ccf385ebc8a0p+1023", "y": "0x0.730d67819e8d2p-1022"},
+    {"id": "small-equal", "x": "0x1.87e92154ef7acp-665", "y": "0x1.87e92154ef7acp-665"},
+    {"id": "subnormal-boundary", "x": "0x0.0000000000001p-1022", "y": "0x1.0000000000000p-1022"}
+  ],
+  "assumptions": [
+    "Decimal.from_float exactly embeds each finite binary64 campaign input.",
+    "The 100-digit Decimal square-root oracle rounds to the intended binary64 reference.",
+    "Each child adapter faithfully exposes its named realization."
+  ],
+  "exclusions": [
+    "The campaign covers twelve exact finite input pairs, not all binary64 inputs.",
+    "No correct-rounding, real-arithmetic proof, alternate-rounding-mode, or cross-hardware claim.",
+    "No NaN, infinity, unrepresentable-result, interval, derivative, or conditioning semantics.",
+    "No performance, SIMD, higher-dimensional, complex-number, or arbitrary numerical generality claim.",
+    "No adapter-faithfulness or effect-completeness conclusion beyond the child boundary."
+  ]
+}
