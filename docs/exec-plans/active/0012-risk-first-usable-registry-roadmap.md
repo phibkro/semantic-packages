@@ -175,7 +175,7 @@ contract must pass for the docs-only PR.
 - [x] RM2 design-spec 0007 risk ordering, spikes, slices, falsifiers, and parked list
 - [x] RM-R1 local cross-boundary review
 - [x] RM3 design/plan agreement and no-code operator gate
-- [ ] RM-G1 local/hosted docs-only convergence and PR report
+- [x] RM-G1 local/hosted docs-only convergence and PR report
 - [ ] OP-G operator accept/revise/reject
 
 ## Discoveries and changed assumptions
@@ -205,6 +205,10 @@ contract must pass for the docs-only PR.
 - 2026-07-23: a web app can reuse JSR/npm information architecture later, but building
   it before generic APIs and authoritative projections would create a polished second
   source of truth.
+- 2026-07-23: RM-G1 passed the seven-risk/seven-spike/fourteen-falsifier structural
+  gate, `git diff --check`, full 333-journey/49-proof repository gate, conventional
+  commit range check, exact two-file/one-design-spec scope, and hosted prospective
+  metadata/repository contract. Docs-only PR #22 is open; OP-G is the sole live gate.
 
 ## Decision log
 
@@ -228,8 +232,8 @@ Design-spec 0007 revision 1 and this plan form the complete docs-only roadmap in
 The risk order is R1 semantic correspondence, R2 exact Realization subject, R3 portable
 Rust/TypeScript contract, R4 generic assurance, R5 evidence-backed version resolution,
 R6 transactional publication/acquisition, and R7 cold CLI/API usability. Future work is
-S1–S6, each separately gated and 1:1. RM-G1 and operator gate OP-G remain; no product
-code is authorized.
+S1–S6, each separately gated and 1:1. RM-G1 passed in PR #22; operator gate OP-G remains
+and no product code is authorized.
 
 ## Stop and escalation conditions
 
