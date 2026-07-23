@@ -13,7 +13,7 @@ The project explores a shared specification language that:
 
 ## Current phase
 
-**Shared authoring control implemented → non-control author journey.**
+**Human PSpec author journey experienceable → uninvolved-author observation.**
 
 The accepted Stack tracer publishes one nontrivial specification, binds proof and
 conformance Evidence, registers two independent Realizations, resolves them under an
@@ -28,11 +28,13 @@ observation or arbitrary-domain generality passed. Its exact-profile successor n
 selects Rust for a native-process envelope and TypeScript for a Deno-sandbox envelope
 from one append-only graph, retaining every nonmatching Claim and Evidence record as
 inapplicable rather than transferring assurance.
-The shared authoring boundary now round-trips the exact Stack and OrderedMap
-Specification documents from strict canonical JSON, validates explicit finite profile
-contexts, and returns deterministic all-or-none diagnostics without hidden identity,
-defaults, acquisition, or hosted-text interpretation. This is the conformance control,
-not the final human-facing surface.
+The shared authoring boundary now supports both its strict canonical-JSON conformance
+control and an explicit human-editable PSpec surface. The candidate command authors the
+exact Stack and OrderedMap Specification documents, validates explicitly named finite
+profile contexts, publishes output atomically, and returns deterministic source-local
+diagnostics without hidden identity, defaults, acquisition, or hosted-text
+interpretation. Automated journey controls pass; eligible uninvolved-author observation
+and final independent acceptance remain open.
 
 ## Repository map
 
@@ -50,6 +52,7 @@ not the final human-facing surface.
 - [`docs/design/lifecycle.md`](docs/design/lifecycle.md): project knowledge, feedback loops, and quality gates.
 - [`docs/operations/multi-provider-workflow.md`](docs/operations/multi-provider-workflow.md): agent route status, model-diverse delegation, security boundaries, and provenance.
 - [`docs/design/tracer-bullet.md`](docs/design/tracer-bullet.md): first vertical slice.
+- [`design-specs/0001-explicit-pspec-author-journey.md`](design-specs/0001-explicit-pspec-author-journey.md): observable contract and falsifiers for the complete PSpec author experience.
 - [`docs/exec-plans/active/0003-cold-human-inspection.md`](docs/exec-plans/active/0003-cold-human-inspection.md): executable inspection surface and deferred uninvolved-human gate.
 - [`docs/exec-plans/completed/0004-ordered-map-generality.md`](docs/exec-plans/completed/0004-ordered-map-generality.md): completed OrderedMap second-domain research, implementation, maintenance, and convergence history.
 - [`docs/exec-plans/completed/0005-deployment-profile-choice.md`](docs/exec-plans/completed/0005-deployment-profile-choice.md): completed differentiated-profile research, Evidence, authority, actor, maintenance, and convergence history.
@@ -58,6 +61,66 @@ not the final human-facing surface.
 - [`tasks/backlog.md`](tasks/backlog.md): ordered research and engineering backlog.
 
 ## Local use
+
+### Author an exact semantic Specification
+
+Author Stack from the human-editable PSpec source and its explicit profile dependency:
+
+```sh
+nix develop --command python3 -m semantic_packages author \
+  specs/stack.pspec \
+  --dependency registry/stack/theory/dependencies/stack-profile.json \
+  --output /tmp/stack-spec.json
+```
+
+Expected output:
+
+```text
+authored specification stack@0.1.0 -> /tmp/stack-spec.json
+```
+
+The same command and surface author the structurally different OrderedMap domain:
+
+```sh
+nix develop --command python3 -m semantic_packages author \
+  specs/ordered-map.pspec \
+  --dependency registry/ordered-map/theory/dependencies/ordered-map-profile.json \
+  --output /tmp/ordered-map-spec.json
+```
+
+Expected output:
+
+```text
+authored specification ordered-map@0.1.0 -> /tmp/ordered-map-spec.json
+```
+
+To experience an author-local failure without changing repository files, blank one law
+in a disposable copy and run the same boundary:
+
+```sh
+sed '0,/statement = "pop(empty) == None"/s//statement = ""/' \
+  specs/stack.pspec > /tmp/stack-broken.pspec
+nix develop --command python3 -m semantic_packages author \
+  /tmp/stack-broken.pspec \
+  --dependency registry/stack/theory/dependencies/stack-profile.json \
+  --output /tmp/stack-broken.json
+```
+
+The command exits `1`, leaves the requested output absent or unchanged, and reports:
+
+```text
+SCHEMA_NONEMPTY_STRING /tmp/stack-broken.pspec#/laws/0/statement: value must be a nonempty string
+```
+
+What is real underneath: PSpec TOML values enter the same all-or-none canonical schema
+and graph boundary as the JSON control, relative only to the dependency files named on
+the command line. Parsing does not prove hosted laws, create Evidence, publish records,
+or discover profiles.
+
+The exact privacy-bounded acceptance task for an eligible uninvolved author is in
+[`docs/operations/explicit-pspec-author-observation.md`](docs/operations/explicit-pspec-author-observation.md).
+
+### Verify the repository
 
 Run the repository quality gate:
 
@@ -70,7 +133,7 @@ python3 scripts/check_repo.py
 ```
 
 The gate includes record/link fixtures, 18 loader groups, 50 adapter/campaign tests,
-59 cross-language candidate/Evidence-binding controls, 221 actor journeys, 27 research
+59 cross-language candidate/Evidence-binding controls, 253 actor journeys, 42 research
 probes, 20 governance tests, two fresh Stack reports/eight records, two fresh base
 OrderedMap reports plus one selective breaker, the exact base and profile-choice
 2/14/14 candidate censuses, two fresh profile-bound reports, and the 49-group proof
@@ -163,7 +226,7 @@ Then open the repository in Codex, an IDE extension, or another coding agent. Th
 
 This repository is an executable research prototype with complete bounded local Stack,
 finite OrderedMap, and exact differentiated-profile lifecycles, plus an independently
-reviewed two-domain authoring control. The next authored node adds a non-control surface
-and exact author journey without selecting hidden IDs or a universal logic. This is not
-yet a stable standard, an arbitrary-domain semantic-package ecosystem, or a hosted
-production registry.
+reviewed two-domain authoring control and an experienceable explicit PSpec candidate.
+The automated author journey is green; uninvolved-author observation and final review
+remain required before ExecPlan 0006 closes. This is not yet a stable standard, an
+arbitrary-domain semantic-package ecosystem, or a hosted production registry.

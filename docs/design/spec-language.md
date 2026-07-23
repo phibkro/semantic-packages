@@ -4,9 +4,11 @@
 
 The first language is not universal. It is sufficient when it can express one useful abstract data type, its observations, laws, one resource/effect property, and scoped claims that can be connected to external proof and test systems.
 
-The tracer bullet uses JSON as its temporary canonical interchange format. The
-surface form below is an authoring sketch only; it has no conformance status until a
-parser elaborates it into canonical records.
+The tracer bullet uses JSON as its temporary canonical interchange format. The curly
+surface form below is the retained pre-A5 sketch, not PSpec v1 syntax. The first
+experienceable PSpec candidate is the explicit TOML-shaped surface governed by
+[design-spec 0001](../../design-specs/0001-explicit-pspec-author-journey.md); it does not
+turn the historical sketch into an implicit desugaring authority.
 
 Categorical logic and propositions-as-types may guide an individual semantic aspect or
 proof checker, but they do not make one type theory the canonical Specification
@@ -103,10 +105,18 @@ caller-supplied and finite; it performs no acquisition or selection. The generic
 checker retains its historical coarse fallback, while this author-facing boundary
 refines the accepted blank-law counterexample to its exact source pointer.
 
-The lifecycle cannot close without a non-control surface adapter and eligible
-uninvolved-author observation across Stack and OrderedMap. A separate authoring IR
-remains unjustified until a second useful frontend or non-identity transformation
-demonstrates the need.
+`pspec-toml-v1` is the first non-control adapter through the same boundary. It maps
+explicit UTF-8 TOML keys and tables losslessly to the canonical Specification document,
+rejects invalid TOML and non-JSON TOML values before schema conclusions, preserves
+authored declaration order and hosted text, and grants comments no canonical meaning.
+`python3 -m semantic_packages author` owns the explicit source/dependency/output file
+boundary and atomic output publication; it performs no dependency discovery or registry
+publication. Stack and OrderedMap exercise the same command and schema/link authority.
+
+The automated non-control journey is implemented, but the lifecycle cannot close
+without eligible uninvolved-author observation across Stack and OrderedMap and A-R5
+review. A separate authoring IR remains unjustified until a second useful frontend or
+non-identity transformation demonstrates the need.
 
 ## Semantic rules
 
@@ -164,9 +174,10 @@ The Stack tracer fixes the following meaning without prescribing a representatio
   `a*n+b`. Evidence may instantiate a plural cost model; absent acceptable evidence,
   the claim remains visibly unsupported.
 
-These obligations authorize canonical record design, but `specs/stack.pspec` remains
-an illustrative authoring fixture until an accepted non-control adapter defines its
-elaboration.
+These obligations authorize canonical record design. `specs/stack.pspec` and
+`specs/ordered-map.pspec` are now complete PSpec v1 candidate inputs whose outputs equal
+the accepted records; their final author-experience acceptance still depends on the
+uninvolved-author and A-R5 gates.
 
 ### Initial conformance and performance profile
 

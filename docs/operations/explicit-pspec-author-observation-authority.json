@@ -1,0 +1,9 @@
+{
+  "kind": "human-author-observation-authority-v1",
+  "revision": "1621f1b336716e6611e0df530a1173474b0a3d2a",
+  "protocol": "docs/operations/explicit-pspec-author-observation.md",
+  "domains": [
+    "stack",
+    "ordered-map"
+  ]
+}

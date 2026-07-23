@@ -1,42 +1,61 @@
-spec Stack[A] version 0.1.0 {
-  type Stack
+# PSpec v1: every canonical identity and reference is explicit.
+kind = "specification"
+id = "stack"
+version = "0.1.0"
 
-  op empty : Stack
-  op push  : Stack * A -> Stack
-  obs pop  : Stack -> Option[A * Stack]
+[[carriers]]
+id = "Stack"
+description = "An abstract finite last-in-first-out collection."
 
-  observe elements(s: Stack):
-    top_first_sequence_by_repeated_pop_until_none(s)
+[[operations]]
+id = "empty"
+signature = "Stack[A]"
 
-  equivalence Stack:
-    pointwise_equal(elements(left), elements(right))
+[[operations]]
+id = "push"
+signature = "Stack[A] * A -> Stack[A]"
 
-  law pop_empty:
-    pop(empty) == None
+[[observations]]
+id = "pop"
+signature = "Stack[A] -> Option[A * Stack[A]]"
 
-  law pop_push(s: Stack, x: A):
-    pop(push(s, x)) == Some((x, s))
+[[derivedObservations]]
+id = "elements"
+definition = "Repeatedly pop a reachable finite stack until None, yielding a top-first sequence."
 
-  effects {
-    forbidden: io.*
-    optional: debug.emit
-    default: unspecified
-  }
+[[equivalences]]
+id = "stack-equivalence"
+carrier = "Stack"
+definition = "Pointwise equality of top-first elements sequences under the declared element equivalence."
 
-  resources {
-    persistence: retained_values_remain_observationally_unchanged
-  }
+[[laws]]
+id = "pop-empty"
+statement = "pop(empty) == None"
 
-  claim push_cost {
-    concern: performance
-    proposition: amortized_O(1)
-    profile: ref(realizationProfile, stack-default, 0.1.0)
-    workload: push-sequence
-    cost_measure: realization-steps
-    starting_state: empty
-    size: push_count_n
-    aggregate: sum
-    predicate: exists a,b >= 0 . total_cost(n) <= a*n+b
-    supporting_methods: checked_proof | accepted_proof_audit
-  }
-}
+[[laws]]
+id = "pop-push"
+statement = "pop(push(s, x)) == Some((x, s)) under Stack observational equivalence"
+
+[effects]
+id = "stack-effects"
+forbidden = ["io.*"]
+optional = ["debug.emit"]
+default = "unspecified"
+
+[[resources]]
+id = "persistence"
+rule = "Retained stack handles remain usable and observationally unchanged after operations on them or derived handles."
+
+[[performancePropositions]]
+id = "push-amortized-constant"
+operationFamily = ["push"]
+predicate = "There exist constants a,b >= 0 such that total realization-steps for n pushes is at most a*n+b for every n >= 0."
+permittedEvidenceMethods = ["proof", "proof-audit"]
+
+[performancePropositions.workload]
+profile = { kind = "realizationProfile", id = "stack-default", version = "0.1.0" }
+localId = "push-sequence"
+
+[performancePropositions.costMeasure]
+profile = { kind = "realizationProfile", id = "stack-default", version = "0.1.0" }
+localId = "realization-steps"

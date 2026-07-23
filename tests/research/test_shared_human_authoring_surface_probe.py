@@ -7,8 +7,9 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[2]
-STACK_SURFACE = ROOT / "specs" / "stack.pspec"
-ORDERED_MAP_SURFACE = ROOT / "specs" / "ordered-map.pspec"
+A1_SURFACE_FIXTURES = ROOT / "fixtures" / "authoring" / "a1"
+STACK_SURFACE = A1_SURFACE_FIXTURES / "stack-illustrative.pspec"
+ORDERED_MAP_SURFACE = A1_SURFACE_FIXTURES / "ordered-map-illustrative.pspec"
 STACK_SPEC = ROOT / "registry" / "stack" / "theory" / "records" / "stack-spec.json"
 ORDERED_MAP_SPEC = (
     ROOT / "registry" / "ordered-map" / "theory" / "records" / "ordered-map-spec.json"
@@ -186,7 +187,7 @@ class SharedHumanAuthoringSurfaceProbeTest(unittest.TestCase):
                     _reference_census(specification),
                 )
 
-    def test_current_surface_cannot_round_trip_without_hidden_defaults(self) -> None:
+    def test_a1_surface_cannot_round_trip_without_hidden_defaults(self) -> None:
         surface = STACK_SURFACE.read_text(encoding="utf-8")
         self.assertFalse(ORDERED_MAP_SURFACE.exists())
         for canonical_id in (
